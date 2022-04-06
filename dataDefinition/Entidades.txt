@@ -1,0 +1,59 @@
+Modelo de Treino:
+  -> Nome
+  -> Autor
+  -> Descricao
+  -> Exercicios : [Exercicio1, Exercicio2, Exercicio3,..., ExercicioN]
+-------------------------------------------------------------------------------------
+
+Treino :
+ -> Nome
+ -> Descricao
+ -> Exercicios : [Exercicio1, Exercicio2, Exercicio3,..., ExercicioN]
+ -> Finalizado : boolean
+ -> Volume : numero (Sets*reps*peso -> Para cada EP)
+ -> Tempo  : numero (t+t+t -> Para cada ED)
+
+-------------------------------------------------------------------------------------
+
+Exercicio :
+  -> Nome (Nome do exercicio)
+  -> Id   (Identificador interno do exercicio)
+  -> Descriçao (Descriçao geral do exercicio)
+  -> Categoria (Categoria na qual o exercicio se insere)
+  -> TempoDescanso (Tempo de descanso apos cada serie)
+  -> Anotaçao / Comentario
+  Categorias (Barra / Haltere / Maquina / Peso Corporal / Cardiovascular e Resistencia)
+
+Exercicio Peso (EP):
+  -> Multiplicador
+  -> SeriesEP : [Serie1, Serie2, Serie3,... SerieN]
+  
+Exercicio Duraçao (ED):
+  -> SeriesD : [Serie1, Serie2, Serie3,... SerieN]
+
+Execicio Barra/Maquina -> EP:
+  -> Multiplicador = 1 
+
+Exercicio Peso Corporal -> EP:
+  -> Multiplicador = 1 
+  -> Assistido : booleano
+  -> Sobrecarregado : booleano
+
+Exercicio Haltere -> EP:
+  -> Multiplicador = 2
+
+-------------------------------------------------------------------------------------
+
+SerieEP :
+  -> Peso
+  -> RepeticoesDesejadas : [x, y] (rep range)
+  -> RepeticoesEfetuadas : numero concreto de repetiçoes efetuadas
+
+SerieD : 
+  -> DuracaoDesejada : [x, y] (time range)
+  -> DuracaoEfetuada : duracao concreta 
+
+SerieFinal -> (SerieEP || SerieD):
+  -> Imagens
+  -> Video
+  -> Anotaçao / Comentario
