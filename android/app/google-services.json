@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:782424571231:android:3fc36e2646a10be64e8aea",
+        "mobilesdk_app_id": "1:782424571231:android:8b50d0b5cb1a76384e8aea",
         "android_client_info": {
-          "package_name": "com.helloreactworld"
+          "package_name": "com.isel2122_leim_prj61.traininglog"
         }
       },
       "oauth_client": [
