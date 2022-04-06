@@ -1,4 +1,4 @@
-package com.training_log.newarchitecture;
+package com.isel2122_leim_prj61.traininglog.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.training_log.BuildConfig;
-import com.training_log.newarchitecture.components.MainComponentsRegistry;
-import com.training_log.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.isel2122_leim_prj61.traininglog.BuildConfig;
+import com.isel2122_leim_prj61.traininglog.newarchitecture.components.MainComponentsRegistry;
+import com.isel2122_leim_prj61.traininglog.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

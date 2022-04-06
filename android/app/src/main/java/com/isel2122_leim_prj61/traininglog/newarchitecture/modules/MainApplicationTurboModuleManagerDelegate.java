@@ -1,4 +1,4 @@
-package com.training_log.newarchitecture.modules;
+package com.isel2122_leim_prj61.traininglog.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

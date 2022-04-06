@@ -1,4 +1,4 @@
-package com.training_log.newarchitecture.components;
+package com.isel2122_leim_prj61.traininglog.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Training_Log.app"
-               BlueprintName = "Training_Log"
-               ReferencedContainer = "container:Training_Log.xcodeproj">
+               BuildableName = "TrainingLog.app"
+               BlueprintName = "TrainingLog"
+               ReferencedContainer = "container:TrainingLog.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "Training_LogTests.xctest"
-               BlueprintName = "Training_LogTests"
-               ReferencedContainer = "container:Training_Log.xcodeproj">
+               BuildableName = "TrainingLogTests.xctest"
+               BlueprintName = "TrainingLogTests"
+               ReferencedContainer = "container:TrainingLog.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Training_Log.app"
-            BlueprintName = "Training_Log"
-            ReferencedContainer = "container:Training_Log.xcodeproj">
+            BuildableName = "TrainingLog.app"
+            BlueprintName = "TrainingLog"
+            ReferencedContainer = "container:TrainingLog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Training_Log.app"
-            BlueprintName = "Training_Log"
-            ReferencedContainer = "container:Training_Log.xcodeproj">
+            BuildableName = "TrainingLog.app"
+            BlueprintName = "TrainingLog"
+            ReferencedContainer = "container:TrainingLog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

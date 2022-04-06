@@ -1,4 +1,4 @@
-package com.training_log;
+package com.isel2122_leim_prj61.traininglog;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Training_Log";
+    return "TrainingLog";
   }
 
   /**
