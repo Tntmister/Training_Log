@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 const App = () => {
   return (
     <View>
-      <Text style={styles.hello}>Hello</Text>
+      <Text style={styles.hello}>Hello World</Text>
     </View>
   );
 };
