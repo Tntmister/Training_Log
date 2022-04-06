@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "782424571231",
+    "firebase_url": "https://training-log-de1ae-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "training-log-de1ae",
+    "storage_bucket": "training-log-de1ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782424571231:android:3fc36e2646a10be64e8aea",
+        "android_client_info": {
+          "package_name": "com.helloreactworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782424571231-deej2palg0cprusaid4mjh3ir9p7lffe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7YyPPxO3CmZKEB3aFgM7-4kh0FdrL7gg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782424571231-deej2palg0cprusaid4mjh3ir9p7lffe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
