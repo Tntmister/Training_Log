@@ -1,11 +1,21 @@
 import React from "react"
 import { Button, StyleSheet, Text, View } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import {
+  NativeStackScreenProps,
+  createNativeStackNavigator
+} from "@react-navigation/native-stack"
 
-const Stack = createNativeStackNavigator()
+type RootStackParamList = {
+  Test1: undefined;
+  Test2: undefined;
+};
 
-const Test1 = ({ navigation }) => {
+const Stack = createNativeStackNavigator<RootStackParamList>()
+
+type Props = NativeStackScreenProps<RootStackParamList, "Test1">;
+
+function Test1({ navigation }: Props) {
   return (
     <View>
       <Button title="Test1" onPress={() => navigation.navigate("Test1")} />
@@ -15,7 +25,7 @@ const Test1 = ({ navigation }) => {
   )
 }
 
-const Test2 = ({ navigation }) => {
+function Test2({ navigation }: Props) {
   return (
     <View>
       <Button title="Test1" onPress={() => navigation.navigate("Test1")} />
@@ -25,10 +35,10 @@ const Test2 = ({ navigation }) => {
   )
 }
 
-const Main = () => {
+function Main() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Test1">
         <Stack.Screen name="Test1" component={Test1} />
         <Stack.Screen name="Test2" component={Test2} />
       </Stack.Navigator>
