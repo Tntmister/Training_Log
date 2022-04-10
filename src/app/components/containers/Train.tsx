@@ -1,10 +1,10 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-const Home = () => {
+const Train = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
+      <Text style={styles.text}>Train</Text>
     </View>
   )
 }
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home
+export default Train

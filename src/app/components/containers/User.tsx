@@ -1,10 +1,10 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-const Home = () => {
+const User = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
+      <Text style={styles.text}>User</Text>
     </View>
   )
 }
@@ -22,5 +22,4 @@ const styles = StyleSheet.create({
     fontSize: 50
   }
 })
-
-export default Home
+export default User
