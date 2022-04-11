@@ -25,7 +25,7 @@ const Nav = () => {
           tabBarIcon: ({ focused }) => (
             <View>
               <Image
-                source={require("../assets/icons/icons1/home/home_pressed(-hdpi).png")}
+                source={require("../assets/icons/home/home(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
                   width: 25,
@@ -44,7 +44,7 @@ const Nav = () => {
           tabBarIcon: ({ focused }) => (
             <View>
               <Image
-                source={require("../assets/icons/icons1/search/search_pressed(-hdpi).png")}
+                source={require("../assets/icons/search/search(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
                   width: 25,
@@ -63,7 +63,7 @@ const Nav = () => {
           tabBarIcon: ({ focused }) => (
             <View>
               <Image
-                source={require("../assets/icons/icons1/train/dumbbell_pressed(-hdpi).png")}
+                source={require("../assets/icons/train/train(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
                   width: 25,
@@ -82,7 +82,7 @@ const Nav = () => {
           tabBarIcon: ({ focused }) => (
             <View>
               <Image
-                source={require("../assets/icons/icons1/history/clock_pressed(-hdpi).png")}
+                source={require("../assets/icons/history/history(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
                   width: 25,
@@ -101,7 +101,7 @@ const Nav = () => {
           tabBarIcon: ({ focused }) => (
             <View>
               <Image
-                source={require("../assets/icons/icons1/user/user_pressed(-hdpi).png")}
+                source={require("../assets/icons/user/user(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
                   width: 25,
