@@ -1,43 +1,24 @@
 import { StyleSheet, Text, View, Image } from "react-native"
 import React from "react"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Home from "./containers/Home"
 import Search from "./containers/Search"
 import History from "./containers/History"
 import User from "./containers/User"
 import Train from "./containers/Train"
-import Auth from "./Auth"
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 
-const Tab = createMaterialTopTabNavigator()
+const Tab = createBottomTabNavigator()
 
 const Nav = (props: { style: any }) => {
   const [style, setStyle] = React.useState(props.style)
   return (
     <Tab.Navigator
-      tabBarPosition="bottom"
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: { backgroundColor: style.background[1] }
       })}
     >
-      <Tab.Screen
-        name="Auth"
-        component={Auth}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/icons/icons1/home/home_pressed(-hdpi).png")}
-              resizeMode="contain"
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? "#FE6751" : "#E9E9E9"
-              }}
-            />
-          )
-        }}
-      />
       <Tab.Screen
         name="Home"
         component={Home}
@@ -136,7 +117,5 @@ const Nav = (props: { style: any }) => {
     </Tab.Navigator>
   )
 }
-
-const styles = StyleSheet.create({})
 
 export default Nav
