@@ -4,14 +4,15 @@ import Nav from "./components/Nav"
 import Auth from "./components/Auth"
 import UserContext from "./UserContext"
 import { UserProvider } from "./UserProvider"
+import Style from "./styles/styles"
 
-function Main() {
+export default function Main() {
   const user = useContext(UserContext)
   return (
     <UserProvider>
       {user ? (
         <NavigationContainer>
-          <Nav />
+          <Nav style={Style} />
         </NavigationContainer>
       ) : (
         <Auth />
@@ -19,5 +20,3 @@ function Main() {
     </UserProvider>
   )
 }
-
-export default Main
