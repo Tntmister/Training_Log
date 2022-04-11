@@ -1,11 +1,12 @@
 import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import Nav from "./app/components/Nav"
+import Style from "./app/styles/styles"
 
 function Main() {
   return (
     <NavigationContainer>
-      <Nav />
+      <Nav style={Style} />
     </NavigationContainer>
   )
 }

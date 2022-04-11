@@ -9,13 +9,14 @@ import Train from "./containers/Train"
 
 const Tab = createBottomTabNavigator()
 
-const Nav = () => {
+const Nav = (props: { style: any }) => {
+  const [style, setStyle] = React.useState(props.style)
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         headerShown: false,
-        tabBarStyle: { backgroundColor: "#2F2C3B" }
+        tabBarStyle: { backgroundColor: style.background[1] }
       })}
     >
       <Tab.Screen
@@ -28,9 +29,9 @@ const Nav = () => {
                 source={require("../assets/icons/home/home(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#FE6751" : "#E9E9E9"
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
                 }}
               />
             </View>
@@ -47,9 +48,9 @@ const Nav = () => {
                 source={require("../assets/icons/search/search(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#FE6751" : "#E9E9E9"
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
                 }}
               />
             </View>
@@ -66,9 +67,9 @@ const Nav = () => {
                 source={require("../assets/icons/train/train(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#FE6751" : "#E9E9E9"
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
                 }}
               />
             </View>
@@ -85,9 +86,9 @@ const Nav = () => {
                 source={require("../assets/icons/history/history(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#FE6751" : "#E9E9E9"
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
                 }}
               />
             </View>
@@ -104,9 +105,9 @@ const Nav = () => {
                 source={require("../assets/icons/user/user(-xxxhdpi).png")}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#FE6751" : "#E9E9E9"
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
                 }}
               />
             </View>
@@ -117,10 +118,6 @@ const Nav = () => {
   )
 }
 
-const styles = StyleSheet.create({
-  nav: {
-    backgroundColor: "#2F2C3B"
-  }
-})
+const styles = StyleSheet.create({})
 
 export default Nav
