@@ -10,13 +10,15 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 const Tab = createMaterialTopTabNavigator()
 
-const Nav = () => {
+const Nav = (props: { style: any }) => {
+  const [style, setStyle] = React.useState(props.style)
   return (
     <Tab.Navigator
       tabBarPosition="bottom"
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
-        tabBarStyle: styles.nav
+        headerShown: false,
+        tabBarStyle: { backgroundColor: style.background[1] }
       })}
     >
       <Tab.Screen
@@ -41,15 +43,17 @@ const Nav = () => {
         component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/icons/icons1/home/home_pressed(-hdpi).png")}
-              resizeMode="contain"
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? "#FE6751" : "#E9E9E9"
-              }}
-            />
+            <View>
+              <Image
+                source={require("../assets/icons/home/home(-xxxhdpi).png")}
+                resizeMode="contain"
+                style={{
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
+                }}
+              />
+            </View>
           )
         }}
       />
@@ -58,15 +62,17 @@ const Nav = () => {
         component={Search}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/icons/icons1/search/search_pressed(-hdpi).png")}
-              resizeMode="contain"
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? "#FE6751" : "#E9E9E9"
-              }}
-            />
+            <View>
+              <Image
+                source={require("../assets/icons/search/search(-xxxhdpi).png")}
+                resizeMode="contain"
+                style={{
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
+                }}
+              />
+            </View>
           )
         }}
       />
@@ -75,15 +81,17 @@ const Nav = () => {
         component={Train}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/icons/icons1/train/dumbbell_pressed(-hdpi).png")}
-              resizeMode="contain"
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? "#FE6751" : "#E9E9E9"
-              }}
-            />
+            <View>
+              <Image
+                source={require("../assets/icons/train/train(-xxxhdpi).png")}
+                resizeMode="contain"
+                style={{
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
+                }}
+              />
+            </View>
           )
         }}
       />
@@ -92,15 +100,17 @@ const Nav = () => {
         component={History}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/icons/icons1/history/clock_pressed(-hdpi).png")}
-              resizeMode="contain"
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? "#FE6751" : "#E9E9E9"
-              }}
-            />
+            <View>
+              <Image
+                source={require("../assets/icons/history/history(-xxxhdpi).png")}
+                resizeMode="contain"
+                style={{
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
+                }}
+              />
+            </View>
           )
         }}
       />
@@ -109,15 +119,17 @@ const Nav = () => {
         component={User}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/icons/icons1/user/user_pressed(-hdpi).png")}
-              resizeMode="contain"
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? "#FE6751" : "#E9E9E9"
-              }}
-            />
+            <View>
+              <Image
+                source={require("../assets/icons/user/user(-xxxhdpi).png")}
+                resizeMode="contain"
+                style={{
+                  width: focused ? style.icon_size_focused : style.icon_size,
+                  height: focused ? style.icon_size_focused : style.icon_size,
+                  tintColor: focused ? style.main[1] : style.text[1]
+                }}
+              />
+            </View>
           )
         }}
       />
@@ -125,10 +137,6 @@ const Nav = () => {
   )
 }
 
-const styles = StyleSheet.create({
-  nav: {
-    backgroundColor: "#2F2C3B"
-  }
-})
+const styles = StyleSheet.create({})
 
 export default Nav

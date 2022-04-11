@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-const User = () => {
+const User = (props: { style: any }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>User</Text>
@@ -13,11 +13,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#2F2C3B"
+    alignItems: "center"
   },
   text: {
-    color: "#E9E9E9",
     fontWeight: "bold",
     fontSize: 50
   }
