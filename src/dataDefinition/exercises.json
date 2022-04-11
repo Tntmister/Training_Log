@@ -383,7 +383,7 @@
         "As the stone passes the knees, lap it by sitting backward, pulling the stone on top of your thighs.",
         "Sit low, getting the stone high onto your chest as you change your grip to reach over the stone. Stand, driving through with your hips. Close distance to the loading platform, and lean back, extending the hips to get the stone as high as possible."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Atlas Stone Trainer",
@@ -402,7 +402,7 @@
         "Begin by pulling the weight up past the knees, extending through the hips. As the weight clears the knees, it can be lapped by resting it on your thighs and sitting back, hugging it tightly to your chest.",
         "Finish the movement by extending through your hips and knees to raise the weight as high as possible. The weight can be returned to the lap or to the ground for successive repetitions."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Axle Deadlift",
@@ -422,7 +422,7 @@
         "After the bar passes the knees, aggressively pull the bar back, pulling your shoulder blades together as you drive your hips forward into the bar.",
         "Lower the bar by bending at the hips and guiding it to the floor."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Backward Drag",
@@ -439,11 +439,11 @@
         "Load a sled with the desired weight, attaching a rope or straps to the sled that you can hold onto.",
         "Begin the exercise by moving backwards for a given distance. Leaning back, extend through the legs for short steps to move as quickly as possible."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Backward Medicine Ball Throw",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["shoulders"],
       "secondaryMuscles": [],
       "instructions": [
@@ -483,7 +483,7 @@
     },
     {
       "name": "Ball Leg Curl",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["hamstrings"],
       "secondaryMuscles": ["calves", "glutes"],
       "instructions": [
@@ -518,7 +518,7 @@
         "Keeping your legs straight, extend through the hips to come to a near vertical position.",
         "Ensure that you do not round your back as you go down back to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Band Good Morning (Pull Through)",
@@ -530,7 +530,7 @@
         "Begin by bending at the hips, getting your butt back as far as possible. Keep your back flat and bend forward to about 90 degrees. Your knees should be only slightly bent.",
         "Return to the starting position be driving through with the hips to come back to a standing position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Band Hip Adductions",
@@ -687,7 +687,7 @@
         "Begin the movement by driving through with your heels, extending your hips vertically through the bar. Your weight should be supported by your upper back and the heels of your feet.",
         "Extend as far as possible, then reverse the motion to return to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Barbell Guillotine Bench Press",
@@ -726,7 +726,7 @@
         "Roll the bar so that it is directly above your hips, and lean back against the bench so that your shoulder blades are near the top of it.",
         "Begin the movement by driving through your feet, extending your hips vertically through the bar. Your weight should be supported by your shoulder blades and your feet. Extend as far as possible, then reverse the motion to return to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Barbell Incline Bench Press - Medium Grip",
@@ -956,7 +956,7 @@
         "Wearing either a harness or a loose weight belt, attach the chain to the back so that you will be facing away from the sled. Bend down so that your hands are on the ground. Your back should be flat and knees bent. This is your starting position.",
         "Begin by driving with legs, alternating left and right. Use your hands to maintain balance and to help pull. Try to keep your back flat as you move over a given distance."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Behind Head Chest Stretch",
@@ -1009,7 +1009,7 @@
         "Lower the bar to your lower chest or upper stomach. The bar, wrist, and elbow should stay in line at all times.",
         "Pause when the barbell touches your torso, and then drive the bar up with as much force as possible. The elbows should be tucked in until lockout."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Bench Press - With Bands",
@@ -1038,7 +1038,7 @@
         "Pull the bar out of the rack without protracting your shoulders. Focus on squeezing the bar and trying to pull it apart. Lower the bar to your lower chest or upper stomach. The bar, wrist, and elbow should stay in line at all times.",
         "Pause when the barbell touches your torso, and then drive the bar up with as much force as possible. The elbows should be tucked in until lockout."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Bench Sprint",
@@ -1244,7 +1244,7 @@
         "You can take a standard bench grip, or shoulder width to focus on the triceps. Pull the bar out of the rack without protracting your shoulders. The bar, wrist, and elbow should stay in line at all times. Focus on squeezing the bar and trying to pull it apart.",
         "Lower the bar to the boards, and then drive the bar up with as much force as possible. The elbows should be tucked in until lockout."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Body-Up",
@@ -1261,7 +1261,7 @@
     },
     {
       "name": "Bodyweight Flyes",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": ["abdominals", "shoulders", "triceps"],
       "instructions": [
@@ -1421,7 +1421,7 @@
         "With your back, shoulders, and core tight, push your knees and butt out and you begin your descent. Sit back with your hips until you are seated on the box. Ideally, your shins should be perpendicular to the ground. Pause when you reach the box, and relax the hip flexors. Never bounce off of a box.",
         "Keeping the weight on your heels and pushing your feet and knees out, drive upward off of the box as you lead the movement with your head. Continue upward, maintaining tightness head to toe."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Box Squat with Bands",
@@ -1441,7 +1441,7 @@
         "With your back, shoulders, and core tight, push your knees and butt out and you begin your descent. Sit back with your hips until you are seated on the box. Ideally, your shins should be perpendicular to the ground. Pause when you reach the box, and relax the hip flexors. Never bounce off of a box.",
         "Keeping the weight on your heels and pushing your feet and knees out, drive upward off of the box as you lead the movement with your head. Continue upward, maintaining tightness head to toe. Use care to return the barbell to the rack."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Box Squat with Chains",
@@ -2015,7 +2015,7 @@
         "Look forward with your head, keep your chest up and your back arched, and begin driving through the heels to move the weight upward. As the weight comes up, pull your shoulder blades together as you drive your hips forward.",
         "Lower the weight by bending at the hips and guiding it to the floor."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Car Drivers",
@@ -2032,7 +2032,7 @@
     },
     {
       "name": "Catch and Overhead Throw",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["lats"],
       "secondaryMuscles": ["abdominals", "chest", "shoulders"],
       "instructions": [
@@ -2064,7 +2064,7 @@
         "Begin by extending through the elbow, keeping your upper arm still, with your wrists pronated.",
         "Pause at the lockout, and reverse the motion to return to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Chain Press",
@@ -2076,7 +2076,7 @@
         "Lower the chains by flexing the elbows, unloading some of the chain onto the floor.",
         "Continue until your elbow forms a 90 degree angle, and then reverse the motion by extending through the elbow to lockout."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Chair Leg Extended Stretch",
@@ -2143,7 +2143,7 @@
     },
     {
       "name": "Chest Push (multiple response)",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": ["abdominals", "shoulders", "triceps"],
       "instructions": [
@@ -2156,7 +2156,7 @@
     },
     {
       "name": "Chest Push (single response)",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": ["abdominals", "shoulders", "triceps"],
       "instructions": [
@@ -2168,7 +2168,7 @@
     },
     {
       "name": "Chest Push from 3 point stance",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": ["abdominals", "shoulders", "triceps"],
       "instructions": [
@@ -2180,7 +2180,7 @@
     },
     {
       "name": "Chest Push with Run Release",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": ["abdominals", "shoulders", "triceps"],
       "instructions": [
@@ -2192,7 +2192,7 @@
     },
     {
       "name": "Chest Stretch on Stability Ball",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": [],
       "instructions": [
@@ -2257,7 +2257,7 @@
         "Ensure that you get one of the dumbbell heads behind the shoulder to keep from being thrown off balance. To raise it overhead, dip by flexing the knees, and the drive upwards as you extend the dumbbell overhead, leaning slightly away from it as you do so.",
         "Carefully guide the bell back to the floor, keeping it under control as much as possible. It is best to perform this event on a thick rubber mat to prevent damage to the floor."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Clean",
@@ -2280,7 +2280,7 @@
         "As full extension is achieved, transition into the third pull by aggressively shrugging and flexing the arms with the elbows up and out. At peak extension, aggressively pull yourself down, rotating your elbows under the bar as you do so. Receive the bar in a front squat position, the depth of which is dependent upon the height of the bar at the end of the third pull. The bar should be racked onto the protracted shoulders, lightly touching the throat with the hands relaxed. Continue to descend to the bottom squat position, which will help in the recovery.",
         "Immediately recover by driving through the heels, keeping the torso upright and elbows up. Continue until you have risen to a standing position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Clean and Jerk",
@@ -2305,7 +2305,7 @@
         "Drive through the heels create as much speed and force as possible, and be sure to move your head out of the way as the bar leaves the shoulders.",
         "At this moment as the feet leave the floor, the feet must be placed into the receiving position as quickly as possible. In the brief moment the feet are not actively driving against the platform, the athletes effort to push the bar up will drive them down. The feet should be split, with one foot forward, and one foot back. Receive the bar with the arms locked out overhead. Return to a standing position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Clean and Press",
@@ -2351,7 +2351,7 @@
         "Begin by driving through the floor through the front of your heels. As the bar travels upward, maintain a constant back angle. Flare your knees out to the side to help keep them out of the bar's path.",
         "After the bar crosses the knees, complete the lift by driving the hips into the bar until your hips and knees are extended."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Clean from Blocks",
@@ -2370,7 +2370,7 @@
         "As full extension is achieved, transition into the receiving position by aggressively shrugging and flexing the arms with the elbows up and out. Aggressively pull yourself down, rotating your elbows under the bar as you do so. Receive the bar in a front squat position, the depth of which is dependent upon the height of the bar at the end of the third pull. The bar should be racked onto the protracted shoulders, lightly touching the throat with the hands relaxed. Continue to descend to the bottom squat position, which will help in the recovery.",
         "Immediately recover by driving through the heels, keeping the torso upright and elbows up. Continue until you have risen to a standing position. Return the weight to the boxes for the next rep."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Clean Pull",
@@ -2388,7 +2388,7 @@
         "Begin the first pull by driving through the heels, extending your knees. Your back angle should stay the same, and your arms should remain straight and elbows out. Move the weight with control as you continue to above the knees.",
         "Next comes the second pull, the main source of acceleration for the clean. As the bar approaches the mid-thigh position, begin extending through the hips. In a jumping motion, accelerate by extending the hips, knees, and ankles, using speed to move the bar upward. There should be no need to actively pull through the arms to accelerate the weight; at the end of the second pull, the body should be fully extended, leaning slightly back, with the arms still extended. Full extension should be violent and abrupt, and ensure that you do not prolong the extension for longer than necessary."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Clean Shrug",
@@ -2399,7 +2399,7 @@
         "Begin with a shoulder width, double overhand or hook grip, with the bar hanging at the mid thigh position. Your back should be straight and inclined slightly forward.",
         "Shrug your shoulders towards your ears. While this exercise can usually by loaded with heavier weight than a clean, avoid overloading to the point that the execution slows down."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Clock Push-Up",
@@ -2446,7 +2446,7 @@
     },
     {
       "name": "Close-Grip EZ-Bar Curl with Band",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["biceps"],
       "secondaryMuscles": ["forearms"],
       "instructions": [
@@ -2460,7 +2460,7 @@
     },
     {
       "name": "Close-Grip EZ-Bar Press",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["triceps"],
       "secondaryMuscles": ["chest", "shoulders"],
       "instructions": [
@@ -2557,7 +2557,7 @@
         "With the weight loaded, take a zurcher hold on the end of the implement. Place the bar in the crook of the elbow and hold onto your wrist. Try to keep the weight off of the forearms.",
         "Begin by lifting the weight from the ground. Keep a tight, upright posture as you being to walk, taking short, fast steps. Look up and away as you turn in a circle. Do not hold your breath during the event. Continue walking until you complete one or more complete turns."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Concentration Curls",
@@ -2642,7 +2642,7 @@
         "In the crucifix, you statically hold weights out to the side for time. While the event can be practiced using dumbbells, it is best to practice with one of the various implements used, such as axes and hammers, as it feels different.",
         "Begin standing, and raise your arms out to the side holding the implements. Your arms should be parallel to the ground. In competition, judges or sensors are used to let you know when you break parallel. Hold for as long as you can. Typically, the weights should be heavy enough that you fail in 30-60 seconds."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Crunches",
@@ -2733,7 +2733,7 @@
         "With your feet, and your grip set, take a big breath and then lower your hips and bend the knees until your shins contact the bar. Look forward with your head, keep your chest up and your back arched, and begin driving through the heels to move the weight upward. After the bar passes the knees, aggressively pull the bar back, pulling your shoulder blades together as you drive your hips forward into the bar.",
         "Lower the bar by bending at the hips and guiding it to the floor."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Deadlift with Chains",
@@ -2753,7 +2753,7 @@
         "Look forward with your head, keep your chest up and your back arched, and begin driving through the heels to move the weight upward. After the bar passes the knees, aggressively pull the bar back, pulling your shoulder blades together as you drive your hips forward into the bar.",
         "Lower the bar by bending at the hips and guiding it to the floor."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Dead Bug",
@@ -2947,7 +2947,7 @@
         "With your feet, and your grip set, take a big breath and then lower your hips and bend the knees until your shins contact the bar. Look forward with your head, keep your chest up and your back arched, and begin driving through the heels to move the weight upward. After the bar passes the knees, aggressively pull the bar back, pulling your shoulder blades together as you drive your hips forward into the bar.",
         "Lower the bar by bending at the hips and guiding it to the floor."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Depth Jump Leap",
@@ -3116,7 +3116,7 @@
     },
     {
       "name": "Downward Facing Balance",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["glutes"],
       "secondaryMuscles": ["abdominals", "hamstrings"],
       "instructions": [
@@ -3236,7 +3236,7 @@
         "Lower the weights until your upper arm comes in contact with the floor. You can tuck your elbows to emphasize triceps size and strength, or to focus on your chest angle your arms to the side.",
         "Pause at the bottom, and then bring the weight together at the top by extending through the elbows."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Dumbbell Flyes",
@@ -3670,7 +3670,7 @@
     },
     {
       "name": "Exercise Ball Crunch",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": [],
       "instructions": [
@@ -3684,7 +3684,7 @@
     },
     {
       "name": "Exercise Ball Pull-In",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": [],
       "instructions": [
@@ -3751,7 +3751,7 @@
     },
     {
       "name": "EZ-Bar Curl",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["biceps"],
       "secondaryMuscles": [],
       "instructions": [
@@ -3765,7 +3765,7 @@
     },
     {
       "name": "EZ-Bar Skullcrusher",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["triceps"],
       "secondaryMuscles": ["forearms"],
       "instructions": [
@@ -3803,7 +3803,7 @@
         "After gripping the handles, lift them up by driving through your heels, keeping your back straight and your head up.",
         "Walk taking short, quick steps, and don't forget to breathe. Move for a given distance, typically 50-100 feet, as fast as possible."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Fast Skipping",
@@ -3917,7 +3917,7 @@
         "Lower the bar towards the bottom of your chest or upper stomach, squeezing the bar and attempting to pull it apart as you do so. Ensure that you tuck your elbows throughout the movement. Lower the bar until your upper arm contacts the ground and pause, preventing any slamming or bouncing of the weight.",
         "Press the bar back up as fast as you can, keeping the bar, your wrists, and elbows in line as you do so."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Floor Press with Chains",
@@ -3930,7 +3930,7 @@
         "Lower the bar towards the bottom of your chest or upper stomach, squeezing the bar and attempting to pull it apart as you do so. Ensure that you tuck your elbows throughout the movement. Lower the bar until your upper arm contacts the ground and pause, preventing any slamming or bouncing of the weight.",
         "Press the bar back up as fast as you can, keeping the bar, your wrists, and elbows in line as you do so."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Flutter Kicks",
@@ -3973,7 +3973,7 @@
         "Attach a dual handled chain or rope attachment to the sled. You should be facing away from the sled, holding a handle in each hand.",
         "Begin the movement by moving forward for one step. Leaning forward, extend through the legs and hips to move, pausing with each step to extend through the elbows, pressing your hands forward. Step forward until you return to the start position prepared to press."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Frankenstein Squat",
@@ -3986,7 +3986,7 @@
         "Squat by flexing the knees and hips, sitting in between your legs. Keep the torso upright, the arms up, and the shoulders forward, and the bar should stay in place. Go to the bottom of the squat, until your hamstrings contact your calves.",
         "Return to the upright position by driving through the front of the heel and extending the knees and hips."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Freehand Jump Squat",
@@ -4252,7 +4252,7 @@
         "Start from the bottom of the movement. Keep your back arched as you begin the movement by flexing the knees. Drive your toes into the foot plate as you do so. Keep your upper body straight, and continue until your body is upright.",
         "Return to the starting position, keeping your descent under control."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Glute Kickback",
@@ -4289,7 +4289,7 @@
         "Begin by bending at the hips, moving them back as you bend over to near parallel. Keep your back arched and your cervical spine in proper alignment.",
         "Reverse the motion by extending through the hips with your glutes and hamstrings. Continue until you have returned to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Good Morning off Pins",
@@ -4300,7 +4300,7 @@
         "Begin with a bar on a rack at about the same height as your stomach. Bend over underneath the bar and rack the bar across the rear of your shoulders as you would a power squat, not on top of your shoulders. At the proper height, you should be near parallel to the floor when bent over. Keep your back tight, shoulder blades pinched together, and your knees slightly bent. Keep your back arched and your cervical spine in proper alignment.",
         "Begin the motion by extending through the hips with your glutes and hamstrings, and you are standing with the weight. Slowly lower the weight back to the pins returning to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Gorilla Chin/Crunch",
@@ -4435,7 +4435,7 @@
         "Begin the motion by extending through the hips with your glutes and hamstrings, and you are standing with the weight.",
         "Slowly lower the weight back to the starting position, where it is supported by the chains."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Hanging Leg Raise",
@@ -4482,7 +4482,7 @@
         "Begin by aggressively extending through the hips, knees and ankles, driving the weight upward. As you do so, shrug your shoulders towards your ears.",
         "Immediately recover by driving through the heels, keeping the torso upright and elbows up. Continue until you have risen to a standing position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Hang Clean - Below the Knees",
@@ -4503,7 +4503,7 @@
         "At peak extension, aggressively pull yourself down, rotating your elbows under the bar as you do so. Receive the bar in a front squat position, the depth of which is dependent upon the height of the bar at the end of the third pull. The bar should be racked onto the protracted shoulders, lightly touching the throat with the hands relaxed. Continue to descend to the bottom squat position, which will help in the recovery.",
         "Immediately recover by driving through the heels, keeping the torso upright and elbows up. Continue until you have risen to a standing position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Hang Snatch",
@@ -4525,7 +4525,7 @@
         "As you move your feet into the receiving position, forcefully pull yourself below the bar as you elevate the bar overhead. Receive the bar with your body as low as possible and the arms fully extended overhead.",
         "Return to a standing position with the weight overhead. Follow by returning the weight to the ground under control."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Hang Snatch - Below Knees",
@@ -4547,7 +4547,7 @@
         "As you move your feet into the receiving position, forcefully pull yourself below the bar as you elevate the bar overhead. Receive the bar with your body as low as possible and the arms fully extended overhead.",
         "Return to a standing position with the weight overhead, and then return the weight to the floor under control."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Heaving Snatch Balance",
@@ -4566,7 +4566,7 @@
         "Begin by dipping with the knees slightly, and popping back up to briefly unload the bar. Drive yourself underneath the bar, elevating it overhead as you descend into a full squat.",
         "Return to a standing position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Heavy Bag Thrust",
@@ -4642,11 +4642,11 @@
         "Keeping your shoulders on the ground, drive through your heels to raise your hips, pushing into the band as high as you can.",
         "Pause at the top of the motion, and return to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Hug A Ball",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["lower back"],
       "secondaryMuscles": ["calves", "glutes"],
       "instructions": [
@@ -5196,7 +5196,7 @@
         "Initiate the movement as you would a normal jerk, dipping at the knees while keeping your torso vertical, and driving back up forcefully, using momentum and not your arms to elevate the weight.",
         "Keep the rear foot in place, using it to drive your body forward into a full split as you jerk the weight. Recover by standing up with the weight overhead."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Jerk Dip Squat",
@@ -5207,7 +5207,7 @@
         "This movement strengthens the dip portion of the jerk. Begin with the bar racked in the jerk position, with the shoulders forward to create a shelf and the bar lightly contacting the throat. The feet should be directly under the hips, with the feet turned out as is comfortable.",
         "Keeping the torso vertical, dip by flexing the knees, allowing them to travel forward and without moving the hips to the rear. The dip should not be excessive. Return the weight to the starting position by driving forcefully though the feet."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "JM Press",
@@ -5256,7 +5256,7 @@
         "The higher you can place the keg, the faster you should be able to move to the platform. Shouldering is usually not allowed. Be sure to keep a firm hold on the keg. Move as quickly as possible to the platform, and load it, extending through your hips, knees, and ankles to get it as high as possible.",
         "Return to the starting position to retrieve the next keg, and repeat until the event is completed."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Kettlebell Arnold Press",
@@ -5576,7 +5576,7 @@
         "Explode up with your hips, generating enough power to land with your feet flat on the floor.",
         "Continue with the squat by driving through your heels and extending the knees to come to a standing position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Kneeling Single-Arm High Pulley Row",
@@ -5601,7 +5601,7 @@
         "With your head looking forward, sit back with your butt until you touch your calves.",
         "Reverse the motion, returning the torso to an upright position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Knee Across The Body",
@@ -6012,7 +6012,7 @@
         "Push your head back and look up, creating a shelf on your chest to rest the log. Begin the press by dipping, flexing slightly through the knees and reversing the motion. This push press will generate momentum to start the log moving vertically. Continue by extending through the elbows to press the log above your head. There are no strict rules on form, so use whatever techniques you are most efficient with. As the log is pressed, ensure that you push your head through on each repetition, looking forward.",
         "Repeat as many times as possible. Attempt to control the descent of the log as it is returned to the ground."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "London Bridges",
@@ -6185,7 +6185,7 @@
     },
     {
       "name": "Lying Close-Grip Barbell Triceps Press To Chin",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["triceps"],
       "secondaryMuscles": [],
       "instructions": [
@@ -6403,7 +6403,7 @@
     },
     {
       "name": "Lying Triceps Press",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["triceps"],
       "secondaryMuscles": [],
       "instructions": [
@@ -6487,7 +6487,7 @@
     },
     {
       "name": "Medicine Ball Chest Pass",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": ["shoulders", "triceps"],
       "instructions": [
@@ -6501,7 +6501,7 @@
     },
     {
       "name": "Medicine Ball Full Twist",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": ["shoulders"],
       "instructions": [
@@ -6514,7 +6514,7 @@
     },
     {
       "name": "Medicine Ball Scoop Throw",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["shoulders"],
       "secondaryMuscles": ["abdominals", "hamstrings", "quadriceps"],
       "instructions": [
@@ -6613,7 +6613,7 @@
         "Begin the pull by driving through the front of the heels, raising the bar. Transition into the second pull by extending through the hips knees and ankles, driving the bar up as quickly as possible. The bar should be close to the body.",
         "Continue raising the bar to the overhead position, without rebending the knees."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Muscle Up",
@@ -6759,7 +6759,7 @@
         "Descend by flexing the knees, refraining from moving the hips back as much as possible. This requires that the knees travel forward; ensure that they stay aligned with the feet. The goal is to keep the torso as upright as possible. Continue all the way down, keeping the weight on the front of the heel.",
         "At the moment the upper legs contact the lower, reverse the motion, driving the weight upward."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "On-Your-Back Quad Stretch",
@@ -7005,7 +7005,7 @@
     },
     {
       "name": "One-Arm Medicine Ball Slam",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": ["lats", "shoulders"],
       "instructions": [
@@ -7333,7 +7333,7 @@
     },
     {
       "name": "Overhead Slam",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["lats"],
       "secondaryMuscles": [],
       "instructions": [
@@ -7365,7 +7365,7 @@
         "Now use your feet and legs to help bring the weight back up to the starting position while exhaling.",
         "Repeat for the recommended amount of repetitions."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Overhead Stretch",
@@ -7536,7 +7536,7 @@
     },
     {
       "name": "Physioball Hip Bridge",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["glutes"],
       "secondaryMuscles": ["hamstrings"],
       "instructions": [
@@ -7565,7 +7565,7 @@
         "Drive the bar up with as much force as possible. The elbows should be tucked in until lockout.",
         "Return the bar to the pins, pausing before beginning the next repetition."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Piriformis-SMR",
@@ -7737,7 +7737,7 @@
         "As full extension is achieved, transition into the third pull by aggressively shrugging and flexing the arms with the elbows up and out. At peak extension, pull yourself under the bar far enough that it can be racked onto the shoulders, rotating your elbows under the bar as you do so. The bar should be racked onto the protracted shoulders, lightly touching the throat with the hands relaxed.",
         "Immediately recover by driving through the heels, keeping the torso upright and elbows up. Continue until you have risen to a standing position, and complete the repetition by returning the weight to the boxes."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Power Jerk",
@@ -7758,7 +7758,7 @@
         "Receive the bar with the arms locked out overhead.",
         "Return to a standing position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Power Partials",
@@ -7794,7 +7794,7 @@
         "As you move your feet into the receiving position, a slightly wider position, pull yourself below the bar as you elevate the bar overhead. The bar should be received in a partial squat. Continue raising the bar to the overhead position, receiving the bar locked out overhead.",
         "Return to a standing position with the weight over head."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Power Snatch from Blocks",
@@ -7817,7 +7817,7 @@
         "As you move your feet into the receiving position, forcefully pull yourself below the bar as you elevate the bar overhead. The feet should move to just outside the hips, turned out as necessary. Receive the bar above a full squat and with the arms fully extended overhead.",
         "Keeping the bar aligned over the front of the heels, your head and chest up, drive through heels of the feet to move to a standing position. Carefully return the weight to the boxes."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Power Stairs",
@@ -7838,7 +7838,7 @@
         "As you lean back, attempt to swing the weight onto the stairs, which are usually around 16-18\" high. You can use your legs to help push the weight onto the stair.",
         "Repeat for 3-5 repetitions, and continue with a heavier weight, moving as fast as possible."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Preacher Curl",
@@ -7964,7 +7964,7 @@
     },
     {
       "name": "Push-Ups With Feet On An Exercise Ball",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["chest"],
       "secondaryMuscles": ["shoulders", "triceps"],
       "instructions": [
@@ -8021,7 +8021,7 @@
       "primaryMuscles": ["shoulders"],
       "secondaryMuscles": ["quadriceps", "triceps"],
       "instructions": [],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Push Press - Behind the Neck",
@@ -8033,7 +8033,7 @@
         "Using the momentum generated, finish pressing the weight overhead be extending through the arms.",
         "Return to the starting position, using your legs to absorb the impact."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Push Up to Side Plank",
@@ -8051,7 +8051,7 @@
     },
     {
       "name": "Pyramid",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["lower back"],
       "secondaryMuscles": ["shoulders"],
       "instructions": [
@@ -8105,7 +8105,7 @@
         "Begin by rotating the elbows around the bar, delivering the bar to the shoulders. As your elbows come forward, relax your grip. The shoulders should be protracted, providing a shelf for the bar, which should lightly contact the throat.",
         "It is important that the bar stay close to the body at all times, as with a heavier load any distance will result in an unwanted collision. As the movement becomes smoother, speed and load can be increased before progressing further."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Rack Pulls",
@@ -8117,7 +8117,7 @@
         "With your head looking forward, extend through the hips and knees, pulling the weight up and back until lockout. Be sure to pull your shoulders back as you complete the movement.",
         "Return the weight to the pins and repeat."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Rack Pull with Bands",
@@ -8135,7 +8135,7 @@
         "Position yourself against the bar in proper deadlifting position. Your feet should be under your hips, your grip shoulder width, back arched, and hips back to engage the hamstrings. Since the weight is typically heavy, you may use a mixed grip, a hook grip, or use straps to aid in holding the weight.",
         "With your head looking forward, extend through the hips and knees, pulling the weight up and back until lockout. Be sure to pull your shoulders back as you complete the movement. Return the weight to the pins and repeat."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Rear Leg Raises",
@@ -8162,7 +8162,7 @@
     },
     {
       "name": "Return Push from Stance",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["shoulders"],
       "secondaryMuscles": ["chest", "triceps"],
       "instructions": [
@@ -8191,7 +8191,7 @@
         "Pull the bar out of the rack without protracting your shoulders. Focus on squeezing the bar and trying to pull it apart. Lower the bar to your lower chest or upper stomach. The bar, wrist, and elbow should stay in line at all times.",
         "Pause when the barbell touches your torso, and then drive the bar up with as much force as possible. The elbows should be tucked in until lockout."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Reverse Band Box Squat",
@@ -8212,7 +8212,7 @@
         "With your back, shoulders, and core tight, push your knees and butt out and you begin your descent. Sit back with your hips until you are seated on the box. Ideally, your shins should be perpendicular to the ground. Pause when you reach the box, and relax the hip flexors. Never bounce off of a box.",
         "Keeping the weight on your heels and pushing your feet and knees out, drive upward off of the box as you lead the movement with your head. Continue upward, maintaining tightness head to toe. Use care to return the barbell to the rack."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Reverse Band Deadlift",
@@ -8233,7 +8233,7 @@
         "After the bar passes the knees, aggressively pull the bar back, pulling your shoulder blades together as you drive your hips forward into the bar.",
         "Lower the bar by bending at the hips and guiding it to the floor."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Reverse Band Power Squat",
@@ -8252,7 +8252,7 @@
         "Keep your head facing forward. With your back, shoulders, and core tight, push your knees and butt out and you begin your descent. Sit back with your hips as much as possible. Ideally, your shins should be perpendicular to the ground. Lower bar position necessitates a greater torso lean to keep the bar over the heels. Continue until you break parallel, which is defined as the crease of the hip being in line with the top of the knee.",
         "Keeping the weight on your heels and pushing your feet and knees out, drive upward as you lead the movement with your head. Continue upward, maintaining tightness head to toe, until you have returned to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Reverse Band Sumo Deadlift",
@@ -8275,7 +8275,7 @@
         "As the bar passes through the knees, lean back and drive the hips into the bar, pulling your shoulder blades together.",
         "Return the weight to the ground by bending at the hips and controlling the weight on the way down."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Reverse Barbell Curl",
@@ -8292,7 +8292,7 @@
     },
     {
       "name": "Reverse Barbell Preacher Curls",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["biceps"],
       "secondaryMuscles": ["forearms"],
       "instructions": [
@@ -8473,7 +8473,7 @@
         "Position the frame at the starting point, and load with the appropriate weight. Standing in the center of the frame, begin by gripping the handles and driving through your heels to lift the frame. Ensure your chest and head are up and your back is straight.",
         "Immediately begin walking briskly with quick, controlled steps. Keep your chest up and head forward, and make sure you continue breathing. Bring the frame to the ground after you have reached the end point."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Rickshaw Deadlift",
@@ -8491,7 +8491,7 @@
         "With your feet and your grip set, take a big breath and then lower your hips and flex the knees. Look forward with your head, keep your chest up and your back arched, and begin driving through the heels to move the weight upward. As the weight comes up, pull your shoulder blades together as you drive your hips forward.",
         "Lower the weight by bending at the hips and guiding it to the ground."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Ring Dips",
@@ -8574,7 +8574,7 @@
         "Begin by flexing the knees slightly, and then flex at the hip, moving your butt back as far as possible, lowering the torso as far as flexibility allows. The back should remain in absolute extension at all times, and the bar should remain in contact with the legs. If done properly, there should be heavy tension felt in the hamstrings.",
         "Reverse the motion to return to the starting position."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Rope Climb",
@@ -8718,7 +8718,7 @@
         "Move as quickly as possible to the platform, and load it, extending through your hips, knees, and ankles to get it as high as possible. Place it onto the platform, ensuring it doesn't fall off.",
         "Return to the starting position to retrieve the next sandbag, and repeat until the event is completed."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Scapular Pull-Up",
@@ -9063,7 +9063,7 @@
         "Keeping the bar tight, bend forward at the hips as much as possible. If you set the pins to what would be parallel, you not only have a safety if you fail, but know when to stop.",
         "Pause just above the pins and reverse the motion until your torso it upright."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Seated Hamstring",
@@ -9719,7 +9719,7 @@
         "To begin, load the sled with the desired weight and attach the pulling strap. You can pull with handles, use a harness, or attach the pulling strap to a weight belt.",
         "Whether pulling forwards or backwards, lean in the direction of travel and progress by extending through the hips and knees."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Sled Overhead Backward Walk",
@@ -9761,7 +9761,7 @@
         "Load your pushing sled with the desired weight.",
         "Take an athletic posture, leaning into the sled with your arms fully extended, grasping the handles. Push the sled as fast as possible, focusing on extending your hips and knees to strengthen your posterior chain."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Sled Reverse Flye",
@@ -10087,7 +10087,7 @@
         "Now in a very quick but powerful motion, you have to get your body under the barbell when it has reached a high enough point where it can be controlled and drop while locking your arms and holding the barbell overhead as you assume a squat position.",
         "Finalize the movement by rising up out of the squat position to finish the lift. At the end of the lift both feet should be on line and the arms fully extended holding the barbell overhead."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Snatch Balance",
@@ -10106,7 +10106,7 @@
         "Receive the bar locked out overhead near the bottom of the squat. The torso should remain vertical, lowering the hips between the legs.",
         "Continue to descend to full depth, and return to a standing position. Carefully lower the weight."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Snatch Deadlift",
@@ -10125,7 +10125,7 @@
         "Initiate the movement by driving through the heels, raising the hips. The back angle should remain the same until the bar passes the knees.",
         "At that point, drive your hips through the bar as you lay back. Return the bar to the platform by reversing the motion."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Snatch from Blocks",
@@ -10148,7 +10148,7 @@
         "As you move your feet into the receiving position, forcefully pull yourself below the bar as you elevate the bar overhead. The feet should move to just outside the hips, turned out as necessary. Receive the bar with your body as low as possible and the arms fully extended overhead.",
         "Keeping the bar aligned over the front of the heels, your head and chest up, drive through heels of the feet to move to a standing position. Carefully return the weight to the boxes."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Snatch Pull",
@@ -10178,7 +10178,7 @@
         "Begin with a wide grip, with the bar hanging at the mid thigh position. You can use a hook or overhand grip. Your back should be straight and inclined slightly forward.",
         "Shrug your shoulders towards your ears. While this exercise can usually by loaded with heavier weight than a snatch, avoid overloading to the point that the execution slows down."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Speed Band Overhead Triceps",
@@ -10205,7 +10205,7 @@
         "Unrack the bar and position yourself in front of the box. Sit back with your hips until you are seated on the box, ensuring that you descend under control and don't crash onto the surface.",
         "Pause briefly, and explode off of the box, extending through the hips and knees."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Speed Squats",
@@ -10249,7 +10249,7 @@
     },
     {
       "name": "Spider Curl",
-      "equipment": "e-z curl bar",
+      "equipment": "barbell",
       "primaryMuscles": ["biceps"],
       "secondaryMuscles": [],
       "instructions": [
@@ -10297,7 +10297,7 @@
         "Receive the bar with the feet split, aggressively moving one foot forward and one foot back. The bar should be racked onto the protracted shoulders, lightly touching the throat with the hands relaxed. Continue to descend to the bottom position, which will help in the recovery.",
         "Immediately recover by driving through the heels, keeping the torso upright and elbows up. Bring the feet together as you stand up."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Split Jerk",
@@ -10310,7 +10310,7 @@
         "In the brief moment the feet are not actively driving against the platform, the athlete\u00e2\u20ac\u2122s effort to push the bar up will drive them down. The feet should be moved to a split stance, one foot forward, one foot back, with the knees partially bent. Receive the bar with the arms locked out overhead.",
         "Return to a standing position, bringing the feet together."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Split Jump",
@@ -10349,7 +10349,7 @@
         "Keeping the bar aligned over the front of the heels, your head and chest up, drive through heels of the feet to move to a standing position, bringing your feet together.",
         "Carefully return the weight to floor."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Split Squats",
@@ -10424,7 +10424,7 @@
         "With your back, shoulders, and core tight, push your knees and butt out and you begin your descent. Sit back with your hips as much as possible. Ideally, your shins should be perpendicular to the ground. Lower bar position necessitates a greater torso lean to keep the bar over the heels. Continue until you break parallel, which is defined as the crease of the hip being in line with the top of the knee.",
         "Keeping the weight on your heels and pushing your feet and knees out, drive upward as you lead the movement with your head. Continue upward, maintaining tightness head to toe, until you have returned to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Squat with Chains",
@@ -10443,7 +10443,7 @@
         "With your back, shoulders, and core tight, push your knees and butt out and you begin your descent. Sit back with your hips as much as possible. Ideally, your shins should be perpendicular to the ground. Lower bar position necessitates a greater torso lean to keep the bar over the heels. Continue until you break parallel, which is defined as the crease of the hip being in line with the top of the knee.",
         "Keeping the weight on your heels and pushing your feet and knees out, drive upward as you lead the movement with your head. Continue upward, maintaining tightness head to toe, until you have returned to the starting position."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Squat with Plate Movers",
@@ -11095,7 +11095,7 @@
     },
     {
       "name": "Standing Two-Arm Overhead Throw",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["shoulders"],
       "secondaryMuscles": ["chest", "lats"],
       "instructions": [
@@ -11283,7 +11283,7 @@
         "As the bar passes through the knees, lean back and drive the hips into the bar, pulling your shoulder blades together.",
         "Return the weight to the ground by bending at the hips and controlling the weight on the way down."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Sumo Deadlift with Bands",
@@ -11305,7 +11305,7 @@
         "As the bar passes through the knees, lean back and drive the hips into the bar, pulling your shoulder blades together.",
         "Return the weight to the ground by bending at the hips and controlling the weight on the way down."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Sumo Deadlift with Chains",
@@ -11328,7 +11328,7 @@
         "As the bar passes through the knees, lean back and drive the hips into the bar, pulling your shoulder blades together.",
         "Return the weight to the ground by bending at the hips and controlling the weight on the way down."
       ],
-      "category": "powerlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Superman",
@@ -11345,7 +11345,7 @@
     },
     {
       "name": "Supine Chest Throw",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["triceps"],
       "secondaryMuscles": ["chest", "shoulders"],
       "instructions": [
@@ -11358,7 +11358,7 @@
     },
     {
       "name": "Supine One-Arm Overhead Throw",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": ["chest", "lats", "shoulders"],
       "instructions": [
@@ -11370,7 +11370,7 @@
     },
     {
       "name": "Supine Two-Arm Overhead Throw",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": ["chest", "lats", "shoulders"],
       "instructions": [
@@ -11550,7 +11550,7 @@
         "To lift the tire, extend through the hips, knees, and ankles, driving into the tire and up.",
         "As the tire reaches a 45 degree angle, step forward and drive a knee into the tire. As you do so adjust your grip to the upper portion of the tire and push it forward as hard as possible to complete the turn. Repeat as necessary."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Toe Touchers",
@@ -11569,7 +11569,7 @@
     },
     {
       "name": "Torso Rotation",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": [],
       "instructions": [
@@ -11909,7 +11909,7 @@
     },
     {
       "name": "Weighted Ball Hyperextension",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["lower back"],
       "secondaryMuscles": ["glutes", "hamstrings", "middle back"],
       "instructions": [
@@ -11922,7 +11922,7 @@
     },
     {
       "name": "Weighted Ball Side Bend",
-      "equipment": "exercise ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": [],
       "instructions": [
@@ -11952,7 +11952,7 @@
     },
     {
       "name": "Weighted Crunches",
-      "equipment": "medicine ball",
+      "equipment": "ball",
       "primaryMuscles": ["abdominals"],
       "secondaryMuscles": [],
       "instructions": [
@@ -12153,7 +12153,7 @@
         "Begin with a barbell loaded on the floor. Adopt a wide stance, and then bend at the hips to grab the bar. Your hips should be as far back as possible, and your legs nearly straight. Keep your back straight, and your head and chest up. This will be your starting position.",
         "Begin the movement be engaging the hips, driving them forward as you allow the arms to hang straight. Continue until you are standing straight up, and then slowly return the weight to the starting position. For successive reps, the weight need not touch the floor."
       ],
-      "category": "olympic weightlifting"
+      "category": "weightlifting"
     },
     {
       "name": "Windmills",
@@ -12248,7 +12248,7 @@
         "Begin by racking the apparatus across the back of the shoulders. With your head looking forward and back arched, lift the yoke by driving through the heels.",
         "Begin walking as quickly as possible using short, quick steps. You may hold the side posts of the yoke to help steady it and hold it in position. Continue for the given distance as fast as possible, usually 75-100 feet."
       ],
-      "category": "strongman"
+      "category": "weightlifting"
     },
     {
       "name": "Zercher Squats",
