@@ -7,7 +7,7 @@ import { UserProvider } from "../UserProvider"
 import Style from "../styles/styles"
 
 export default function Main() {
-  const DEBUG = false
+  const DEBUG = true
   const user = useContext(UserContext)
   return (
     <UserProvider>
