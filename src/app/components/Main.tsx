@@ -7,10 +7,11 @@ import { UserProvider } from "../UserProvider"
 import Style from "../styles/styles"
 
 export default function Main() {
+  const DEBUG = false
   const user = useContext(UserContext)
   return (
     <UserProvider>
-      {user ? (
+      {user || DEBUG ? (
         <NavigationContainer>
           <Nav style={Style} />
         </NavigationContainer>
