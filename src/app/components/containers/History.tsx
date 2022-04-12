@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-const History = (props: { style: any }) => {
+const History = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>History</Text>
