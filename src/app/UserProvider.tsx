@@ -1,13 +1,30 @@
 import React, { ReactNode, useEffect, useState } from "react"
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth"
 import UserContext from "./UserContext"
+import { Alert } from "react-native"
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged((firebaseUser) => {
+      console.log(firebaseUser)
       setUser(firebaseUser)
+      if (firebaseUser && !firebaseUser.emailVerified) {
+        Alert.alert(
+          "Confirm Account",
+          "A confirmation email address has been sent to your email.",
+          [
+            {
+              text: "Resend email",
+              onPress: () => firebaseUser.sendEmailVerification()
+            },
+            {
+              text: "Ok"
+            }
+          ]
+        )
+      }
     })
 
     return unsubscribe

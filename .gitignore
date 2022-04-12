@@ -60,4 +60,6 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 
-**/*.py
+*.py
+__pycache__/
+*.pyc
