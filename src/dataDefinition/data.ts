@@ -45,15 +45,18 @@ class DESet extends MediaComponent {
 }
 
 // Exercises
-class Exercise extends MediaComponent {
+export class Exercise /*extends MediaComponent*/ {
   name: string;
   id: number;
-  description: string;
-  categorie?: number;
-  restTime = "1:30";
+  description: string[];
+  category?: string;
+  equipment?: string;
+  primaryMuscles?: string[];
+  secondaryMuscles?: string[];
+  restTime?: string;
 
-  constructor(name: string, id: number, description: string) {
-    super()
+  constructor(name: string, id: number, description: string[]) {
+    //super()
     this.name = name
     this.id = id
     this.description = description
@@ -68,7 +71,7 @@ export class WeightExercise extends Exercise {
 export class DurationExercise extends Exercise {
   sets: DESet[] = [];
 }
-
+/*
 export class BarbellExercise extends WeightExercise {
   categorie = 1;
 }
@@ -96,7 +99,7 @@ export class CardioExercise extends DurationExercise {
 
 export class EnduranceExercise extends DurationExercise {
   categorie = 6;
-}
+}*/
 
 // Training Session
 export class TrainingSession {
@@ -172,7 +175,7 @@ model1.description = "Upper Body Workout - From Upper-Lower Split"
 
 console.log(model1)
 
-const ex1 = new BarbellExercise("Bench Press", 1, "Barbell Bench Press")
+/*const ex1 = new BarbellExercise("Bench Press", 1, "Barbell Bench Press")
 const ex2 = new BodyWeightExercise("Pull-Up", 2, "Overhand grip Pull-Up")
 
 model1.exercises.push(ex1)
@@ -184,4 +187,4 @@ const session1 = model1.startSession()
 
 console.log("TRAINING SESSION \n", JSON.stringify(session1, null, 1))
 
-console.log(new Date().getTime())
+console.log(new Date().getTime())*/

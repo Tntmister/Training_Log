@@ -7,11 +7,15 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native"
+import ExerciseList from "../reusable/ExerciseList"
 import Header from "../reusable/Header"
-import Style from "../../styles/styles"
+import ModelList from "../reusable/ModelList"
 import MyButton from "../reusable/MyButton"
+import { ThemeContext } from "./../App"
+
 const Train = () => {
   const [selectedTab, setSelectedTab] = React.useState("models")
+  const theme = React.useContext(ThemeContext)
 
   function handlePress(selected: string) {
     if (selected !== selectedTab) setSelectedTab(selected)
@@ -20,27 +24,49 @@ const Train = () => {
   console.log(selectedTab)
 
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor={Style.background[1]}></StatusBar>
+    <View
+      style={{ ...styles.container, backgroundColor: theme.colors.background }}
+    >
+      <StatusBar backgroundColor={theme.colors.background}></StatusBar>
       <View>
         <Header />
-        <View style={styles.title}>
-          <Text style={styles.title}>Training</Text>
+        <View
+          style={{
+            ...styles.title,
+            backgroundColor: theme.colors.background
+          }}
+        >
+          <Text style={{ ...styles.title, color: theme.colors.foreground }}>
+            Training
+          </Text>
         </View>
         <View>
-          <TouchableOpacity style={styles.startButton}>
-            <Text style={styles.text}>Start Empty Training Session</Text>
+          <TouchableOpacity
+            style={{
+              ...styles.startButton,
+              backgroundColor: theme.colors.main
+            }}
+          >
+            <Text style={{ ...styles.text, color: theme.colors.foreground }}>
+              Start Empty Training Session
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.tabHolder}>
           <View
-            style={selectedTab === "models" ? styles.selectedTab : styles.tab}
+            style={
+              selectedTab === "models"
+                ? { ...styles.tab, backgroundColor: theme.colors.main }
+                : { ...styles.tab, backgroundColor: theme.colors.background }
+            }
           >
             <MyButton title="Models" onPress={() => handlePress("models")} />
           </View>
           <View
             style={
-              selectedTab === "exercises" ? styles.selectedTab : styles.tab
+              selectedTab === "exercises"
+                ? { ...styles.tab, backgroundColor: theme.colors.main }
+                : { ...styles.tab, backgroundColor: theme.colors.background }
             }
           >
             <MyButton
@@ -49,14 +75,7 @@ const Train = () => {
             />
           </View>
         </View>
-        <ScrollView>
-          <Text>Um treino</Text>
-          <Text>Um treino</Text>
-          <Text>Um treino</Text>
-          <Text>Um treino</Text>
-          <Text>Um treino</Text>
-          <Text>Um treino</Text>
-        </ScrollView>
+        {selectedTab === "models" ? <ModelList /> : <ExerciseList />}
       </View>
     </View>
   )
@@ -64,43 +83,28 @@ const Train = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Style.background[1]
+    flex: 1
   },
   text: {
     fontWeight: "bold",
-    fontSize: 15,
-    color: Style.text[1]
+    fontSize: 15
   },
   title: {
-    backgroundColor: Style.background[1],
     fontSize: 25,
-    color: Style.text[1],
     fontWeight: "bold"
   },
   startButton: {
-    backgroundColor: Style.main[1],
     width: "60%",
     borderRadius: 10,
     padding: 10
   },
   tab: {
     marginVertical: 10,
-    padding: 5,
-    borderWidth: 3,
-    borderTopColor: Style.background[1],
-    borderRightColor: Style.background[1],
-    borderLeftColor: Style.background[1],
-    borderBottomColor: Style.background[1]
+    padding: 5
   },
   selectedTab: {
     marginVertical: 10,
-    padding: 5,
-    borderWidth: 3,
-    borderTopColor: Style.background[1],
-    borderRightColor: Style.background[1],
-    borderLeftColor: Style.background[1],
-    borderBottomColor: Style.main[1]
+    padding: 5
   },
   tabHolder: {
     flexDirection: "row",

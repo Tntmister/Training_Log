@@ -1,4 +1,4 @@
-const Style = {
+/*const Style = {
   background: {
     1: "#2F2C3B",
     2: "#21222D"
@@ -14,5 +14,44 @@ const Style = {
   icon_size: 25,
   icon_size_focused: 30
 }
+*/
 
-export default Style
+export const theme1 = {
+  colors: {
+    background: "#2F2C3B",
+    foreground: "#E9E9E9",
+    main: "#FE6751"
+  },
+  sizes: {
+    icon_size: 25,
+    icon_size_focused: 30
+  },
+  text: {}
+}
+
+export const lightTheme1 = {
+  ...theme1,
+  colors: {
+    background: "#E9E9E9",
+    foreground: "#2F2C3B",
+    main: "#FE6751"
+  }
+}
+
+export const theme2 = {
+  ...theme1,
+  colors: {
+    background: "#21222D",
+    foreground: "#FCFCFC",
+    main: "#D5FE01"
+  }
+}
+
+export const lightTheme2 = {
+  ...theme2,
+  colors: {
+    background: "#FCFCFC",
+    foreground: "#21222D",
+    main: "#D5FE01"
+  }
+}
