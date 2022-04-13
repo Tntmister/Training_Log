@@ -24,17 +24,15 @@ const Nav = (props: { style: any }) => {
         component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View>
-              <Image
-                source={require("../assets/icons/home/home(-xxxhdpi).png")}
-                resizeMode="contain"
-                style={{
-                  width: focused ? style.icon_size_focused : style.icon_size,
-                  height: focused ? style.icon_size_focused : style.icon_size,
-                  tintColor: focused ? style.main[1] : style.text[1]
-                }}
-              />
-            </View>
+            <Image
+              source={require("../assets/icons/home/home(-xxxhdpi).png")}
+              resizeMode="contain"
+              style={{
+                width: focused ? style.icon_size_focused : style.icon_size,
+                height: focused ? style.icon_size_focused : style.icon_size,
+                tintColor: focused ? style.main[1] : style.text[1]
+              }}
+            />
           )
         }}
       />
@@ -43,17 +41,15 @@ const Nav = (props: { style: any }) => {
         component={Search}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View>
-              <Image
-                source={require("../assets/icons/search/search(-xxxhdpi).png")}
-                resizeMode="contain"
-                style={{
-                  width: focused ? style.icon_size_focused : style.icon_size,
-                  height: focused ? style.icon_size_focused : style.icon_size,
-                  tintColor: focused ? style.main[1] : style.text[1]
-                }}
-              />
-            </View>
+            <Image
+              source={require("../assets/icons/search/search(-xxxhdpi).png")}
+              resizeMode="contain"
+              style={{
+                width: focused ? style.icon_size_focused : style.icon_size,
+                height: focused ? style.icon_size_focused : style.icon_size,
+                tintColor: focused ? style.main[1] : style.text[1]
+              }}
+            />
           )
         }}
       />
@@ -62,17 +58,15 @@ const Nav = (props: { style: any }) => {
         component={Train}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View>
-              <Image
-                source={require("../assets/icons/train/train(-xxxhdpi).png")}
-                resizeMode="contain"
-                style={{
-                  width: focused ? style.icon_size_focused : style.icon_size,
-                  height: focused ? style.icon_size_focused : style.icon_size,
-                  tintColor: focused ? style.main[1] : style.text[1]
-                }}
-              />
-            </View>
+            <Image
+              source={require("../assets/icons/train/train(-xxxhdpi).png")}
+              resizeMode="contain"
+              style={{
+                width: focused ? style.icon_size_focused : style.icon_size,
+                height: focused ? style.icon_size_focused : style.icon_size,
+                tintColor: focused ? style.main[1] : style.text[1]
+              }}
+            />
           )
         }}
       />
@@ -81,17 +75,15 @@ const Nav = (props: { style: any }) => {
         component={History}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View>
-              <Image
-                source={require("../assets/icons/history/history(-xxxhdpi).png")}
-                resizeMode="contain"
-                style={{
-                  width: focused ? style.icon_size_focused : style.icon_size,
-                  height: focused ? style.icon_size_focused : style.icon_size,
-                  tintColor: focused ? style.main[1] : style.text[1]
-                }}
-              />
-            </View>
+            <Image
+              source={require("../assets/icons/history/history(-xxxhdpi).png")}
+              resizeMode="contain"
+              style={{
+                width: focused ? style.icon_size_focused : style.icon_size,
+                height: focused ? style.icon_size_focused : style.icon_size,
+                tintColor: focused ? style.main[1] : style.text[1]
+              }}
+            />
           )
         }}
       />
@@ -100,17 +92,15 @@ const Nav = (props: { style: any }) => {
         component={User}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View>
-              <Image
-                source={require("../assets/icons/user/user(-xxxhdpi).png")}
-                resizeMode="contain"
-                style={{
-                  width: focused ? style.icon_size_focused : style.icon_size,
-                  height: focused ? style.icon_size_focused : style.icon_size,
-                  tintColor: focused ? style.main[1] : style.text[1]
-                }}
-              />
-            </View>
+            <Image
+              source={require("../assets/icons/user/user(-xxxhdpi).png")}
+              resizeMode="contain"
+              style={{
+                width: focused ? style.icon_size_focused : style.icon_size,
+                height: focused ? style.icon_size_focused : style.icon_size,
+                tintColor: focused ? style.main[1] : style.text[1]
+              }}
+            />
           )
         }}
       />

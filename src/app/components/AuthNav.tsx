@@ -1,8 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import React, { useContext, useState } from "react"
-import { Button, Image, Text, TextInput, ToastAndroid } from "react-native"
+import React, { useState } from "react"
+import { Button, Image, TextInput, ToastAndroid } from "react-native"
 import { login, register } from "../lib/firebase"
-import UserContext from "../UserContext"
 
 export default function AuthNav() {
   const Tab = createMaterialTopTabNavigator()
