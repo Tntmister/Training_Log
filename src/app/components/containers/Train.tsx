@@ -1,6 +1,12 @@
 import React from "react"
-import { StatusBar, StyleSheet, Text, View } from "react-native"
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity
+} from "react-native"
 import Header from "../reusable/Header"
 import Style from "../../styles/styles"
 import MyButton from "../reusable/MyButton"
