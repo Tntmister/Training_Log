@@ -1,6 +1,18 @@
 import auth from "@react-native-firebase/auth"
 import { FirebaseError } from "@firebase/util"
-import { ToastAndroid } from "react-native"
+import { Alert, ToastAndroid } from "react-native"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
+
+GoogleSignin.configure({
+  webClientId:
+    "782424571231-deej2palg0cprusaid4mjh3ir9p7lffe.apps.googleusercontent.com"
+})
+
+export async function loginGoogle() {
+  const { idToken } = await GoogleSignin.signIn()
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken)
+  return auth().signInWithCredential(googleCredential)
+}
 
 export async function login(email: string, password: string) {
   try {
@@ -54,6 +66,26 @@ export async function register(
       default:
         break
     }
+  }
+}
+
+export async function resetPassword(email: string) {
+  if (email != "") {
+    try {
+      await auth()
+        .sendPasswordResetEmail(email)
+        .then(() =>
+          Alert.alert(
+            "Password Reset",
+            `A password reset email has been send to "${email}"`,
+            [{ text: "Ok" }]
+          )
+        )
+    } catch (error) {
+      ToastAndroid.show("Invalid email", ToastAndroid.SHORT)
+    }
+  } else {
+    ToastAndroid.show("Email is empty", ToastAndroid.SHORT)
   }
 }
 

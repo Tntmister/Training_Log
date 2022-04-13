@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "782424571231-7pt8j4uctc29o7fmdvp2i8oj652qf1br.apps.googleusercontent.com",
+          "client_id": "782424571231-ddhf4a9juk23bm9lldkq5o17me96gmc0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.isel2122_leim_prj61.traininglog",
@@ -23,8 +23,16 @@
           }
         },
         {
+          "client_id": "782424571231-tt34cblhbgg2f54t1oimjsoqtg18k616.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isel2122_leim_prj61.traininglog",
+            "certificate_hash": "9c9b01a2f9662d6de87a5036cb75d708db6d60d9"
+          }
+        },
+        {
           "client_id": "782424571231-deej2palg0cprusaid4mjh3ir9p7lffe.apps.googleusercontent.com",
-          "client_type": 3
+          "client_tfype": 3
         }
       ],
       "api_key": [

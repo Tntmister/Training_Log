@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React, { useState } from "react"
 import { Button, Image, TextInput, ToastAndroid } from "react-native"
-import { login, register } from "../lib/firebase"
+import { login, loginGoogle, register, resetPassword } from "../lib/firebase"
 
 export default function AuthNav() {
   const Tab = createMaterialTopTabNavigator()
@@ -32,6 +32,10 @@ function SignIn() {
     login(email, password)
   }
 
+  function onForgotPassword() {
+    resetPassword(email)
+  }
+
   return (
     <>
       <TextInput value={email} onChangeText={setEmail} placeholder="Email" />
@@ -42,6 +46,8 @@ function SignIn() {
         secureTextEntry={true}
       />
       <Button onPress={onSubmit} title="Sign In" />
+      <Button onPress={loginGoogle} title="Sign In With Google" />
+      <Button onPress={onForgotPassword} title="Forgot Password" />
     </>
   )
 }
