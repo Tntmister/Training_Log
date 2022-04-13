@@ -1,9 +1,11 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StatusBar, StyleSheet, Text, View } from "react-native"
+import Style from "../../styles/styles"
 
-const Home = (props: { style: any }) => {
+const Home = (props: any) => {
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={Style.background[1]}></StatusBar>
       <Text style={styles.text}>Home</Text>
     </View>
   )

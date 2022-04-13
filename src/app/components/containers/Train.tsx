@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native"
+import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import Header from "../reusable/Header"
 import Style from "../../styles/styles"

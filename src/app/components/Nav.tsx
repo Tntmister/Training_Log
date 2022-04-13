@@ -9,7 +9,7 @@ import Train from "./containers/Train"
 
 const Tab = createBottomTabNavigator()
 
-const Nav = (props: { style: any }) => {
+const Nav = (props: any) => {
   const [style, setStyle] = React.useState(props.style)
   return (
     <Tab.Navigator
