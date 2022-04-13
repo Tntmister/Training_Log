@@ -1,7 +1,8 @@
-import React, { ReactNode, useEffect, useState } from "react"
+import React, { createContext, ReactNode, useEffect, useState } from "react"
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth"
-import UserContext from "./UserContext"
 import { Alert } from "react-native"
+
+export const UserContext = createContext<FirebaseAuthTypes.User | null>(null)
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
