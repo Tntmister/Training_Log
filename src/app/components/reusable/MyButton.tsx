@@ -2,17 +2,21 @@ import React from "react"
 import { Text, StyleSheet, Pressable } from "react-native"
 import { ThemeContext } from "./../App"
 
-export default function Button(props: any) {
-  const { onPress, title } = props
+interface IButton {
+  onPress: () => void;
+  title: string;
+}
+
+export default function Button(props: IButton) {
   const theme = React.useContext(ThemeContext)
 
   return (
     <Pressable
       style={{ ...styles.button, backgroundColor: theme.colors.background }}
-      onPress={onPress}
+      onPress={props.onPress}
     >
       <Text style={{ ...styles.text, color: theme.colors.foreground }}>
-        {title}
+        {props.title}
       </Text>
     </Pressable>
   )
