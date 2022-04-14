@@ -1,31 +1,36 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
-import ExerciseDescriptor from "./ExerciseDescriptor"
 import { ExercisesContext } from "./../App"
-import { Text, View } from "react-native"
-import SearchBar from "./SearchBar"
+import { Text, View, ScrollView, StyleSheet } from "react-native"
+import { Searchbar } from "react-native-paper"
+import { getExercises } from "../../lib/util"
 
 export default function ExerciseList() {
   const exContext = useContext(ExercisesContext)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [listOfExs, setListOfExs] = useState(getExercises(searchQuery))
 
-  console.log(exContext[0])
+  const onChangeSearch = (query: React.SetStateAction<string>) => {
+    setSearchQuery(query)
+    setListOfExs(getExercises(searchQuery))
+  }
 
-  const renderExercise = (ex: any) => (
-    <ExerciseDescriptor
-      exercise={{
-        id: 0,
-        name: ex.name,
-        category: ex.category,
-        description: ex.instructions,
-        equipment: ex.equipment,
-        primaryMuscles: ex.primaryMuscles,
-        secondaryMuscles: ex.secondaryMuscles
-      }}
-    />
-  )
+  //console.log(exContext[0])
+
   return (
     <View>
-      <SearchBar />
+      <Searchbar
+        placeholder="Search"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+      />
+      <ScrollView style={styles.container}>{listOfExs}</ScrollView>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10
+  }
+})
