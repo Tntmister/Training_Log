@@ -4,7 +4,7 @@ import { theme1 } from "../../styles/styles"
 import { logout } from "../../lib/firebase"
 import Button from "../reusable/MyButton"
 
-const Home = (props: any) => {
+const Home = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={theme1.colors.background}></StatusBar>

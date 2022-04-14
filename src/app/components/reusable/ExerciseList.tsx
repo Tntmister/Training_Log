@@ -2,8 +2,8 @@ import React, { useContext } from "react"
 
 import ExerciseDescriptor from "./ExerciseDescriptor"
 import { ExercisesContext } from "./../App"
-import { FlatList } from "react-native-gesture-handler"
-import { Text } from "react-native"
+import { Text, View } from "react-native"
+import SearchBar from "./SearchBar"
 
 export default function ExerciseList() {
   const exContext = useContext(ExercisesContext)
@@ -24,11 +24,8 @@ export default function ExerciseList() {
     />
   )
   return (
-    /*<FlatList
-      data={exContext}
-      renderItem={renderExercise}
-      keyExtractor={(ex) => ex.name}
-    />*/
-    <Text>Hello</Text>
+    <View>
+      <SearchBar />
+    </View>
   )
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-const Search = (props: { style: any }) => {
+const Search = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Search</Text>
