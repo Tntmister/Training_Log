@@ -1,13 +1,13 @@
 import React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
-import Style from "../../styles/styles"
+import { theme1 } from "../../styles/styles"
 import { logout } from "../../lib/firebase"
 import Button from "../reusable/MyButton"
 
 const Home = (props: any) => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={Style.background[1]}></StatusBar>
+      <StatusBar backgroundColor={theme1.colors.background}></StatusBar>
       <Text style={styles.text}>Home</Text>
       <Button onPress={logout} title="Sign Out" />
     </View>
