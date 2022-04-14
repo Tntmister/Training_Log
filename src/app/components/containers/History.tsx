@@ -1,11 +1,10 @@
 import React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
-import { theme1 } from "../../styles/styles"
 
 const History = () => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={theme1.colors.background}></StatusBar>
+      <StatusBar></StatusBar>
       <Text style={styles.text}>History</Text>
     </View>
   )
