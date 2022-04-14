@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   TouchableOpacity
 } from "react-native"
 import ExerciseList from "../reusable/ExerciseList"

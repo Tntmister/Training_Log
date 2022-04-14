@@ -1,6 +1,5 @@
 import React from "react"
-import { Text, StyleSheet, Pressable, View } from "react-native"
-import { ThemeContext } from "./../App"
+import { Text, View } from "react-native"
 
 export default function ModelList() {
   return (

@@ -1,15 +1,19 @@
-import React from "react"
-import { Text, StyleSheet, Pressable, View } from "react-native"
-import { ThemeContext } from "./../App"
+import React, { useContext } from "react"
 
-import { exercises } from "../../../dataDefinition/exercises.json"
 import ExerciseDescriptor from "./ExerciseDescriptor"
+import { ExercisesContext } from "./../App"
+import { FlatList } from "react-native-gesture-handler"
+import { Text } from "react-native"
 
 export default function ExerciseList() {
-  const exArray = exercises.map((ex, index) => {
+  const exContext = useContext(ExercisesContext)
+
+  console.log(exContext[0])
+
+  const renderExercise = (ex: any) => (
     <ExerciseDescriptor
       exercise={{
-        id: index,
+        id: 0,
         name: ex.name,
         category: ex.category,
         description: ex.instructions,
@@ -18,11 +22,13 @@ export default function ExerciseList() {
         secondaryMuscles: ex.secondaryMuscles
       }}
     />
-  })
-
+  )
   return (
-    <View>
-      <Text>{JSON.stringify(exercises[0])}</Text>
-    </View>
+    /*<FlatList
+      data={exContext}
+      renderItem={renderExercise}
+      keyExtractor={(ex) => ex.name}
+    />*/
+    <Text>Hello</Text>
   )
 }

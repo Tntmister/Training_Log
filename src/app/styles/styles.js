@@ -26,7 +26,10 @@ export const theme1 = {
     icon_size: 25,
     icon_size_focused: 30
   },
-  text: {}
+  text: {
+    fontSizeSmall: 16,
+    fontSizeBig: 30
+  }
 }
 
 export const lightTheme1 = {
