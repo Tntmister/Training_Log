@@ -1,36 +1,47 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useState } from "react"
 
-import { ExercisesContext } from "./../App"
-import { Text, View, ScrollView, StyleSheet } from "react-native"
+import { View, ScrollView, StyleSheet } from "react-native"
 import { Searchbar } from "react-native-paper"
 import { getExercises } from "../../lib/util"
 
 export default function ExerciseList() {
-  const exContext = useContext(ExercisesContext)
   const [searchQuery, setSearchQuery] = useState("")
   const [listOfExs, setListOfExs] = useState(getExercises(searchQuery))
 
-  const onChangeSearch = (query: React.SetStateAction<string>) => {
-    setSearchQuery(query)
-    setListOfExs(getExercises(searchQuery))
-  }
-
-  //console.log(exContext[0])
-
   return (
     <View>
-      <Searchbar
-        placeholder="Search"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-      />
-      <ScrollView style={styles.container}>{listOfExs}</ScrollView>
+      <View style={styles.searchContainer}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={(query) => setSearchQuery(query)}
+          onIconPress={() => setListOfExs(getExercises(searchQuery))}
+          value={searchQuery}
+          style={styles.search}
+        />
+      </View>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ flex: 1 }}>{listOfExs}</View>
+      </ScrollView>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 400 //TODO
+  },
+  searchContainer: {
+    paddingVertical: 5,
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  search: {
+    width: "80%"
   }
 })

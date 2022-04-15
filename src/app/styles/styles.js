@@ -20,7 +20,8 @@ export const theme1 = {
   colors: {
     background: "#2F2C3B",
     foreground: "#E9E9E9",
-    main: "#FE6751"
+    main: "rgba(254,103,81,1)",
+    mainEnd: "rgba(254,103,81,0.80)"
   },
   sizes: {
     icon_size: 25,
@@ -28,6 +29,8 @@ export const theme1 = {
   },
   text: {
     fontSizeSmall: 16,
+    fontSizeMS: 18,
+    fontSizeMedium: 20,
     fontSizeBig: 30
   }
 }

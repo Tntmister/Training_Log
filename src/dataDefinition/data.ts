@@ -50,16 +50,24 @@ export class Exercise /*extends MediaComponent*/ {
   id: number;
   description: string[];
   category?: string;
-  equipment?: string;
-  primaryMuscles?: string[];
+  equipment: string;
+  primaryMuscles: string[];
   secondaryMuscles?: string[];
   restTime?: string;
 
-  constructor(name: string, id: number, description: string[]) {
+  constructor(
+    name: string,
+    id: number,
+    description: string[],
+    primaryMuscles: string[],
+    equipment: string
+  ) {
     //super()
     this.name = name
     this.id = id
     this.description = description
+    this.primaryMuscles = primaryMuscles
+    this.equipment = equipment
   }
 }
 

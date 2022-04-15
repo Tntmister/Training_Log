@@ -2,48 +2,85 @@ import React from "react"
 import { Image, StyleSheet, Text, View } from "react-native"
 import { Exercise } from "../../../dataDefinition/data"
 import { ThemeContext } from "../App"
+import LinearGrad from "./LinearGrad"
+
+const cardio = "../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"
+const plyometrics =
+  "../../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"
+const strength = "../../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"
+const stretching =
+  "../../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"
+const weightlifting =
+  "../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png"
 
 export default function ExerciseDescriptor(props: { exercise: Exercise }) {
   const theme = React.useContext(ThemeContext)
-  const path = `../../assets/icons/ex_categ/${props.exercise.category}/${props.exercise.category}(-xxxhdpi).png`
-  console.log(path)
+  const ex = props.exercise
+  const primaryMuscle =
+    ex.primaryMuscles[0].charAt(0).toUpperCase() +
+    ex.primaryMuscles[0].slice(1)
+  const equip = `( ${
+    ex.equipment.charAt(0).toUpperCase() + ex.equipment.slice(1)
+  } )`
   return (
-    <View
-      style={{
-        ...styles.container
-      }}
-    >
-      {
+    <View style={{ justifyContent: "center", flexDirection: "row" }}>
+      <LinearGrad height={80}>
         <Image
           style={styles.image}
           resizeMode="contain"
-          source={require("../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png")}
+          source={
+            ex.category === "cardio"
+              ? require(cardio)
+              : ex.category === "plyometrics"
+                ? require(plyometrics)
+                : ex.category === "strength"
+                  ? require(strength)
+                  : ex.category === "stretching"
+                    ? require(stretching)
+                    : ex.category === "weightlifting"
+                      ? require(weightlifting)
+                      : ""
+          }
         />
-      }
-      <Text
-        style={{
-          ...styles.text,
-          color: theme.colors.foreground,
-          fontSize: theme.text.fontSizeSmall
-        }}
-      >
-        {props.exercise.name}
-      </Text>
+        <View style={styles.textContainer}>
+          <Text
+            style={{
+              ...styles.text,
+              color: theme.colors.foreground,
+              fontSize: theme.text.fontSizeSmall
+            }}
+          >
+            {ex.name}
+          </Text>
+          <Text style={{ ...styles.smallText, color: theme.colors.background }}>
+            {
+              primaryMuscle + " " + equip
+              /*+ " " + ex.id*/
+            }
+          </Text>
+        </View>
+      </LinearGrad>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 10,
-    flex: 1,
-    justifyContent: "center"
+  textContainer: {
+    width: "90%"
   },
+
   text: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    paddingHorizontal: 10
+    //backgroundColor: "red"
+  },
+  smallText: {
+    paddingHorizontal: 15
+    //backgroundColor: "blue"
   },
   image: {
-    width: 40,
-    height: 40
+    width: 30,
+    height: 30
+    //backgroundColor: "white"
   }
 })
