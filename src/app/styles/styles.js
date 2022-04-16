@@ -31,6 +31,7 @@ export const theme1 = {
     icon_size_focused: 30
   },
   text: {
+    fontSizeXS: 14,
     fontSizeSmall: 16,
     fontSizeMS: 18,
     fontSizeMedium: 20,

@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native"
 import { Exercise } from "../../../dataDefinition/data"
 import { ThemeContext } from "../App"
 import LinearGrad from "./LinearGrad"
@@ -13,7 +13,10 @@ const stretching =
 const weightlifting =
   "../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png"
 
-export default function ExerciseDescriptor(props: { exercise: Exercise }) {
+export default function ExerciseDescriptor(props: {
+  exercise: Exercise;
+  onExClick: (ex: string) => void;
+}) {
   const theme = React.useContext(ThemeContext)
   const ex = props.exercise
 
@@ -70,13 +73,15 @@ export default function ExerciseDescriptor(props: { exercise: Exercise }) {
             }
           </Text>
         </View>
-        <View style={styles.helpContainer}>
-          <Image
-            source={require("../../assets/icons/help/help(-xxxhdpi).png")}
-            style={styles.help}
-            resizeMode="contain"
-          />
-        </View>
+        <TouchableOpacity onPress={() => props.onExClick(ex.name)}>
+          <View style={styles.helpContainer}>
+            <Image
+              source={require("../../assets/icons/help/help(-xxxhdpi).png")}
+              style={styles.help}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableOpacity>
       </LinearGrad>
     </View>
   )

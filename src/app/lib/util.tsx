@@ -4,14 +4,17 @@ import React, { ReactNode } from "react"
 import { Text } from "react-native"
 import { theme1 } from "../styles/styles"
 
-export function getExercises(query: string): ReactNode[] {
+export function getExercises(
+  query: string,
+  onExClick: (ex: string) => void
+): ReactNode[] | ReactNode {
   if (query.trim().length === 0)
     return [
       <Text
         key={0}
         style={{
           color: theme1.colors.foreground,
-          fontSize: theme1.text.fontSizeMS,
+          fontSize: theme1.text.fontSizeXS,
           fontWeight: "bold"
         }}
       >
@@ -21,7 +24,7 @@ export function getExercises(query: string): ReactNode[] {
   const filteredExercises = exercises.filter((ex) =>
     ex.name.toLowerCase().includes(query.toLowerCase())
   )
-  console.log(filteredExercises.length)
+  //console.log(filteredExercises.length)
   return filteredExercises.map((ex, index) => {
     return (
       <ExerciseDescriptor
@@ -35,6 +38,7 @@ export function getExercises(query: string): ReactNode[] {
           primaryMuscles: ex.primaryMuscles,
           secondaryMuscles: ex.secondaryMuscles
         }}
+        onExClick={() => onExClick(ex.name)}
       />
     )
   })

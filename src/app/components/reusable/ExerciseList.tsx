@@ -5,9 +5,13 @@ import { Searchbar } from "react-native-paper"
 import { getExercises } from "../../lib/util"
 import ScrollableContainer from "./ScrollableContainer"
 
-export default function ExerciseList() {
+export default function ExerciseList(props: {
+  onExClick: (ex: string) => void;
+}) {
   const [searchQuery, setSearchQuery] = useState("")
-  const [listOfExs, setListOfExs] = useState(getExercises(searchQuery))
+  const [listOfExs, setListOfExs] = useState(
+    getExercises(searchQuery, props.onExClick)
+  )
   const theme = React.useContext(ThemeContext)
   return (
     <ScrollableContainer>
@@ -15,7 +19,9 @@ export default function ExerciseList() {
         <Searchbar
           placeholder="Search"
           onChangeText={(query) => setSearchQuery(query)}
-          onIconPress={() => setListOfExs(getExercises(searchQuery))}
+          onIconPress={() =>
+            setListOfExs(getExercises(searchQuery, props.onExClick))
+          }
           value={searchQuery}
           style={{ ...styles.search, backgroundColor: theme.colors.foreground }}
           selectionColor={theme.colors.main}

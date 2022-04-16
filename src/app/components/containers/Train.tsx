@@ -16,12 +16,19 @@ import { ThemeContext } from "./../App"
 const Train = () => {
   const [selectedTab, setSelectedTab] = React.useState("models")
   const theme = React.useContext(ThemeContext)
+  const [selectedExercise, setSelectedExercise] = React.useState("")
 
   function handlePress(selected: string) {
     if (selected !== selectedTab) setSelectedTab(selected)
   }
 
   console.log(selectedTab)
+
+  function onExClick(exName: string) {
+    setSelectedExercise(exName)
+  }
+
+  console.log("SELECTED_EXERCISE -> " + selectedExercise)
 
   return (
     <View
@@ -55,9 +62,12 @@ const Train = () => {
               }
             />
           </View>
-          {/*</View>*/}
         </View>
-        {selectedTab === "models" ? <ModelList /> : <ExerciseList />}
+        {selectedTab === "models" ? (
+          <ModelList />
+        ) : (
+          <ExerciseList onExClick={(ex: string) => onExClick(ex)} />
+        )}
         <View style={styles.startTraining}>
           <LinearGrad
             height={45}
