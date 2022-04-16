@@ -8,6 +8,7 @@ import {
 } from "react-native"
 import ExerciseList from "../reusable/ExerciseList"
 import Header from "../reusable/Header"
+import LinearGrad from "../reusable/LinearGrad"
 import ModelList from "../reusable/ModelList"
 import MyButton from "../reusable/MyButton"
 import { ThemeContext } from "./../App"
@@ -26,76 +27,93 @@ const Train = () => {
     <View
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
     >
-      <StatusBar backgroundColor={theme.colors.background}></StatusBar>
+      <StatusBar backgroundColor={theme.colors.background} />
+
       <View>
-        <Header />
-        <View
-          style={{
-            ...styles.title,
-            backgroundColor: theme.colors.background
-          }}
-        >
-          <Text style={{ ...styles.title, color: theme.colors.foreground }}>
-            Training
-          </Text>
-        </View>
-        <View>
-          <TouchableOpacity
-            style={{
-              ...styles.startButton,
-              backgroundColor: theme.colors.main
-            }}
-          >
-            <Text style={{ ...styles.text, color: theme.colors.foreground }}>
-              Start Empty Training Session
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Header title="Training" />
         <View style={styles.tabHolder}>
-          <View
-            style={
-              selectedTab === "models"
-                ? { ...styles.tab, backgroundColor: theme.colors.main }
-                : { ...styles.tab, backgroundColor: theme.colors.background }
-            }
-          >
+          <View>
             <MyButton title="Models" onPress={() => handlePress("models")} />
+            <View
+              style={
+                selectedTab === "models"
+                  ? { ...styles.underline, backgroundColor: theme.colors.main }
+                  : styles.underline
+              }
+            />
           </View>
-          <View
-            style={
-              selectedTab === "exercises"
-                ? { ...styles.tab, backgroundColor: theme.colors.main }
-                : { ...styles.tab, backgroundColor: theme.colors.background }
-            }
-          >
+          <View>
             <MyButton
               title="Exercises"
               onPress={() => handlePress("exercises")}
             />
+            <View
+              style={
+                selectedTab === "exercises"
+                  ? { ...styles.underline, backgroundColor: theme.colors.main }
+                  : styles.underline
+              }
+            />
           </View>
+          {/*</View>*/}
         </View>
         {selectedTab === "models" ? <ModelList /> : <ExerciseList />}
+        <View style={styles.startTraining}>
+          <LinearGrad
+            height={45}
+            bgStart={theme.colors.main}
+            bgEnd={theme.colors.mainEnd}
+            center={true}
+          >
+            <TouchableOpacity
+              style={{
+                ...styles.startButton
+              }}
+              onPress={() => console.log("ola")}
+            >
+              <Text
+                style={{
+                  ...styles.text,
+                  color: theme.colors.foreground,
+                  fontSize: theme.text.fontSizeSmall
+                }}
+              >
+                Start Empty Training Session
+              </Text>
+            </TouchableOpacity>
+          </LinearGrad>
+        </View>
       </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  startTraining: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "80%",
+    alignSelf: "center",
+    //backgroundColor: "white",
+    marginTop: "auto"
+  },
   container: {
     flex: 1
   },
   text: {
-    fontWeight: "bold",
-    fontSize: 15
+    fontWeight: "bold"
   },
   title: {
-    fontSize: 25,
     fontWeight: "bold"
   },
   startButton: {
-    width: "60%",
+    flexDirection: "row",
     borderRadius: 10,
-    padding: 10
+    paddingHorizontal: 15,
+    justifyContent: "center",
+
+    paddingVertical: 0
+    //backgroundColor: "black",
   },
   tab: {
     marginVertical: 10,
@@ -109,6 +127,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around"
+    //backgroundColor: "white"
+  },
+  underline: {
+    height: 3,
+    borderRadius: 3,
+    width: 90
   }
 })
 

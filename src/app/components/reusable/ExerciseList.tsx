@@ -1,22 +1,27 @@
 import React, { useState } from "react"
-
+import { ThemeContext } from "../App"
 import { View, ScrollView, StyleSheet } from "react-native"
 import { Searchbar } from "react-native-paper"
 import { getExercises } from "../../lib/util"
+import ScrollableContainer from "./ScrollableContainer"
 
 export default function ExerciseList() {
   const [searchQuery, setSearchQuery] = useState("")
   const [listOfExs, setListOfExs] = useState(getExercises(searchQuery))
-
+  const theme = React.useContext(ThemeContext)
   return (
-    <View>
+    <ScrollableContainer>
       <View style={styles.searchContainer}>
         <Searchbar
           placeholder="Search"
           onChangeText={(query) => setSearchQuery(query)}
           onIconPress={() => setListOfExs(getExercises(searchQuery))}
           value={searchQuery}
-          style={styles.search}
+          style={{ ...styles.search, backgroundColor: theme.colors.foreground }}
+          selectionColor={theme.colors.main}
+          inputStyle={{
+            paddingVertical: 0
+          }}
         />
       </View>
       <ScrollView
@@ -25,7 +30,7 @@ export default function ExerciseList() {
       >
         <View style={{ flex: 1 }}>{listOfExs}</View>
       </ScrollView>
-    </View>
+    </ScrollableContainer>
   )
 }
 
@@ -34,7 +39,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 400 //TODO
+    paddiingvertical: 5
+    //paddingBottom: 400 //TODO
   },
   searchContainer: {
     paddingVertical: 5,
@@ -42,6 +48,15 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   search: {
-    width: "80%"
+    flexDirection: "row",
+    width: "95%",
+    borderRadius: 10,
+    marginTop: 10,
+    height: 35
+  },
+  globalContainer: {
+    height: "75%"
+    //borderWidth: 2,
+    //borderColor: "black"
   }
 })

@@ -11,7 +11,7 @@ export function getExercises(query: string): ReactNode[] {
         key={0}
         style={{
           color: theme1.colors.foreground,
-          fontSize: theme1.text.fontSizeMedium,
+          fontSize: theme1.text.fontSizeMS,
           fontWeight: "bold"
         }}
       >

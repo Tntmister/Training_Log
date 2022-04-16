@@ -18,7 +18,8 @@ const Nav = () => {
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         headerShown: false,
-        tabBarStyle: { backgroundColor: theme.colors.background }
+        tabBarStyle: { backgroundColor: theme.colors.background },
+        tabBarHideOnKeyboard: true
       })}
     >
       <Tab.Screen

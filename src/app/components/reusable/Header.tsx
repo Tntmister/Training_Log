@@ -1,25 +1,32 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { theme1 } from "../../styles/styles"
+import { ThemeContext } from "../App"
 
-const Header = () => {
+const Header = (props: { title: string }) => {
+  const theme = React.useContext(ThemeContext)
   return (
-    <View style={styles.header}>
-      <Text style={styles.text}>Header</Text>
+    <View style={styles.headerContainer}>
+      <Text
+        style={{
+          ...styles.title,
+          color: theme.colors.foreground,
+          fontSize: theme.text.fontSizeBig
+        }}
+      >
+        {props.title}
+      </Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: theme1.colors.background[1]
+  headerContainer: {
+    paddingTop: 10,
+    paddingBottom: 5,
+    paddingLeft: 20
   },
-  text: {
-    fontWeight: "bold",
-    fontSize: theme1.sizes.icon_size_focused,
-    color: theme1.colors.foreground
+  title: {
+    fontWeight: "bold"
   }
 })
 

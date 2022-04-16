@@ -20,8 +20,11 @@ export const theme1 = {
   colors: {
     background: "#2F2C3B",
     foreground: "#E9E9E9",
+    foregroundEnd: "rgba(233,233,233,0.80)",
     main: "rgba(254,103,81,1)",
-    mainEnd: "rgba(254,103,81,0.80)"
+    mainEnd: "rgba(254,103,81,0.80)",
+    white: "rgba(255,255,255,1)",
+    whiteEnd: "rgba(255,255,255,0.8)"
   },
   sizes: {
     icon_size: 25,
@@ -31,6 +34,7 @@ export const theme1 = {
     fontSizeSmall: 16,
     fontSizeMS: 18,
     fontSizeMedium: 20,
+    fontSizeMB: 24,
     fontSizeBig: 30
   }
 }

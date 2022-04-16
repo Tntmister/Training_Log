@@ -16,15 +16,26 @@ const weightlifting =
 export default function ExerciseDescriptor(props: { exercise: Exercise }) {
   const theme = React.useContext(ThemeContext)
   const ex = props.exercise
+
   const primaryMuscle =
     ex.primaryMuscles[0].charAt(0).toUpperCase() +
     ex.primaryMuscles[0].slice(1)
+
   const equip = `( ${
     ex.equipment.charAt(0).toUpperCase() + ex.equipment.slice(1)
   } )`
+
+  const colorStart = theme.colors.white
+  const colorEnd = theme.colors.white
+
   return (
     <View style={{ justifyContent: "center", flexDirection: "row" }}>
-      <LinearGrad height={80}>
+      <LinearGrad
+        height={70}
+        bgStart={colorStart}
+        bgEnd={colorEnd}
+        center={false}
+      >
         <Image
           style={styles.image}
           resizeMode="contain"
@@ -46,7 +57,7 @@ export default function ExerciseDescriptor(props: { exercise: Exercise }) {
           <Text
             style={{
               ...styles.text,
-              color: theme.colors.foreground,
+              color: theme.colors.main,
               fontSize: theme.text.fontSizeSmall
             }}
           >
@@ -59,6 +70,13 @@ export default function ExerciseDescriptor(props: { exercise: Exercise }) {
             }
           </Text>
         </View>
+        <View style={styles.helpContainer}>
+          <Image
+            source={require("../../assets/icons/help/help(-xxxhdpi).png")}
+            style={styles.help}
+            resizeMode="contain"
+          />
+        </View>
       </LinearGrad>
     </View>
   )
@@ -66,7 +84,7 @@ export default function ExerciseDescriptor(props: { exercise: Exercise }) {
 
 const styles = StyleSheet.create({
   textContainer: {
-    width: "90%"
+    width: "85%"
   },
 
   text: {
@@ -82,5 +100,17 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30
     //backgroundColor: "white"
+  },
+  help: {
+    width: 15,
+    height: 15
+  },
+  helpContainer: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center"
   }
 })

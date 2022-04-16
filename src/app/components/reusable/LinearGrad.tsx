@@ -1,19 +1,23 @@
-import { ThemeContext } from "../App"
 import LinearGradient from "react-native-linear-gradient"
 import React, { ReactNode } from "react"
 import { StyleSheet } from "react-native"
 
 export default function LinearGrad(props: {
   height: number;
-  children: ReactNode[];
+  children: ReactNode[] | ReactNode;
+  bgStart: string;
+  bgEnd: string;
+  center: boolean;
 }) {
-  const theme = React.useContext(ThemeContext)
-  const colorStart = theme.colors.main
-  const colorEnd = theme.colors.mainEnd
+  const center = props.center ? "center" : "flex-start"
   return (
     <LinearGradient
-      colors={[colorStart, colorEnd]}
-      style={{ ...styles.linearGradient, height: props.height }}
+      colors={[props.bgStart, props.bgEnd]}
+      style={{
+        ...styles.linearGradient,
+        height: props.height,
+        justifyContent: center
+      }}
       start={{ x: 0, y: 0.5 }}
       end={{ x: 1, y: 0.5 }}
     >
@@ -29,8 +33,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "98%",
     borderRadius: 10,
-    paddingHorizontal: 5,
-    paddingVertical: 5
-    //flexWrap: "wrap"
+    paddingHorizontal: 15
   }
 })

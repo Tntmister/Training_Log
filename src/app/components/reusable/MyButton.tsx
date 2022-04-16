@@ -12,7 +12,7 @@ export default function Button(props: IButton) {
 
   return (
     <Pressable
-      style={{ ...styles.button, backgroundColor: theme.colors.background }}
+      style={{ ...styles.button /*backgroundColor: theme.colors.background*/ }}
       onPress={props.onPress}
     >
       <Text style={{ ...styles.text, color: theme.colors.foreground }}>
@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 5
-    //backgroundColor: Style.background[1]
+    paddingTop: 5,
+    paddingBottom: 2
+    //backgroundColor: "red"
   },
   text: {
     fontSize: 16,
