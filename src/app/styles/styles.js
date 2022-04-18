@@ -23,8 +23,10 @@ export const theme1 = {
     foregroundEnd: "rgba(233,233,233,0.80)",
     main: "rgba(254,103,81,1)",
     mainEnd: "rgba(254,103,81,0.80)",
+    black: "rgba(0,0,0,1)",
     white: "rgba(255,255,255,1)",
-    whiteEnd: "rgba(255,255,255,0.8)"
+    whiteEnd: "rgba(255,255,255,0.8)",
+    none: "rgba(0,0,0,0)"
   },
   sizes: {
     icon_size: 25,

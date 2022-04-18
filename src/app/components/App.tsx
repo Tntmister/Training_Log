@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import Nav from "./Nav"
-import AuthNav from "./AuthNav"
+import Auth from "./Auth"
 import { UserContext } from "../User"
 import { theme1 } from "../styles/styles"
 import { exercises } from "../../dataDefinition/exercises.json"
@@ -15,7 +15,7 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={theme1}>
-      {user?.emailVerified || DEBUG ? <Nav /> : <AuthNav />}
+      {user?.emailVerified || DEBUG ? <Nav /> : <Auth />}
     </ThemeContext.Provider>
   )
 }
