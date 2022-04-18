@@ -8,6 +8,7 @@ export default function LinearGrad(props: {
   bgStart: string;
   bgEnd: string;
   center: boolean;
+  marginVertical?: number;
 }) {
   const center = props.center ? "center" : "flex-start"
   return (
@@ -16,7 +17,8 @@ export default function LinearGrad(props: {
       style={{
         ...styles.linearGradient,
         height: props.height,
-        justifyContent: center
+        justifyContent: center,
+        marginVertical: props.marginVertical
       }}
       start={{ x: 0, y: 0.5 }}
       end={{ x: 1, y: 0.5 }}
@@ -29,7 +31,7 @@ export default function LinearGrad(props: {
 const styles = StyleSheet.create({
   linearGradient: {
     flexDirection: "row",
-    marginVertical: 5,
+    //marginVertical: 5,
     alignItems: "center",
     width: "98%",
     borderRadius: 10,

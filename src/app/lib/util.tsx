@@ -7,8 +7,8 @@ import { theme1 } from "../styles/styles"
 export function getExercises(
   query: string,
   onExClick: (ex: string) => void
-): ReactNode[] | ReactNode {
-  if (query.trim().length === 0)
+): ReactNode[] {
+  if (query.trim().length < 2)
     return [
       <Text
         key={0}

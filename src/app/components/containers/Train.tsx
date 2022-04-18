@@ -1,104 +1,53 @@
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React from "react"
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from "react-native"
+import { StatusBar, StyleSheet, View } from "react-native"
+import Exercise from "../reusable/Exercise"
 import ExerciseList from "../reusable/ExerciseList"
 import Header from "../reusable/Header"
-import LinearGrad from "../reusable/LinearGrad"
 import ModelList from "../reusable/ModelList"
-import MyButton from "../reusable/MyButton"
 import { ThemeContext } from "./../App"
+import Exercises from "./Exercises"
 
 const Train = () => {
-  const [selectedTab, setSelectedTab] = React.useState("models")
+  const Tab = createMaterialTopTabNavigator()
+
   const theme = React.useContext(ThemeContext)
-  const [selectedExercise, setSelectedExercise] = React.useState("")
-
-  function handlePress(selected: string) {
-    if (selected !== selectedTab) setSelectedTab(selected)
-  }
-
-  console.log(selectedTab)
-
-  function onExClick(exName: string) {
-    setSelectedExercise(exName)
-  }
-
-  console.log("SELECTED_EXERCISE -> " + selectedExercise)
 
   return (
     <View
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
     >
       <StatusBar backgroundColor={theme.colors.background} />
-
       <View>
         <Header title="Training" />
-        <View style={styles.tabHolder}>
-          <View>
-            <MyButton title="Models" onPress={() => handlePress("models")} />
-            <View
-              style={
-                selectedTab === "models"
-                  ? { ...styles.underline, backgroundColor: theme.colors.main }
-                  : styles.underline
-              }
-            />
-          </View>
-          <View>
-            <MyButton
-              title="Exercises"
-              onPress={() => handlePress("exercises")}
-            />
-            <View
-              style={
-                selectedTab === "exercises"
-                  ? { ...styles.underline, backgroundColor: theme.colors.main }
-                  : styles.underline
-              }
-            />
-          </View>
-        </View>
-        {selectedTab === "models" ? (
-          <ModelList />
-        ) : (
-          <ExerciseList onExClick={(ex: string) => onExClick(ex)} />
-        )}
-        <View style={styles.startTraining}>
-          <LinearGrad
-            height={45}
-            bgStart={theme.colors.main}
-            bgEnd={theme.colors.mainEnd}
-            center={true}
-          >
-            <TouchableOpacity
-              style={{
-                ...styles.startButton
-              }}
-              onPress={() => console.log("ola")}
-            >
-              <Text
-                style={{
-                  ...styles.text,
-                  color: theme.colors.foreground,
-                  fontSize: theme.text.fontSizeSmall
-                }}
-              >
-                Start Empty Training Session
-              </Text>
-            </TouchableOpacity>
-          </LinearGrad>
-        </View>
+        <View style={styles.tabHolder}></View>
       </View>
+      <Tab.Navigator
+        screenOptions={() => ({
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: theme.colors.background,
+            color: theme.colors.main
+          },
+          tabBarIndicatorStyle: {
+            backgroundColor: theme.colors.main
+          },
+          tabBarHideOnKeyboard: true,
+          tabBarActiveTintColor: theme.colors.main,
+          tabBarInactiveTintColor: theme.colors.foregroundEnd
+        })}
+      >
+        <Tab.Screen component={ModelList} name="Models" />
+        <Tab.Screen component={Exercises} name="Exercises" />
+      </Tab.Navigator>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  indicator: {
+    color: "white"
+  },
   startTraining: {
     flexDirection: "row",
     justifyContent: "center",

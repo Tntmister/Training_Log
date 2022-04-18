@@ -38,6 +38,7 @@ export default function ExerciseDescriptor(props: {
         bgStart={colorStart}
         bgEnd={colorEnd}
         center={false}
+        marginVertical={5}
       >
         <Image
           style={styles.image}

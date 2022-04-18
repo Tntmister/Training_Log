@@ -9,6 +9,6 @@ export default function ScrollableContainer(props: {
 
 const styles = StyleSheet.create({
   globalContainer: {
-    height: "75%"
+    height: "85%"
   }
 })
