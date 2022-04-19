@@ -2,6 +2,7 @@ import React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { logout } from "../../lib/firebase"
 import Button from "../reusable/MyButton"
+import { Button as Button2 } from "react-native-paper"
 import { ThemeContext } from "./../App"
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
       <StatusBar backgroundColor={theme.colors.background}></StatusBar>
       <Text style={styles.text}>Home</Text>
       <Button onPress={logout} title="Sign Out" />
+      <Button2 mode="contained">Test</Button2>
     </View>
   )
 }
