@@ -1,11 +1,10 @@
-import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
 import Exercise from "../reusable/Exercise"
 import ExerciseList from "../reusable/ExerciseList"
 
 export default function Exercises() {
-  const Stack = createNativeStackNavigator()
+  const Stack = createStackNavigator()
   return (
     <Stack.Navigator>
       <Stack.Screen
