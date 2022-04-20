@@ -2,7 +2,6 @@ import auth from "@react-native-firebase/auth"
 import { FirebaseError } from "@firebase/util"
 import { Alert, ToastAndroid } from "react-native"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
-import Auth from "../components/Auth"
 
 GoogleSignin.configure({
   webClientId:
