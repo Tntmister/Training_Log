@@ -1,6 +1,6 @@
 import React from "react"
 import { Text, StyleSheet, Pressable } from "react-native"
-import { ThemeContext } from "./../App"
+import { ThemeContext } from "../../App"
 
 interface IButton {
   onPress: () => void;

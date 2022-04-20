@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import Exercise from "../reusable/Exercise"
-import ExerciseList from "../reusable/ExerciseList"
+import Exercise from "./Exercise"
+import ExerciseList from "./ExerciseList"
 
 export default function Exercises() {
   const Stack = createStackNavigator()

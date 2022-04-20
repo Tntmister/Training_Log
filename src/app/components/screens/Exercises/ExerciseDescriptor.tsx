@@ -1,8 +1,8 @@
 import React from "react"
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native"
-import { Exercise } from "../../../dataDefinition/data"
-import { ThemeContext } from "../App"
-import LinearGrad from "./LinearGrad"
+import { Exercise } from "../../../../dataDefinition/data"
+import { ThemeContext } from "../../../App"
+import LinearGrad from "../../reusable/LinearGrad"
 
 const cardio = "../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"
 const plyometrics =

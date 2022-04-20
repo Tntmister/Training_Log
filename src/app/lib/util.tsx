@@ -1,5 +1,5 @@
 import { exercises } from "../../dataDefinition/exercises.json"
-import ExerciseDescriptor from "../components/reusable/ExerciseDescriptor"
+import ExerciseDescriptor from "../components/screens/Exercises/ExerciseDescriptor"
 import React, { ReactNode } from "react"
 import { Text } from "react-native"
 import { theme1 } from "../styles/styles"

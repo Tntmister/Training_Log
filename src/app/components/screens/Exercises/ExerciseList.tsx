@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { ThemeContext } from "../App"
+import { ThemeContext } from "../../../App"
 import {
   View,
   ScrollView,
@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   Text
 } from "react-native"
-import { getExercises } from "../../lib/util"
-import ScrollableContainer from "./ScrollableContainer"
-import LinearGrad from "./LinearGrad"
-import Loading from "./Loading"
+import { getExercises } from "../../../lib/util"
+import ScrollableContainer from "../../reusable/ScrollableContainer"
+import LinearGrad from "../../reusable/LinearGrad"
+import Loading from "../../reusable/Loading"
 import { Searchbar } from "react-native-paper"
 
 export default function ExerciseList({ navigation }) {

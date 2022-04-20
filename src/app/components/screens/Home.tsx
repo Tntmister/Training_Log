@@ -3,7 +3,7 @@ import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { logout } from "../../lib/firebase"
 import Button from "../reusable/MyButton"
 import { Button as Button2 } from "react-native-paper"
-import { ThemeContext } from "./../App"
+import { ThemeContext } from "../../App"
 
 const Home = () => {
   const theme = React.useContext(ThemeContext)

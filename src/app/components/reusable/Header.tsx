@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { ThemeContext } from "../App"
+import { ThemeContext } from "../../App"
 
 const Header = (props: { title: string }) => {
   const theme = React.useContext(ThemeContext)

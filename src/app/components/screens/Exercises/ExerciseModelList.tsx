@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { ThemeContext } from "../App"
+import { ThemeContext } from "../../../App"
 import {
   View,
   ScrollView,
@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Text
 } from "react-native"
-import ScrollableContainer from "./ScrollableContainer"
-import LinearGrad from "./LinearGrad"
+import ScrollableContainer from "../../reusable/ScrollableContainer"
+import LinearGrad from "../../reusable/LinearGrad"
 
 export default function ModelList() {
   const theme = React.useContext(ThemeContext)

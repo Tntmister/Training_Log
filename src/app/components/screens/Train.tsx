@@ -1,12 +1,10 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React from "react"
 import { StatusBar, StyleSheet, View } from "react-native"
-import Exercise from "../reusable/Exercise"
-import ExerciseList from "../reusable/ExerciseList"
 import Header from "../reusable/Header"
-import ModelList from "../reusable/ModelList"
-import { ThemeContext } from "./../App"
-import Exercises from "./Exercises"
+import ModelList from "./Exercises/ExerciseModelList"
+import { ThemeContext } from "../../App"
+import Exercises from "./Exercises/ExerciseNav"
 
 const Train = () => {
   const Tab = createMaterialTopTabNavigator()

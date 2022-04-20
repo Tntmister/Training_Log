@@ -1,26 +1,25 @@
-import { StyleSheet, Text, View, Image } from "react-native"
+import { Image } from "react-native"
 import React from "react"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import Home from "./containers/Home"
-import Search from "./containers/Search"
-import History from "./containers/History"
-import User from "./containers/User"
-import Train from "./containers/Train"
-import { ThemeContext } from "./App"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
+import Home from "./screens/Home"
+import Search from "./screens/Search"
+import History from "./screens/History"
+import User from "./screens/User"
+import Train from "./screens/Train"
+import { ThemeContext } from "../App"
 
-const Tab = createBottomTabNavigator()
+const Tab = createMaterialTopTabNavigator()
 
 const Nav = () => {
   const theme = React.useContext(ThemeContext)
 
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      tabBarPosition="bottom"
+      screenOptions={{
         tabBarShowLabel: false,
-        headerShown: false,
-        tabBarStyle: { backgroundColor: theme.colors.background },
-        tabBarHideOnKeyboard: true
-      })}
+        tabBarStyle: { backgroundColor: theme.colors.background }
+      }}
     >
       <Tab.Screen
         name="Home"
