@@ -4,14 +4,15 @@ import { Exercise } from "../../../../dataDefinition/data"
 import { ThemeContext } from "../../../App"
 import LinearGrad from "../../reusable/LinearGrad"
 
-const cardio = "../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"
+const cardio = "../../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"
 const plyometrics =
-  "../../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"
-const strength = "../../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"
+  "../../../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"
+const strength =
+  "../../../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"
 const stretching =
-  "../../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"
+  "../../../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"
 const weightlifting =
-  "../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png"
+  "../../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png"
 
 export default function ExerciseDescriptor(props: {
   exercise: Exercise;
@@ -77,7 +78,7 @@ export default function ExerciseDescriptor(props: {
         <TouchableOpacity onPress={() => props.onExClick(ex.name)}>
           <View style={styles.helpContainer}>
             <Image
-              source={require("../../assets/icons/help/help(-xxxhdpi).png")}
+              source={require("../../../assets/icons/help/help(-xxxhdpi).png")}
               style={styles.help}
               resizeMode="contain"
             />

@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useContext } from "react"
 import { Pressable } from "react-native"
-import { Text, TextInput } from "react-native-paper"
-import { ThemeContext } from "../../App"
+import { Text, TextInput, useTheme } from "react-native-paper"
+import { ThemeContext } from "../../providers/Theme"
 
 interface ITextInput {
   onChangeText: Dispatch<SetStateAction<string>>;
@@ -11,24 +11,25 @@ interface ITextInput {
 }
 
 export function AuthTextInput(props: ITextInput) {
-  const theme = React.useContext(ThemeContext)
+  const theme = useTheme()
+  const { toggleTheme, dark } = React.useContext(ThemeContext)
 
   return (
     <TextInput
       style={{
         fontSize: 20,
         textAlignVertical: "bottom",
+        color: theme.colors.text,
+        borderBottomColor: theme.colors.primary,
         marginTop: 20,
-        color: theme.colors.white,
         paddingHorizontal: 20,
-        borderBottomColor: theme.colors.main,
         borderBottomWidth: 2,
         width: "80%"
       }}
-      placeholderTextColor={theme.colors.white}
       onChangeText={props.onChangeText}
       value={props.value}
       placeholder={props.placeholder}
+      placeholderTextColor={theme.colors.text}
       secureTextEntry={props.secureTextEntry}
     />
   )
@@ -58,7 +59,6 @@ export function AuthButton(props: IAuthButton) {
       <Text
         style={{
           color: props.textColor,
-          fontSize: props.backgroundColor == theme.colors.none ? 16 : 24,
           fontFamily: "Lato-Regular",
           textAlignVertical: "top",
           textAlign: "center"

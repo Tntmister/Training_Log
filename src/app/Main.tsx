@@ -1,17 +1,14 @@
 import React from "react"
-import { NavigationContainer } from "@react-navigation/native"
 import { UserProvider } from "./providers/User"
 import App from "./App"
-import { ThemeProvider } from "./providers/Theme"
+import { PaperNavigationProvider } from "./providers/Theme"
 
 export default function Main() {
   return (
-    <ThemeProvider>
+    <PaperNavigationProvider>
       <UserProvider>
-        <NavigationContainer>
-          <App />
-        </NavigationContainer>
+        <App />
       </UserProvider>
-    </ThemeProvider>
+    </PaperNavigationProvider>
   )
 }
