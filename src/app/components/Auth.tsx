@@ -1,8 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import { check } from "prettier"
 import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import {
-  Button,
   Dimensions,
   Image,
   Pressable,
@@ -12,7 +10,14 @@ import {
   View
 } from "react-native"
 import { Checkbox, Text } from "react-native-paper"
-import { login, loginGoogle, register, resetPassword } from "../lib/firebase"
+import {
+  login,
+  loginGoogle,
+  logout,
+  register,
+  resetPassword
+} from "../lib/firebase"
+import { UserContext } from "../User"
 import { ThemeContext } from "./App"
 
 export default function Auth() {
@@ -63,8 +68,10 @@ function SignIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const theme = useContext(ThemeContext)
+  const user = useContext(UserContext)
 
   function onSubmit() {
+    if (user) logout()
     login(email, password)
   }
 
