@@ -12,7 +12,6 @@ import {
   View
 } from "react-native"
 import { Checkbox, Text } from "react-native-paper"
-import { Theme } from "react-native-paper/lib/typescript/types"
 import { login, loginGoogle, register, resetPassword } from "../lib/firebase"
 import { ThemeContext } from "./App"
 

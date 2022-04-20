@@ -18,6 +18,7 @@ export async function login(email: string, password: string) {
   try {
     await auth().signInWithEmailAndPassword(email, password)
   } catch (error) {
+    console.log(error)
     switch ((error as FirebaseError).code) {
       case "auth/user-not-found":
       case "auth/wrong-password":
