@@ -1,1 +1,1 @@
-export const DEBUG_NoLogin = false
+export const DEBUG_NoLogin = true

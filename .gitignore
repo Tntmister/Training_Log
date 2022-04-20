@@ -63,3 +63,5 @@ buck-out/
 *.py
 __pycache__/
 *.pyc
+
+debug.js
