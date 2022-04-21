@@ -1,6 +1,5 @@
 import React, { ReactNode, useCallback, useMemo, useState } from "react"
 import {
-  configureFonts,
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
@@ -12,29 +11,7 @@ import {
   NavigationContainer,
   Theme as NavigationTheme
 } from "@react-navigation/native"
-import {
-  Fonts,
-  Theme as PaperTheme
-} from "react-native-paper/lib/typescript/types"
-
-const fontConfig: Fonts = {
-  regular: {
-    fontFamily: "sans-serif",
-    fontWeight: "normal"
-  },
-  medium: {
-    fontFamily: "sans-serif-medium",
-    fontWeight: "normal"
-  },
-  light: {
-    fontFamily: "sans-serif-light",
-    fontWeight: "normal"
-  },
-  thin: {
-    fontFamily: "sans-serif-thin",
-    fontWeight: "normal"
-  }
-}
+import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
 
 export type Theme = {
   margins: {
@@ -55,11 +32,24 @@ PaperTheme;
 const defaultTheme: Theme = {
   ...PaperDefaultTheme,
   ...NavigationDefaultTheme,
-  fonts: configureFonts({
-    ios: fontConfig,
-    android: fontConfig,
-    native: fontConfig
-  }),
+  fonts: {
+    regular: {
+      fontFamily: "Lato",
+      fontWeight: "normal"
+    },
+    medium: {
+      fontFamily: "Lato",
+      fontWeight: "normal"
+    },
+    light: {
+      fontFamily: "Lato",
+      fontWeight: "normal"
+    },
+    thin: {
+      fontFamily: "Lato",
+      fontWeight: "normal"
+    }
+  },
   margins: {
     s: 8,
     m: 16,

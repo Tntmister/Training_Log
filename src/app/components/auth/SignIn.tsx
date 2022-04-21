@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import { Text, View } from "react-native"
+import { TextInput } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { login, loginGoogle, logout, resetPassword } from "../../lib/firebase"
 import { useTheme } from "../../providers/Theme"
@@ -62,7 +63,8 @@ export default function SignIn() {
             color: theme.colors.primary,
             textAlign: "center",
             paddingTop: theme.paddings.m,
-            fontSize: RFValue(12)
+            fontSize: RFValue(12),
+            fontFamily: "Lato"
           }}
         >
           Or Sign In With

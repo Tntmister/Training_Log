@@ -13,18 +13,19 @@ export const AuthTextInput = ({
     <TextInput
       style={[
         {
-          color: theme.colors.text,
           borderBottomColor: theme.colors.primary,
           marginTop: theme.margins.m,
           paddingHorizontal: theme.paddings.l,
           height: 50,
           borderBottomWidth: 2,
           width: "80%",
-          fontSize: RFValue(16),
-          fontFamily: "light"
+          fontSize: RFValue(16)
         },
         style
       ]}
+      theme={{
+        fonts: { regular: { fontFamily: "Lato", fontWeight: "normal" } }
+      }}
       placeholderTextColor={theme.colors.placeholder}
       {...props}
     />
@@ -43,7 +44,8 @@ export const AuthButton = ({
         {
           paddingVertical: theme.paddings.s,
           color: theme.colors.text,
-          fontSize: RFValue(16)
+          fontSize: RFValue(16),
+          fontFamily: "Lato"
         },
         labelStyle
       ]}

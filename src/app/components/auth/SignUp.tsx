@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { ToastAndroid, View } from "react-native"
-import { Checkbox, Text } from "react-native-paper"
+import { Checkbox, Text, TextInput } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { register } from "../../lib/firebase"
 import { useTheme } from "../../providers/Theme"
@@ -68,7 +68,12 @@ export default function SignUp() {
             setCheckedTOS(!checkedTOS)
           }}
         />
-        <Text style={{ fontSize: RFValue(14) }}>
+        <Text
+          style={{
+            fontSize: RFValue(14),
+            fontFamily: "Lato"
+          }}
+        >
           I agree to the Terms of Use
         </Text>
       </View>

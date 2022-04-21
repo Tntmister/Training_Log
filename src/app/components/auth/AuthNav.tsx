@@ -28,7 +28,8 @@ export default function AuthNav() {
             elevation: 0
           },
           tabBarLabelStyle: {
-            fontSize: RFValue(30)
+            fontSize: RFValue(30),
+            fontFamily: "Lato"
           },
           tabBarIndicatorStyle: {
             width: barWidth * 0.4,
