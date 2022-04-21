@@ -1,7 +1,8 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React from "react"
 import { Dimensions, Image, View } from "react-native"
-import { useTheme } from "react-native-paper"
+import { RFValue } from "react-native-responsive-fontsize"
+import { useTheme } from "../../providers/Theme"
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
 
@@ -15,7 +16,7 @@ export default function AuthNav() {
         style={{
           width: "100%",
           height: "30%",
-          marginTop: 20
+          marginTop: theme.margins.m
         }}
         resizeMode="contain"
         source={require("../../assets/logo/logo1.png")}
@@ -27,7 +28,7 @@ export default function AuthNav() {
             elevation: 0
           },
           tabBarLabelStyle: {
-            fontSize: 30
+            fontSize: RFValue(30)
           },
           tabBarIndicatorStyle: {
             width: barWidth * 0.4,

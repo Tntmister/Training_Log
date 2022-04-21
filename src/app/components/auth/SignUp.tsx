@@ -1,8 +1,10 @@
 import React, { useState } from "react"
 import { ToastAndroid, View } from "react-native"
-import { Button, Checkbox, Text, useTheme } from "react-native-paper"
+import { Checkbox, Text } from "react-native-paper"
+import { RFValue } from "react-native-responsive-fontsize"
 import { register } from "../../lib/firebase"
-import { AuthTextInput, styles } from "./AuthReusable"
+import { useTheme } from "../../providers/Theme"
+import { AuthButton, AuthTextInput } from "./AuthReusable"
 
 export default function SignUp() {
   const [email, setEmail] = useState("")
@@ -25,8 +27,17 @@ export default function SignUp() {
 
   return (
     <View
-      style={{ ...styles.rootView, backgroundColor: theme.colors.background }}
+      style={{
+        alignItems: "center",
+        paddingTop: theme.paddings.s,
+        backgroundColor: theme.colors.background
+      }}
     >
+      <AuthTextInput
+        value={username}
+        onChangeText={setUsername}
+        placeholder="Username"
+      />
       <AuthTextInput
         value={email}
         onChangeText={setEmail}
@@ -44,13 +55,12 @@ export default function SignUp() {
         placeholder="Confirm Password"
         secureTextEntry={true}
       />
-      <AuthTextInput
-        value={username}
-        onChangeText={setUsername}
-        placeholder="Username"
-      />
       <View
-        style={{ flexDirection: "row", alignItems: "center", marginTop: 8 }}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: theme.margins.m
+        }}
       >
         <Checkbox
           status={checkedTOS ? "checked" : "unchecked"}
@@ -58,17 +68,14 @@ export default function SignUp() {
             setCheckedTOS(!checkedTOS)
           }}
         />
-        <Text>I agree to the Terms of Use</Text>
+        <Text style={{ fontSize: RFValue(14) }}>
+          I agree to the Terms of Use
+        </Text>
       </View>
 
-      <Button
-        labelStyle={{ color: "#FFFFFF", paddingVertical: 4 }}
-        style={styles.button}
-        mode="contained"
-        onPress={onSubmit}
-      >
+      <AuthButton style={{ marginTop: theme.margins.m }} onPress={onSubmit}>
         Sign Up
-      </Button>
+      </AuthButton>
     </View>
   )
 }

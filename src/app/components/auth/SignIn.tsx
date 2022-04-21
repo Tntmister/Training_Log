@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react"
 import { Text, View } from "react-native"
-import { Button, useTheme } from "react-native-paper"
+import { RFValue } from "react-native-responsive-fontsize"
 import { login, loginGoogle, logout, resetPassword } from "../../lib/firebase"
+import { useTheme } from "../../providers/Theme"
 import { UserContext } from "../../providers/User"
-import { AuthTextInput, styles } from "./AuthReusable"
+import { AuthButton, AuthTextInput } from "./AuthReusable"
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
@@ -19,10 +20,13 @@ export default function SignIn() {
   function onForgotPassword() {
     resetPassword(email)
   }
-
   return (
     <View
-      style={{ ...styles.rootView, backgroundColor: theme.colors.background }}
+      style={{
+        alignItems: "center",
+        paddingTop: theme.paddings.s,
+        backgroundColor: theme.colors.background
+      }}
     >
       <AuthTextInput
         value={email}
@@ -35,25 +39,19 @@ export default function SignIn() {
         placeholder="Password"
         secureTextEntry={true}
       />
-      <Button
-        style={{ marginTop: 10 }}
+      <AuthButton
+        mode="text"
         onPress={onForgotPassword}
-        uppercase={false}
+        labelStyle={{ color: theme.colors.primary, fontSize: RFValue(12) }}
       >
         Forgot Password?
-      </Button>
-      <Button
-        mode="contained"
-        onPress={onSubmit}
-        uppercase={false}
-        style={styles.button}
-        labelStyle={{ color: "#FFFFFF", paddingVertical: 4 }}
-      >
+      </AuthButton>
+      <AuthButton mode="contained" onPress={onSubmit}>
         Sign In
-      </Button>
+      </AuthButton>
       <View
         style={{
-          marginTop: 30,
+          marginTop: theme.margins.xl,
           width: "90%",
           borderTopColor: theme.colors.primary,
           borderTopWidth: 1
@@ -63,22 +61,21 @@ export default function SignIn() {
           style={{
             color: theme.colors.primary,
             textAlign: "center",
-            paddingTop: 8
+            paddingTop: theme.paddings.m,
+            fontSize: RFValue(12)
           }}
         >
           Or Sign In With
         </Text>
       </View>
-      <Button
+      <AuthButton
         onPress={loginGoogle}
-        style={styles.button}
-        labelStyle={{ paddingVertical: 4 }}
-        uppercase={false}
         color={theme.colors.text}
-        mode="contained"
+        style={{ marginTop: theme.margins.l }}
+        labelStyle={{ color: theme.colors.surface }}
       >
         Sign In With Google
-      </Button>
+      </AuthButton>
     </View>
   )
 }

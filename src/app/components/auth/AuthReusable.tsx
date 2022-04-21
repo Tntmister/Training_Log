@@ -1,45 +1,61 @@
-import React, { Dispatch, SetStateAction } from "react"
-import { StyleSheet } from "react-native"
-import { TextInput as PaperTextInput, useTheme } from "react-native-paper"
+/* eslint-disable react/prop-types */
+import React from "react"
+import { Button, TextInput } from "react-native-paper"
+import { RFValue } from "react-native-responsive-fontsize"
+import { useTheme } from "../../providers/Theme"
 
-type ITextInput = {
-  onChangeText: Dispatch<SetStateAction<string>>;
-  value: string;
-  placeholder: string;
-  secureTextEntry?: boolean;
-};
-
-export function AuthTextInput(props: ITextInput) {
+export const AuthTextInput = ({
+  style,
+  ...props
+}: React.ComponentProps<typeof TextInput>) => {
   const theme = useTheme()
-
   return (
-    <PaperTextInput
-      style={{
-        color: theme.colors.text,
-        borderBottomColor: theme.colors.primary,
-        marginTop: 20,
-        paddingHorizontal: 20,
-        borderBottomWidth: 2,
-        width: "80%"
-      }}
-      onChangeText={props.onChangeText}
-      value={props.value}
-      placeholder={props.placeholder}
+    <TextInput
+      style={[
+        {
+          color: theme.colors.text,
+          borderBottomColor: theme.colors.primary,
+          marginTop: theme.margins.l,
+          paddingHorizontal: theme.paddings.l,
+          borderBottomWidth: 2,
+          width: "80%",
+          fontSize: RFValue(16)
+        },
+        style
+      ]}
       placeholderTextColor={theme.colors.placeholder}
-      secureTextEntry={props.secureTextEntry}
+      {...props}
     />
   )
 }
 
-export const styles = StyleSheet.create({
-  rootView: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: 10
-  },
-  button: {
-    width: "80%",
-    borderRadius: 50,
-    marginTop: 16
-  }
-})
+export const AuthButton = ({
+  style,
+  labelStyle,
+  ...props
+}: React.ComponentProps<typeof Button>) => {
+  const theme = useTheme()
+  return (
+    <Button
+      labelStyle={[
+        {
+          paddingVertical: theme.paddings.s,
+          color: theme.colors.text,
+          fontSize: RFValue(16)
+        },
+        labelStyle
+      ]}
+      style={[
+        {
+          width: "80%",
+          borderRadius: 50,
+          marginTop: theme.margins.s
+        },
+        style
+      ]}
+      mode="contained"
+      uppercase={false}
+      {...props}
+    />
+  )
+}

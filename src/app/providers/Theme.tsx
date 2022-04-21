@@ -1,9 +1,9 @@
 import React, { ReactNode, useCallback, useMemo, useState } from "react"
 import {
-  configureFonts,
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
-  Provider as PaperProvider
+  Provider as PaperProvider,
+  useTheme as useThemePaper
 } from "react-native-paper"
 import {
   DarkTheme as NavigationDarkTheme,
@@ -11,46 +11,58 @@ import {
   NavigationContainer,
   Theme as NavigationTheme
 } from "@react-navigation/native"
-import {
-  Fonts,
-  Theme as PaperTheme
-} from "react-native-paper/lib/typescript/types"
+import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
 
-const fonts: Fonts = {
-  regular: {
-    fontFamily: "Lato",
-    fontWeight: "normal"
-  },
-  medium: {
-    fontFamily: "Lato",
-    fontWeight: "500"
-  },
-  light: {
-    fontFamily: "Lato-Light",
-    fontWeight: "normal"
-  },
-  thin: {
-    fontFamily: "Lato-Thin",
-    fontWeight: "normal"
-  }
-}
-
-const fontConfig = configureFonts({
-  ios: fonts,
-  android: fonts,
-  web: fonts
-})
-
-type Theme = NavigationTheme & PaperTheme;
+export type Theme = {
+  margins: {
+    s: number;
+    m: number;
+    l: number;
+    xl: number;
+  };
+  paddings: {
+    s: number;
+    m: number;
+    l: number;
+    xl: number;
+  };
+} & NavigationTheme &
+PaperTheme;
 
 const defaultTheme: Theme = {
   ...PaperDefaultTheme,
   ...NavigationDefaultTheme,
-  fonts: fontConfig,
-  dark: false,
+  fonts: {
+    regular: {
+      fontFamily: "Lato",
+      fontWeight: "normal"
+    },
+    medium: {
+      fontFamily: "Lato",
+      fontWeight: "500"
+    },
+    light: {
+      fontFamily: "Lato-Light",
+      fontWeight: "normal"
+    },
+    thin: {
+      fontFamily: "Lato-Thin",
+      fontWeight: "normal"
+    }
+  },
+  margins: {
+    s: 8,
+    m: 16,
+    l: 24,
+    xl: 36
+  },
+  paddings: {
+    s: 4,
+    m: 8,
+    l: 16,
+    xl: 24
+  },
   colors: {
-    ...PaperDefaultTheme.colors,
-    ...NavigationDefaultTheme.colors,
     background: "#EEEEEE",
     disabled: "#B34939",
     card: "#EEEEEE",
@@ -71,7 +83,6 @@ const darkTheme: Theme = {
   ...defaultTheme,
   ...PaperDarkTheme,
   ...NavigationDarkTheme,
-  fonts: fontConfig,
   mode: "exact",
   dark: true,
   colors: {
@@ -89,6 +100,10 @@ const darkTheme: Theme = {
     error: "#FF0000",
     placeholder: "#d9d9d9"
   }
+}
+
+export const useTheme = () => {
+  return useThemePaper() as Theme
 }
 
 export const ThemeContext = React.createContext({
