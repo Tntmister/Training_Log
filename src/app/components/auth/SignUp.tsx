@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react"
-import { StyleSheet, ToastAndroid, View } from "react-native"
-import { Checkbox, Text } from "react-native-paper"
-import { ThemeContext } from "../../App"
+import React, { useState } from "react"
+import { ToastAndroid, View } from "react-native"
+import { Button, Checkbox, Text, useTheme } from "react-native-paper"
 import { register } from "../../lib/firebase"
-import { AuthButton, AuthTextInput } from "./AuthReusable"
+import { AuthTextInput, styles } from "./AuthReusable"
 
 export default function SignUp() {
   const [email, setEmail] = useState("")
@@ -11,7 +10,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("")
   const [password2, setPassword2] = useState("")
   const [checkedTOS, setCheckedTOS] = useState(false)
-  const theme = useContext(ThemeContext)
+  const theme = useTheme()
 
   function onSubmit() {
     if (password !== password2)
@@ -50,7 +49,9 @@ export default function SignUp() {
         onChangeText={setUsername}
         placeholder="Username"
       />
-      <View>
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginTop: 8 }}
+      >
         <Checkbox
           status={checkedTOS ? "checked" : "unchecked"}
           onPress={() => {
@@ -60,20 +61,14 @@ export default function SignUp() {
         <Text>I agree to the Terms of Use</Text>
       </View>
 
-      <AuthButton
+      <Button
+        labelStyle={{ color: "#FFFFFF", paddingVertical: 4 }}
+        style={styles.button}
+        mode="contained"
         onPress={onSubmit}
-        title="Sign Up"
-        backgroundColor={theme.colors.main}
-        textColor={theme.colors.white}
-      />
+      >
+        Sign Up
+      </Button>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  rootView: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: 20
-  }
-})

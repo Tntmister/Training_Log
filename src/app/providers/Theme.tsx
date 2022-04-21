@@ -37,7 +37,8 @@ const fonts: Fonts = {
 
 const fontConfig = configureFonts({
   ios: fonts,
-  android: fonts
+  android: fonts,
+  web: fonts
 })
 
 type Theme = NavigationTheme & PaperTheme;
@@ -50,41 +51,48 @@ const defaultTheme: Theme = {
   colors: {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
-    background: "#FFFFFF",
-    disabled: "#FFFFFF",
+    background: "#EEEEEE",
+    disabled: "#B34939",
+    card: "#EEEEEE",
     surface: "#FFFFFF",
     notification: "#FFFFFF",
-    onSurface: "#FFFFFF",
     backdrop: "#FFFFFF",
-    primary: "#FFFFFF",
-    accent: "#FFFFFF",
-    text: "#FFFFFF",
-    error: "#FFFFFF",
-    placeholder: "#FFFFFF"
+    onSurface: "#FFFFFF",
+    primary: "#FE6751",
+    border: "#FE6751",
+    accent: "#FE6751",
+    text: "#000000",
+    error: "#FF0000",
+    placeholder: "#424242"
   }
 }
 
 const darkTheme: Theme = {
+  ...defaultTheme,
   ...PaperDarkTheme,
   ...NavigationDarkTheme,
   fonts: fontConfig,
   mode: "exact",
   dark: true,
   colors: {
-    ...PaperDarkTheme.colors,
-    ...NavigationDarkTheme.colors,
-    background: "#1B1A21",
-    disabled: "#1B1A21",
-    surface: "#2F2C3B",
+    disabled: "#b34939",
+    background: "#2F2C3B",
+    card: "#2F2C3B",
+    surface: "#1B1A21",
+    notification: "#1B1A21",
+    backdrop: "#1B1A21",
+    onSurface: "#1B1A21",
     primary: "#FE6751",
+    border: "#FE6751",
     accent: "#FE6751",
     text: "#FFFFFF",
     error: "#FF0000",
-    placeholder: "#424242"
+    placeholder: "#d9d9d9"
   }
 }
 
 export const ThemeContext = React.createContext({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
   dark: true
 })

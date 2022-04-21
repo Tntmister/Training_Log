@@ -15,6 +15,8 @@ export async function loginGoogle() {
 }
 
 export async function login(email: string, password: string) {
+  if (email == "" || password == "")
+    return ToastAndroid.show("Invalid Credentials", ToastAndroid.SHORT)
   try {
     await auth().signInWithEmailAndPassword(email, password)
   } catch (error) {

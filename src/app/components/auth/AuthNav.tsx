@@ -1,21 +1,20 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import React, { useContext } from "react"
+import React from "react"
 import { Dimensions, Image, View } from "react-native"
-import { ThemeContext } from "../../App"
+import { useTheme } from "react-native-paper"
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
 
 export default function AuthNav() {
   const Tab = createMaterialTopTabNavigator()
-  const theme = useContext(ThemeContext)
+  const theme = useTheme()
   const barWidth = Dimensions.get("window").width * 0.8
-
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <Image
         style={{
           width: "100%",
-          height: "25%",
+          height: "30%",
           marginTop: 20
         }}
         resizeMode="contain"
@@ -24,7 +23,6 @@ export default function AuthNav() {
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: theme.colors.background,
             marginHorizontal: "10%",
             elevation: 0
           },
@@ -32,14 +30,10 @@ export default function AuthNav() {
             fontSize: 30
           },
           tabBarIndicatorStyle: {
-            backgroundColor: theme.colors.main,
             width: barWidth * 0.4,
             left: barWidth * 0.05
           },
-          tabBarActiveTintColor: theme.colors.white,
-          tabBarInactiveTintColor: theme.colors.white,
-          tabBarPressOpacity: 1,
-          tabBarPressColor: theme.colors.background
+          tabBarPressOpacity: 1
         }}
       >
         <Tab.Screen component={SignIn} name="Sign In" />
