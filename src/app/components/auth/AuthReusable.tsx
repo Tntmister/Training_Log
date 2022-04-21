@@ -15,11 +15,13 @@ export const AuthTextInput = ({
         {
           color: theme.colors.text,
           borderBottomColor: theme.colors.primary,
-          marginTop: theme.margins.l,
+          marginTop: theme.margins.m,
           paddingHorizontal: theme.paddings.l,
+          height: 50,
           borderBottomWidth: 2,
           width: "80%",
-          fontSize: RFValue(16)
+          fontSize: RFValue(16),
+          fontFamily: "light"
         },
         style
       ]}

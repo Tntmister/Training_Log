@@ -51,7 +51,7 @@ export default function SignIn() {
       </AuthButton>
       <View
         style={{
-          marginTop: theme.margins.xl,
+          marginTop: theme.margins.l,
           width: "90%",
           borderTopColor: theme.colors.primary,
           borderTopWidth: 1

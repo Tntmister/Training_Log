@@ -59,7 +59,7 @@ export default function SignUp() {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          marginTop: theme.margins.m
+          marginTop: theme.margins.s
         }}
       >
         <Checkbox
@@ -73,9 +73,7 @@ export default function SignUp() {
         </Text>
       </View>
 
-      <AuthButton style={{ marginTop: theme.margins.m }} onPress={onSubmit}>
-        Sign Up
-      </AuthButton>
+      <AuthButton onPress={onSubmit}>Sign Up</AuthButton>
     </View>
   )
 }
