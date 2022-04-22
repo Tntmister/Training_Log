@@ -8,12 +8,28 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:782424571231:android:3fc36e2646a10be64e8aea",
+        "mobilesdk_app_id": "1:782424571231:android:8b50d0b5cb1a76384e8aea",
         "android_client_info": {
-          "package_name": "com.helloreactworld"
+          "package_name": "com.isel2122_leim_prj61.traininglog"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "782424571231-ddhf4a9juk23bm9lldkq5o17me96gmc0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isel2122_leim_prj61.traininglog",
+            "certificate_hash": "84bac8dd0f04060c396491532f4a06c80f95f9ff"
+          }
+        },
+        {
+          "client_id": "782424571231-tt34cblhbgg2f54t1oimjsoqtg18k616.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isel2122_leim_prj61.traininglog",
+            "certificate_hash": "9c9b01a2f9662d6de87a5036cb75d708db6d60d9"
+          }
+        },
         {
           "client_id": "782424571231-deej2palg0cprusaid4mjh3ir9p7lffe.apps.googleusercontent.com",
           "client_type": 3
