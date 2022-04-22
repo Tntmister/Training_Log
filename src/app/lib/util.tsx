@@ -1,21 +1,21 @@
 import { exercises } from "../../dataDefinition/exercises.json"
 import ExerciseDescriptor from "../components/screens/Exercises/ExerciseDescriptor"
 import React, { ReactNode } from "react"
-import { Text } from "react-native"
-import { theme1 } from "../styles/styles"
+import { useTheme } from "../providers/Theme"
+import { RFValue } from "react-native-responsive-fontsize"
+import { Text } from "../components/reusable/Text"
 
 export function getExercises(
   query: string,
   onExClick: (ex: string) => void
 ): ReactNode[] {
+  //const theme = useTheme()
   if (query.trim().length < 2)
     return [
       <Text
         key={0}
         style={{
-          color: theme1.colors.foreground,
-          fontSize: theme1.text.fontSizeXS,
-          fontWeight: "bold"
+          fontSize: RFValue(12)
         }}
       >
         No current exercises...

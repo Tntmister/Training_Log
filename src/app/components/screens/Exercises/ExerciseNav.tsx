@@ -3,20 +3,21 @@ import React from "react"
 import Exercise from "./Exercise"
 import ExerciseList from "./ExerciseList"
 
+export type RootStackParamList = {
+  ExerciseList: undefined;
+  Exercise: { name: string | undefined };
+};
+
 export default function Exercises() {
-  const Stack = createStackNavigator()
+  const Stack = createStackNavigator<RootStackParamList>()
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="ExerciseList"
-        component={ExerciseList}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Exercise"
-        component={Exercise}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator
+      initialRouteName="ExerciseList"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="ExerciseList" component={ExerciseList} />
+      <Stack.Screen name="Exercise" component={Exercise} />
     </Stack.Navigator>
   )
 }

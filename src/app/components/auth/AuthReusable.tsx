@@ -1,62 +1,38 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import { Button, TextInput } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
-import { useTheme } from "../../providers/Theme"
+import { Button } from "../reusable/Button"
+import { TextInput } from "../reusable/TextInput"
 
-export const AuthTextInput = ({
+export function AuthTextInput({
   style,
   ...props
-}: React.ComponentProps<typeof TextInput>) => {
-  const theme = useTheme()
+}: React.ComponentProps<typeof TextInput>) {
   return (
     <TextInput
-      style={[
-        {
-          borderBottomColor: theme.colors.primary,
-          marginTop: theme.margins.m,
-          paddingHorizontal: theme.paddings.l,
-          height: 50,
-          borderBottomWidth: 2,
-          width: "80%",
-          fontSize: RFValue(16)
-        },
-        style
-      ]}
-      theme={{
-        fonts: { regular: { fontFamily: "Lato", fontWeight: "normal" } }
+      style={{
+        width: "80%",
+        ...(typeof style === "object" ? style : {})
       }}
-      placeholderTextColor={theme.colors.placeholder}
       {...props}
     />
   )
 }
 
-export const AuthButton = ({
+export function AuthButton({
   style,
   labelStyle,
   ...props
-}: React.ComponentProps<typeof Button>) => {
-  const theme = useTheme()
+}: React.ComponentProps<typeof Button>) {
   return (
     <Button
-      labelStyle={[
-        {
-          paddingVertical: theme.paddings.s,
-          color: theme.colors.text,
-          fontSize: RFValue(16),
-          fontFamily: "Lato"
-        },
-        labelStyle
-      ]}
-      style={[
-        {
-          width: "80%",
-          borderRadius: 50,
-          marginTop: theme.margins.s
-        },
-        style
-      ]}
+      labelStyle={{
+        ...(typeof labelStyle === "object" ? labelStyle : {})
+      }}
+      style={{
+        width: "80%",
+        borderRadius: 50,
+        ...(typeof style === "object" ? style : {})
+      }}
       mode="contained"
       uppercase={false}
       {...props}

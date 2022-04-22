@@ -1,8 +1,10 @@
 import React from "react"
-import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native"
+import { Image, StyleSheet, View, TouchableOpacity } from "react-native"
+import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../dataDefinition/data"
-import { ThemeContext } from "../../../App"
+import { useTheme } from "../../../providers/Theme"
 import LinearGrad from "../../reusable/LinearGrad"
+import { Text } from "../../reusable/Text"
 
 const cardio = "../../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"
 const plyometrics =
@@ -18,7 +20,7 @@ export default function ExerciseDescriptor(props: {
   exercise: Exercise;
   onExClick: (ex: string) => void;
 }) {
-  const theme = React.useContext(ThemeContext)
+  const theme = useTheme()
   const ex = props.exercise
 
   const primaryMuscle =
@@ -29,8 +31,8 @@ export default function ExerciseDescriptor(props: {
     ex.equipment.charAt(0).toUpperCase() + ex.equipment.slice(1)
   } )`
 
-  const colorStart = theme.colors.white
-  const colorEnd = theme.colors.white
+  const colorStart = theme.colors.surface
+  const colorEnd = theme.colors.surface
 
   return (
     <View style={{ justifyContent: "center", flexDirection: "row" }}>
@@ -62,8 +64,8 @@ export default function ExerciseDescriptor(props: {
           <Text
             style={{
               ...styles.text,
-              color: theme.colors.main,
-              fontSize: theme.text.fontSizeSmall
+              color: theme.colors.primary,
+              fontSize: RFValue(14)
             }}
           >
             {ex.name}

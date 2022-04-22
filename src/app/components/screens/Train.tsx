@@ -1,96 +1,44 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React from "react"
-import { StatusBar, StyleSheet, View } from "react-native"
-import Header from "../reusable/Header"
 import ModelList from "./Exercises/ExerciseModelList"
-import { ThemeContext } from "../../App"
 import Exercises from "./Exercises/ExerciseNav"
+import { useTheme } from "../../providers/Theme"
+import { RFValue } from "react-native-responsive-fontsize"
+import { Dimensions } from "react-native"
+import { Button } from "../reusable/Button"
 
-const Train = () => {
+export default function Train() {
   const Tab = createMaterialTopTabNavigator()
 
-  const theme = React.useContext(ThemeContext)
+  const theme = useTheme()
 
   return (
-    <View
-      style={{ ...styles.container, backgroundColor: theme.colors.background }}
-    >
-      <StatusBar backgroundColor={theme.colors.background} />
-      <View>
-        <Header title="Training" />
-        <View style={styles.tabHolder}></View>
-      </View>
+    <>
       <Tab.Navigator
-        screenOptions={() => ({
-          headerShown: false,
-          tabBarStyle: {
-            backgroundColor: theme.colors.background,
-            color: theme.colors.main
+        backBehavior="none"
+        initialLayout={{ width: Dimensions.get("window").width }}
+        screenOptions={{
+          tabBarLabelStyle: {
+            fontSize: RFValue(18),
+            fontFamily: "Lato"
           },
-          tabBarIndicatorStyle: {
-            backgroundColor: theme.colors.main
-          },
-          tabBarHideOnKeyboard: true,
-          tabBarActiveTintColor: theme.colors.main,
-          tabBarInactiveTintColor: theme.colors.foregroundEnd
-        })}
+          tabBarActiveTintColor: theme.colors.primary,
+          tabBarInactiveTintColor: theme.colors.text
+        }}
       >
-        <Tab.Screen component={ModelList} name="Models" />
         <Tab.Screen component={Exercises} name="Exercises" />
+        <Tab.Screen component={ModelList} name="Models" />
       </Tab.Navigator>
-    </View>
+
+      <Button
+        style={{
+          marginTop: theme.margins.m,
+          marginBottom: theme.margins.m
+        }}
+        onPress={() => console.log("Starting an Empty Training Session")}
+      >
+        Start an Empty Training Session
+      </Button>
+    </>
   )
 }
-
-const styles = StyleSheet.create({
-  indicator: {
-    color: "white"
-  },
-  startTraining: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "80%",
-    alignSelf: "center",
-    //backgroundColor: "white",
-    marginTop: "auto"
-  },
-  container: {
-    flex: 1
-  },
-  text: {
-    fontWeight: "bold"
-  },
-  title: {
-    fontWeight: "bold"
-  },
-  startButton: {
-    flexDirection: "row",
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    justifyContent: "center",
-
-    paddingVertical: 0
-    //backgroundColor: "black",
-  },
-  tab: {
-    marginVertical: 10,
-    padding: 5
-  },
-  selectedTab: {
-    marginVertical: 10,
-    padding: 5
-  },
-  tabHolder: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around"
-    //backgroundColor: "white"
-  },
-  underline: {
-    height: 3,
-    borderRadius: 3,
-    width: 90
-  }
-})
-
-export default Train

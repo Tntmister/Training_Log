@@ -1,4 +1,4 @@
-import { Dimensions, Image, ImageURISource } from "react-native"
+import { Dimensions, Image } from "react-native"
 import React from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import Home from "./screens/Home"
@@ -20,20 +20,21 @@ export default function Nav() {
       tabBarPosition="bottom"
       initialLayout={{ width: Dimensions.get("window").width }}
       screenOptions={({ route }) => ({
+        tabBarInactiveTintColor: theme.colors.text,
+        tabBarActiveTintColor: theme.colors.primary,
         tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: theme.colors.background
-        },
         tabBarIconStyle: {
           width: 30,
           height: 30
-          //borderWidth: 2,
-          //borderColor: "#ffffff"
         },
-        tabBarIcon: ({ focused }) => (
-          <TabBarIcon
-            focused={focused}
-            image={images[route.name as keyof typeof images]}
+        tabBarIcon: ({ color }) => (
+          <Image
+            source={images[route.name as keyof typeof images]}
+            style={{
+              width: "100%", //focused ? 30 : 25,
+              height: "100%", //focused ? 30 : 25,
+              tintColor: color
+            }}
           />
         )
       })}
@@ -52,25 +53,4 @@ const images = {
   Home: require("../assets/icons/home/home(-xxxhdpi).png"),
   Search: require("../assets/icons/search/search(-xxxhdpi).png"),
   Train: require("../assets/icons/train/train(-xxxhdpi).png")
-}
-
-function TabBarIcon({
-  focused,
-  image
-}: {
-  focused: boolean;
-  image: ImageURISource;
-}) {
-  const theme = useTheme()
-  return (
-    <Image
-      source={image}
-      resizeMode="contain"
-      style={{
-        width: "100%", //focused ? 30 : 25,
-        height: "100%", //focused ? 30 : 25,
-        tintColor: focused ? theme.colors.primary : theme.colors.text
-      }}
-    />
-  )
 }

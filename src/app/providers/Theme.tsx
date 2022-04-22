@@ -26,6 +26,9 @@ export type Theme = {
     l: number;
     xl: number;
   };
+  colors: {
+    white: string;
+  };
 } & NavigationTheme &
 PaperTheme;
 
@@ -33,11 +36,11 @@ const defaultTheme: Theme = {
   ...PaperDefaultTheme,
   ...NavigationDefaultTheme,
   fonts: {
-    regular: {
+    medium: {
       fontFamily: "Lato",
       fontWeight: "normal"
     },
-    medium: {
+    regular: {
       fontFamily: "Lato",
       fontWeight: "normal"
     },
@@ -64,7 +67,7 @@ const defaultTheme: Theme = {
   },
   colors: {
     background: "#EEEEEE",
-    disabled: "#B34939",
+    disabled: "#E9E9E9",
     card: "#EEEEEE",
     surface: "#FFFFFF",
     notification: "#FFFFFF",
@@ -75,7 +78,8 @@ const defaultTheme: Theme = {
     accent: "#FE6751",
     text: "#000000",
     error: "#FF0000",
-    placeholder: "#424242"
+    placeholder: "#424242",
+    white: "#FFFFFF"
   }
 }
 
@@ -86,7 +90,7 @@ const darkTheme: Theme = {
   mode: "exact",
   dark: true,
   colors: {
-    disabled: "#b34939",
+    ...defaultTheme.colors,
     background: "#2F2C3B",
     card: "#2F2C3B",
     surface: "#1B1A21",
@@ -97,7 +101,6 @@ const darkTheme: Theme = {
     border: "#FE6751",
     accent: "#FE6751",
     text: "#FFFFFF",
-    error: "#FF0000",
     placeholder: "#d9d9d9"
   }
 }

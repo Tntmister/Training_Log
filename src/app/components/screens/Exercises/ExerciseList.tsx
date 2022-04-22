@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react"
-import { ThemeContext } from "../../../App"
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Text
-} from "react-native"
+import React, { useState } from "react"
+import { View, ScrollView, StyleSheet } from "react-native"
 import { getExercises } from "../../../lib/util"
-import ScrollableContainer from "../../reusable/ScrollableContainer"
-import LinearGrad from "../../reusable/LinearGrad"
 import Loading from "../../reusable/Loading"
 import { Searchbar } from "react-native-paper"
+import { useTheme } from "../../../providers/Theme"
+import { StackScreenProps } from "@react-navigation/stack"
+import { RootStackParamList } from "./ExerciseNav"
 
-export default function ExerciseList({ navigation }) {
-  const theme = React.useContext(ThemeContext)
+export default function ExerciseList({
+  navigation
+}: StackScreenProps<RootStackParamList, "ExerciseList">) {
+  const theme = useTheme()
 
   const [searchQuery, setSearchQuery] = useState("")
   const [listOfExs, setListOfExs] = useState(
@@ -22,15 +18,16 @@ export default function ExerciseList({ navigation }) {
   )
   const [selectedExercise, setSelectedExercise] = React.useState("")
 
+  function searchExercises(query: string) {
+    setSearchQuery(query)
+    setListOfExs(getExercises(searchQuery, onExClick))
+  }
+
   function onExClick(exName: string) {
     setSelectedExercise(exName)
     console.log("INSIDE onClick -> " + exName)
-    navigation.navigate("Exercise", { name: exName, bla: "bla bla" })
+    navigation.navigate("Exercise", { name: exName })
   }
-
-  useEffect(() => {
-    setListOfExs(() => getExercises(searchQuery, onExClick))
-  }, [searchQuery])
 
   console.log("SELECTED EXRCISE -> " + selectedExercise)
   console.log("LIST LENGTH -> " + listOfExs.length)
@@ -42,70 +39,43 @@ export default function ExerciseList({ navigation }) {
         backgroundColor: theme.colors.background
       }}
     >
-      <ScrollableContainer>
-        <View
+      <View
+        style={{
+          ...styles.searchContainer,
+          backgroundColor: theme.colors.background
+        }}
+      >
+        <Searchbar
+          placeholder="Search"
+          onChangeText={(query) => searchExercises(query)}
+          value={searchQuery}
           style={{
-            ...styles.searchContainer,
-            backgroundColor: theme.colors.background
+            ...styles.search,
+            backgroundColor: theme.colors.surface
           }}
-        >
-          <Searchbar
-            placeholder="Search"
-            onChangeText={(query) => setSearchQuery(query)}
-            value={searchQuery}
-            style={{
-              ...styles.search,
-              backgroundColor: theme.colors.foreground
-            }}
-            selectionColor={theme.colors.main}
-            inputStyle={{
-              paddingVertical: 0
-            }}
-          />
-        </View>
-        <ScrollView
-          contentContainerStyle={{
-            ...styles.container,
-            backgroundColor: theme.colors.background
+          selectionColor={theme.colors.primary}
+          inputStyle={{
+            paddingVertical: 0
           }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={{ flex: 1 }}>
-            {searchQuery.length == 0 ? (
-              listOfExs
-            ) : searchQuery.length < 3 && listOfExs.length == 1 ? (
-              <Loading color={theme.colors.main} marginVertical={50} />
-            ) : (
-              listOfExs
-            )}
-          </View>
-        </ScrollView>
-      </ScrollableContainer>
-      <View style={styles.startTraining}>
-        <LinearGrad
-          height={45}
-          bgStart={theme.colors.main}
-          bgEnd={theme.colors.mainEnd}
-          center={true}
-        >
-          <TouchableOpacity
-            style={{
-              ...styles.startButton
-            }}
-            onPress={() => console.log("Starting empty training session")}
-          >
-            <Text
-              style={{
-                ...styles.text,
-                color: theme.colors.foreground,
-                fontSize: theme.text.fontSizeSmall
-              }}
-            >
-              Start Empty Training Session
-            </Text>
-          </TouchableOpacity>
-        </LinearGrad>
+        />
       </View>
+      <ScrollView
+        contentContainerStyle={{
+          ...styles.container,
+          backgroundColor: theme.colors.background
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ flex: 1 }}>
+          {searchQuery.length == 0 ? (
+            listOfExs
+          ) : searchQuery.length < 3 && listOfExs.length == 1 ? (
+            <Loading color={theme.colors.primary} marginVertical={50} />
+          ) : (
+            listOfExs
+          )}
+        </View>
+      </ScrollView>
     </View>
   )
 }
@@ -131,7 +101,7 @@ const styles = StyleSheet.create({
   search: {
     width: "95%",
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 0,
     height: 35
   },
   startTraining: {

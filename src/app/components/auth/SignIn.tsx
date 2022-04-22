@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react"
-import { Text, View } from "react-native"
-import { TextInput } from "react-native-paper"
+import { View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { login, loginGoogle, logout, resetPassword } from "../../lib/firebase"
 import { useTheme } from "../../providers/Theme"
 import { UserContext } from "../../providers/User"
+import { Text } from "../reusable/Text"
 import { AuthButton, AuthTextInput } from "./AuthReusable"
 
 export default function SignIn() {
@@ -25,7 +25,7 @@ export default function SignIn() {
     <View
       style={{
         alignItems: "center",
-        paddingTop: theme.paddings.s,
+        paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
       }}
     >
@@ -44,6 +44,7 @@ export default function SignIn() {
         mode="text"
         onPress={onForgotPassword}
         labelStyle={{ color: theme.colors.primary, fontSize: RFValue(12) }}
+        style={{ marginTop: theme.margins.s }}
       >
         Forgot Password?
       </AuthButton>
@@ -63,8 +64,7 @@ export default function SignIn() {
             color: theme.colors.primary,
             textAlign: "center",
             paddingTop: theme.paddings.m,
-            fontSize: RFValue(12),
-            fontFamily: "Lato"
+            fontSize: RFValue(12)
           }}
         >
           Or Sign In With

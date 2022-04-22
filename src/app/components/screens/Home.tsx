@@ -1,34 +1,28 @@
-import React from "react"
-import { StatusBar, StyleSheet, Text, View } from "react-native"
+import React, { useContext } from "react"
+import { StyleSheet, View } from "react-native"
+import { ThemeContext, useTheme } from "../../providers/Theme"
+import { RFValue } from "react-native-responsive-fontsize"
 import { logout } from "../../lib/firebase"
-import Button from "../reusable/MyButton"
-import { Button as Button2 } from "react-native-paper"
-import { ThemeContext } from "../../App"
+import { Button } from "../reusable/Button"
+import { Switch } from "react-native-paper"
+import { Text } from "../reusable/Text"
 
-const Home = () => {
-  const theme = React.useContext(ThemeContext)
+export default function Home() {
+  const theme = useTheme()
+  const { toggleTheme, dark } = useContext(ThemeContext)
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center"
+    }
+  })
   return (
-    <View
-      style={{ ...styles.container, backgroundColor: theme.colors.background }}
-    >
-      <StatusBar backgroundColor={theme.colors.background}></StatusBar>
-      <Text style={styles.text}>Home</Text>
-      <Button onPress={logout} title="Sign Out" />
-      <Button2 mode="contained">Test</Button2>
+    <View style={{ ...styles.container }}>
+      <Text style={{ fontSize: RFValue(50) }}>Home</Text>
+      <Button onPress={logout}>Sign Out</Button>
+      <Switch onValueChange={toggleTheme} value={dark} />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  text: {
-    fontWeight: "bold",
-    fontSize: 50
-  }
-})
-
-export default Home

@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { ToastAndroid, View } from "react-native"
-import { Checkbox, Text, TextInput } from "react-native-paper"
+import { Checkbox } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { register } from "../../lib/firebase"
 import { useTheme } from "../../providers/Theme"
+import { Text } from "../reusable/Text"
 import { AuthButton, AuthTextInput } from "./AuthReusable"
 
 export default function SignUp() {
@@ -29,7 +30,7 @@ export default function SignUp() {
     <View
       style={{
         alignItems: "center",
-        paddingTop: theme.paddings.s,
+        paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
       }}
     >
@@ -59,7 +60,7 @@ export default function SignUp() {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          marginTop: theme.margins.s
+          marginTop: theme.margins.m
         }}
       >
         <Checkbox
@@ -70,8 +71,7 @@ export default function SignUp() {
         />
         <Text
           style={{
-            fontSize: RFValue(14),
-            fontFamily: "Lato"
+            fontSize: RFValue(14)
           }}
         >
           I agree to the Terms of Use

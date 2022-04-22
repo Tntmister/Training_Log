@@ -1,17 +1,12 @@
-import React, { useState } from "react"
-import { ThemeContext } from "../../../App"
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Text
-} from "react-native"
-import ScrollableContainer from "../../reusable/ScrollableContainer"
-import LinearGrad from "../../reusable/LinearGrad"
+import React from "react"
+import { ScrollView } from "react-native"
+import { RFValue } from "react-native-responsive-fontsize"
+import { useTheme } from "../../../providers/Theme"
+import { Button } from "../../reusable/Button"
+import { Text } from "../../reusable/Text"
 
 export default function ModelList() {
-  const theme = React.useContext(ThemeContext)
+  const theme = useTheme()
   //const [listOfModels, setListofModels] = useState([])
 
   /*const [searchQuery, setSearchQuery] = useState("")
@@ -27,128 +22,39 @@ export default function ModelList() {
   
   console.log("SELECTED EXRCISE -> " + selectedExercise)*/
   return (
-    <View
-      style={{
-        ...styles.globalContainer,
-        backgroundColor: theme.colors.background
-      }}
-    >
-      <ScrollableContainer>
-        <View style={styles.newModel}>
-          <LinearGrad
-            height={45}
-            bgStart={theme.colors.main}
-            bgEnd={theme.colors.mainEnd}
-            center={true}
-          >
-            <TouchableOpacity
-              style={{
-                ...styles.newModelButton
-              }}
-              onPress={() => console.log("Creating a new Training Model")}
-            >
-              <Text
-                style={{
-                  ...styles.text,
-                  color: theme.colors.foreground,
-                  fontSize: theme.text.fontSizeSmall
-                }}
-              >
-                Create a new Training Model
-              </Text>
-            </TouchableOpacity>
-          </LinearGrad>
-        </View>
-        <ScrollView
-          contentContainerStyle={{
-            ...styles.container,
-            backgroundColor: theme.colors.background
-          }}
-          showsVerticalScrollIndicator={false}
-        >
-          {/*<View style={{ flex: 1 }}>{listOfModels}</View>*/}
-          <View>
-            <Text style={{ color: theme.colors.foreground }}>MODEL LIST</Text>
-          </View>
-        </ScrollView>
-      </ScrollableContainer>
-      <View style={styles.startTraining}>
-        <LinearGrad
-          height={45}
-          bgStart={theme.colors.main}
-          bgEnd={theme.colors.mainEnd}
-          center={true}
-        >
-          <TouchableOpacity
-            style={{
-              ...styles.startButton
-            }}
-            onPress={() => console.log("Starting and Empty Training Session")}
-          >
+    <>
+      <Button
+        style={{ marginBottom: theme.margins.m }}
+        onPress={() => console.log("Creating a new Training Model")}
+      >
+        Create a new Training Model
+      </Button>
+      <ScrollView
+        contentContainerStyle={{
+          alignItems: "center",
+          backgroundColor: theme.colors.backdrop
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Testes do ScrollView */}
+        {Array.from(Array(20).keys()).map((value, key) => {
+          return (
             <Text
               style={{
-                ...styles.text,
-                color: theme.colors.foreground,
-                fontSize: theme.text.fontSizeSmall
+                fontSize: RFValue(14),
+                marginTop: 4,
+                height: 40,
+                textAlign: "center",
+                textAlignVertical: "center"
               }}
+              key={key}
             >
-              Start Empty Training Session
+              {value}
             </Text>
-          </TouchableOpacity>
-        </LinearGrad>
-      </View>
-    </View>
+          )
+        })}
+        {/*{listOfModels}*/}
+      </ScrollView>
+    </>
   )
 }
-
-const styles = StyleSheet.create({
-  globalContainer: {
-    height: "100%",
-    flexDirection: "column",
-    justifyContent: "space-evenly"
-  },
-  container: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 5
-    //paddingBottom: 400 //TODO
-  },
-  searchContainer: {
-    flexDirection: "row",
-    justifyContent: "center"
-  },
-  search: {
-    width: "95%",
-    borderRadius: 10,
-    marginTop: 10,
-    height: 35
-  },
-  startTraining: {
-    width: "80%",
-    alignSelf: "center"
-  },
-  text: {
-    fontWeight: "bold"
-  },
-  title: {
-    fontWeight: "bold"
-  },
-  startButton: {
-    borderRadius: 10,
-    paddingHorizontal: 15
-    //backgroundColor: "black"
-  },
-
-  newModel: {
-    //backgroundColor: "red",
-    width: "80%",
-    alignSelf: "center",
-    alignItems: "center"
-  },
-  newModelButton: {
-    borderRadius: 10,
-    paddingHorizontal: 15
-    //backgroundColor: "black"
-  }
-})
