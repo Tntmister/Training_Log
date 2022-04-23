@@ -1,23 +1,16 @@
 import React from "react"
 import { Image, View, TouchableOpacity } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { Exercise } from "../../../../dataDefinition/data"
+import { exercise } from "../../../assets/exercises"
+import { categoryIcons } from "../../../lib/exercises"
 import { useTheme } from "../../../providers/Theme"
 import { Text } from "../../reusable/Text"
-
-const icons = {
-  cardio: require("../../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
-  plyometrics: require("../../../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"),
-  strength: require("../../../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"),
-  stretching: require("../../../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"),
-  weightlifting: require("../../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png")
-}
 
 export default function ExerciseDescriptor({
   exercise,
   onPress
 }: {
-  exercise: Exercise;
+  exercise: exercise;
   onPress: () => void;
 }) {
   const theme = useTheme()
@@ -54,7 +47,7 @@ export default function ExerciseDescriptor({
           aspectRatio: 1,
           tintColor: theme.colors.text
         }}
-        source={icons[exercise.category as keyof typeof icons]}
+        source={categoryIcons[exercise.category as keyof typeof categoryIcons]}
       />
       <View
         style={{

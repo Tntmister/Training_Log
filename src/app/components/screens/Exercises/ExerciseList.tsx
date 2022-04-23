@@ -8,8 +8,8 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "./ExerciseNav"
 import { RFValue } from "react-native-responsive-fontsize"
 import ExerciseDescriptor from "./ExerciseDescriptor"
-import { Exercise } from "../../../../dataDefinition/data"
 import { Text } from "../../reusable/Text"
+import { exercise } from "../../../assets/exercises"
 
 export default function ExerciseList({
   navigation
@@ -17,7 +17,7 @@ export default function ExerciseList({
   const theme = useTheme()
 
   const [searchQuery, setSearchQuery] = useState("")
-  const [listOfExs, setListOfExs] = useState<Exercise[] | undefined>([])
+  const [listOfExs, setListOfExs] = useState<exercise[] | undefined>([])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -59,7 +59,7 @@ export default function ExerciseList({
               key={item.name}
               exercise={item}
               onPress={() =>
-                navigation.navigate("Exercise", { name: item.name })
+                navigation.navigate("Exercise", { exercise: item })
               }
             />
           )}
