@@ -7,15 +7,6 @@
     6. Endurance
 */
 
-const categoria = {
-  1: "barbell",
-  2: "dumbbell",
-  3: "machine",
-  4: "bodyweight",
-  5: "cardio",
-  6: "endurance"
-}
-
 type ExtraContent = {
   //  images: Object;
   //  video: Object;
@@ -47,27 +38,27 @@ class DESet extends MediaComponent {
 // Exercises
 export class Exercise /*extends MediaComponent*/ {
   name: string;
-  id: number;
-  description: string[];
-  category?: string;
+  instructions: string[];
+  category: string;
   equipment: string;
   primaryMuscles: string[];
-  secondaryMuscles?: string[];
-  restTime?: string;
+  secondaryMuscles: string[];
 
   constructor(
     name: string,
-    id: number,
-    description: string[],
+    category: string,
+    instructions: string[],
+    equipment: string,
     primaryMuscles: string[],
-    equipment: string
+    secondaryMuscles: string[] = []
   ) {
     //super()
     this.name = name
-    this.id = id
-    this.description = description
-    this.primaryMuscles = primaryMuscles
+    this.category = category
+    this.instructions = instructions
     this.equipment = equipment
+    this.primaryMuscles = primaryMuscles
+    this.secondaryMuscles = secondaryMuscles
   }
 }
 
