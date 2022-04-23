@@ -8,7 +8,7 @@ export type RootStackParamList = {
   Exercise: { name: string | undefined };
 };
 
-export default function Exercises() {
+export default function ExerciseNav() {
   const Stack = createStackNavigator<RootStackParamList>()
 
   return (

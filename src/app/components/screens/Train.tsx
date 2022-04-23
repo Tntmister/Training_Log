@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React from "react"
 import ModelList from "./Exercises/ExerciseModelList"
-import Exercises from "./Exercises/ExerciseNav"
+import ExerciseNav from "./Exercises/ExerciseNav"
 import { useTheme } from "../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Dimensions } from "react-native"
@@ -26,14 +26,14 @@ export default function Train() {
           tabBarInactiveTintColor: theme.colors.text
         }}
       >
-        <Tab.Screen component={Exercises} name="Exercises" />
+        <Tab.Screen component={ExerciseNav} name="Exercises" />
         <Tab.Screen component={ModelList} name="Models" />
       </Tab.Navigator>
 
       <Button
         style={{
           marginTop: theme.margins.m,
-          marginBottom: theme.margins.m
+          marginBottom: theme.margins.s
         }}
         onPress={() => console.log("Starting an Empty Training Session")}
       >

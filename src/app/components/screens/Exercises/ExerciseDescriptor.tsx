@@ -1,125 +1,84 @@
 import React from "react"
-import { Image, StyleSheet, View, TouchableOpacity } from "react-native"
+import { Image, View, TouchableOpacity } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../dataDefinition/data"
 import { useTheme } from "../../../providers/Theme"
-import LinearGrad from "../../reusable/LinearGrad"
 import { Text } from "../../reusable/Text"
 
-const cardio = "../../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"
-const plyometrics =
-  "../../../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"
-const strength =
-  "../../../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"
-const stretching =
-  "../../../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"
-const weightlifting =
-  "../../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png"
-
-export default function ExerciseDescriptor(props: {
-  exercise: Exercise;
-  onExClick: (ex: string) => void;
-}) {
-  const theme = useTheme()
-  const ex = props.exercise
-
-  const primaryMuscle =
-    ex.primaryMuscles[0].charAt(0).toUpperCase() +
-    ex.primaryMuscles[0].slice(1)
-
-  const equip = `( ${
-    ex.equipment.charAt(0).toUpperCase() + ex.equipment.slice(1)
-  } )`
-
-  const colorStart = theme.colors.surface
-  const colorEnd = theme.colors.surface
-
-  return (
-    <View style={{ justifyContent: "center", flexDirection: "row" }}>
-      <LinearGrad
-        height={70}
-        bgStart={colorStart}
-        bgEnd={colorEnd}
-        center={false}
-        marginVertical={5}
-      >
-        <Image
-          style={styles.image}
-          resizeMode="contain"
-          source={
-            ex.category === "cardio"
-              ? require(cardio)
-              : ex.category === "plyometrics"
-                ? require(plyometrics)
-                : ex.category === "strength"
-                  ? require(strength)
-                  : ex.category === "stretching"
-                    ? require(stretching)
-                    : ex.category === "weightlifting"
-                      ? require(weightlifting)
-                      : ""
-          }
-        />
-        <View style={styles.textContainer}>
-          <Text
-            style={{
-              ...styles.text,
-              color: theme.colors.primary,
-              fontSize: RFValue(14)
-            }}
-          >
-            {ex.name}
-          </Text>
-          <Text style={{ ...styles.smallText, color: theme.colors.background }}>
-            {
-              primaryMuscle + " " + equip
-              /*+ " " + ex.id*/
-            }
-          </Text>
-        </View>
-        <TouchableOpacity onPress={() => props.onExClick(ex.name)}>
-          <View style={styles.helpContainer}>
-            <Image
-              source={require("../../../assets/icons/help/help(-xxxhdpi).png")}
-              style={styles.help}
-              resizeMode="contain"
-            />
-          </View>
-        </TouchableOpacity>
-      </LinearGrad>
-    </View>
-  )
+const icons = {
+  cardio: require("../../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
+  plyometrics: require("../../../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"),
+  strength: require("../../../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"),
+  stretching: require("../../../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"),
+  weightlifting: require("../../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png")
 }
 
-const styles = StyleSheet.create({
-  textContainer: {
-    width: "85%"
-  },
+export default function ExerciseDescriptor({
+  exercise,
+  onPress
+}: {
+  exercise: Exercise;
+  onPress: () => void;
+}) {
+  const theme = useTheme()
 
-  text: {
-    fontWeight: "bold",
-    paddingHorizontal: 10
-    //backgroundColor: "red"
-  },
-  smallText: {
-    paddingHorizontal: 15
-    //backgroundColor: "blue"
-  },
-  image: {
-    width: 30,
-    height: 30
-    //backgroundColor: "white"
-  },
-  help: {
-    width: 15,
-    height: 15
-  },
-  helpContainer: {
-    width: 20,
-    height: 20,
-    borderWidth: 2,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-})
+  const primaryMuscle =
+    exercise.primaryMuscles[0].charAt(0).toUpperCase() +
+    exercise.primaryMuscles[0].slice(1)
+
+  const equip = `(${
+    exercise.equipment.charAt(0).toUpperCase() + exercise.equipment.slice(1)
+  })`
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: theme.colors.backdrop,
+        marginBottom: theme.margins.s,
+        width: "95%",
+        paddingVertical: theme.paddings.s,
+        paddingHorizontal: theme.paddings.m,
+        borderRadius: 10,
+        height: 70,
+        elevation: 6
+      }}
+    >
+      <Image
+        style={{
+          marginRight: theme.margins.s,
+          height: "75%",
+          width: undefined,
+          aspectRatio: 1,
+          tintColor: theme.colors.text
+        }}
+        source={icons[exercise.category as keyof typeof icons]}
+      />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "space-evenly",
+          paddingVertical: theme.paddings.s
+        }}
+      >
+        <Text
+          style={{
+            flexWrap: "wrap",
+            color: theme.colors.primary,
+            fontSize: RFValue(16)
+          }}
+        >
+          {exercise.name}
+        </Text>
+        <Text style={{ color: theme.colors.text, fontSize: RFValue(14) }}>
+          {
+            primaryMuscle + " " + equip
+            /*+ " " + ex.id*/
+          }
+        </Text>
+      </View>
+    </TouchableOpacity>
+  )
+}

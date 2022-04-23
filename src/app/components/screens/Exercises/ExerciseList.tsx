@@ -1,11 +1,15 @@
-import React, { useState } from "react"
-import { View, ScrollView, StyleSheet } from "react-native"
-import { getExercises } from "../../../lib/util"
+import React, { useEffect, useState } from "react"
+import { View, FlatList } from "react-native"
+import { getExercises } from "../../../lib/exercises"
 import Loading from "../../reusable/Loading"
 import { Searchbar } from "react-native-paper"
 import { useTheme } from "../../../providers/Theme"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "./ExerciseNav"
+import { RFValue } from "react-native-responsive-fontsize"
+import ExerciseDescriptor from "./ExerciseDescriptor"
+import { Exercise } from "../../../../dataDefinition/data"
+import { Text } from "../../reusable/Text"
 
 export default function ExerciseList({
   navigation
@@ -13,110 +17,71 @@ export default function ExerciseList({
   const theme = useTheme()
 
   const [searchQuery, setSearchQuery] = useState("")
-  const [listOfExs, setListOfExs] = useState(
-    getExercises(searchQuery, onExClick)
-  )
-  const [selectedExercise, setSelectedExercise] = React.useState("")
+  const [listOfExs, setListOfExs] = useState<Exercise[] | undefined>([])
 
-  function searchExercises(query: string) {
-    setSearchQuery(query)
-    setListOfExs(getExercises(searchQuery, onExClick))
-  }
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setListOfExs(getExercises(searchQuery))
+    }, 100)
+    return () => clearTimeout(timeout)
+  }, [searchQuery])
 
-  function onExClick(exName: string) {
-    setSelectedExercise(exName)
-    console.log("INSIDE onClick -> " + exName)
-    navigation.navigate("Exercise", { name: exName })
-  }
-
-  console.log("SELECTED EXRCISE -> " + selectedExercise)
-  console.log("LIST LENGTH -> " + listOfExs.length)
-  console.log("QUERY -> " + searchQuery + " (" + searchQuery.length + ")")
   return (
     <View
       style={{
-        ...styles.globalContainer,
-        backgroundColor: theme.colors.background
+        alignItems: "center",
+        width: "100%"
       }}
     >
-      <View
+      <Searchbar
+        placeholder="Search Exercises"
+        placeholderTextColor={theme.colors.placeholder}
+        onChangeText={(query) => {
+          setListOfExs(undefined)
+          setSearchQuery(query)
+        }}
+        value={searchQuery}
         style={{
-          ...styles.searchContainer,
-          backgroundColor: theme.colors.background
+          width: "95%",
+          marginTop: theme.margins.s,
+          height: 40,
+          borderRadius: 10,
+          backgroundColor: theme.colors.surface
         }}
-      >
-        <Searchbar
-          placeholder="Search"
-          onChangeText={(query) => searchExercises(query)}
-          value={searchQuery}
-          style={{
-            ...styles.search,
-            backgroundColor: theme.colors.surface
-          }}
-          selectionColor={theme.colors.primary}
-          inputStyle={{
-            paddingVertical: 0
-          }}
-        />
-      </View>
-      <ScrollView
-        contentContainerStyle={{
-          ...styles.container,
-          backgroundColor: theme.colors.background
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={{ flex: 1 }}>
-          {searchQuery.length == 0 ? (
-            listOfExs
-          ) : searchQuery.length < 3 && listOfExs.length == 1 ? (
-            <Loading color={theme.colors.primary} marginVertical={50} />
-          ) : (
-            listOfExs
+        selectionColor={theme.colors.primary}
+        inputStyle={{ fontSize: RFValue(18), paddingVertical: 0 }}
+      />
+      {listOfExs ? (
+        <FlatList
+          data={listOfExs}
+          renderItem={({ item }) => (
+            <ExerciseDescriptor
+              key={item.name}
+              exercise={item}
+              onPress={() =>
+                navigation.navigate("Exercise", { name: item.name })
+              }
+            />
           )}
-        </View>
-      </ScrollView>
+          getItemLayout={(data, index) => ({
+            length: 70,
+            offset: 70 * index,
+            index
+          })}
+          ListEmptyComponent={<Text>No Exercises found!</Text>}
+          style={{
+            marginTop: theme.margins.s,
+            width: "100%"
+          }}
+          contentContainerStyle={{
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+          showsVerticalScrollIndicator={true}
+        />
+      ) : (
+        <Loading color={theme.colors.primary} marginVertical={50} />
+      )}
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  globalContainer: {
-    height: "100%",
-    flexDirection: "column",
-    justifyContent: "space-evenly"
-  },
-  container: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-    //paddingVertical: 5
-    //paddingBottom: 400 //TODO
-  },
-  searchContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingBottom: 5
-  },
-  search: {
-    width: "95%",
-    borderRadius: 10,
-    marginTop: 0,
-    height: 35
-  },
-  startTraining: {
-    width: "80%",
-    alignSelf: "center"
-  },
-  text: {
-    fontWeight: "bold"
-  },
-  title: {
-    fontWeight: "bold"
-  },
-  startButton: {
-    borderRadius: 10,
-    paddingHorizontal: 15
-    //backgroundColor: "black"
-  }
-})

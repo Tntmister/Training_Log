@@ -1,7 +1,6 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
-import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "../../providers/Theme"
 import { Text } from "../reusable/Text"
 
