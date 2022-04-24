@@ -5,7 +5,7 @@ import Home from "./screens/Home"
 import Search from "./screens/Search"
 import History from "./screens/History"
 import User from "./screens/User"
-import Train from "./screens/Train"
+import Train from "./screens/Train/Train"
 import { useTheme } from "../providers/Theme"
 
 const Tab = createMaterialTopTabNavigator()

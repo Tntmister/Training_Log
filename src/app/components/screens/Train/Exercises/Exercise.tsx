@@ -2,10 +2,10 @@ import React from "react"
 import type { StackScreenProps } from "@react-navigation/stack"
 import type { RootStackParamList } from "./ExerciseNav"
 import { Appbar } from "react-native-paper"
-import { Text } from "../../reusable/Text"
+import { Text } from "../../../reusable/Text"
 import { ScrollView } from "react-native-gesture-handler"
 import { StyleSheet } from "react-native"
-import { useTheme } from "../../../providers/Theme"
+import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 
 export default function Exercise({

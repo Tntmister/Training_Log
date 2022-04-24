@@ -1,9 +1,9 @@
 import React from "react"
 import { ScrollView } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { useTheme } from "../../../providers/Theme"
-import { Button } from "../../reusable/Button"
-import { Text } from "../../reusable/Text"
+import { useTheme } from "../../../../providers/Theme"
+import { Button } from "../../../reusable/Button"
+import { Text } from "../../../reusable/Text"
 
 export default function ModelList() {
   const theme = useTheme()

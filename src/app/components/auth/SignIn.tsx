@@ -1,7 +1,12 @@
 import React, { useContext, useState } from "react"
 import { View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { login, loginGoogle, logout, resetPassword } from "../../lib/firebase"
+import {
+  login,
+  loginGoogle,
+  logout,
+  resetPassword
+} from "../../lib/firebaseAuth"
 import { useTheme } from "../../providers/Theme"
 import { UserContext } from "../../providers/User"
 import { Text } from "../reusable/Text"

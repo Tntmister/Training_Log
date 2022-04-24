@@ -1,10 +1,10 @@
 import React from "react"
 import { Image, View, TouchableOpacity } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { exercise } from "../../../assets/exercises"
-import { categoryIcons } from "../../../lib/exercises"
-import { useTheme } from "../../../providers/Theme"
-import { Text } from "../../reusable/Text"
+import { exercise } from "../../../../assets/exercises"
+import { categoryIcons } from "../../../../lib/exercises"
+import { useTheme } from "../../../../providers/Theme"
+import { Text } from "../../../reusable/Text"
 
 export default function ExerciseDescriptor({
   exercise,

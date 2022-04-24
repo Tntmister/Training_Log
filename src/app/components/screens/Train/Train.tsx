@@ -1,11 +1,11 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React from "react"
-import ModelList from "./Exercises/ExerciseModelList"
+import ModelList from "./Models/ModelList"
 import ExerciseNav from "./Exercises/ExerciseNav"
-import { useTheme } from "../../providers/Theme"
+import { useTheme } from "../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Dimensions } from "react-native"
-import { Button } from "../reusable/Button"
+import { Button } from "../../reusable/Button"
 
 export default function Train() {
   const Tab = createMaterialTopTabNavigator()

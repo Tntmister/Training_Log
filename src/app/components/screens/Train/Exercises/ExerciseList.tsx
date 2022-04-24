@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { View, FlatList } from "react-native"
-import { getExercises } from "../../../lib/exercises"
-import Loading from "../../reusable/Loading"
+import { getExercises } from "../../../../lib/exercises"
+import Loading from "../../../reusable/Loading"
 import { Searchbar } from "react-native-paper"
-import { useTheme } from "../../../providers/Theme"
+import { useTheme } from "../../../../providers/Theme"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "./ExerciseNav"
 import { RFValue } from "react-native-responsive-fontsize"
 import ExerciseDescriptor from "./ExerciseDescriptor"
-import { Text } from "../../reusable/Text"
-import { exercise } from "../../../assets/exercises"
+import { Text } from "../../../reusable/Text"
+import { exercise } from "../../../../assets/exercises"
 
 export default function ExerciseList({
   navigation
@@ -54,9 +54,9 @@ export default function ExerciseList({
       {listOfExs ? (
         <FlatList
           data={listOfExs}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <ExerciseDescriptor
-              key={item.name}
+              key={index}
               exercise={item}
               onPress={() =>
                 navigation.navigate("Exercise", { exercise: item })
