@@ -22,39 +22,31 @@ export default function ModelList() {
   
   console.log("SELECTED EXRCISE -> " + selectedExercise)*/
   return (
-    <>
-      <Button
-        style={{ marginBottom: theme.margins.m }}
-        onPress={() => console.log("Creating a new Training Model")}
-      >
-        Create a new Training Model
-      </Button>
-      <ScrollView
-        contentContainerStyle={{
-          alignItems: "center",
-          backgroundColor: theme.colors.backdrop
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Testes do ScrollView */}
-        {Array.from(Array(20).keys()).map((value, key) => {
-          return (
-            <Text
-              style={{
-                fontSize: RFValue(14),
-                marginTop: 4,
-                height: 40,
-                textAlign: "center",
-                textAlignVertical: "center"
-              }}
-              key={key}
-            >
-              {value}
-            </Text>
-          )
-        })}
-        {/*{listOfModels}*/}
-      </ScrollView>
-    </>
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: "center",
+        backgroundColor: theme.colors.backdrop
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* Testes do ScrollView */}
+      {Array.from(Array(20).keys()).map((value, key) => {
+        return (
+          <Text
+            style={{
+              fontSize: RFValue(14),
+              marginTop: 4,
+              height: 40,
+              textAlign: "center",
+              textAlignVertical: "center"
+            }}
+            key={key}
+          >
+            {value}
+          </Text>
+        )
+      })}
+      {/*{listOfModels}*/}
+    </ScrollView>
   )
 }

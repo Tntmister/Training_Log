@@ -1,12 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import { Exercise as ExerciseType } from "../../../../../dataDefinition/data"
+import { exercises } from "../../../../assets/exercises"
 import Exercise from "./Exercise"
 import ExerciseList from "./ExerciseList"
 
 export type RootStackParamList = {
   ExerciseList: undefined;
-  Exercise: { exercise: ExerciseType };
+  Exercise: { exercise: typeof exercises[number] };
 };
 
 export default function ExerciseNav() {

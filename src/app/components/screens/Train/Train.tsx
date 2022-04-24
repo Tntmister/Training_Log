@@ -19,8 +19,11 @@ export default function Train() {
         initialLayout={{ width: Dimensions.get("window").width }}
         screenOptions={{
           tabBarLabelStyle: {
-            fontSize: RFValue(18),
+            fontSize: RFValue(32),
             fontFamily: "Lato"
+          },
+          tabBarStyle: {
+            marginBottom: theme.margins.m
           },
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text

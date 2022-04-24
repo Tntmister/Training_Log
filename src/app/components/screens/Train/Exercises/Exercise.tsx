@@ -29,7 +29,7 @@ export default function Exercise({
       </Appbar>
       <ScrollView style={{ marginTop: theme.margins.m }}>
         <Text style={styles.text}>
-          Primary Muscle: {exercise.primaryMuscles[0]}
+          Primary Muscle: {exercise.primaryMuscle}
         </Text>
         {exercise.secondaryMuscles.length > 0 && (
           <Text style={styles.text}>
