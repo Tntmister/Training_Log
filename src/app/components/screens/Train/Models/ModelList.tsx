@@ -1,52 +1,63 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { ScrollView } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
 import { Text } from "../../../reusable/Text"
+import { TrainingModel } from "../../../../../dataDefinition/data"
+import { StackScreenProps } from "@react-navigation/stack"
+import { RootStackParamList } from "./ModelNav"
 
-export default function ModelList() {
+export default function ModelList({
+  navigation
+}: StackScreenProps<RootStackParamList, "ModelList">) {
   const theme = useTheme()
-  //const [listOfModels, setListofModels] = useState([])
-
-  /*const [searchQuery, setSearchQuery] = useState("")
-  const [listOfExs, setListOfExs] = useState(
-    getExercises(searchQuery, onExClick)
+  const [listOfModels, setListofModels] = useState(
+    useState<typeof TrainingModel | undefined>(undefined)
   )
-  const [selectedExercise, setSelectedExercise] = React.useState("")
 
-  function onExClick(exName: string) {
-    setSelectedExercise(exName)
-  }
-  getExercises(searchQuery, onExClick)
-  
-  console.log("SELECTED EXRCISE -> " + selectedExercise)*/
+  useEffect(() => {
+    console.log("Getting training models from db")
+  }, [])
+
   return (
-    <ScrollView
-      contentContainerStyle={{
-        alignItems: "center",
-        backgroundColor: theme.colors.backdrop
-      }}
-      showsVerticalScrollIndicator={false}
-    >
-      {/* Testes do ScrollView */}
-      {Array.from(Array(20).keys()).map((value, key) => {
-        return (
-          <Text
-            style={{
-              fontSize: RFValue(14),
-              marginTop: 4,
-              height: 40,
-              textAlign: "center",
-              textAlignVertical: "center"
-            }}
-            key={key}
-          >
-            {value}
-          </Text>
-        )
-      })}
-      {/*{listOfModels}*/}
-    </ScrollView>
+    <>
+      <Button
+        style={{
+          marginTop: theme.margins.s,
+          marginBottom: theme.margins.s
+        }}
+        onPress={() => navigation.navigate("CreateModel")}
+      >
+        Create your own Training Model
+      </Button>
+
+      <ScrollView
+        contentContainerStyle={{
+          alignItems: "center",
+          backgroundColor: theme.colors.backdrop
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Testes do ScrollView */}
+        {Array.from(Array(20).keys()).map((value, key) => {
+          return (
+            <Text
+              style={{
+                fontSize: RFValue(14),
+                marginTop: 4,
+                height: 40,
+                textAlign: "center",
+                textAlignVertical: "center"
+              }}
+              key={key}
+            >
+              {value}
+            </Text>
+          )
+        })}
+        {/*{listOfModels}*/}
+      </ScrollView>
+    </>
   )
 }

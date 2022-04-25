@@ -6,6 +6,7 @@ import { useTheme } from "../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Dimensions } from "react-native"
 import { Button } from "../../reusable/Button"
+import ModelNav from "./Models/ModelNav"
 
 export default function Train() {
   const Tab = createMaterialTopTabNavigator()
@@ -30,7 +31,7 @@ export default function Train() {
         }}
       >
         <Tab.Screen component={ExerciseNav} name="Exercises" />
-        <Tab.Screen component={ModelList} name="Models" />
+        <Tab.Screen component={ModelNav} name="Models" />
       </Tab.Navigator>
 
       <Button

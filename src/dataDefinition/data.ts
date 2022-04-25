@@ -10,16 +10,17 @@
 type ExtraContent = {
   //  images: Object;
   //  video: Object;
+  content: [];
 };
 
 // Component that can have multimedia content attached
 
 class MediaComponent {
-  extraContent: ExtraContent;
+  extraContent: [] = [];
   anotation = "";
-  constructor() {
+  /*constructor() {
     this.extraContent = { images: [], video: [] }
-  }
+  }*/
 }
 
 // Sets
@@ -121,12 +122,21 @@ export class TrainingModel extends MediaComponent {
   name = "New Training Model";
   author = "";
   description = "";
-  exercises: Exercise[] = [];
+  exercises: [] = [];
 
   public startSession(): TrainingSession {
     return new TrainingSession(this.exercises, this.name)
   }
 }
+
+export type TrainingModelType = {
+  name: string;
+  author: string;
+  description: string;
+  exercises: [];
+  extraContent: [];
+  anotation: string;
+};
 
 // auxiliar
 function getTimestamp(): string {
