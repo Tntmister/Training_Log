@@ -37,32 +37,15 @@ class DESet extends MediaComponent {
 }
 
 // Exercises
-export class Exercise /*extends MediaComponent*/ {
+export type Exercise = {
   name: string;
   instructions: string[];
   category: string;
   equipment: string;
-  primaryMuscles: string[];
+  primaryMuscle: string;
   secondaryMuscles: string[];
-
-  constructor(
-    name: string,
-    category: string,
-    instructions: string[],
-    equipment: string,
-    primaryMuscles: string[],
-    secondaryMuscles: string[] = []
-  ) {
-    //super()
-    this.name = name
-    this.category = category
-    this.instructions = instructions
-    this.equipment = equipment
-    this.primaryMuscles = primaryMuscles
-    this.secondaryMuscles = secondaryMuscles
-  }
-}
-
+};
+/* 
 export class WeightExercise extends Exercise {
   multiplier = 1;
   sets: WESet[] = [];
@@ -70,7 +53,7 @@ export class WeightExercise extends Exercise {
 
 export class DurationExercise extends Exercise {
   sets: DESet[] = [];
-}
+} */
 /*
 export class BarbellExercise extends WeightExercise {
   categorie = 1;

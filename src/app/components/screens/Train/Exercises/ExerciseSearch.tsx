@@ -1,4 +1,10 @@
-import React, { SetStateAction, useEffect, useMemo, useState } from "react"
+import React, {
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react"
 import { Button } from "../../../reusable/Button"
 import DropDown from "react-native-paper-dropdown"
 import { Menu, Searchbar } from "react-native-paper"
@@ -7,16 +13,17 @@ import {
   categories as categoryList,
   muscles as muscleList,
   equipments as equipmentList,
-  getExercises
+  searchExercises,
+  initExercises
 } from "../../../../lib/exercises"
 import { useTheme } from "../../../../providers/Theme"
 import { View } from "react-native"
-import { exercises } from "../../../../assets/exercises"
+import { Exercise } from "../../../../../dataDefinition/data"
 
 export default function ExerciseSearch({
   setListOfExs
 }: {
-  setListOfExs: React.Dispatch<SetStateAction<typeof exercises | undefined>>;
+  setListOfExs: React.Dispatch<SetStateAction<Exercise[] | undefined>>;
 }) {
   const theme = useTheme()
   const [searchQuery, setSearchQuery] = useState("")
@@ -60,14 +67,25 @@ export default function ExerciseSearch({
     ],
     []
   )
+  const [initializing, setInitializing] = useState(true)
   useEffect(() => {
-    setListOfExs(undefined)
-    const timeout = setTimeout(() => {
-      setListOfExs(getExercises(searchQuery, category, muscle, equipments))
-    }, 100)
-    return () => clearTimeout(timeout)
-  }, [searchQuery, category, muscle, equipments])
-
+    const init = async () => {
+      await initExercises()
+      setInitializing(false)
+    }
+    init()
+  }, [])
+  useEffect(() => {
+    if (!initializing) {
+      setListOfExs(undefined)
+      const timeout = setTimeout(() => {
+        setListOfExs(
+          searchExercises(searchQuery, category, muscle, equipments)
+        )
+      }, 200)
+      return () => clearTimeout(timeout)
+    }
+  }, [searchQuery, category, muscle, equipments, initializing])
   return (
     <>
       <Searchbar

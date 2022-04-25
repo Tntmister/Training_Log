@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react"
+import React, { useState } from "react"
 import { View, FlatList } from "react-native"
 import Loading from "../../../reusable/Loading"
 import { useTheme } from "../../../../providers/Theme"
@@ -6,17 +6,15 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "./ExerciseNav"
 import ExerciseDescriptor from "./ExerciseDescriptor"
 import { Text } from "../../../reusable/Text"
-import { exercises } from "../../../../assets/exercises"
 import ExerciseSearch from "./ExerciseSearch"
+import { Exercise } from "../../../../../dataDefinition/data"
 
 export default function ExerciseList({
   navigation
 }: StackScreenProps<RootStackParamList, "ExerciseList">) {
   const theme = useTheme()
 
-  const [listOfExs, setListOfExs] = useState<typeof exercises | undefined>(
-    undefined
-  )
+  const [listOfExs, setListOfExs] = useState<Exercise[] | undefined>(undefined)
 
   return (
     <View

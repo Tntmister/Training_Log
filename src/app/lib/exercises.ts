@@ -1,4 +1,5 @@
-import { exercises } from "../assets/exercises"
+import firestore from "@react-native-firebase/firestore"
+import { Exercise } from "../../dataDefinition/data"
 
 export const categoryIcons = {
   Cardio: require("../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
@@ -8,7 +9,12 @@ export const categoryIcons = {
   Weightlifting: require("../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png")
 }
 
-export function getExercises(
+export const exercises: Exercise[] = []
+export async function initExercises() {
+  const result = await firestore().collection("exercises").get()
+  result.forEach((doc) => exercises.push({ ...(doc.data() as Exercise) }))
+}
+export function searchExercises(
   query: string,
   category: string | undefined,
   muscle: string | undefined,
@@ -20,7 +26,6 @@ export function getExercises(
       : exercises.filter((ex) =>
         ex.name.toLowerCase().includes(query.toLowerCase())
       )
-  console.log(category)
   if (category != undefined) {
     result = exercises.filter(
       (ex) => ex.category.toLowerCase() === category.toLowerCase()
