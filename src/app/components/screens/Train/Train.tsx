@@ -38,9 +38,9 @@ export default function Train() {
           marginTop: theme.margins.m,
           marginBottom: theme.margins.s
         }}
-        onPress={() => console.log("Starting an Empty Training Session")}
+        onPress={() => console.log("New Training Session")}
       >
-        Start an Empty Training Session
+        Start a new training session
       </Button>
     </>
   )
