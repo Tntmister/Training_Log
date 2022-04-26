@@ -17,7 +17,7 @@ type ExtraContent = {
 
 class MediaComponent {
   extraContent: [] = [];
-  anotation = "";
+  annotation = "";
   /*constructor() {
     this.extraContent = { images: [], video: [] }
   }*/
@@ -114,11 +114,11 @@ export class TrainingModel extends MediaComponent {
 
 export type TrainingModelType = {
   name: string;
-  author: string;
+  author: string | null | undefined;
   description: string;
   exercises: [];
   extraContent: [];
-  anotation: string;
+  annotation: string;
 };
 
 // auxiliar
@@ -158,7 +158,7 @@ function getTimestamp(): string {
 }
 
 //--------------------------------------------------------------------------------//
-const model1 = new TrainingModel()
+/*const model1 = new TrainingModel()
 
 console.log(model1)
 
