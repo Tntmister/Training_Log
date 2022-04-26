@@ -15,12 +15,14 @@ import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
 
 export type Theme = {
   margins: {
+    xs: number;
     s: number;
     m: number;
     l: number;
     xl: number;
   };
   paddings: {
+    xs: number;
     s: number;
     m: number;
     l: number;
@@ -54,12 +56,14 @@ const defaultTheme: Theme = {
     }
   },
   margins: {
+    xs: 6,
     s: 8,
     m: 16,
     l: 24,
     xl: 36
   },
   paddings: {
+    xs: 2,
     s: 4,
     m: 8,
     l: 16,
