@@ -1,4 +1,5 @@
 import firestore from "@react-native-firebase/firestore"
+import storage from "@react-native-firebase/storage"
 import { Exercise } from "../../dataDefinition/data"
 
 export const categoryIcons = {
@@ -14,6 +15,18 @@ export async function initExercises() {
   const result = await firestore().collection("exercises").get()
   result.forEach((doc) => exercises.push({ ...(doc.data() as Exercise) }))
 }
+
+export async function getImages(name: string) {
+  const urls: string[] = []
+  const list = await storage()
+    .ref(`exercises/${name.replace("/", "_")}`)
+    .list()
+  for (const ref of list.items) {
+    urls.push(await ref.getDownloadURL())
+  }
+  return urls
+}
+
 export function searchExercises(
   query: string,
   category: string | undefined,

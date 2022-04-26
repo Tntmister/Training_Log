@@ -17,6 +17,7 @@
 		"@react-native-firebase/app": "^14.7.0",
 		"@react-native-firebase/auth": "^14.7.0",
 		"@react-native-firebase/firestore": "^14.7.0",
+		"@react-native-firebase/storage": "^14.7.0",
 		"@react-native-google-signin/google-signin": "^7.2.2",
 		"@react-navigation/bottom-tabs": "^6.3.1",
 		"@react-navigation/material-top-tabs": "^6.2.1",
@@ -25,6 +26,7 @@
 		"@react-navigation/stack": "^6.2.1",
 		"react": "17.0.2",
 		"react-native": "^0.68.1",
+		"react-native-dots-pagination": "github:alexanderhodes/react-native-dots-pagination",
 		"react-native-gesture-handler": "^2.4.1",
 		"react-native-linear-gradient": "^2.5.6",
 		"react-native-pager-view": "^5.4.15",
@@ -56,7 +58,6 @@
 		"metro-react-native-babel-preset": "^0.67.0",
 		"prettier": "^2.6.2",
 		"prettier-eslint": "^13.0.0",
-		"react-devtools": "^4.24.4",
 		"react-test-renderer": "17.0.2",
 		"typescript": "^4.6.3"
 	},
