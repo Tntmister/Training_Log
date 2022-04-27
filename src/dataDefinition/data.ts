@@ -28,12 +28,12 @@ class MediaComponent {
 class WESet extends MediaComponent {
   weight = 0;
   repRange = [0, 0];
-  repsDone = 0;
+  repsDone? = 0;
 }
 
 class DESet extends MediaComponent {
-  wantedDuration = 0;
-  duration = 0;
+  wantedDuration: string | undefined;
+  duration?: string;
 }
 
 // Exercises
@@ -44,6 +44,7 @@ export type Exercise = {
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
+  sets?: WESet[] | DESet[];
 };
 /* 
 export class WeightExercise extends Exercise {
@@ -104,8 +105,7 @@ export class TrainingSession {
 export class TrainingModel extends MediaComponent {
   name = "New Training Model";
   author = "";
-  description = "";
-  exercises: [] = [];
+  exercises: Exercise[] = [];
 
   public startSession(): TrainingSession {
     return new TrainingSession(this.exercises, this.name)
@@ -115,8 +115,7 @@ export class TrainingModel extends MediaComponent {
 export type TrainingModelType = {
   name: string;
   author: string | null | undefined;
-  description: string;
-  exercises: [];
+  exercises: Exercise[];
   extraContent: [];
   annotation: string;
 };

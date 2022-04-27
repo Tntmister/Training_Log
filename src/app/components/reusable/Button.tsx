@@ -17,6 +17,7 @@ export function Button({
         paddingVertical: theme.paddings.s,
         color: theme.colors.white,
         fontSize: RFValue(16),
+        fontFamily: "Lato",
         ...(typeof labelStyle === "object" ? labelStyle : {})
       }}
       style={{

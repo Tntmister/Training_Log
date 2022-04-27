@@ -6,20 +6,28 @@ import { Exercise } from "../../../../../dataDefinition/data"
 import { categoryIcons } from "../../../../lib/exercises"
 import { Theme } from "../../../../providers/Theme"
 import { Text } from "../../../reusable/Text"
+import { RootStackParamListModelNav } from "../Models/ModelNav"
 import { RootStackParamList } from "./ExerciseNav"
+import { images } from "../../../../lib/extra"
 
 function ExerciseDescriptor({
   exercise,
   navigation,
-  theme
+  theme,
+  onPress,
+  checked
 }: {
   exercise: Exercise;
-  navigation: StackNavigationProp<RootStackParamList, "ExerciseList">;
+  navigation:
+  | StackNavigationProp<RootStackParamList, "ExerciseList">
+  | StackNavigationProp<RootStackParamListModelNav, "ExerciseSelector">;
   theme: Theme;
+  onPress: () => void;
+  checked: boolean | null | undefined;
 }) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Exercise", { exercise: exercise })}
+      onPress={onPress}
       style={{
         flexDirection: "row",
         alignItems: "center",
@@ -41,7 +49,11 @@ function ExerciseDescriptor({
           aspectRatio: 1,
           tintColor: theme.colors.text
         }}
-        source={categoryIcons[exercise.category as keyof typeof categoryIcons]}
+        source={
+          checked
+            ? images.Checked
+            : categoryIcons[exercise.category as keyof typeof categoryIcons]
+        }
       />
       <View
         style={{

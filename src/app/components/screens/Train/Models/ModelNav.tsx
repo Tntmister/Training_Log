@@ -1,20 +1,23 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import { TrainingModelType } from "../../../../../dataDefinition/data"
+import {
+  Exercise,
+  TrainingModelType
+} from "../../../../../dataDefinition/data"
 import ExerciseSelector from "../Exercises/ExerciseSelector"
 import CreateModel from "./CreateModel"
 import Model from "./Model"
 import ModelList from "./ModelList"
 
-export type RootStackParamList = {
+export type RootStackParamListModelNav = {
   ModelList: undefined;
   Model: { model: TrainingModelType };
-  CreateModel: undefined;
+  CreateModel: { exercises: Exercise[] };
   ExerciseSelector: undefined;
 };
 
 export default function ExerciseNav() {
-  const Stack = createStackNavigator<RootStackParamList>()
+  const Stack = createStackNavigator<RootStackParamListModelNav>()
 
   return (
     <Stack.Navigator

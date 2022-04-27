@@ -3,13 +3,13 @@ import React from "react"
 import { StyleSheet, Text } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
-import { RootStackParamList } from "./ModelNav"
+import { RootStackParamListModelNav } from "./ModelNav"
 import { Appbar } from "react-native-paper"
 
 export default function Model({
   route,
   navigation
-}: StackScreenProps<RootStackParamList, "Model">) {
+}: StackScreenProps<RootStackParamListModelNav, "Model">) {
   const { model } = route.params
   const theme = useTheme()
   const styles = StyleSheet.create({

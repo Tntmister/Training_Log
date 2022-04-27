@@ -38,6 +38,10 @@ export default function ExerciseList({
               theme={theme}
               exercise={item}
               navigation={navigation}
+              onPress={() =>
+                navigation.navigate("Exercise", { exercise: item })
+              }
+              checked={undefined}
             />
           )}
           getItemLayout={(data, index) => ({

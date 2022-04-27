@@ -1,37 +1,48 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
 import { ScrollView, StyleSheet, Text, View } from "react-native"
 import { Appbar } from "react-native-paper"
 import { TrainingModel } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
-import { RootStackParamList } from "./ModelNav"
+import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModelType } from "../../../../../dataDefinition/data"
 import { UserContext } from "../../../../providers/User"
 import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Button } from "../../../reusable/Button"
+import { images } from "../../../../lib/extra"
+import ProgrammedExercise from "../Exercises/ProgrammedExercise"
+
 export default function CreateModel({
   route,
   navigation
-}: StackScreenProps<RootStackParamList, "Model">) {
+}: StackScreenProps<RootStackParamListModelNav, "CreateModel">) {
   const [model, setModel] = useState<TrainingModelType>(new TrainingModel())
   const user = useContext(UserContext)
   const theme = useTheme()
-  const styles = StyleSheet.create({
-    text: {
-      marginBottom: theme.margins.s,
-      marginHorizontal: theme.margins.l,
-      fontSize: RFValue(20)
-    }
-  })
 
   useEffect(() => {
     setModel((prevModel) => ({
       ...prevModel,
       author: user?.displayName
     }))
+    console.log("Exercicios -> " + JSON.stringify(model.exercises))
+    console.log("Params -> " + JSON.stringify(route.params))
+    //console.log(model.exercises.map((ex) => ex.name))
   }, [])
+
+  useEffect(() => {
+    setModel((prevModel) =>
+      route.params
+        ? {
+          ...prevModel,
+          exercises: [...prevModel.exercises, ...route.params.exercises]
+        }
+        : { ...prevModel }
+    )
+  }, [route.params])
 
   function handleChangeName(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))
@@ -79,13 +90,13 @@ export default function CreateModel({
               width: 60,
               height: 60,
               marginTop: 0,
-              borderRadius: 10
+              borderRadius: 30
             }}
             labelStyle={{
               fontSize: RFValue(26)
             }}
             onPress={() => console.log("Add media")}
-            icon={require("../../../../assets/icons/camera/camera(-xxxhdpi).png")}
+            icon={images.Camera}
             compact={true}
           >
             {}
@@ -146,7 +157,11 @@ export default function CreateModel({
           </ScrollView>
           {/*dummy views*/}
         </InlineContainer>
-
+        <View>
+          {model.exercises.map((ex, index) => (
+            <ProgrammedExercise exercise={ex} key={index} />
+          ))}
+        </View>
         <Button
           style={{
             marginTop: theme.margins.m,

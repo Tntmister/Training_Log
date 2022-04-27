@@ -7,6 +7,7 @@ import History from "./screens/History"
 import User from "./screens/User"
 import Train from "./screens/Train/Train"
 import { useTheme } from "../providers/Theme"
+import { images } from "../lib/extra"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -46,11 +47,4 @@ export default function Nav() {
       <Tab.Screen name="User" component={User} />
     </Tab.Navigator>
   )
-}
-const images = {
-  User: require("../assets/icons/user/user(-xxxhdpi).png"),
-  History: require("../assets/icons/history/history(-xxxhdpi).png"),
-  Home: require("../assets/icons/home/home(-xxxhdpi).png"),
-  Search: require("../assets/icons/search/search(-xxxhdpi).png"),
-  Train: require("../assets/icons/train/train(-xxxhdpi).png")
 }
