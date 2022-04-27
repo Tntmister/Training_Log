@@ -21,7 +21,6 @@ export function TextInput({
         fontSize: RFValue(16),
         ...(typeof style === "object" ? style : {})
       }}
-      theme={theme}
       placeholderTextColor={theme.colors.placeholder}
       {...props}
     />
