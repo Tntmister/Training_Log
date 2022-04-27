@@ -1,10 +1,4 @@
-import React, {
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react"
+import React, { SetStateAction, useCallback, useEffect, useState } from "react"
 import { Button } from "../../../reusable/Button"
 import DropDown from "react-native-paper-dropdown"
 import { Menu, Searchbar } from "react-native-paper"
@@ -17,7 +11,7 @@ import {
   initExercises
 } from "../../../../lib/exercises"
 import { useTheme } from "../../../../providers/Theme"
-import { View } from "react-native"
+import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { Exercise } from "../../../../../dataDefinition/data"
 
 export default function ExerciseSearch({
@@ -28,45 +22,49 @@ export default function ExerciseSearch({
   const theme = useTheme()
   const [searchQuery, setSearchQuery] = useState("")
 
+  // visibilidade dos menus
   const [categoryVisible, setCatVisible] = useState(false)
   const [muscleVisible, setMuscleVisible] = useState(false)
   const [equipmentVisible, setEquipmentVisible] = useState(false)
+
+  // filtros selecionados
   const [category, setCategory] = useState<string | undefined>(undefined)
   const [muscle, setMuscle] = useState<string | undefined>(undefined)
   const [equipments, setEquipments] = useState("")
 
-  const [categoryItems, musclesItems, equipmentItems] = useMemo(
-    () => [
-      categoryList.map((value) => {
-        return (
-          <Menu.Item
-            onPress={() => {
-              setCategory(value)
-              setCatVisible(false)
-            }}
-            title={value}
-            key={value}
-          />
-        )
-      }),
-      muscleList.map((value) => {
-        return (
-          <Menu.Item
-            onPress={() => {
-              setMuscle(value)
-              setMuscleVisible(false)
-            }}
-            title={value}
-            key={value}
-          />
-        )
-      }),
-      equipmentList.map((value) => {
-        return { label: value, value: value }
-      })
-    ],
-    []
+  const categorySet = useCallback(
+    () =>
+      categoryList.map((value) => (
+        <Menu.Item
+          onPress={() => {
+            setCategory(value)
+            setCatVisible(false)
+          }}
+          title={value}
+          key={value}
+        />
+      )),
+    [categoryList]
   )
+  const muscleSet = useCallback(
+    () =>
+      muscleList.map((value) => (
+        <Menu.Item
+          onPress={() => {
+            setMuscle(value)
+            setMuscleVisible(false)
+          }}
+          title={value}
+          key={value}
+        />
+      )),
+    [muscleList]
+  )
+  const equipmentSet = useCallback(
+    () => equipmentList.map((value) => ({ label: value, value: value })),
+    [equipmentList]
+  )
+
   const [initializing, setInitializing] = useState(true)
   useEffect(() => {
     const init = async () => {
@@ -75,6 +73,7 @@ export default function ExerciseSearch({
     }
     init()
   }, [])
+
   useEffect(() => {
     if (!initializing) {
       setListOfExs(undefined)
@@ -86,6 +85,19 @@ export default function ExerciseSearch({
       return () => clearTimeout(timeout)
     }
   }, [searchQuery, category, muscle, equipments, initializing])
+
+  const filterButtonStyle: ViewStyle = {
+    marginHorizontal: theme.margins.s,
+    width: "100%",
+    marginTop: 0,
+    borderColor: theme.colors.placeholder,
+    borderWidth: 1
+  }
+
+  const filterButtonLabelStyle: StyleProp<TextStyle> = {
+    fontSize: RFValue(14)
+  }
+
   return (
     <>
       <Searchbar
@@ -106,53 +118,81 @@ export default function ExerciseSearch({
         style={{
           width: "95%",
           flexDirection: "row",
-          justifyContent: "space-around"
+          justifyContent: "space-between",
+          alignItems: "center"
         }}
       >
-        <Menu
-          visible={categoryVisible}
-          onDismiss={() => setCatVisible(false)}
-          anchor={<Button onPress={() => setCatVisible(true)}>Category</Button>}
+        <View style={{ marginTop: theme.margins.s, flexBasis: 0, flexGrow: 1 }}>
+          <Menu
+            visible={categoryVisible}
+            onDismiss={() => setCatVisible(false)}
+            anchor={
+              <Button
+                mode="outlined"
+                style={filterButtonStyle}
+                labelStyle={filterButtonLabelStyle}
+                onPress={() => setCatVisible(true)}
+              >
+                {category === undefined ? "Category: Any" : category}
+              </Button>
+            }
+          >
+            <Menu.Item
+              onPress={() => {
+                setCategory(undefined)
+                setCatVisible(false)
+              }}
+              title="Any"
+            />
+            {categorySet()}
+          </Menu>
+          <Menu
+            visible={muscleVisible}
+            onDismiss={() => setMuscleVisible(false)}
+            anchor={
+              <Button
+                mode="outlined"
+                style={{ ...filterButtonStyle, marginTop: theme.margins.s }}
+                labelStyle={filterButtonLabelStyle}
+                onPress={() => setMuscleVisible(true)}
+              >
+                {muscle === undefined ? "Muscle: Any" : muscle}
+              </Button>
+            }
+          >
+            <Menu.Item
+              onPress={() => {
+                setMuscle(undefined)
+                setMuscleVisible(false)
+              }}
+              title="Any"
+            />
+            {muscleSet()}
+          </Menu>
+        </View>
+        <View
+          style={{
+            marginHorizontal: theme.margins.s,
+            flexGrow: 1,
+            flexBasis: 0
+          }}
         >
-          <Menu.Item
-            onPress={() => {
-              setCategory(undefined)
-              setCatVisible(false)
+          <DropDown
+            inputProps={{
+              style: { height: RFValue(86), paddingTop: 0 }
             }}
-            title="Any"
+            dropDownContainerHeight={RFPercentage(50)}
+            label="Equipment"
+            mode="outlined"
+            visible={equipmentVisible}
+            showDropDown={() => setEquipmentVisible(true)}
+            onDismiss={() => setEquipmentVisible(false)}
+            value={equipments}
+            setValue={setEquipments}
+            list={equipmentSet()}
+            multiSelect
           />
-          {categoryItems}
-        </Menu>
-        <Menu
-          visible={muscleVisible}
-          onDismiss={() => setMuscleVisible(false)}
-          anchor={
-            <Button onPress={() => setMuscleVisible(true)}>
-              Primary Muscle
-            </Button>
-          }
-        >
-          <Menu.Item
-            onPress={() => {
-              setMuscle(undefined)
-              setMuscleVisible(false)
-            }}
-            title="Any"
-          />
-          {musclesItems}
-        </Menu>
-        <DropDown
-          dropDownContainerHeight={RFPercentage(60)}
-          label="Equipment"
-          mode="outlined"
-          visible={equipmentVisible}
-          showDropDown={() => setEquipmentVisible(true)}
-          onDismiss={() => setEquipmentVisible(false)}
-          value={equipments}
-          setValue={setEquipments}
-          list={equipmentItems}
-          multiSelect
-        />
+        </View>
       </View>
     </>
   )

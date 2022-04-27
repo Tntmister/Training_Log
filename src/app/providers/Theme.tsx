@@ -1,6 +1,5 @@
 import React, { ReactNode, useCallback, useMemo, useState } from "react"
 import {
-  configureFonts,
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
@@ -12,10 +11,7 @@ import {
   NavigationContainer,
   Theme as NavigationTheme
 } from "@react-navigation/native"
-import {
-  Fonts,
-  Theme as PaperTheme
-} from "react-native-paper/lib/typescript/types"
+import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
 
 export type Theme = {
   margins: {
@@ -109,7 +105,7 @@ const darkTheme: Theme = {
     border: "#FE6751",
     accent: "#FE6751",
     text: "#FFFFFF",
-    placeholder: "#d9d9d9"
+    placeholder: "#d0d0d0"
   }
 }
 

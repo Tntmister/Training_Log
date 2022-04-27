@@ -14,6 +14,9 @@ export const exercises: Exercise[] = []
 export async function initExercises() {
   const result = await firestore().collection("exercises").get()
   result.forEach((doc) => exercises.push({ ...(doc.data() as Exercise) }))
+  muscles = [...new Set(exercises.map((attr) => attr.primaryMuscle))].sort()
+  equipments = [...new Set(exercises.map((attr) => attr.equipment))].sort()
+  categories = [...new Set(exercises.map((attr) => attr.category))].sort()
 }
 
 export async function getImages(name: string) {
@@ -40,31 +43,25 @@ export function searchExercises(
         ex.name.toLowerCase().includes(query.toLowerCase())
       )
   if (category != undefined) {
-    result = exercises.filter(
+    result = result.filter(
       (ex) => ex.category.toLowerCase() === category.toLowerCase()
     )
   }
   if (muscle != undefined) {
-    result = exercises.filter(
+    result = result.filter(
       (ex) => ex.primaryMuscle.toLowerCase() === muscle.toLowerCase()
     )
   }
   if (equipments.length > 0) {
-    result = exercises.filter((ex) =>
+    result = result.filter((ex) =>
       equipments.substring(1).split(",").includes(ex.equipment)
     )
   }
   return result
 }
 
-export const muscles = [
-  ...new Set(exercises.map((attr) => attr.primaryMuscle))
-].sort()
+export let muscles: string[] = []
 
-export const equipments = [
-  ...new Set(exercises.map((attr) => attr.equipment))
-].sort()
+export let equipments: string[] = []
 
-export const categories = [
-  ...new Set(exercises.map((attr) => attr.category))
-].sort()
+export let categories: string[] = []
