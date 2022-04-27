@@ -4,12 +4,13 @@ import type { RootStackParamList } from "./ExerciseNav"
 import { Appbar } from "react-native-paper"
 import { Text } from "../../../reusable/Text"
 import { ScrollView } from "react-native-gesture-handler"
-import { Dimensions, Image, StyleSheet, View } from "react-native"
+import { Dimensions, StyleSheet, View } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import { getImages } from "../../../../lib/exercises"
 import PagerView from "react-native-pager-view"
 import Dots from "react-native-dots-pagination"
+import FastImage from "react-native-fast-image"
 
 export default function Exercise({
   route,
@@ -61,14 +62,15 @@ export default function Exercise({
           >
             {imageURLs.map((url, key) => {
               return (
-                <Image
+                <FastImage
                   key={key}
                   style={{
                     width: "100%",
                     height: undefined,
-                    aspectRatio: 3 / 2
+                    aspectRatio: 3 / 2,
+                    borderRadius: 10
                   }}
-                  source={{ uri: url }}
+                  source={{ uri: url, cache: "web" }}
                 />
               )
             })}

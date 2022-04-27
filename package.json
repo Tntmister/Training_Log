@@ -27,6 +27,7 @@
 		"react": "17.0.2",
 		"react-native": "^0.68.1",
 		"react-native-dots-pagination": "github:alexanderhodes/react-native-dots-pagination",
+		"react-native-fast-image": "^8.5.11",
 		"react-native-gesture-handler": "^2.4.1",
 		"react-native-linear-gradient": "^2.5.6",
 		"react-native-pager-view": "^5.4.15",
