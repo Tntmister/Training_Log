@@ -22,9 +22,6 @@ export default function Train() {
             fontSize: RFValue(28),
             fontFamily: "Lato"
           },
-          tabBarStyle: {
-            marginBottom: theme.margins.m
-          },
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text
         }}
@@ -35,8 +32,7 @@ export default function Train() {
 
       <Button
         style={{
-          marginTop: theme.margins.m,
-          marginBottom: theme.margins.s
+          marginTop: theme.margins.s
         }}
         onPress={() => console.log("New Training Session")}
       >

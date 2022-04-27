@@ -8,16 +8,19 @@ import {
   muscles as muscleList,
   equipments as equipmentList,
   searchExercises,
-  initExercises
+  initExercises,
+  exercises
 } from "../../../../lib/exercises"
 import { useTheme } from "../../../../providers/Theme"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { Exercise } from "../../../../../dataDefinition/data"
 
 export default function ExerciseSearch({
-  setListOfExs
+  setExercises,
+  setLoading
 }: {
-  setListOfExs: React.Dispatch<SetStateAction<Exercise[] | undefined>>;
+  setExercises: React.Dispatch<SetStateAction<Exercise[]>>;
+  setLoading: React.Dispatch<SetStateAction<boolean>>;
 }) {
   const theme = useTheme()
   const [searchQuery, setSearchQuery] = useState("")
@@ -64,27 +67,29 @@ export default function ExerciseSearch({
     () => equipmentList.map((value) => ({ label: value, value: value })),
     [equipmentList]
   )
-
-  const [initializing, setInitializing] = useState(true)
+  const [init, setInit] = useState(true)
   useEffect(() => {
-    const init = async () => {
+    const initEx = async () => {
       await initExercises()
-      setInitializing(false)
+      setInit(false)
+      setExercises(exercises)
+      setLoading(false)
     }
-    init()
+    initEx()
   }, [])
-
   useEffect(() => {
-    if (!initializing) {
-      setListOfExs(undefined)
+    if (!init) {
+      setLoading(true)
       const timeout = setTimeout(() => {
-        setListOfExs(
+        setExercises(
           searchExercises(searchQuery, category, muscle, equipments)
         )
       }, 200)
-      return () => clearTimeout(timeout)
+      return () => {
+        clearTimeout(timeout)
+      }
     }
-  }, [searchQuery, category, muscle, equipments, initializing])
+  }, [searchQuery, category, muscle, equipments])
 
   const filterButtonStyle: ViewStyle = {
     marginHorizontal: theme.margins.s,
@@ -95,6 +100,7 @@ export default function ExerciseSearch({
   }
 
   const filterButtonLabelStyle: StyleProp<TextStyle> = {
+    marginVertical: theme.margins.s,
     fontSize: RFValue(14)
   }
 
@@ -177,21 +183,23 @@ export default function ExerciseSearch({
             flexBasis: 0
           }}
         >
-          <DropDown
-            inputProps={{
-              style: { height: RFValue(86), paddingTop: 0 }
-            }}
-            dropDownContainerHeight={RFPercentage(50)}
-            label="Equipment"
-            mode="outlined"
-            visible={equipmentVisible}
-            showDropDown={() => setEquipmentVisible(true)}
-            onDismiss={() => setEquipmentVisible(false)}
-            value={equipments}
-            setValue={setEquipments}
-            list={equipmentSet()}
-            multiSelect
-          />
+          {
+            <DropDown
+              inputProps={{
+                style: { height: RFValue(86), paddingTop: 0 }
+              }}
+              dropDownContainerHeight={RFPercentage(50)}
+              label="Equipment"
+              mode="outlined"
+              visible={equipmentVisible}
+              showDropDown={() => setEquipmentVisible(true)}
+              onDismiss={() => setEquipmentVisible(false)}
+              value={equipments}
+              setValue={setEquipments}
+              list={equipmentSet()}
+              multiSelect
+            />
+          }
         </View>
       </View>
     </>

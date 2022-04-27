@@ -19,7 +19,11 @@ export async function initExercises() {
   categories = [...new Set(exercises.map((attr) => attr.category))].sort()
 }
 
-export async function getImages(name: string) {
+/**
+ * @param name Nome do Exercício
+ * @returns Promessa sobre array de URLs de imagens do exercício
+ */
+export async function getImages(name: string): Promise<string[]> {
   const urls: string[] = []
   const list = await storage()
     .ref(`exercises/${name.replace("/", "_")}`)

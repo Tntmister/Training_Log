@@ -14,26 +14,30 @@ export default function ExerciseList({
 }: StackScreenProps<RootStackParamList, "ExerciseList">) {
   const theme = useTheme()
 
-  const [listOfExs, setListOfExs] = useState<Exercise[] | undefined>(undefined)
+  const [loading, setLoading] = useState(true)
+  const [exercises, setExercises] = useState<Exercise[]>([])
 
   return (
     <View
       style={{
+        marginTop: theme.margins.s,
         alignItems: "center",
         width: "100%"
       }}
     >
-      <ExerciseSearch setListOfExs={setListOfExs} />
-      {listOfExs ? (
+      <ExerciseSearch setExercises={setExercises} setLoading={setLoading} />
+      {loading ? (
+        <Loading color={theme.colors.primary} marginVertical={50} />
+      ) : (
         <FlatList
-          data={listOfExs}
+          data={exercises}
+          initialNumToRender={8}
           renderItem={({ item, index }) => (
             <ExerciseDescriptor
               key={index}
+              theme={theme}
               exercise={item}
-              onPress={() =>
-                navigation.navigate("Exercise", { exercise: item })
-              }
+              navigation={navigation}
             />
           )}
           getItemLayout={(data, index) => ({
@@ -52,8 +56,6 @@ export default function ExerciseList({
           }}
           showsVerticalScrollIndicator={true}
         />
-      ) : (
-        <Loading color={theme.colors.primary} marginVertical={50} />
       )}
     </View>
   )

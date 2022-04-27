@@ -1,23 +1,25 @@
+import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
 import { Image, View, TouchableOpacity } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { exercises } from "../../../../assets/exercises"
+import { Exercise } from "../../../../../dataDefinition/data"
 import { categoryIcons } from "../../../../lib/exercises"
-import { useTheme } from "../../../../providers/Theme"
+import { Theme } from "../../../../providers/Theme"
 import { Text } from "../../../reusable/Text"
+import { RootStackParamList } from "./ExerciseNav"
 
-export default function ExerciseDescriptor({
+function ExerciseDescriptor({
   exercise,
-  onPress
+  navigation,
+  theme
 }: {
-  exercise: typeof exercises[number];
-  onPress: () => void;
+  exercise: Exercise;
+  navigation: StackNavigationProp<RootStackParamList, "ExerciseList">;
+  theme: Theme;
 }) {
-  const theme = useTheme()
-
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => navigation.navigate("Exercise", { exercise: exercise })}
       style={{
         flexDirection: "row",
         alignItems: "center",
@@ -58,13 +60,10 @@ export default function ExerciseDescriptor({
           {exercise.name}
         </Text>
         <Text style={{ color: theme.colors.text, fontSize: RFValue(14) }}>
-          {
-            exercise.primaryMuscle +
-              " - " +
-              exercise.equipment /* depois alterar o proprio json com maiusculas */
-          }
+          {exercise.primaryMuscle + " - " + exercise.equipment}
         </Text>
       </View>
     </TouchableOpacity>
   )
 }
+export default React.memo(ExerciseDescriptor)
