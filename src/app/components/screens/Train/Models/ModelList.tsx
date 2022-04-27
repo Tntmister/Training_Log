@@ -4,7 +4,7 @@ import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
 import { Text } from "../../../reusable/Text"
-import { TrainingModel } from "../../../../../dataDefinition/data"
+import { TrainingModelType } from "../../../../../dataDefinition/data"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "./ModelNav"
 
@@ -13,7 +13,7 @@ export default function ModelList({
 }: StackScreenProps<RootStackParamList, "ModelList">) {
   const theme = useTheme()
   const [listOfModels, setListofModels] = useState(
-    useState<typeof TrainingModel | undefined>(undefined)
+    useState<TrainingModelType | undefined>(undefined)
   )
 
   useEffect(() => {

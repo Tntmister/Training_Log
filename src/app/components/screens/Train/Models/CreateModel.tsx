@@ -26,6 +26,13 @@ export default function CreateModel({
     }
   })
 
+  useEffect(() => {
+    setModel((prevModel) => ({
+      ...prevModel,
+      author: user?.displayName
+    }))
+  }, [])
+
   function handleChangeName(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))
   }
@@ -34,12 +41,6 @@ export default function CreateModel({
     setModel((prevModel) => ({ ...prevModel, annotation: newAnotation }))
   }
 
-  useEffect(() => {
-    setModel((prevModel) => ({
-      ...prevModel,
-      author: user?.displayName
-    }))
-  }, [])
   return (
     <>
       <Appbar>
@@ -52,7 +53,6 @@ export default function CreateModel({
           value={model.name}
           onChangeText={(text) => handleChangeName(text)}
         />
-
         <TextInput
           style={{
             width: "80%",
@@ -152,9 +152,21 @@ export default function CreateModel({
             marginTop: theme.margins.m,
             marginBottom: theme.margins.s
           }}
-          onPress={() => console.log("Add a new exercise")}
+          onPress={() => {
+            console.log("Add a new exercise")
+            navigation.navigate("ExerciseSelector")
+          }}
         >
           Add an Exercise
+        </Button>
+        <Button
+          style={{
+            marginTop: theme.margins.m,
+            marginBottom: theme.margins.s
+          }}
+          onPress={() => console.log("Save the Training Model")}
+        >
+          Save Training Model
         </Button>
 
         <Text style={{ color: "white" }}>{JSON.stringify(model, null, 2)}</Text>
