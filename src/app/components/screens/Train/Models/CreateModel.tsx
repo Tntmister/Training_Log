@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 import { Appbar } from "react-native-paper"
 import { TrainingModel } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
@@ -159,7 +159,7 @@ export default function CreateModel({
         </InlineContainer>
         <View>
           {model.exercises.map((ex, index) => (
-            <ProgrammedExercise exercise={ex} key={index} />
+            <ProgrammedExercise exercise={ex} key={index} theme={theme} />
           ))}
         </View>
         <Button
