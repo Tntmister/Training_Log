@@ -5,6 +5,9 @@ import { Exercise } from "../../../../../dataDefinition/data"
 import { Theme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
+import ProgrammedCardioExercise from "./ProgrammedCardioExercise"
+import ProgrammedRegularExercise from "./ProgrammedRegularExercise"
+import ProgrammedStretchingExercise from "./ProgrammedStretchingExercise"
 
 export default function ProgrammedExercise({
   exercise,
@@ -13,13 +16,14 @@ export default function ProgrammedExercise({
   exercise: Exercise;
   theme: Theme;
 }) {
+  console.log(exercise.category)
   return (
     <View
       style={{
         ...styles.container,
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
-        paddingVertical: theme.paddings.s,
+        paddingVertical: theme.paddings.m,
         paddingHorizontal: theme.paddings.m
       }}
     >
@@ -31,53 +35,20 @@ export default function ProgrammedExercise({
       >
         {exercise.name}
       </Text>
-      <InlineContainer
-        style={{ ...styles.subtitleContainer, marginTop: theme.margins.xs }}
-      >
-        <Text
-          style={{
-            ...styles.setNum,
-            ...styles.subtitle,
-            color: theme.colors.primary
-          }}
-        >
-          Set
-        </Text>
-        <Text
-          style={{
-            ...styles.weight,
-            ...styles.subtitle,
-            color: theme.colors.primary
-          }}
-        >
-          Weight
-        </Text>
-        <Text
-          style={{
-            ...styles.repRange,
-            ...styles.subtitle,
-            color: theme.colors.primary
-          }}
-        >
-          Rep. Range
-        </Text>
-        <Text
-          style={{
-            ...styles.reps,
-            ...styles.subtitle,
-            color: theme.colors.primary
-          }}
-        >
-          Reps
-        </Text>
-      </InlineContainer>
+      {exercise.category == "Cardio" ? (
+        <ProgrammedCardioExercise exercise={exercise} theme={theme} />
+      ) : exercise.category == "Stretching" ? (
+        <ProgrammedStretchingExercise exercise={exercise} theme={theme} />
+      ) : (
+        <ProgrammedRegularExercise exercise={exercise} theme={theme} />
+      )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: "95%",
+    width: "98%",
     borderRadius: 10,
     alignSelf: "center"
   },

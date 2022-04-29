@@ -25,11 +25,19 @@ class MediaComponent {
 
 // Sets
 
-class WESet extends MediaComponent {
+export class WESet extends MediaComponent {
   weight = 0;
   repRange = [0, 0];
   repsDone? = 0;
 }
+
+export type WESetType = {
+  weight: number;
+  repRange: number[];
+  repsDone?: number;
+  extraContent: [];
+  annotation: string;
+};
 
 class DESet extends MediaComponent {
   wantedDuration: string | undefined;
