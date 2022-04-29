@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import { Platform, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "../../../../../providers/Theme"
 import { TextInput } from "../../../../reusable/TextInput"
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(18),
     borderRadius: 5,
     paddingHorizontal: 0,
-    height: 30,
+    height: 40,
     marginTop: 0
   }
 })

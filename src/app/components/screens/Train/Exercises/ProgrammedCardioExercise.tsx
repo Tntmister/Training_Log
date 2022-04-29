@@ -6,13 +6,7 @@ import { Theme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
 
-export default function ProgrammedCardioExercise({
-  exercise,
-  theme
-}: {
-  exercise: Exercise;
-  theme: Theme;
-}) {
+export default function ProgrammedCardioExercise({ theme }: { theme: Theme }) {
   return (
     <InlineContainer
       style={{ ...styles.subtitleContainer, marginTop: theme.margins.xs }}

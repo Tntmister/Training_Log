@@ -39,10 +39,26 @@ export type WESetType = {
   annotation: string;
 };
 
-class DESet extends MediaComponent {
-  wantedDuration: string | undefined;
+export type GeneralExercise = {
+  weight?: number;
+  repRange?: number[];
+  repsDone?: number;
+  wantedDuration?: string | undefined;
+  duration?: string;
+  extraContent: [];
+  annotation: string;
+};
+export class DESet extends MediaComponent {
+  wantedDuration?: string | undefined;
   duration?: string;
 }
+
+export type DESetType = {
+  wantedDuration: string | undefined;
+  duration?: string;
+  extraContent: [];
+  annotation: string;
+};
 
 // Exercises
 export type Exercise = {
@@ -52,7 +68,7 @@ export type Exercise = {
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
-  sets?: WESet[] | DESet[];
+  sets?: GeneralExercise[]; // WESetType[] | DESetType[];
 };
 /* 
 export class WeightExercise extends Exercise {

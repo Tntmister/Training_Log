@@ -3,7 +3,11 @@ import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
 import { ScrollView, Text, View } from "react-native"
 import { Appbar } from "react-native-paper"
-import { TrainingModel } from "../../../../../dataDefinition/data"
+import {
+  DESetType,
+  TrainingModel,
+  WESetType
+} from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModelType } from "../../../../../dataDefinition/data"
@@ -50,6 +54,15 @@ export default function CreateModel({
 
   function handleChangeAnotation(newAnotation: string) {
     setModel((prevModel) => ({ ...prevModel, annotation: newAnotation }))
+  }
+
+  function handleSetChange(exNum: number, sets: WESetType[] | DESetType[]) {
+    setModel((prevModel) => ({
+      ...prevModel,
+      exercises: prevModel.exercises.map((ex, index) =>
+        index == exNum ? { ...ex, sets: sets } : ex
+      )
+    }))
   }
 
   return (
@@ -159,7 +172,13 @@ export default function CreateModel({
         </InlineContainer>
         <View>
           {model.exercises.map((ex, index) => (
-            <ProgrammedExercise exercise={ex} key={index} theme={theme} />
+            <ProgrammedExercise
+              exercise={ex}
+              key={index}
+              theme={theme}
+              exNum={index}
+              onSetChange={handleSetChange}
+            />
           ))}
         </View>
         <Button

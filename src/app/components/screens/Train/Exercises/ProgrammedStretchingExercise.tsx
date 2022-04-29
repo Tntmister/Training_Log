@@ -7,10 +7,8 @@ import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
 
 export default function ProgrammedStretchingExercise({
-  exercise,
   theme
 }: {
-  exercise: Exercise;
   theme: Theme;
 }) {
   return (

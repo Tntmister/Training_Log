@@ -1,9 +1,12 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { Exercise } from "../../../../../dataDefinition/data"
+import {
+  DESetType,
+  Exercise,
+  WESetType
+} from "../../../../../dataDefinition/data"
 import { Theme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
 import ProgrammedCardioExercise from "./ProgrammedCardioExercise"
 import ProgrammedRegularExercise from "./ProgrammedRegularExercise"
@@ -11,12 +14,15 @@ import ProgrammedStretchingExercise from "./ProgrammedStretchingExercise"
 
 export default function ProgrammedExercise({
   exercise,
-  theme
+  theme,
+  exNum,
+  onSetChange
 }: {
   exercise: Exercise;
   theme: Theme;
+  exNum: number;
+  onSetChange: (exNum: number, sets: WESetType[] | DESetType[]) => void;
 }) {
-  console.log(exercise.category)
   return (
     <View
       style={{
@@ -36,11 +42,15 @@ export default function ProgrammedExercise({
         {exercise.name}
       </Text>
       {exercise.category == "Cardio" ? (
-        <ProgrammedCardioExercise exercise={exercise} theme={theme} />
+        <ProgrammedCardioExercise theme={theme} />
       ) : exercise.category == "Stretching" ? (
-        <ProgrammedStretchingExercise exercise={exercise} theme={theme} />
+        <ProgrammedStretchingExercise theme={theme} />
       ) : (
-        <ProgrammedRegularExercise exercise={exercise} theme={theme} />
+        <ProgrammedRegularExercise
+          theme={theme}
+          exNum={exNum}
+          onSetChange={onSetChange}
+        />
       )}
     </View>
   )
@@ -55,27 +65,5 @@ const styles = StyleSheet.create({
   title: {
     flexWrap: "wrap",
     fontSize: RFValue(18)
-  },
-  subtitleContainer: {
-    justifyContent: "space-between"
-  },
-  subtitle: {
-    textAlign: "center"
-  },
-  setNum: {
-    //backgroundColor: "green",
-    width: "15%"
-  },
-  weight: {
-    //backgroundColor: "purple",
-    width: "20%"
-  },
-  repRange: {
-    //backgroundColor: "green",
-    width: "45%"
-  },
-  reps: {
-    //backgroundColor: "purple",
-    width: "20%"
   }
 })
