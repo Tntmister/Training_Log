@@ -29,6 +29,7 @@
 		"react-native-dots-pagination": "github:alexanderhodes/react-native-dots-pagination",
 		"react-native-fast-image": "^8.5.11",
 		"react-native-gesture-handler": "^2.4.1",
+		"react-native-image-picker": "^4.8.1",
 		"react-native-linear-gradient": "^2.5.6",
 		"react-native-pager-view": "^5.4.15",
 		"react-native-paper": "^4.12.0",
