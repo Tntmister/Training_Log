@@ -2,8 +2,9 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
-  DESetType,
+  CardioSetType,
   Exercise,
+  StretchingSetType,
   WESetType
 } from "../../../../../dataDefinition/data"
 import { Theme } from "../../../../providers/Theme"
@@ -21,7 +22,10 @@ export default function ProgrammedExercise({
   exercise: Exercise;
   theme: Theme;
   exNum: number;
-  onSetChange: (exNum: number, sets: WESetType[] | DESetType[]) => void;
+  onSetChange: (
+    exNum: number,
+    sets: WESetType[] | StretchingSetType[] | CardioSetType[]
+  ) => void;
 }) {
   return (
     <View
@@ -42,9 +46,17 @@ export default function ProgrammedExercise({
         {exercise.name}
       </Text>
       {exercise.category == "Cardio" ? (
-        <ProgrammedCardioExercise theme={theme} />
+        <ProgrammedCardioExercise
+          theme={theme}
+          exNum={exNum}
+          onSetChange={onSetChange}
+        />
       ) : exercise.category == "Stretching" ? (
-        <ProgrammedStretchingExercise theme={theme} />
+        <ProgrammedStretchingExercise
+          theme={theme}
+          exNum={exNum}
+          onSetChange={onSetChange}
+        />
       ) : (
         <ProgrammedRegularExercise
           theme={theme}

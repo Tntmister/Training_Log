@@ -43,21 +43,37 @@ export type GeneralExercise = {
   weight?: number;
   repRange?: number[];
   repsDone?: number;
-  wantedDuration?: string | undefined;
+  wantedDuration?: string;
   duration?: string;
   extraContent: [];
   annotation: string;
 };
-export class DESet extends MediaComponent {
-  wantedDuration?: string | undefined;
-  duration?: string;
+export class StretchingSet extends MediaComponent {
+  wantedDuration = "00:00";
+  duration = "00:00";
+  weight = 0;
 }
 
-export type DESetType = {
-  wantedDuration: string | undefined;
-  duration?: string;
+export type StretchingSetType = {
+  wantedDuration: string;
+  duration: string;
   extraContent: [];
   annotation: string;
+  weight: number;
+};
+
+export class CardioSet extends MediaComponent {
+  duration = "00:00";
+  weight = 0;
+  distance = 0;
+}
+
+export type CardioSetType = {
+  distance: number;
+  duration: string;
+  extraContent: [];
+  annotation: string;
+  weight: number;
 };
 
 // Exercises

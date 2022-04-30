@@ -4,7 +4,8 @@ import React, { useContext, useEffect, useState } from "react"
 import { ScrollView, Text, View } from "react-native"
 import { Appbar } from "react-native-paper"
 import {
-  DESetType,
+  CardioSetType,
+  StretchingSetType,
   TrainingModel,
   WESetType
 } from "../../../../../dataDefinition/data"
@@ -56,7 +57,10 @@ export default function CreateModel({
     setModel((prevModel) => ({ ...prevModel, annotation: newAnotation }))
   }
 
-  function handleSetChange(exNum: number, sets: WESetType[] | DESetType[]) {
+  function handleSetChange(
+    exNum: number,
+    sets: WESetType[] | StretchingSetType[] | CardioSetType[]
+  ) {
     setModel((prevModel) => ({
       ...prevModel,
       exercises: prevModel.exercises.map((ex, index) =>
