@@ -1,9 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import {
-  Exercise,
-  TrainingModelType
-} from "../../../../../dataDefinition/data"
+import { Exercise, TrainingModel } from "../../../../../dataDefinition/data"
 import ExerciseSelector from "../Exercises/ExerciseSelector"
 import CreateModel from "./CreateModel"
 import Model from "./Model"
@@ -11,7 +8,7 @@ import ModelList from "./ModelList"
 
 export type RootStackParamListModelNav = {
   ModelList: undefined;
-  Model: { model: TrainingModelType };
+  Model: { model: TrainingModel };
   CreateModel: { exercises: Exercise[] };
   ExerciseSelector: undefined;
 };

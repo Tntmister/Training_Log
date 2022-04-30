@@ -7,6 +7,8 @@
     6. Endurance
 */
 
+import { Asset } from "react-native-image-picker"
+
 type ExtraContent = {
   //  images: Object;
   //  video: Object;
@@ -35,7 +37,7 @@ export type WESetType = {
   weight: number;
   repRange: number[];
   repsDone?: number;
-  extraContent: [];
+  mediaContent: Asset[];
   annotation: string;
 };
 
@@ -45,7 +47,7 @@ export type GeneralExercise = {
   repsDone?: number;
   wantedDuration?: string;
   duration?: string;
-  extraContent: [];
+  mediaContent: Asset[];
   annotation: string;
 };
 export class StretchingSet extends MediaComponent {
@@ -57,7 +59,7 @@ export class StretchingSet extends MediaComponent {
 export type StretchingSetType = {
   wantedDuration: string;
   duration: string;
-  extraContent: [];
+  mediaContent: Asset[];
   annotation: string;
   weight: number;
 };
@@ -71,7 +73,7 @@ export class CardioSet extends MediaComponent {
 export type CardioSetType = {
   distance: number;
   duration: string;
-  extraContent: [];
+  mediaContent: Asset[];
   annotation: string;
   weight: number;
 };
@@ -142,7 +144,7 @@ export class TrainingSession {
 }
 
 // Training Model
-export class TrainingModel extends MediaComponent {
+/* export class TrainingModel extends MediaComponent {
   name = "New Training Model";
   author = "";
   exercises: Exercise[] = [];
@@ -150,14 +152,14 @@ export class TrainingModel extends MediaComponent {
   public startSession(): TrainingSession {
     return new TrainingSession(this.exercises, this.name)
   }
-}
+} */
 
-export type TrainingModelType = {
+export type TrainingModel = {
   name: string;
-  author: string | null | undefined;
+  author: string;
   exercises: Exercise[];
-  extraContent: [];
-  annotation: string;
+  mediaContent: Asset[];
+  description: string;
 };
 
 // auxiliar

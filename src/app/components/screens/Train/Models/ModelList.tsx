@@ -4,17 +4,15 @@ import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
 import { Text } from "../../../reusable/Text"
-import { TrainingModelType } from "../../../../../dataDefinition/data"
+import { TrainingModel } from "../../../../../dataDefinition/data"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "./ModelNav"
+import { RootStackParamListModelNav } from "./ModelNav"
 
 export default function ModelList({
   navigation
-}: StackScreenProps<RootStackParamList, "ModelList">) {
+}: StackScreenProps<RootStackParamListModelNav, "ModelList">) {
   const theme = useTheme()
-  const [listOfModels, setListofModels] = useState(
-    useState<TrainingModelType | undefined>(undefined)
-  )
+  const [models, setModels] = useState<TrainingModel[]>([])
 
   useEffect(() => {
     console.log("Getting training models from db")
@@ -27,7 +25,7 @@ export default function ModelList({
           marginTop: theme.margins.s,
           marginBottom: theme.margins.s
         }}
-        onPress={() => navigation.navigate("CreateModel")}
+        onPress={() => navigation.navigate("CreateModel", { exercises: [] })}
       >
         Create your own Training Model
       </Button>

@@ -6,12 +6,11 @@ import { Appbar, IconButton } from "react-native-paper"
 import {
   CardioSetType,
   StretchingSetType,
-  TrainingModel,
   WESetType
 } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
-import { TrainingModelType } from "../../../../../dataDefinition/data"
+import { TrainingModel } from "../../../../../dataDefinition/data"
 import { UserContext } from "../../../../providers/User"
 import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -28,18 +27,20 @@ export default function CreateModel({
   route,
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "CreateModel">) {
-  const [model, setModel] = useState<TrainingModelType>(new TrainingModel())
   const user = useContext(UserContext)
   const theme = useTheme()
 
+  const [model, setModel] = useState<TrainingModel>({
+    name: "New Training Model",
+    author: user!.displayName!,
+    exercises: [],
+    mediaContent: [],
+    description: ""
+  })
   // TODO: incorporar lista de conteudos multimedia no modelo em si
   const [assets, setAssets] = useState<Asset[]>([])
 
   useEffect(() => {
-    setModel((prevModel) => ({
-      ...prevModel,
-      author: user?.displayName
-    }))
     console.log("Exercicios -> " + JSON.stringify(model.exercises))
     console.log("Params -> " + JSON.stringify(route.params))
     //console.log(model.exercises.map((ex) => ex.name))
@@ -96,7 +97,7 @@ export default function CreateModel({
             maxHeight: 120
           }}
           textAlignVertical={"top"}
-          value={model.annotation}
+          value={model.description}
           placeholder={"Training Annotation"}
           multiline={true}
           numberOfLines={5}
