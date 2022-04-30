@@ -84,6 +84,7 @@ export default function ExerciseSearch({
         setExercises(
           searchExercises(searchQuery, category, muscle, equipments)
         )
+        setLoading(false)
       }, 200)
       return () => {
         clearTimeout(timeout)

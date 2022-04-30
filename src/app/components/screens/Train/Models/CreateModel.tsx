@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
-import { ScrollView, Text, View } from "react-native"
-import { Appbar } from "react-native-paper"
+import { Image, ScrollView, Text, View } from "react-native"
+import { Appbar, IconButton } from "react-native-paper"
 import {
   CardioSetType,
   StretchingSetType,
@@ -17,8 +17,12 @@ import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Button } from "../../../reusable/Button"
-import { images } from "../../../../lib/extra"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
+import {
+  launchImageLibrary,
+  launchCamera,
+  Asset
+} from "react-native-image-picker"
 
 export default function CreateModel({
   route,
@@ -27,6 +31,9 @@ export default function CreateModel({
   const [model, setModel] = useState<TrainingModelType>(new TrainingModel())
   const user = useContext(UserContext)
   const theme = useTheme()
+
+  // TODO: incorporar lista de conteudos multimedia no modelo em si
+  const [assets, setAssets] = useState<Asset[]>([])
 
   useEffect(() => {
     setModel((prevModel) => ({
@@ -98,82 +105,82 @@ export default function CreateModel({
         />
         <InlineContainer
           style={{
-            marginVertical: theme.margins.s,
-            marginHorizontal: theme.margins.s
+            marginVertical: theme.margins.s
           }}
         >
-          <Button
-            style={{
-              width: 60,
-              height: 60,
-              marginTop: 0,
-              borderRadius: 30
+          <IconButton
+            size={30}
+            icon="file-upload"
+            onPress={() => {
+              launchImageLibrary({
+                mediaType: "mixed",
+                videoQuality: "high",
+                selectionLimit: 5,
+                quality: 0.2
+              }).then((response) => {
+                if (response.assets !== undefined) {
+                  setAssets([...assets, ...response.assets])
+                }
+              })
             }}
-            labelStyle={{
-              fontSize: RFValue(26)
+          />
+          <IconButton
+            size={30}
+            icon="video"
+            onPress={() => {
+              launchCamera({
+                mediaType: "video",
+                videoQuality: "high",
+                presentationStyle: "currentContext"
+              }).then((response) => {
+                if (response.assets !== undefined) {
+                  setAssets([...assets, ...response.assets])
+                }
+              })
             }}
-            onPress={() => console.log("Add media")}
-            icon={images.Camera}
-            compact={true}
-          >
-            {}
-          </Button>
-
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={true}
-            style={{
-              paddingVertical: theme.margins.s
+          />
+          <IconButton
+            size={30}
+            icon="video-image"
+            onPress={() => {
+              launchCamera({
+                mediaType: "photo",
+                quality: 0.2
+              }).then((response) => {
+                if (response.assets !== undefined) {
+                  setAssets([...assets, ...response.assets])
+                }
+              })
             }}
-          >
-            {/*dummy views*/}
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                marginHorizontal: theme.margins.xs,
-                borderWidth: 2,
-                borderRadius: 10,
-                backgroundColor: "white",
-                borderColor: "white"
-              }}
-            ></View>
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                marginHorizontal: theme.margins.xs,
-                borderWidth: 2,
-                borderRadius: 10,
-                backgroundColor: "white",
-                borderColor: "white"
-              }}
-            ></View>
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                marginHorizontal: theme.margins.xs,
-                borderWidth: 2,
-                borderRadius: 10,
-                backgroundColor: "white",
-                borderColor: "white"
-              }}
-            ></View>
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                marginHorizontal: theme.margins.xs,
-                borderWidth: 2,
-                borderRadius: 10,
-                backgroundColor: "white",
-                borderColor: "white"
-              }}
-            ></View>
-          </ScrollView>
-          {/*dummy views*/}
+          />
         </InlineContainer>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={true}
+          contentContainerStyle={{
+            paddingHorizontal: theme.margins.m,
+            paddingBottom: theme.paddings.m
+          }}
+        >
+          {assets.map((asset) => (
+            <Image
+              key={asset.uri}
+              resizeMode="contain"
+              style={{
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: theme.colors.primary,
+                marginRight: theme.margins.s,
+                width: 100,
+                height: undefined,
+                aspectRatio: 1
+              }}
+              source={{
+                uri: asset.uri
+              }}
+            />
+          ))}
+        </ScrollView>
         <View>
           {model.exercises.map((ex, index) => (
             <ProgrammedExercise
