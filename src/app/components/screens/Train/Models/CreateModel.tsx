@@ -20,7 +20,7 @@ import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import {
   launchImageLibrary,
   launchCamera,
-  Asset
+  ImagePickerResponse
 } from "react-native-image-picker"
 
 export default function CreateModel({
@@ -37,8 +37,6 @@ export default function CreateModel({
     mediaContent: [],
     description: ""
   })
-  // TODO: incorporar lista de conteudos multimedia no modelo em si
-  const [assets, setAssets] = useState<Asset[]>([])
 
   useEffect(() => {
     console.log("Exercicios -> " + JSON.stringify(model.exercises))
@@ -75,6 +73,15 @@ export default function CreateModel({
         index == exNum ? { ...ex, sets: sets } : ex
       )
     }))
+  }
+
+  function onCameraExit(response: ImagePickerResponse) {
+    if (response.assets !== undefined) {
+      setModel((prevModel) => ({
+        ...prevModel,
+        mediaContent: { ...prevModel.mediaContent, ...response.assets }
+      }))
+    }
   }
 
   return (
@@ -118,11 +125,7 @@ export default function CreateModel({
                 videoQuality: "high",
                 selectionLimit: 5,
                 quality: 0.2
-              }).then((response) => {
-                if (response.assets !== undefined) {
-                  setAssets([...assets, ...response.assets])
-                }
-              })
+              }).then(onCameraExit)
             }}
           />
           <IconButton
@@ -131,13 +134,8 @@ export default function CreateModel({
             onPress={() => {
               launchCamera({
                 mediaType: "video",
-                videoQuality: "high",
-                presentationStyle: "currentContext"
-              }).then((response) => {
-                if (response.assets !== undefined) {
-                  setAssets([...assets, ...response.assets])
-                }
-              })
+                videoQuality: "high"
+              }).then(onCameraExit)
             }}
           />
           <IconButton
@@ -147,11 +145,7 @@ export default function CreateModel({
               launchCamera({
                 mediaType: "photo",
                 quality: 0.2
-              }).then((response) => {
-                if (response.assets !== undefined) {
-                  setAssets([...assets, ...response.assets])
-                }
-              })
+              }).then(onCameraExit)
             }}
           />
         </InlineContainer>
@@ -163,7 +157,7 @@ export default function CreateModel({
             paddingBottom: theme.paddings.m
           }}
         >
-          {assets.map((asset) => (
+          {model.mediaContent.map((asset) => (
             <Image
               key={asset.uri}
               resizeMode="contain"
