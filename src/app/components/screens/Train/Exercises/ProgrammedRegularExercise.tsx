@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { WESet as Set, WESetType } from "../../../../../dataDefinition/data"
+import {
+  Exercise,
+  WESet as Set,
+  WESetType
+} from "../../../../../dataDefinition/data"
 import { Theme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
 import InlineContainer from "../../../reusable/InlineContainer"
@@ -11,13 +15,19 @@ import WESet from "./Sets/WESet"
 export default function ProgrammedRegularExercise({
   theme,
   exNum,
+  exercise,
   onSetChange
 }: {
   theme: Theme;
   exNum: number;
+  exercise: Exercise;
   onSetChange: (exNum: number, sets: WESetType[]) => void;
 }) {
-  const [sets, setSets] = useState<WESetType[]>([new Set()])
+  const [sets, setSets] = useState<WESetType[]>([])
+
+  useEffect(() => {
+    setSets(exercise.sets as WESetType[])
+  }, [])
 
   function handleChangeWeight(setIndex: number, weight: number) {
     setSets((prevSets) => {
@@ -53,19 +63,19 @@ export default function ProgrammedRegularExercise({
 
   function deleteSet(setIndex: number) {
     setSets((prevSets) => {
-      console.log(
+      /*console.log(
         `DELETING SET N ${setIndex}:  ${JSON.stringify(prevSets[setIndex])}`
-      )
+      )*/
       return prevSets.filter((set, index) => index != setIndex)
     })
   }
 
   useEffect(() => {
     onSetChange(exNum, sets)
-    console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `)
+    //console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `)
   }, [sets])
 
-  const setElements = sets.map((set, index) => (
+  const setElements = (exercise.sets as WESetType[]).map((set, index) => (
     <WESet
       theme={theme}
       model={true}

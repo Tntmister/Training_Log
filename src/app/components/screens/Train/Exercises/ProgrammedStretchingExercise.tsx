@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
   StretchingSetType,
-  StretchingSet as Set
+  StretchingSet as Set,
+  Exercise
 } from "../../../../../dataDefinition/data"
 import { Theme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
@@ -14,13 +15,19 @@ import StretchingSet from "./Sets/StretchingSet"
 export default function ProgrammedStretchingExercise({
   theme,
   exNum,
+  exercise,
   onSetChange
 }: {
   theme: Theme;
   exNum: number;
+  exercise: Exercise;
   onSetChange: (exNum: number, sets: StretchingSetType[]) => void;
 }) {
-  const [sets, setSets] = useState<StretchingSetType[]>([new Set()])
+  const [sets, setSets] = useState<StretchingSetType[]>([])
+
+  useEffect(() => {
+    setSets(exercise.sets as StretchingSetType[])
+  }, [])
 
   useEffect(() => {
     onSetChange(exNum, sets)
@@ -63,21 +70,23 @@ export default function ProgrammedStretchingExercise({
     setSets((prevSets) => [...prevSets, new Set()])
   }
 
-  const setElements = sets.map((set, index) => (
-    <StretchingSet
-      theme={theme}
-      model={true}
-      setNum={index}
-      key={index}
-      weight={set.weight}
-      wantedDuration={set.wantedDuration}
-      duration={set.duration}
-      onChangeWeight={handleChangeWeight}
-      onChangeWDuration={handleChangeWDuration}
-      onChangeDuration={handleChangeDuration}
-      onDeletePress={deleteSet}
-    />
-  ))
+  const setElements = (exercise.sets as StretchingSetType[]).map(
+    (set, index) => (
+      <StretchingSet
+        theme={theme}
+        model={true}
+        setNum={index}
+        key={index}
+        weight={set.weight}
+        wantedDuration={set.wantedDuration}
+        duration={set.duration}
+        onChangeWeight={handleChangeWeight}
+        onChangeWDuration={handleChangeWDuration}
+        onChangeDuration={handleChangeDuration}
+        onDeletePress={deleteSet}
+      />
+    )
+  )
   return (
     <>
       <InlineContainer

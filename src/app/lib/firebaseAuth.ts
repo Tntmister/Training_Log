@@ -2,6 +2,7 @@ import auth from "@react-native-firebase/auth"
 import { FirebaseError } from "@firebase/util"
 import { Alert, ToastAndroid } from "react-native"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { createUserDoc } from "./firebaseFS"
 
 GoogleSignin.configure({
   webClientId:
@@ -54,6 +55,7 @@ export async function register(
         result.user.updateProfile({
           displayName: username
         })
+        createUserDoc(username)
       })
   } catch (error) {
     switch ((error as FirebaseError).code) {

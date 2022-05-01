@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
   CardioSetType,
-  CardioSet as Set
+  CardioSet as Set,
+  Exercise
 } from "../../../../../dataDefinition/data"
 import { Theme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
@@ -14,13 +15,19 @@ import CardioSet from "./Sets/CardioSet"
 export default function ProgrammedCardioExercise({
   theme,
   exNum,
+  exercise,
   onSetChange
 }: {
   theme: Theme;
   exNum: number;
+  exercise: Exercise;
   onSetChange: (exNum: number, sets: CardioSetType[]) => void;
 }) {
-  const [sets, setSets] = useState<CardioSetType[]>([new Set()])
+  const [sets, setSets] = useState<CardioSetType[]>([])
+
+  useEffect(() => {
+    setSets(exercise.sets as CardioSetType[])
+  }, [])
 
   useEffect(() => {
     onSetChange(exNum, sets)
@@ -63,7 +70,7 @@ export default function ProgrammedCardioExercise({
     setSets((prevSets) => [...prevSets, new Set()])
   }
 
-  const setElements = sets.map((set, index) => (
+  const setElements = (exercise.sets as CardioSetType[]).map((set, index) => (
     <CardioSet
       theme={theme}
       model={true}

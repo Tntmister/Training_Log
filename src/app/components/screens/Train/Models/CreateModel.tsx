@@ -4,16 +4,18 @@ import React, { useContext, useEffect, useState } from "react"
 import { Image, ScrollView, Text, View } from "react-native"
 import { Appbar, IconButton } from "react-native-paper"
 import {
+  CardioSet,
   CardioSetType,
+  StretchingSet,
   StretchingSetType,
-  WESetType
+  WESetType,
+  WESet
 } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModel } from "../../../../../dataDefinition/data"
 import { UserContext } from "../../../../providers/User"
 import { useTheme } from "../../../../providers/Theme"
-import { RFValue } from "react-native-responsive-fontsize"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
@@ -22,6 +24,7 @@ import {
   launchCamera,
   ImagePickerResponse
 } from "react-native-image-picker"
+import { saveModel } from "../../../../lib/firebaseFS"
 
 export default function CreateModel({
   route,
@@ -49,7 +52,18 @@ export default function CreateModel({
       route.params
         ? {
           ...prevModel,
-          exercises: [...prevModel.exercises, ...route.params.exercises]
+          exercises: [
+            ...prevModel.exercises,
+            ...route.params.exercises.map((ex) => ({
+              ...ex,
+              sets:
+                  ex.category == "Cardio"
+                    ? [new CardioSet()]
+                    : ex.category == "Stretching"
+                      ? [new StretchingSet()]
+                      : [new WESet()]
+            }))
+          ]
         }
         : { ...prevModel }
     )
@@ -84,6 +98,23 @@ export default function CreateModel({
     }
   }
 
+  function handleExerciseDelete(exNum: number) {
+    setModel((prevModel) => ({
+      ...prevModel,
+      exercises: prevModel.exercises.filter((ex, index) => exNum != index)
+    }))
+  }
+
+  function handleSaveModel() {
+    if (user?.displayName != null) saveModel(user?.displayName, model)
+    navigation.navigate("ModelList")
+  }
+
+  console.log(
+    `EXERCISES -> ${model.exercises.map(
+      (ex) => ex.name + " " + ex.sets.length
+    )}`
+  )
   return (
     <>
       <Appbar>
@@ -184,6 +215,7 @@ export default function CreateModel({
               theme={theme}
               exNum={index}
               onSetChange={handleSetChange}
+              onExerciseDel={handleExerciseDelete}
             />
           ))}
         </View>
@@ -204,7 +236,7 @@ export default function CreateModel({
             marginTop: theme.margins.m,
             marginBottom: theme.margins.s
           }}
-          onPress={() => console.log("Save the Training Model")}
+          onPress={() => handleSaveModel()}
         >
           Save Training Model
         </Button>

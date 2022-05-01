@@ -7,7 +7,10 @@ import {
   StretchingSetType,
   WESetType
 } from "../../../../../dataDefinition/data"
+import { images } from "../../../../lib/extra"
 import { Theme } from "../../../../providers/Theme"
+import { Button } from "../../../reusable/Button"
+import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
 import ProgrammedCardioExercise from "./ProgrammedCardioExercise"
 import ProgrammedRegularExercise from "./ProgrammedRegularExercise"
@@ -17,7 +20,8 @@ export default function ProgrammedExercise({
   exercise,
   theme,
   exNum,
-  onSetChange
+  onSetChange,
+  onExerciseDel
 }: {
   exercise: Exercise;
   theme: Theme;
@@ -26,6 +30,7 @@ export default function ProgrammedExercise({
     exNum: number,
     sets: WESetType[] | StretchingSetType[] | CardioSetType[]
   ) => void;
+  onExerciseDel: (exNum: number) => void;
 }) {
   return (
     <View
@@ -37,30 +42,52 @@ export default function ProgrammedExercise({
         paddingHorizontal: theme.paddings.m
       }}
     >
-      <Text
-        style={{
-          ...styles.title,
-          color: theme.colors.primary
-        }}
-      >
-        {exercise.name}
-      </Text>
+      <InlineContainer style={{ justifyContent: "space-between" }}>
+        <Text
+          style={{
+            ...styles.title,
+            color: theme.colors.primary
+          }}
+        >
+          {exNum + " " + exercise.name}
+        </Text>
+        <Button
+          style={{
+            ...styles.del,
+            height: 40,
+            marginTop: 0,
+            borderRadius: 5
+          }}
+          labelStyle={{
+            fontSize: RFValue(26)
+          }}
+          onPress={() => onExerciseDel(exNum)}
+          icon={images.Trash}
+          compact={true}
+        >
+          {}
+        </Button>
+      </InlineContainer>
+
       {exercise.category == "Cardio" ? (
         <ProgrammedCardioExercise
           theme={theme}
           exNum={exNum}
+          exercise={exercise}
           onSetChange={onSetChange}
         />
       ) : exercise.category == "Stretching" ? (
         <ProgrammedStretchingExercise
           theme={theme}
           exNum={exNum}
+          exercise={exercise}
           onSetChange={onSetChange}
         />
       ) : (
         <ProgrammedRegularExercise
           theme={theme}
           exNum={exNum}
+          exercise={exercise}
           onSetChange={onSetChange}
         />
       )}
@@ -75,7 +102,13 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   title: {
-    flexWrap: "wrap",
+    //backgroundColor: "green",
+    //flexWrap: "wrap",
+    //width: "50%",
+    textAlign: "center",
     fontSize: RFValue(18)
+  },
+  del: {
+    width: "15%"
   }
 })
