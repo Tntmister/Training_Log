@@ -18,7 +18,7 @@ type ExtraContent = {
 // Component that can have multimedia content attached
 
 class MediaComponent {
-  extraContent: [] = [];
+  mediaContent: [] = [];
   annotation = "";
   /*constructor() {
     this.extraContent = { images: [], video: [] }
@@ -86,7 +86,7 @@ export type Exercise = {
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
-  sets?: GeneralExercise[]; // WESetType[] | DESetType[];
+  sets: WESetType[] | StretchingSetType[] | CardioSetType[];
 };
 /* 
 export class WeightExercise extends Exercise {
