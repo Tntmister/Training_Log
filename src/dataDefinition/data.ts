@@ -9,12 +9,6 @@
 
 import { Asset } from "react-native-image-picker"
 
-type ExtraContent = {
-  //  images: Object;
-  //  video: Object;
-  content: [];
-};
-
 // Component that can have multimedia content attached
 
 class MediaComponent {

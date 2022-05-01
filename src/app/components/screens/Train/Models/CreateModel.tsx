@@ -24,6 +24,7 @@ import {
   launchCamera,
   Asset
 } from "react-native-image-picker"
+import { saveModel } from "../../../../lib/firebaseFS"
 
 export default function CreateModel({
   route,
@@ -95,6 +96,11 @@ export default function CreateModel({
       ...prevModel,
       exercises: prevModel.exercises.filter((ex, index) => exNum != index)
     }))
+  }
+
+  function handleSaveModel() {
+    if (user?.displayName != null) saveModel(user?.displayName, model)
+    navigation.navigate("ModelList")
   }
 
   console.log(
@@ -236,7 +242,7 @@ export default function CreateModel({
             marginTop: theme.margins.m,
             marginBottom: theme.margins.s
           }}
-          onPress={() => console.log("Save the Training Model")}
+          onPress={() => handleSaveModel()}
         >
           Save Training Model
         </Button>

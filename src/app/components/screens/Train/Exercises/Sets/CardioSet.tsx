@@ -10,7 +10,6 @@ import SetFieldInput from "./SetFieldInput"
 
 export default function CardioSet({
   theme,
-  model,
   setNum,
   weight,
   duration,
