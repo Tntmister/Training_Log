@@ -55,7 +55,7 @@ export async function register(
         result.user.updateProfile({
           displayName: username
         })
-        createUserDoc(username)
+        createUserDoc(result.user.uid)
       })
   } catch (error) {
     switch ((error as FirebaseError).code) {

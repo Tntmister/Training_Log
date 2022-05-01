@@ -99,7 +99,7 @@ export default function CreateModel({
   }
 
   function handleSaveModel() {
-    if (user?.displayName != null) saveModel(user?.displayName, model)
+    if (user?.uid != null) saveModel(user?.uid, model)
     navigation.navigate("ModelList")
   }
 
