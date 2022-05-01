@@ -7,6 +7,19 @@ export async function createUserDoc(uID: string) {
   })
 }
 
-export async function saveModel(uID: string, model: TrainingModel) {
-  firestore().collection("users").doc(uID).collection("models").add(model)
+export async function saveModel(
+  uID: string,
+  model: TrainingModel,
+  id: string | null
+) {
+  if (id !== null) {
+    firestore()
+      .collection("users")
+      .doc(uID)
+      .collection("models")
+      .doc(id)
+      .update(model)
+  } else {
+    firestore().collection("users").doc(uID).collection("models").add(model)
+  }
 }

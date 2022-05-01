@@ -12,7 +12,9 @@ export default function ModelList({
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "ModelList">) {
   const theme = useTheme()
-  const [models, setModels] = useState<TrainingModel[]>([])
+  const [models, setModels] = useState<
+  { model: TrainingModel; id: string | null }[]
+  >([])
 
   useEffect(() => {
     console.log("Getting training models from db")
@@ -25,7 +27,9 @@ export default function ModelList({
           marginTop: theme.margins.s,
           marginBottom: theme.margins.s
         }}
-        onPress={() => navigation.navigate("CreateModel", { exercises: [] })}
+        onPress={() =>
+          navigation.navigate("CreateModel", { exercises: [], id: null })
+        }
       >
         Create your own Training Model
       </Button>

@@ -33,6 +33,8 @@ export default function CreateModel({
   const user = useContext(UserContext)
   const theme = useTheme()
 
+  const { id } = route.params
+
   const [model, setModel] = useState<TrainingModel>({
     name: "New Training Model",
     author: user!.displayName!,
@@ -106,7 +108,7 @@ export default function CreateModel({
   }
 
   function handleSaveModel() {
-    if (user?.uid != null) saveModel(user?.uid, model)
+    saveModel(user!.uid, model, id)
     navigation.navigate("ModelList")
   }
 
