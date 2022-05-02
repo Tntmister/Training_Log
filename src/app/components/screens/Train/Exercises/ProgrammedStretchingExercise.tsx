@@ -31,10 +31,10 @@ export default function ProgrammedStretchingExercise({
 
   useEffect(() => {
     onSetChange(exNum, sets)
-    console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `)
+    /* console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `) */
   }, [sets])
 
-  function handleChangeWeight(setIndex: number, weight: number) {
+  function onWeightChange(setIndex: number, weight: number) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex ? { ...set, weight: weight } : set
@@ -42,7 +42,7 @@ export default function ProgrammedStretchingExercise({
     })
   }
 
-  function handleChangeWDuration(setIndex: number, dur: string) {
+  function onChangeWDuration(setIndex: number, dur: string) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex ? { ...set, wantedDuration: dur } : set
@@ -50,7 +50,7 @@ export default function ProgrammedStretchingExercise({
     })
   }
 
-  function handleChangeDuration(setIndex: number, dur: string) {
+  function onChangeDuration(setIndex: number, dur: string) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex ? { ...set, duration: dur } : set
@@ -80,9 +80,9 @@ export default function ProgrammedStretchingExercise({
         weight={set.weight}
         wantedDuration={set.wantedDuration}
         duration={set.duration}
-        onChangeWeight={handleChangeWeight}
-        onChangeWDuration={handleChangeWDuration}
-        onChangeDuration={handleChangeDuration}
+        onChangeWeight={onWeightChange}
+        onChangeWDuration={onChangeWDuration}
+        onChangeDuration={onChangeDuration}
         onDeletePress={deleteSet}
       />
     )

@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { FlatList, Text } from "react-native"
 import { Appbar } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -28,9 +28,7 @@ export default function ExerciseSelector({
       setSelectedExercises((prevArr) => [...prevArr, exercise])
     }
   }
-  useEffect(() => {
-    console.log(selectedExercises.map((ex) => ex.name))
-  }, [selectedExercises])
+
   return (
     <>
       <Appbar>
@@ -82,9 +80,7 @@ export default function ExerciseSelector({
           labelStyle={{
             fontSize: RFValue(26)
           }}
-          onPress={() =>
-            navigation.navigate("CreateModel", { exercises: selectedExercises })
-          }
+          onPress={() => route.params.onSubmit(selectedExercises)}
           icon={images.Train}
           compact={true}
         >
