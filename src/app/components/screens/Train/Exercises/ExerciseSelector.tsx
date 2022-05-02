@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useState } from "react"
-import { FlatList, Text } from "react-native"
+import { FlatList, StyleSheet, Text } from "react-native"
 import { Appbar } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../../dataDefinition/data"
@@ -28,7 +28,7 @@ export default function ExerciseSelector({
       setSelectedExercises((prevArr) => [...prevArr, exercise])
     }
   }
-
+  console.log(selectedExercises.map((ex) => ex.name))
   return (
     <>
       <Appbar>
@@ -71,16 +71,14 @@ export default function ExerciseSelector({
       )}
       {selectedExercises.length > 0 ? (
         <Button
-          style={{
-            width: 60,
-            height: 60,
-            marginTop: 0,
-            borderRadius: 10
-          }}
+          style={styles.addBtn}
           labelStyle={{
             fontSize: RFValue(26)
           }}
-          onPress={() => route.params.onSubmit(selectedExercises)}
+          onPress={() => {
+            route.params.onSubmit(selectedExercises)
+            navigation.goBack()
+          }}
           icon={images.Train}
           compact={true}
         >
@@ -92,3 +90,12 @@ export default function ExerciseSelector({
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  addBtn: {
+    width: 60,
+    height: 60,
+    marginTop: 0,
+    borderRadius: 10
+  }
+})
