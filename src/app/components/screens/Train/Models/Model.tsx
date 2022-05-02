@@ -11,7 +11,7 @@ export default function Model({
   route,
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "Model">) {
-  const { model, id } = route.params
+  const { model } = route.params.model
   const theme = useTheme()
   const styles = StyleSheet.create({
     text: {
@@ -26,14 +26,7 @@ export default function Model({
         <Appbar.BackAction onPress={navigation.goBack}></Appbar.BackAction>
         <Appbar.Content title={model.name} />
       </Appbar>
-      <Button
-        onPress={() =>
-          navigation.navigate("CreateModel", {
-            exercises: model.exercises,
-            id: id
-          })
-        }
-      >
+      <Button onPress={() => navigation.navigate("CreateModel", route.params)}>
         Edit Model
       </Button>
       <Text>Model</Text>

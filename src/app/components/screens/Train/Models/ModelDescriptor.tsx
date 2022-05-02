@@ -20,7 +20,7 @@ function ModelDescriptor({
   const [menuVisible, setMenuVisible] = useState(false)
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Model", model)}
+      onPress={() => navigation.navigate("Model", { model })}
       style={{
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
@@ -49,10 +49,7 @@ function ModelDescriptor({
           <Menu.Item
             title="Edit"
             onPress={() => {
-              navigation.navigate("CreateModel", {
-                exercises: model.model.exercises,
-                id: model.id
-              }),
+              navigation.navigate("CreateModel", { model }),
               setMenuVisible(false)
             }}
           />
@@ -66,7 +63,16 @@ function ModelDescriptor({
             </Text>
           ))}
         </>
-        <Image source={{ uri: model.model.mediaContent[0]?.uri }} />
+        <Image
+          style={{
+            borderRadius: 10,
+            width: 80,
+            height: 80,
+            marginLeft: "auto",
+            marginRight: theme.margins.m
+          }}
+          source={{ uri: model.model.mediaContent[0]?.uri }}
+        />
       </View>
     </TouchableOpacity>
   )

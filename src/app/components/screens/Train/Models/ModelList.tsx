@@ -13,7 +13,7 @@ import ModelDescriptor from "./ModelDescriptor"
 
 export type TrainingModelDoc = {
   model: TrainingModel;
-  id?: string;
+  id: string;
 };
 
 export default function ModelList({
@@ -39,7 +39,7 @@ export default function ModelList({
           marginTop: theme.margins.s,
           marginBottom: theme.margins.s
         }}
-        onPress={() => navigation.navigate("CreateModel", { exercises: [] })}
+        onPress={() => navigation.navigate("CreateModel", {})}
       >
         Create your own Training Model
       </Button>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 import { Image, ScrollView, View } from "react-native"
 import { Appbar, IconButton, Menu } from "react-native-paper"
 import {
@@ -24,7 +24,7 @@ import {
   launchCamera,
   ImagePickerResponse
 } from "react-native-image-picker"
-import { saveModel } from "../../../../lib/firebaseFS"
+import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 
 export default function CreateModel({
   route,
@@ -33,37 +33,18 @@ export default function CreateModel({
   const user = useContext(UserContext)
   const theme = useTheme()
 
-  const { id } = route.params
-
-  const [model, setModel] = useState<TrainingModel>({
-    name: "New Training Model",
-    author: user!.displayName!,
-    exercises: [],
-    mediaContent: [],
-    description: ""
-  })
-
-  useEffect(() => {
-    setModel((prevModel) =>
-      route.params
-        ? {
-          ...prevModel,
-          exercises: [
-            ...prevModel.exercises,
-            ...route.params.exercises.map((ex) => ({
-              ...ex,
-              sets:
-                  ex.category == "Cardio"
-                    ? [new CardioSet()]
-                    : ex.category == "Stretching"
-                      ? [new StretchingSet()]
-                      : [new WESet()]
-            }))
-          ]
-        }
-        : { ...prevModel }
-    )
-  }, [route.params])
+  const id = route.params.model?.id
+  const [model, setModel] = useState<TrainingModel>(
+    route.params.model
+      ? route.params.model.model
+      : {
+        name: "New Training Model",
+        author: user!.displayName!,
+        exercises: [],
+        mediaContent: [],
+        description: ""
+      }
+  )
 
   function onNameChange(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))
@@ -89,7 +70,7 @@ export default function CreateModel({
     if (response.assets !== undefined) {
       setModel((prevModel) => ({
         ...prevModel,
-        mediaContent: { ...prevModel.mediaContent, ...response.assets }
+        mediaContent: [...prevModel.mediaContent, ...response.assets!]
       }))
     }
   }
@@ -101,8 +82,13 @@ export default function CreateModel({
     }))
   }
 
-  function onModelSave() {
-    saveModel(user!.uid, model, id)
+  async function onModelSave() {
+    await saveModel(user!.uid, model, id)
+    navigation.navigate("ModelList")
+  }
+
+  async function onModelDelete() {
+    await deleteModel(user!.uid, id!, model.mediaContent.length > 0)
     navigation.navigate("ModelList")
   }
 
@@ -114,11 +100,17 @@ export default function CreateModel({
         <Appbar.BackAction onPress={navigation.goBack}></Appbar.BackAction>
         <Appbar.Content title={model.name} />
         <Menu
-          anchor={<Appbar.Action icon={"dots-vertical"} />}
+          anchor={
+            <Appbar.Action
+              onPress={() => setMenuVisible(true)}
+              icon={"dots-vertical"}
+            />
+          }
           onDismiss={() => setMenuVisible(false)}
           visible={menuVisible}
         >
-          <Menu.Item title={"Delete Model"} />
+          <Menu.Item title={"Placeholder"} />
+          {id && <Menu.Item onPress={onModelDelete} title={"Delete Model"} />}
         </Menu>
       </Appbar>
       <ScrollView>
@@ -226,7 +218,25 @@ export default function CreateModel({
           }}
           onPress={() => {
             console.log("Add a new exercise")
-            navigation.navigate("ExerciseSelector")
+            navigation.navigate("ExerciseSelector", {
+              onSubmit: (exercises) => {
+                setModel((prevModel) => ({
+                  ...prevModel,
+                  exercises: {
+                    ...prevModel.exercises,
+                    ...exercises.map((ex) => ({
+                      ...ex,
+                      sets:
+                        ex.category == "Cardio"
+                          ? [new CardioSet()]
+                          : ex.category == "Stretching"
+                            ? [new StretchingSet()]
+                            : [new WESet()]
+                    }))
+                  }
+                }))
+              }
+            })
           }}
         >
           Add an Exercise
