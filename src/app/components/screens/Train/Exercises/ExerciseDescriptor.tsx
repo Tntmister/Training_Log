@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
-import { Image, View, TouchableOpacity } from "react-native"
+import { Image, View, TouchableOpacity, StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../../dataDefinition/data"
 import { categoryIcons } from "../../../../lib/exercises"
@@ -29,24 +29,17 @@ function ExerciseDescriptor({
     <TouchableOpacity
       onPress={onPress}
       style={{
-        flexDirection: "row",
-        alignItems: "center",
+        ...styles.container,
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
-        width: "95%",
         paddingVertical: theme.paddings.s,
-        paddingHorizontal: theme.paddings.m,
-        borderRadius: 10,
-        height: 70,
-        elevation: 6
+        paddingHorizontal: theme.paddings.m
       }}
     >
       <Image
         style={{
+          ...styles.image,
           marginRight: theme.margins.s,
-          height: "75%",
-          width: undefined,
-          aspectRatio: 1,
           tintColor: theme.colors.text
         }}
         source={
@@ -57,16 +50,14 @@ function ExerciseDescriptor({
       />
       <View
         style={{
-          flex: 1,
-          justifyContent: "space-evenly",
+          ...styles.txtContainer,
           paddingVertical: theme.paddings.s
         }}
       >
         <Text
           style={{
-            flexWrap: "wrap",
-            color: theme.colors.primary,
-            fontSize: RFValue(16)
+            ...styles.name,
+            color: theme.colors.primary
           }}
         >
           {exercise.name}
@@ -79,3 +70,27 @@ function ExerciseDescriptor({
   )
 }
 export default React.memo(ExerciseDescriptor)
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "95%",
+    borderRadius: 10,
+    height: 70,
+    elevation: 6
+  },
+  image: {
+    height: "75%",
+    width: undefined,
+    aspectRatio: 1
+  },
+  txtContainer: {
+    flex: 1,
+    justifyContent: "space-evenly"
+  },
+  name: {
+    flexWrap: "wrap",
+    fontSize: RFValue(16)
+  }
+})

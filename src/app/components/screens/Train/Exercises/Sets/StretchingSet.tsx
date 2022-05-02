@@ -34,7 +34,6 @@ export default function StretchingSet({
     <InlineContainer
       style={{
         ...styles.container,
-
         paddingVertical: theme.margins.s
       }}
     >

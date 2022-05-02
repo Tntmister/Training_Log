@@ -1,4 +1,4 @@
-import { Dimensions, Image } from "react-native"
+import { Dimensions, Image, StyleSheet } from "react-native"
 import React from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import Home from "./screens/Home"
@@ -24,16 +24,12 @@ export default function Nav() {
         tabBarInactiveTintColor: theme.colors.text,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarShowLabel: false,
-        tabBarIconStyle: {
-          width: 30,
-          height: 30
-        },
+        tabBarIconStyle: styles.icon,
         tabBarIcon: ({ color }) => (
           <Image
             source={images[route.name as keyof typeof images]}
             style={{
-              width: "100%", //focused ? 30 : 25,
-              height: "100%", //focused ? 30 : 25,
+              ...styles.img,
               tintColor: color
             }}
           />
@@ -48,3 +44,14 @@ export default function Nav() {
     </Tab.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30
+  },
+  img: {
+    width: "100%",
+    height: "100%"
+  }
+})

@@ -102,9 +102,6 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   title: {
-    //backgroundColor: "green",
-    //flexWrap: "wrap",
-    //width: "50%",
     textAlign: "center",
     fontSize: RFValue(18)
   },
