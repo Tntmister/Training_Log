@@ -8,8 +8,8 @@ import ModelList from "./ModelList"
 
 export type RootStackParamListModelNav = {
   ModelList: undefined;
-  Model: { model: TrainingModel; id: string | null };
-  CreateModel: { exercises: Exercise[]; id: string | null };
+  Model: { model: TrainingModel; id?: string };
+  CreateModel: { exercises: Exercise[]; id?: string };
   ExerciseSelector: undefined;
 };
 

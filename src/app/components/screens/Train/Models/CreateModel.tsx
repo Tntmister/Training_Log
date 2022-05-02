@@ -34,6 +34,7 @@ export default function CreateModel({
   const theme = useTheme()
 
   const { id } = route.params
+  console.log(id)
 
   const [model, setModel] = useState<TrainingModel>({
     name: "New Training Model",

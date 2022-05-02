@@ -83,7 +83,11 @@ export default function ExerciseSelector({
             fontSize: RFValue(26)
           }}
           onPress={() =>
-            navigation.navigate("CreateModel", { exercises: selectedExercises })
+            navigation.navigate({
+              name: "CreateModel",
+              params: { exercises: selectedExercises },
+              merge: true
+            })
           }
           icon={images.Train}
           compact={true}
