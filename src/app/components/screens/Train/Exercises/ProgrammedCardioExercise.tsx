@@ -31,10 +31,10 @@ export default function ProgrammedCardioExercise({
 
   useEffect(() => {
     onSetChange(exNum, sets)
-    console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `)
+    /* console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `) */
   }, [sets])
 
-  function handleChangeWeight(setIndex: number, weight: number) {
+  function onWeightChange(setIndex: number, weight: number) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex ? { ...set, weight: weight } : set
@@ -42,7 +42,7 @@ export default function ProgrammedCardioExercise({
     })
   }
 
-  function handleChangeDistance(setIndex: number, dist: number) {
+  function onDistanceChange(setIndex: number, dist: number) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex ? { ...set, distance: dist } : set
@@ -50,7 +50,7 @@ export default function ProgrammedCardioExercise({
     })
   }
 
-  function handleChangeDuration(setIndex: number, dur: string) {
+  function onDurationChange(setIndex: number, dur: string) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex ? { ...set, duration: dur } : set
@@ -79,9 +79,9 @@ export default function ProgrammedCardioExercise({
       weight={set.weight}
       duration={set.duration}
       distance={set.distance}
-      onChangeWeight={handleChangeWeight}
-      onChangeDistance={handleChangeDistance}
-      onChangeDuration={handleChangeDuration}
+      onChangeWeight={onWeightChange}
+      onChangeDistance={onDistanceChange}
+      onChangeDuration={onDurationChange}
       onDeletePress={deleteSet}
     />
   ))

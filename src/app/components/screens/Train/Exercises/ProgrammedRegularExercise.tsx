@@ -29,7 +29,7 @@ export default function ProgrammedRegularExercise({
     setSets(exercise.sets as WESetType[])
   }, [])
 
-  function handleChangeWeight(setIndex: number, weight: number) {
+  function onWeightChange(setIndex: number, weight: number) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex ? { ...set, weight: weight } : set
@@ -37,7 +37,7 @@ export default function ProgrammedRegularExercise({
     })
   }
 
-  function handleChangeRepMin(setIndex: number, newMin: number) {
+  function onRepMinChange(setIndex: number, newMin: number) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex
@@ -47,7 +47,7 @@ export default function ProgrammedRegularExercise({
     })
   }
 
-  function handleChangeRepMax(setIndex: number, newMax: number) {
+  function onRepMaxChange(setIndex: number, newMax: number) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
         index == setIndex
@@ -84,9 +84,9 @@ export default function ProgrammedRegularExercise({
       weight={set.weight}
       min={set.repRange[0]}
       max={set.repRange[1]}
-      onChangeWeight={handleChangeWeight}
-      onChangeRepMin={handleChangeRepMin}
-      onChangeRepMax={handleChangeRepMax}
+      onChangeWeight={onWeightChange}
+      onChangeRepMin={onRepMinChange}
+      onChangeRepMax={onRepMaxChange}
       onDeletePress={deleteSet}
     />
   ))
