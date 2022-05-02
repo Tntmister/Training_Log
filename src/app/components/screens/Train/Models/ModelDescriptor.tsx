@@ -1,9 +1,12 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
-import { TouchableOpacity } from "react-native"
+import React, { useState } from "react"
+import { Image, TouchableOpacity, View } from "react-native"
 import { Theme } from "../../../../providers/Theme"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModelDoc } from "./ModelList"
+import { Text } from "../../../reusable/Text"
+import { RFValue } from "react-native-responsive-fontsize"
+import { IconButton, Menu } from "react-native-paper"
 
 function ModelDescriptor({
   model,
@@ -14,22 +17,58 @@ function ModelDescriptor({
   navigation: StackNavigationProp<RootStackParamListModelNav, "ModelList">;
   theme: Theme;
 }) {
+  const [menuVisible, setMenuVisible] = useState(false)
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Model", model)}
       style={{
-        flexDirection: "row",
-        alignItems: "center",
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
+        alignSelf: "center",
+        paddingLeft: theme.paddings.l,
+        paddingBottom: theme.paddings.l,
         width: "95%",
-        paddingVertical: theme.paddings.s,
-        paddingHorizontal: theme.paddings.m,
         borderRadius: 10,
-        height: 70,
         elevation: 6
       }}
-    ></TouchableOpacity>
+    >
+      <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+        <Text style={{ flexGrow: 1, fontSize: RFValue(18) }}>
+          {model.model.name}
+        </Text>
+        <Menu
+          visible={menuVisible}
+          onDismiss={() => setMenuVisible(false)}
+          anchor={
+            <IconButton
+              onPress={() => setMenuVisible(true)}
+              icon={"dots-vertical"}
+            />
+          }
+        >
+          <Menu.Item
+            title="Edit"
+            onPress={() => {
+              navigation.navigate("CreateModel", {
+                exercises: model.model.exercises,
+                id: model.id
+              }),
+              setMenuVisible(false)
+            }}
+          />
+        </Menu>
+      </View>
+      <View>
+        <>
+          {model.model.exercises.map((ex, key) => (
+            <Text style={{ fontSize: RFValue(14) }} key={key}>
+              {ex.sets.length} x {ex.name}
+            </Text>
+          ))}
+        </>
+        <Image source={{ uri: model.model.mediaContent[0]?.uri }} />
+      </View>
+    </TouchableOpacity>
   )
 }
 export default React.memo(ModelDescriptor)

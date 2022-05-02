@@ -57,21 +57,11 @@ export default function ModelList({
               key={index}
             />
           )}
-          getItemLayout={(data, index) => ({
-            length: 100,
-            offset: 100 * index,
-            index
-          })}
           ListEmptyComponent={<Text>You have no training models!</Text>}
           style={{
             marginTop: theme.margins.s,
-            width: "100%"
+            flex: 1
           }}
-          contentContainerStyle={{
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-          showsVerticalScrollIndicator={true}
         />
       )}
     </>

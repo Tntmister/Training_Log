@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
-import { Image, ScrollView, Text, View } from "react-native"
-import { Appbar, IconButton } from "react-native-paper"
+import { Image, ScrollView, View } from "react-native"
+import { Appbar, IconButton, Menu } from "react-native-paper"
 import {
   CardioSet,
   CardioSetType,
@@ -34,7 +34,6 @@ export default function CreateModel({
   const theme = useTheme()
 
   const { id } = route.params
-  console.log(id)
 
   const [model, setModel] = useState<TrainingModel>({
     name: "New Training Model",
@@ -43,12 +42,6 @@ export default function CreateModel({
     mediaContent: [],
     description: ""
   })
-
-  useEffect(() => {
-    console.log("Exercicios -> " + JSON.stringify(model.exercises))
-    console.log("Params -> " + JSON.stringify(route.params))
-    //console.log(model.exercises.map((ex) => ex.name))
-  }, [])
 
   useEffect(() => {
     setModel((prevModel) =>
@@ -72,15 +65,15 @@ export default function CreateModel({
     )
   }, [route.params])
 
-  function handleChangeName(newName: string) {
+  function onNameChange(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))
   }
 
-  function handleChangeAnotation(newAnotation: string) {
-    setModel((prevModel) => ({ ...prevModel, annotation: newAnotation }))
+  function onAnnotationChange(newDescription: string) {
+    setModel((prevModel) => ({ ...prevModel, description: newDescription }))
   }
 
-  function handleSetChange(
+  function onSetChange(
     exNum: number,
     sets: WESetType[] | StretchingSetType[] | CardioSetType[]
   ) {
@@ -101,34 +94,38 @@ export default function CreateModel({
     }
   }
 
-  function handleExerciseDelete(exNum: number) {
+  function onExerciseDelete(exNum: number) {
     setModel((prevModel) => ({
       ...prevModel,
       exercises: prevModel.exercises.filter((ex, index) => exNum != index)
     }))
   }
 
-  function handleSaveModel() {
+  function onModelSave() {
     saveModel(user!.uid, model, id)
     navigation.navigate("ModelList")
   }
 
-  console.log(
-    `EXERCISES -> ${model.exercises.map(
-      (ex) => ex.name + " " + ex.sets.length
-    )}`
-  )
+  const [menuVisible, setMenuVisible] = useState(false)
+
   return (
     <>
       <Appbar>
         <Appbar.BackAction onPress={navigation.goBack}></Appbar.BackAction>
         <Appbar.Content title={model.name} />
+        <Menu
+          anchor={<Appbar.Action icon={"dots-vertical"} />}
+          onDismiss={() => setMenuVisible(false)}
+          visible={menuVisible}
+        >
+          <Menu.Item title={"Delete Model"} />
+        </Menu>
       </Appbar>
       <ScrollView>
         <TextInput
           style={{ width: "60%", marginLeft: theme.margins.m }}
           value={model.name}
-          onChangeText={(text) => handleChangeName(text)}
+          onChangeText={onNameChange}
         />
         <TextInput
           style={{
@@ -143,7 +140,7 @@ export default function CreateModel({
           multiline={true}
           numberOfLines={5}
           maxLength={150}
-          onChangeText={(text) => handleChangeAnotation(text)}
+          onChangeText={onAnnotationChange}
         />
         <InlineContainer
           style={{
@@ -217,8 +214,8 @@ export default function CreateModel({
               key={index}
               theme={theme}
               exNum={index}
-              onSetChange={handleSetChange}
-              onExerciseDel={handleExerciseDelete}
+              onSetChange={onSetChange}
+              onExerciseDel={onExerciseDelete}
             />
           ))}
         </View>
@@ -239,12 +236,10 @@ export default function CreateModel({
             marginTop: theme.margins.m,
             marginBottom: theme.margins.s
           }}
-          onPress={() => handleSaveModel()}
+          onPress={onModelSave}
         >
           Save Training Model
         </Button>
-
-        <Text style={{ color: "white" }}>{JSON.stringify(model, null, 2)}</Text>
       </ScrollView>
     </>
   )
