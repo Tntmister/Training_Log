@@ -1,9 +1,8 @@
 import React from "react"
 import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { images } from "../../../../../lib/extra"
 import { Theme } from "../../../../../providers/Theme"
-import { Button } from "../../../../reusable/Button"
+import { DeleteButton } from "../../../../reusable/DeleteButton"
 import InlineContainer from "../../../../reusable/InlineContainer"
 import { Text } from "../../../../reusable/Text"
 import SetFieldInput from "./SetFieldInput"
@@ -35,7 +34,6 @@ export default function WESet({
     <InlineContainer
       style={{
         ...styles.container,
-
         paddingVertical: theme.margins.s
       }}
     >
@@ -65,22 +63,7 @@ export default function WESet({
         onChangeText={(n) => onChangeRepMax(setNum, parseInt(n))}
       />
       <SetFieldInput style={styles.reps} disabled={model} />
-      <Button
-        style={{
-          ...styles.del,
-          height: 40,
-          marginTop: 0,
-          borderRadius: 5
-        }}
-        labelStyle={{
-          fontSize: RFValue(26)
-        }}
-        onPress={() => onDeletePress(setNum)}
-        icon={images.Trash}
-        compact={true}
-      >
-        {}
-      </Button>
+      <DeleteButton onPress={() => onDeletePress(setNum)}>{}</DeleteButton>
     </InlineContainer>
   )
 }
@@ -111,10 +94,6 @@ const styles = StyleSheet.create({
   },
   reps: {
     //backgroundColor: "purple",
-    width: "15%"
-  },
-  del: {
-    //backgroundColor: "green",
     width: "15%"
   }
 })

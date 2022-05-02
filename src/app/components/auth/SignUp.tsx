@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { ToastAndroid, View } from "react-native"
+import { StyleSheet, ToastAndroid, View } from "react-native"
 import { Checkbox } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { register } from "../../lib/firebaseAuth"
@@ -29,7 +29,7 @@ export default function SignUp() {
   return (
     <View
       style={{
-        alignItems: "center",
+        ...styles.container,
         paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
       }}
@@ -82,3 +82,9 @@ export default function SignUp() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center"
+  }
+})

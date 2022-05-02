@@ -1,22 +1,8 @@
-/*
-    1. Barbell
-    2. Dumbbell
-    3. Machine
-    4. BodyWeight
-    5. Cardio
-    6. Endurance
-*/
-
 import { Asset } from "react-native-image-picker"
-
-// Component that can have multimedia content attached
 
 class MediaComponent {
   mediaContent: [] = [];
   annotation = "";
-  /*constructor() {
-    this.extraContent = { images: [], video: [] }
-  }*/
 }
 
 // Sets
@@ -82,44 +68,6 @@ export type Exercise = {
   secondaryMuscles: string[];
   sets: WESetType[] | StretchingSetType[] | CardioSetType[];
 };
-/* 
-export class WeightExercise extends Exercise {
-  multiplier = 1;
-  sets: WESet[] = [];
-}
-
-export class DurationExercise extends Exercise {
-  sets: DESet[] = [];
-} */
-/*
-export class BarbellExercise extends WeightExercise {
-  categorie = 1;
-}
-
-export class DumbbellExercise extends WeightExercise {
-  multiplier = 2;
-  categorie = 2;
-}
-
-export class MachineExercise extends WeightExercise {
-  categorie = 3;
-}
-
-export class BodyWeightExercise extends WeightExercise {
-  categorie = 4;
-  assisted = false;
-  assistance = 0;
-  weighted = false;
-  weigth = 0;
-}
-
-export class CardioExercise extends DurationExercise {
-  categorie = 5;
-}
-
-export class EnduranceExercise extends DurationExercise {
-  categorie = 6;
-}*/
 
 // Training Session
 export class TrainingSession {
@@ -136,17 +84,6 @@ export class TrainingSession {
     this.name = name
   }
 }
-
-// Training Model
-/* export class TrainingModel extends MediaComponent {
-  name = "New Training Model";
-  author = "";
-  exercises: Exercise[] = [];
-
-  public startSession(): TrainingSession {
-    return new TrainingSession(this.exercises, this.name)
-  }
-} */
 
 export type TrainingModel = {
   name: string;

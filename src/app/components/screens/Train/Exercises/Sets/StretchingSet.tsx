@@ -1,9 +1,8 @@
 import React from "react"
 import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { images } from "../../../../../lib/extra"
 import { Theme } from "../../../../../providers/Theme"
-import { Button } from "../../../../reusable/Button"
+import { DeleteButton } from "../../../../reusable/DeleteButton"
 import InlineContainer from "../../../../reusable/InlineContainer"
 import { Text } from "../../../../reusable/Text"
 import SetFieldInput from "./SetFieldInput"
@@ -62,22 +61,8 @@ export default function StretchingSet({
       />
 
       <SetFieldInput style={styles.time} value={duration} disabled={model} />
-      <Button
-        style={{
-          ...styles.del,
-          height: 40,
-          marginTop: 0,
-          borderRadius: 5
-        }}
-        labelStyle={{
-          fontSize: RFValue(26)
-        }}
-        onPress={() => onDeletePress(setNum)}
-        icon={images.Trash}
-        compact={true}
-      >
-        {}
-      </Button>
+
+      <DeleteButton onPress={() => onDeletePress(setNum)}>{}</DeleteButton>
     </InlineContainer>
   )
 }
@@ -109,9 +94,5 @@ const styles = StyleSheet.create({
   time: {
     //backgroundColor: "purple",
     width: "20%"
-  },
-  del: {
-    //backgroundColor: "green",
-    width: "15%"
   }
 })

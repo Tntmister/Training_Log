@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
   login,
@@ -29,7 +29,7 @@ export default function SignIn() {
   return (
     <View
       style={{
-        alignItems: "center",
+        ...styles.container,
         paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
       }}
@@ -58,18 +58,16 @@ export default function SignIn() {
       </AuthButton>
       <View
         style={{
+          ...styles.bottomContainer,
           marginTop: theme.margins.l,
-          width: "90%",
-          borderTopColor: theme.colors.primary,
-          borderTopWidth: 1
+          borderTopColor: theme.colors.primary
         }}
       >
         <Text
           style={{
+            ...styles.bottomText,
             color: theme.colors.primary,
-            textAlign: "center",
-            paddingTop: theme.paddings.m,
-            fontSize: RFValue(12)
+            paddingTop: theme.paddings.m
           }}
         >
           Or Sign In With
@@ -86,3 +84,17 @@ export default function SignIn() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center"
+  },
+  bottomContainer: {
+    width: "90%",
+    borderTopWidth: 1
+  },
+  bottomText: {
+    textAlign: "center",
+    fontSize: RFValue(12)
+  }
+})

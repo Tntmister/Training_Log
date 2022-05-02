@@ -1,7 +1,8 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React from "react"
-import { Dimensions, Image, View } from "react-native"
+import { Dimensions, Image, StyleSheet, View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
+import { images } from "../../lib/extra"
 import { useTheme } from "../../providers/Theme"
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
@@ -11,15 +12,13 @@ export default function AuthNav() {
   const theme = useTheme()
   const barWidth = Dimensions.get("window").width * 0.8
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View
+      style={{ ...styles.container, backgroundColor: theme.colors.background }}
+    >
       <Image
-        style={{
-          width: "100%",
-          height: "30%",
-          marginTop: theme.margins.m
-        }}
+        style={{ ...styles.logo, marginTop: theme.margins.m }}
         resizeMode="contain"
-        source={require("../../assets/logo/logo1.png")}
+        source={images.Logo}
       />
       <Tab.Navigator
         screenOptions={{
@@ -44,3 +43,13 @@ export default function AuthNav() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  logo: {
+    width: "100%",
+    height: "30%"
+  }
+})

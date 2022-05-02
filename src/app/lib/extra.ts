@@ -6,5 +6,6 @@ export const images = {
   Train: require("../assets/icons/train/train(-xxxhdpi).png"),
   Camera: require("../assets/icons/camera/camera(-xxxhdpi).png"),
   Checked: require("../assets/icons/checked/checked(-xxxhdpi).png"),
-  Trash: require("../assets/icons/trash/trash(-xxxhdpi).png")
+  Trash: require("../assets/icons/trash/trash(-xxxhdpi).png"),
+  Logo : require("../assets/logo/logo1.png")
 }
