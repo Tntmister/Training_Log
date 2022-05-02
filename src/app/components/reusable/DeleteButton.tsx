@@ -6,7 +6,10 @@ import { RFValue } from "react-native-responsive-fontsize"
 import { images } from "../../lib/extra"
 import { Button } from "../reusable/Button"
 
-export function DeleteButton({ ...props }) {
+export function DeleteButton({
+  children,
+  ...props
+}: React.ComponentProps<typeof PaperButton>) {
   return (
     <Button
       style={styles.del}
@@ -17,7 +20,7 @@ export function DeleteButton({ ...props }) {
       compact={true}
       {...props}
     >
-      {}
+      {children}
     </Button>
   )
 }
