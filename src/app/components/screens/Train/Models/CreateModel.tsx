@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useState } from "react"
-import { Image, ScrollView, StyleSheet, View } from "react-native"
+import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from "react-native"
 import { Appbar, IconButton, Menu } from "react-native-paper"
 import {
   CardioSet,
@@ -45,7 +52,7 @@ export default function CreateModel({
         description: ""
       }
   )
-  console.log(model)
+  const [deletedImages] = useState<string[]>([])
 
   function onNameChange(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))
@@ -79,12 +86,20 @@ export default function CreateModel({
   function onExerciseDelete(exNum: number) {
     setModel((prevModel) => ({
       ...prevModel,
-      exercises: prevModel.exercises.filter((ex, index) => exNum != index)
+      exercises: prevModel.exercises.filter((_, index) => exNum != index)
+    }))
+  }
+
+  function onImageDelete(imgNum: number) {
+    deletedImages.push(model.mediaContent[imgNum].fileName!)
+    setModel((prevModel) => ({
+      ...prevModel,
+      mediaContent: prevModel.mediaContent.filter((_, index) => imgNum != index)
     }))
   }
 
   async function onModelSave() {
-    await saveModel(user!.uid, model, id)
+    await saveModel(user!.uid, model, deletedImages, id)
     navigation.navigate("ModelList")
   }
 
@@ -179,19 +194,29 @@ export default function CreateModel({
             paddingBottom: theme.paddings.m
           }}
         >
-          {model.mediaContent.map((asset) => (
-            <Image
-              key={asset.uri}
-              resizeMode="contain"
-              style={{
-                ...styles.media,
-                borderColor: theme.colors.primary,
-                marginRight: theme.margins.s
+          {model.mediaContent.map((asset, index) => (
+            <TouchableOpacity
+              key={index}
+              onLongPress={() => {
+                Alert.alert("Delete Image", "Delete the specified image?", [
+                  { text: "Yes", onPress: () => onImageDelete(index) },
+                  { text: "No" }
+                ])
               }}
-              source={{
-                uri: asset.uri
-              }}
-            />
+            >
+              <Image
+                key={asset.uri}
+                resizeMode="contain"
+                style={{
+                  ...styles.media,
+                  borderColor: theme.colors.primary,
+                  marginRight: theme.margins.s
+                }}
+                source={{
+                  uri: asset.uri
+                }}
+              />
+            </TouchableOpacity>
           ))}
         </ScrollView>
         <View>

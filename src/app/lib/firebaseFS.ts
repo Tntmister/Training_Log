@@ -12,6 +12,7 @@ export async function createUserDoc(uID: string) {
 export async function saveModel(
   uID: string,
   model: TrainingModel,
+  deletedImages: string[],
   id?: string
 ) {
   const collectionReference = firestore()
@@ -20,28 +21,29 @@ export async function saveModel(
     .collection("models")
   if (id === undefined) {
     id = (await collectionReference.add({})).id
+  } else {
+    for (const fileName of deletedImages) {
+      await storage().ref(`users/${uID}/models/${id}/${fileName}}`).delete()
+    }
   }
-  for (const [index, asset] of model.mediaContent.entries()) {
+  for (const asset of model.mediaContent) {
     if (!asset.uri?.startsWith("http")) {
-      const ref = storage().ref(
-        `users/${uID}/models/${id}/${index}.${asset.type?.split("/")[1]}`
-      )
+      const ref = storage().ref(`users/${uID}/models/${id}/${asset.fileName}}`)
       await ref.putFile(asset.uri!)
-      model.mediaContent[index].uri = await ref.getDownloadURL()
+      asset.uri = await ref.getDownloadURL()
     }
   }
   await collectionReference.doc(id).update(model)
 }
 
 export async function deleteModel(uID: string, id: string, hasImages: boolean) {
-  console.log(`users/${uID}/models/${id}`)
   await firestore()
     .collection("users")
     .doc(uID)
     .collection("models")
     .doc(id)
     .delete()
-  if (hasImages) await storage().ref(`users/${uID}/models/${id}`)
+  if (hasImages) await storage().ref(`users/${uID}/models/${id}`).delete()
 }
 
 export function getModels(
