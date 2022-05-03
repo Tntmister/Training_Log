@@ -23,12 +23,12 @@ export async function saveModel(
     id = (await collectionReference.add({})).id
   } else {
     for (const fileName of deletedImages) {
-      await storage().ref(`users/${uID}/models/${id}/${fileName}}`).delete()
+      await storage().ref(`users/${uID}/models/${id}/${fileName}`).delete()
     }
   }
   for (const asset of model.mediaContent) {
     if (!asset.uri?.startsWith("http")) {
-      const ref = storage().ref(`users/${uID}/models/${id}/${asset.fileName}}`)
+      const ref = storage().ref(`users/${uID}/models/${id}/${asset.fileName}`)
       await ref.putFile(asset.uri!)
       asset.uri = await ref.getDownloadURL()
     }
