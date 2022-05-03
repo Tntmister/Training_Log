@@ -27,7 +27,7 @@ export default function ExerciseList({
     >
       <ExerciseSearch setExercises={setExercises} setLoading={setLoading} />
       {loading ? (
-        <Loading color={theme.colors.primary} marginVertical={50} />
+        <Loading />
       ) : (
         <FlatList
           data={exercises}
