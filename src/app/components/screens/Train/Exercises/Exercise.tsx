@@ -11,6 +11,8 @@ import { getImages } from "../../../../lib/exercises"
 import PagerView from "react-native-pager-view"
 import Dots from "react-native-dots-pagination"
 import FastImage from "react-native-fast-image"
+import { Image } from "react-native-paper/lib/typescript/components/Avatar/Avatar"
+import ImageCarousel from "../../../reusable/ImageCarousel"
 
 export default function Exercise({
   route,
@@ -34,8 +36,6 @@ export default function Exercise({
     initImages()
   }, [])
 
-  const [activeImage, setActiveImage] = useState(0)
-
   return (
     <>
       <Appbar>
@@ -43,44 +43,7 @@ export default function Exercise({
         <Appbar.Content title={exercise.name} />
       </Appbar>
       <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-        <View
-          style={{
-            width: "100%",
-            marginBottom: theme.margins.m
-          }}
-        >
-          <PagerView
-            orientation="horizontal"
-            onPageScroll={(event) => {
-              if (event.nativeEvent.offset === 0)
-                setActiveImage(event.nativeEvent.position)
-            }}
-            style={{
-              height: Dimensions.get("screen").width / (3 / 2)
-            }}
-            showPageIndicator={true}
-          >
-            {imageURLs.map((url, key) => {
-              return (
-                <FastImage
-                  key={key}
-                  style={{
-                    width: "100%",
-                    height: undefined,
-                    aspectRatio: 3 / 2,
-                    borderRadius: 10
-                  }}
-                  source={{ uri: url, cache: "web" }}
-                />
-              )
-            })}
-          </PagerView>
-          <Dots
-            activeColor={theme.colors.primary}
-            length={imageURLs.length}
-            active={activeImage}
-          />
-        </View>
+        <ImageCarousel URLs={imageURLs} />
         <Text style={styles.text}>
           Primary Muscle: {exercise.primaryMuscle}
         </Text>
