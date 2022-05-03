@@ -99,7 +99,7 @@ export default function ProgrammedRegularExercise({
           style={{
             ...styles.setNum,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Set
@@ -108,7 +108,7 @@ export default function ProgrammedRegularExercise({
           style={{
             ...styles.weight,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Weight
@@ -117,7 +117,7 @@ export default function ProgrammedRegularExercise({
           style={{
             ...styles.repRange,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Rep. Range
@@ -126,7 +126,7 @@ export default function ProgrammedRegularExercise({
           style={{
             ...styles.reps,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Reps
@@ -135,7 +135,7 @@ export default function ProgrammedRegularExercise({
           style={{
             ...styles.del,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           {""}

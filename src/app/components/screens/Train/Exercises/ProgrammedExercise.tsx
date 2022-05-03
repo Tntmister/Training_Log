@@ -12,6 +12,7 @@ import { Theme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
+import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import ProgrammedCardioExercise from "./ProgrammedCardioExercise"
 import ProgrammedRegularExercise from "./ProgrammedRegularExercise"
 import ProgrammedStretchingExercise from "./ProgrammedStretchingExercise"
@@ -21,7 +22,8 @@ export default function ProgrammedExercise({
   theme,
   exNum,
   onSetChange,
-  onExerciseDel
+  onExerciseDel,
+  onExerciseAnnotationChange
 }: {
   exercise: Exercise;
   theme: Theme;
@@ -31,6 +33,7 @@ export default function ProgrammedExercise({
     sets: WESetType[] | StretchingSetType[] | CardioSetType[]
   ) => void;
   onExerciseDel: (exNum: number) => void;
+  onExerciseAnnotationChange: (exNum: number, txt: string) => void;
 }) {
   return (
     <View
@@ -49,7 +52,7 @@ export default function ProgrammedExercise({
             color: theme.colors.primary
           }}
         >
-          {exNum + " " + exercise.name}
+          {exercise.name}
         </Text>
         <Button
           style={{
@@ -68,7 +71,13 @@ export default function ProgrammedExercise({
           {}
         </Button>
       </InlineContainer>
-
+      <VariableHeightTextInput
+        value={exercise.annotation}
+        placeholder={
+          exercise.annotation.length > 0 ? "" : "Exercise Annotation"
+        }
+        onChangeText={(txt) => onExerciseAnnotationChange(exNum, txt)}
+      />
       {exercise.category == "Cardio" ? (
         <ProgrammedCardioExercise
           theme={theme}

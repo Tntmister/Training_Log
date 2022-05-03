@@ -21,6 +21,7 @@ export const strings_en = {
       noExercisesFound: "No Exercises found!",
       equipment: "Equipment",
       exerciseSelector: "Exercise Selector",
+      exerciseAnnotation: "Exercise Annotation",
       set: "Set",
       weight: "Weight",
       distance: "Distance",

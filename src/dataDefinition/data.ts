@@ -67,6 +67,7 @@ export type Exercise = {
   primaryMuscle: string;
   secondaryMuscles: string[];
   sets: WESetType[] | StretchingSetType[] | CardioSetType[];
+  annotation: string;
 };
 
 // Training Session

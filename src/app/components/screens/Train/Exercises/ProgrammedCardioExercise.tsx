@@ -94,7 +94,7 @@ export default function ProgrammedCardioExercise({
           style={{
             ...styles.setNum,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Set
@@ -103,7 +103,7 @@ export default function ProgrammedCardioExercise({
           style={{
             ...styles.weight,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Weight
@@ -112,7 +112,7 @@ export default function ProgrammedCardioExercise({
           style={{
             ...styles.distance,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Distance
@@ -121,7 +121,7 @@ export default function ProgrammedCardioExercise({
           style={{
             ...styles.time,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Duration
@@ -130,7 +130,7 @@ export default function ProgrammedCardioExercise({
           style={{
             ...styles.del,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           {""}

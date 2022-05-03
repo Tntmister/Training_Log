@@ -41,7 +41,7 @@ export default function WESet({
         style={{
           ...styles.setNum,
           ...styles.box,
-          color: theme.colors.text,
+          color: theme.colors.primary,
           paddingVertical: theme.margins.xs
         }}
       >

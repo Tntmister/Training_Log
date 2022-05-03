@@ -27,6 +27,7 @@
 		"@react-navigation/stack": "^6.2.1",
 		"react": "17.0.2",
 		"react-native": "^0.68.1",
+		"react-native-autogrow-textinput": "^5.4.0",
 		"react-native-dots-pagination": "github:alexanderhodes/react-native-dots-pagination",
 		"react-native-file-access": "^2.4.1",
 		"react-native-gesture-handler": "^2.4.1",

@@ -96,7 +96,7 @@ export default function ProgrammedStretchingExercise({
           style={{
             ...styles.setNum,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Set
@@ -105,7 +105,7 @@ export default function ProgrammedStretchingExercise({
           style={{
             ...styles.weight,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Weight
@@ -114,7 +114,7 @@ export default function ProgrammedStretchingExercise({
           style={{
             ...styles.goalTime,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Goal Time
@@ -123,7 +123,7 @@ export default function ProgrammedStretchingExercise({
           style={{
             ...styles.time,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Time
@@ -132,7 +132,7 @@ export default function ProgrammedStretchingExercise({
           style={{
             ...styles.del,
             ...styles.subtitle,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           {""}

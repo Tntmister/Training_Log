@@ -32,6 +32,7 @@ import {
   ImagePickerResponse
 } from "react-native-image-picker"
 import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
+import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 
 export default function CreateModel({
   route,
@@ -70,6 +71,15 @@ export default function CreateModel({
       ...prevModel,
       exercises: prevModel.exercises.map((ex, index) =>
         index == exNum ? { ...ex, sets: sets } : ex
+      )
+    }))
+  }
+
+  function onExerciseAnnotationChange(exNum: number, text: string) {
+    setModel((prevModel) => ({
+      ...prevModel,
+      exercises: prevModel.exercises.map((ex, index) =>
+        index == exNum ? { ...ex, annotation: text } : ex
       )
     }))
   }
@@ -135,17 +145,13 @@ export default function CreateModel({
           value={model.name}
           onChangeText={onNameChange}
         />
-        <TextInput
+        <VariableHeightTextInput
           style={{
             ...styles.annotation,
             marginLeft: theme.margins.m
           }}
-          textAlignVertical={"top"}
           value={model.description}
           placeholder={"Training Annotation"}
-          multiline={true}
-          numberOfLines={5}
-          maxLength={150}
           onChangeText={onAnnotationChange}
         />
         <InlineContainer
@@ -164,6 +170,10 @@ export default function CreateModel({
                 quality: 0.2
               }).then(onCameraExit)
             }}
+            style={{
+              ...styles.mediaBtn,
+              backgroundColor: theme.colors.primary
+            }}
           />
           <IconButton
             size={30}
@@ -174,6 +184,10 @@ export default function CreateModel({
                 videoQuality: "high"
               }).then(onCameraExit)
             }}
+            style={{
+              ...styles.mediaBtn,
+              backgroundColor: theme.colors.primary
+            }}
           />
           <IconButton
             size={30}
@@ -183,6 +197,10 @@ export default function CreateModel({
                 mediaType: "photo",
                 quality: 0.2
               }).then(onCameraExit)
+            }}
+            style={{
+              ...styles.mediaBtn,
+              backgroundColor: theme.colors.primary
             }}
           />
         </InlineContainer>
@@ -228,6 +246,7 @@ export default function CreateModel({
               exNum={index}
               onSetChange={onSetChange}
               onExerciseDel={onExerciseDelete}
+              onExerciseAnnotationChange={onExerciseAnnotationChange}
             />
           ))}
         </View>
@@ -246,6 +265,7 @@ export default function CreateModel({
                     ...prevModel.exercises,
                     ...exercises.map((ex) => ({
                       ...ex,
+                      annotation: "",
                       sets:
                         ex.category == "Cardio"
                           ? [new CardioSet()]
@@ -280,9 +300,7 @@ const styles = StyleSheet.create({
     width: "60%"
   },
   annotation: {
-    width: "80%",
-    height: "",
-    maxHeight: 120
+    width: "80%"
   },
   media: {
     borderWidth: 1,
@@ -290,5 +308,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: undefined,
     aspectRatio: 1
+  },
+  mediaBtn: {
+    borderRadius: 5
   }
 })

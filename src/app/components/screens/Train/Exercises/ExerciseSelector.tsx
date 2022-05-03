@@ -37,7 +37,7 @@ export default function ExerciseSelector({
       </Appbar>
       <ExerciseSearch setExercises={setExercises} setLoading={setLoading} />
       {loading ? (
-        <Loading color={theme.colors.primary} marginVertical={50} />
+        <Loading color={theme.colors.primary} style={{ marginVertical: 50 }} />
       ) : (
         <FlatList
           data={exercises}
