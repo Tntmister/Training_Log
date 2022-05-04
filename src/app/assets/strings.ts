@@ -30,7 +30,8 @@ export const strings_en = {
       repRange: "Rep. Range",
       reps: "Reps",
       time: "Time",
-      goalTime: "Goal Time"
+      goalTime: "Goal Time",
+      times: "x"
     },
     models: {
       newModel: "New Training Model",
@@ -39,7 +40,8 @@ export const strings_en = {
       deleteModel: "Delete Model",
       trainingAnnotation: "Training Annotation",
       addExercise: "Add an Exercise",
-      saveModel: "Save Training Model"
+      saveModel: "Save Training Model",
+      author: "Author"
     }
   },
   history: {},

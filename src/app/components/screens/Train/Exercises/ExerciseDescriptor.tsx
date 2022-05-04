@@ -15,15 +15,18 @@ function ExerciseDescriptor({
   navigation,
   theme,
   onPress,
-  checked
+  checked,
+  setNum
 }: {
   exercise: Exercise;
   navigation:
   | StackNavigationProp<RootStackParamList, "ExerciseList">
-  | StackNavigationProp<RootStackParamListModelNav, "ExerciseSelector">;
+  | StackNavigationProp<RootStackParamListModelNav, "ExerciseSelector">
+  | StackNavigationProp<RootStackParamListModelNav, "Model">;
   theme: Theme;
   onPress: () => void;
   checked: boolean | null | undefined;
+  setNum?: number;
 }) {
   return (
     <TouchableOpacity
@@ -61,6 +64,7 @@ function ExerciseDescriptor({
           }}
         >
           {exercise.name}
+          {setNum ? ` x ${setNum}` : ""}
         </Text>
         <Text style={{ color: theme.colors.text, fontSize: RFValue(14) }}>
           {exercise.primaryMuscle + " - " + exercise.equipment}

@@ -11,7 +11,7 @@ import { getImages } from "../../../../lib/exercises"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import { Asset } from "react-native-image-picker"
 
-export default function Exercise({
+export function Exercise({
   route,
   navigation
 }: StackScreenProps<RootStackParamList, "Exercise">) {

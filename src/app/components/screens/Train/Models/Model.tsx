@@ -1,17 +1,13 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useState } from "react"
-import { View } from "react-native"
+import React, { useState } from "react"
+import { ScrollView, StyleSheet, View } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
-import { RFValue } from "react-native-responsive-fontsize"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { Appbar, Menu } from "react-native-paper"
 import { Text } from "../../../reusable/Text"
-import CardioSet from "../Exercises/Sets/CardioSet"
-import StretchingSet from "../Exercises/Sets/StretchingSet"
-import { CardioSetType } from "../../../../../dataDefinition/data"
 import MediaCarousel from "../../../reusable/MediaCarousel"
-import { CachedImage } from "@georstat/react-native-image-cache"
-import Loading from "../../../reusable/Loading"
+
+import ExerciseDescriptor from "../Exercises/ExerciseDescriptor"
 
 export default function Model({
   route,
@@ -46,16 +42,60 @@ export default function Model({
           />
         </Menu>
       </Appbar>
-      <View style={{ alignItems: "center", marginTop: theme.margins.m }}>
-        <Text style={{ width: "90%" }}>Author: {model.author}</Text>
-        <Text style={{ marginTop: theme.margins.s, width: "90%" }}>
-          {model.description}a
-        </Text>
+      <View style={{ ...styles.container, marginTop: theme.margins.m }}>
+        <Text style={styles.text}>Author: {model.author}</Text>
+        {model.description.length > 0 && (
+          <Text
+            style={{
+              marginTop: theme.margins.m,
+              padding: theme.margins.s,
+              borderColor: theme.colors.primary,
+              ...styles.text,
+              ...styles.description
+            }}
+          >
+            {model.description}
+          </Text>
+        )}
       </View>
-      <MediaCarousel assets={model.mediaContent} />
-      {model.exercises.map((ex, key) => {
-        return <Text key={key}>{ex.name}</Text>
-      })}
+
+      <ScrollView
+        style={{
+          //...styles.container,
+          marginTop: theme.margins.m
+        }}
+      >
+        {model.mediaContent.length > 0 && (
+          <MediaCarousel assets={model.mediaContent} />
+        )}
+        {model.exercises.map((ex, key) => {
+          return (
+            <ExerciseDescriptor
+              key={key}
+              exercise={ex}
+              navigation={navigation}
+              theme={theme}
+              onPress={() => navigation.navigate("Exercise", { exercise: ex })}
+              checked={undefined}
+              setNum={ex.sets.length}
+            />
+          )
+        })}
+      </ScrollView>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center"
+  },
+  text: {
+    width: "95%"
+    //backgroundColor: "red"
+  },
+  description: {
+    borderWidth: 2,
+    borderRadius: 10
+  }
+})
