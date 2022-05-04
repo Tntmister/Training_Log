@@ -49,7 +49,10 @@ function ModelDescriptor({
           <Menu.Item
             title="Edit"
             onPress={() => {
-              navigation.navigate("CreateModel", { model }),
+              navigation.navigate("EditModel", {
+                model: { ...model },
+                isTS: false
+              }),
               setMenuVisible(false)
             }}
           />

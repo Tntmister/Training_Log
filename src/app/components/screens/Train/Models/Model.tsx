@@ -8,6 +8,7 @@ import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 
 import ExerciseDescriptor from "../Exercises/ExerciseDescriptor"
+import { Button } from "../../../reusable/Button"
 
 export default function Model({
   route,
@@ -35,7 +36,7 @@ export default function Model({
         >
           <Menu.Item
             onPress={() => {
-              navigation.navigate("CreateModel", route.params)
+              navigation.navigate("EditModel", { ...model, isTS: false })
               setMenuVisible(false)
             }}
             title={"Edit Model"}
@@ -64,6 +65,7 @@ export default function Model({
           //...styles.container,
           marginTop: theme.margins.m
         }}
+        contentContainerStyle={{ ...styles.container }}
       >
         {model.mediaContent.length > 0 && (
           <MediaCarousel assets={model.mediaContent} />
@@ -81,6 +83,20 @@ export default function Model({
             />
           )
         })}
+        <Button
+          style={{
+            marginTop: theme.margins.s
+          }}
+          onPress={() => {
+            navigation.navigate("EditModel", {
+              model: { ...route.params.model },
+              isTS: true
+            })
+            setMenuVisible(false)
+          }}
+        >
+          Start Training Session
+        </Button>
       </ScrollView>
     </>
   )

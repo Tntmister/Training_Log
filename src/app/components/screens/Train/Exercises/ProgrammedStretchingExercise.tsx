@@ -16,12 +16,14 @@ export default function ProgrammedStretchingExercise({
   theme,
   exNum,
   exercise,
+  isTS,
   onSetChange
 }: {
   theme: Theme;
   exNum: number;
   exercise: Exercise;
   onSetChange: (exNum: number, sets: StretchingSetType[]) => void;
+  isTS: boolean;
 }) {
   const [sets, setSets] = useState<StretchingSetType[]>([])
 
@@ -74,7 +76,7 @@ export default function ProgrammedStretchingExercise({
     (set, index) => (
       <StretchingSet
         theme={theme}
-        model={true}
+        model={isTS}
         setNum={index}
         key={index}
         weight={set.weight}

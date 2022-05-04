@@ -39,7 +39,9 @@ export default function ModelList({
           marginTop: theme.margins.s,
           marginBottom: theme.margins.s
         }}
-        onPress={() => navigation.navigate("CreateModel", {})}
+        onPress={() =>
+          navigation.navigate("EditModel", { model: undefined, isTS: false })
+        }
       >
         Create your own Training Model
       </Button>

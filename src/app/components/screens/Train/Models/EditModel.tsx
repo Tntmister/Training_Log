@@ -34,14 +34,15 @@ import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import { CachedImage } from "@georstat/react-native-image-cache"
 
-export default function CreateModel({
+export default function EditModel({
   route,
   navigation
-}: StackScreenProps<RootStackParamListModelNav, "CreateModel">) {
+}: StackScreenProps<RootStackParamListModelNav, "EditModel">) {
   const user = useContext(UserContext)
   const theme = useTheme()
 
   const id = route.params.model?.id
+  const isTS = route.params.isTS
   const [model, setModel] = useState<TrainingModel>(
     route.params.model
       ? route.params.model.model
@@ -53,7 +54,7 @@ export default function CreateModel({
         description: ""
       }
   )
-
+  console.log("isTS -> " + route.params.isTS)
   const [deletedImages] = useState<string[]>([])
 
   function onNameChange(newName: string) {
@@ -118,6 +119,16 @@ export default function CreateModel({
     await deleteModel(user!.uid, id!, model.mediaContent.length > 0)
     navigation.navigate("ModelList")
     setMenuVisible(false)
+  }
+
+  async function onTSFinished() {
+    navigation.navigate("ModelList")
+    console.log("Trainig Session Finished")
+  }
+
+  function onTSCancelled() {
+    navigation.navigate("ModelList")
+    console.log("Trainig Session Cancelled")
   }
 
   const [menuVisible, setMenuVisible] = useState(false)
@@ -267,6 +278,7 @@ export default function CreateModel({
               key={index}
               theme={theme}
               exNum={index}
+              isTS={isTS}
               onSetChange={onSetChange}
               onExerciseDel={onExerciseDelete}
               onExerciseAnnotationChange={onExerciseAnnotationChange}
@@ -304,15 +316,39 @@ export default function CreateModel({
         >
           Add an Exercise
         </Button>
-        <Button
-          style={{
-            marginTop: theme.margins.m,
-            marginBottom: theme.margins.s
-          }}
-          onPress={onModelSave}
-        >
-          Save Training Model
-        </Button>
+
+        {isTS ? (
+          <>
+            <Button
+              style={{
+                marginTop: theme.margins.s,
+                marginBottom: theme.margins.s
+              }}
+              onPress={onTSFinished}
+            >
+              Finish Training Session
+            </Button>
+            <Button
+              style={{
+                marginTop: theme.margins.s,
+                marginBottom: theme.margins.s
+              }}
+              onPress={onTSCancelled}
+            >
+              Cancel Training Session
+            </Button>
+          </>
+        ) : (
+          <Button
+            style={{
+              marginTop: theme.margins.s,
+              marginBottom: theme.margins.s
+            }}
+            onPress={onModelSave}
+          >
+            Save Training Model
+          </Button>
+        )}
       </ScrollView>
     </>
   )

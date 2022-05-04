@@ -21,6 +21,7 @@ export default function ProgrammedExercise({
   exercise,
   theme,
   exNum,
+  isTS,
   onSetChange,
   onExerciseDel,
   onExerciseAnnotationChange
@@ -28,6 +29,7 @@ export default function ProgrammedExercise({
   exercise: Exercise;
   theme: Theme;
   exNum: number;
+  isTS: boolean;
   onSetChange: (
     exNum: number,
     sets: WESetType[] | StretchingSetType[] | CardioSetType[]
@@ -84,6 +86,7 @@ export default function ProgrammedExercise({
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}
+          isTS={isTS}
         />
       ) : exercise.category == "Stretching" ? (
         <ProgrammedStretchingExercise
@@ -91,6 +94,7 @@ export default function ProgrammedExercise({
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}
+          isTS={isTS}
         />
       ) : (
         <ProgrammedRegularExercise
@@ -98,6 +102,7 @@ export default function ProgrammedExercise({
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}
+          isTS={isTS}
         />
       )}
     </View>

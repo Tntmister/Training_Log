@@ -36,7 +36,7 @@ export default function Train() {
         }}
         onPress={() => console.log("New Training Session")}
       >
-        Start a new training session
+        Start empty Training Session
       </Button>
     </>
   )
