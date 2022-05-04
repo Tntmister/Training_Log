@@ -1,5 +1,6 @@
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
+import { Asset } from "react-native-image-picker"
 import { Exercise } from "../../dataDefinition/data"
 
 export const categoryIcons = {
@@ -23,15 +24,18 @@ export async function initExercises() {
  * @param name Nome do Exercício
  * @returns Promessa sobre array de URLs de imagens do exercício
  */
-export async function getImages(name: string): Promise<string[]> {
-  const urls: string[] = []
+export async function getImages(name: string): Promise<Asset[]> {
+  const assets: Asset[] = []
   const list = await storage()
     .ref(`exercises/${name.replace("/", "_")}`)
     .list()
   for (const ref of list.items) {
-    urls.push(await ref.getDownloadURL())
+    assets.push({
+      uri: await ref.getDownloadURL(),
+      type: (await ref.getMetadata()).contentType!
+    })
   }
-  return urls
+  return assets
 }
 
 export function searchExercises(

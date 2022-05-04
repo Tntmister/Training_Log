@@ -3,7 +3,6 @@ import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useState } from "react"
 import {
   Alert,
-  Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -33,6 +32,7 @@ import {
 } from "react-native-image-picker"
 import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
+import { CachedImage } from "@georstat/react-native-image-cache"
 
 export default function CreateModel({
   route,
@@ -53,6 +53,7 @@ export default function CreateModel({
         description: ""
       }
   )
+
   const [deletedImages] = useState<string[]>([])
 
   function onNameChange(newName: string) {
@@ -116,6 +117,7 @@ export default function CreateModel({
   async function onModelDelete() {
     await deleteModel(user!.uid, id!, model.mediaContent.length > 0)
     navigation.navigate("ModelList")
+    setMenuVisible(false)
   }
 
   const [menuVisible, setMenuVisible] = useState(false)
@@ -136,7 +138,17 @@ export default function CreateModel({
           visible={menuVisible}
         >
           <Menu.Item title={"Placeholder"} />
-          {id && <Menu.Item onPress={onModelDelete} title={"Delete Model"} />}
+          {id && (
+            <Menu.Item
+              onPress={() =>
+                Alert.alert("Delete Model", "Delete the model?", [
+                  { text: "Yes", onPress: onModelDelete },
+                  { text: "No" }
+                ])
+              }
+              title={"Delete Model"}
+            />
+          )}
         </Menu>
       </Appbar>
       <ScrollView>
@@ -181,7 +193,7 @@ export default function CreateModel({
             onPress={() => {
               launchCamera({
                 mediaType: "video",
-                videoQuality: "high"
+                videoQuality: "low"
               }).then(onCameraExit)
             }}
             style={{
@@ -222,18 +234,29 @@ export default function CreateModel({
                 ])
               }}
             >
-              <Image
-                key={asset.uri}
-                resizeMode="contain"
-                style={{
-                  ...styles.media,
-                  borderColor: theme.colors.primary,
-                  marginRight: theme.margins.s
-                }}
-                source={{
-                  uri: asset.uri
-                }}
-              />
+              <>
+                <CachedImage
+                  key={asset.uri!}
+                  noCache={asset.uri?.startsWith("file")}
+                  resizeMode={"cover"}
+                  style={{
+                    ...styles.media,
+                    marginRight: theme.margins.s
+                  }}
+                  source={asset.uri!}
+                />
+                {/* asset.type?.includes("video") && (
+                  <IconButton
+                    style={{
+                      position: "absolute",
+                      margin: 0,
+                      borderWidth: 1,
+                      borderColor: "#000000"
+                    }}
+                    icon={"play"}
+                  />
+                ) */}
+              </>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -303,11 +326,8 @@ const styles = StyleSheet.create({
     width: "80%"
   },
   media: {
-    borderWidth: 1,
-    borderRadius: 10,
     width: 100,
-    height: undefined,
-    aspectRatio: 1
+    height: 100
   },
   mediaBtn: {
     borderRadius: 5

@@ -8,7 +8,8 @@ import { StyleSheet } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import { getImages } from "../../../../lib/exercises"
-import ImageCarousel from "../../../reusable/ImageCarousel"
+import MediaCarousel from "../../../reusable/MediaCarousel"
+import { Asset } from "react-native-image-picker"
 
 export default function Exercise({
   route,
@@ -24,10 +25,10 @@ export default function Exercise({
       fontSize: RFValue(20)
     }
   })
-  const [imageURLs, setImageURLs] = useState<string[]>([])
+  const [images, setImages] = useState<Asset[]>([])
   useEffect(() => {
     const initImages = async () => {
-      setImageURLs(await getImages(exercise.name))
+      setImages(await getImages(exercise.name))
     }
     initImages()
   }, [])
@@ -39,7 +40,7 @@ export default function Exercise({
         <Appbar.Content title={exercise.name} />
       </Appbar>
       <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-        <ImageCarousel URLs={imageURLs} />
+        <MediaCarousel assets={images} />
         <Text style={styles.text}>
           Primary Muscle: {exercise.primaryMuscle}
         </Text>
