@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import { FlatList, LogBox, StyleSheet, Text } from "react-native"
 import { Appbar } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -25,33 +25,36 @@ export default function ExerciseSelector({
   const [loading, setLoading] = useState(true)
   const [exercises, setExercises] = useState<Exercise[]>([])
 
-  function handleExercisePress(exercise: Exercise) {
-    if (selectedExercises.includes(exercise)) {
-      setSelectedExercises((prevArr) => prevArr.filter((ex) => ex != exercise))
-    } else {
-      setSelectedExercises((prevArr) => [...prevArr, exercise])
-    }
-  }
+  const handleExercisePress = useCallback(
+    (exercise: Exercise, checked: boolean, toggleCheck: () => void) => {
+      checked
+        ? setSelectedExercises((prevArr) =>
+          prevArr.filter((ex) => ex != exercise)
+        )
+        : setSelectedExercises((prevArr) => [...prevArr, exercise])
+
+      toggleCheck()
+    },
+    []
+  )
 
   return (
     <>
       <Appbar>
         <Appbar.BackAction onPress={navigation.goBack}></Appbar.BackAction>
-        <Appbar.Content title="Exercise Selector" />
+        <Appbar.Content title="Add Exercise to Model" />
       </Appbar>
       <ExerciseSearch setExercises={setExercises} setLoading={setLoading} />
       {loading ? (
-        <Loading color={theme.colors.primary} style={{ marginVertical: 50 }} />
+        <Loading />
       ) : (
         <FlatList
           data={exercises}
-          initialNumToRender={8}
           renderItem={({ item, index }) => (
             <ExerciseDescriptor
               key={index}
               exercise={item}
               onPress={handleExercisePress}
-              checked={selectedExercises.includes(item)}
             />
           )}
           getItemLayout={(_, index) => ({
@@ -71,24 +74,21 @@ export default function ExerciseSelector({
           showsVerticalScrollIndicator={true}
         />
       )}
-      {selectedExercises.length > 0 ? (
-        <Button
-          style={styles.addBtn}
-          labelStyle={{
-            fontSize: RFValue(26)
-          }}
-          onPress={() => {
-            route.params.onSubmit(selectedExercises)
-            navigation.goBack()
-          }}
-          icon={images.Train}
-          compact={true}
-        >
-          {}
-        </Button>
-      ) : (
-        <Text></Text>
-      )}
+      <Button
+        disabled={selectedExercises.length === 0}
+        style={styles.addBtn}
+        labelStyle={{
+          fontSize: RFValue(26)
+        }}
+        onPress={() => {
+          route.params.onSubmit(selectedExercises)
+          navigation.goBack()
+        }}
+        icon={images.Train}
+        compact={true}
+      >
+        {}
+      </Button>
     </>
   )
 }

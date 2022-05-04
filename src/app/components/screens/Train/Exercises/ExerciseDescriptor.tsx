@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback, useState } from "react"
 import { Image, View, TouchableOpacity, StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../../dataDefinition/data"
@@ -10,18 +10,23 @@ import { images } from "../../../../lib/extra"
 function ExerciseDescriptor({
   exercise,
   onPress,
-  setNum = 1,
-  checked = false
+  setNum = 1
 }: {
   exercise: Exercise;
-  onPress: (exercise: Exercise) => void;
+  onPress: (
+    exercise: Exercise,
+    checked: boolean,
+    toggleCheck: () => void
+  ) => void;
   setNum?: number;
-  checked?: boolean;
 }) {
+  const [checked, setChecked] = useState(false)
+  const toggleCheck = useCallback(() => setChecked(!checked), [checked])
+  console.log(exercise.name)
   const theme = useTheme()
   return (
     <TouchableOpacity
-      onPress={() => onPress(exercise)}
+      onPress={() => onPress(exercise, checked, toggleCheck)}
       style={{
         ...styles.container,
         backgroundColor: theme.colors.backdrop,
