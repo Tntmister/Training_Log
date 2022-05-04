@@ -54,15 +54,17 @@ export default function WESet({
       />
       <SetFieldInput
         style={styles.repRange}
+        disabled={model}
         value={isNaN(min) ? "0" : min.toString()}
         onChangeText={(n) => onChangeRepMin(setNum, parseInt(n))}
       />
       <SetFieldInput
         style={styles.repRange}
+        disabled={model}
         value={isNaN(max) ? "0" : max.toString()}
         onChangeText={(n) => onChangeRepMax(setNum, parseInt(n))}
       />
-      <SetFieldInput style={styles.reps} disabled={model} />
+      <SetFieldInput style={styles.reps} disabled={!model} />
       <DeleteButton onPress={() => onDeletePress(setNum)}>{}</DeleteButton>
     </InlineContainer>
   )

@@ -55,11 +55,12 @@ export default function StretchingSet({
       />
       <SetFieldInput
         style={styles.goalTime}
+        disabled={model}
         value={wantedDuration}
         onChangeText={(time) => onChangeWDuration(setNum, time)}
       />
 
-      <SetFieldInput style={styles.time} value={duration} disabled={model} />
+      <SetFieldInput style={styles.time} value={duration} disabled={!model} />
 
       <DeleteButton onPress={() => onDeletePress(setNum)}>{}</DeleteButton>
     </InlineContainer>

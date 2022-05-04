@@ -16,11 +16,13 @@ export default function ProgrammedRegularExercise({
   theme,
   exNum,
   exercise,
+  isTS,
   onSetChange
 }: {
   theme: Theme;
   exNum: number;
   exercise: Exercise;
+  isTS: boolean;
   onSetChange: (exNum: number, sets: WESetType[]) => void;
 }) {
   const [sets, setSets] = useState<WESetType[]>([])
@@ -78,7 +80,7 @@ export default function ProgrammedRegularExercise({
   const setElements = (exercise.sets as WESetType[]).map((set, index) => (
     <WESet
       theme={theme}
-      model={true}
+      model={isTS}
       setNum={index}
       key={index}
       weight={set.weight}

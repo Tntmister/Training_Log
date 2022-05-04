@@ -41,8 +41,12 @@ export const strings_en = {
       trainingAnnotation: "Training Annotation",
       addExercise: "Add an Exercise",
       saveModel: "Save Training Model",
-      author: "Author"
-    }
+      author: "Author",
+      startTS: "Start Training Session"
+    },
+    starEmptyTS: "Start empty Training Session",
+    finishTS: "Finish Training Session",
+    cancelTS: "Cancel Training Session"
   },
   history: {},
   home: {},

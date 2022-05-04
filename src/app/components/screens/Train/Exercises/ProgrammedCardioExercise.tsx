@@ -16,11 +16,13 @@ export default function ProgrammedCardioExercise({
   theme,
   exNum,
   exercise,
+  isTS,
   onSetChange
 }: {
   theme: Theme;
   exNum: number;
   exercise: Exercise;
+  isTS: boolean;
   onSetChange: (exNum: number, sets: CardioSetType[]) => void;
 }) {
   const [sets, setSets] = useState<CardioSetType[]>([])
@@ -73,7 +75,7 @@ export default function ProgrammedCardioExercise({
   const setElements = (exercise.sets as CardioSetType[]).map((set, index) => (
     <CardioSet
       theme={theme}
-      model={true}
+      model={isTS}
       setNum={index}
       key={index}
       weight={set.weight}
