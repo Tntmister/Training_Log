@@ -1,36 +1,27 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
 import { Image, View, TouchableOpacity, StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../../dataDefinition/data"
 import { categoryIcons } from "../../../../lib/exercises"
-import { Theme } from "../../../../providers/Theme"
+import { useTheme } from "../../../../providers/Theme"
 import { Text } from "../../../reusable/Text"
-import { RootStackParamListModelNav } from "../Models/ModelNav"
-import { RootStackParamList } from "./ExerciseNav"
 import { images } from "../../../../lib/extra"
 
 function ExerciseDescriptor({
   exercise,
-  navigation,
-  theme,
   onPress,
-  checked,
-  setNum
+  setNum = 1,
+  checked = false
 }: {
   exercise: Exercise;
-  navigation:
-  | StackNavigationProp<RootStackParamList, "ExerciseList">
-  | StackNavigationProp<RootStackParamListModelNav, "ExerciseSelector">
-  | StackNavigationProp<RootStackParamListModelNav, "Model">;
-  theme: Theme;
-  onPress: () => void;
-  checked: boolean | null | undefined;
+  onPress: (exercise: Exercise) => void;
   setNum?: number;
+  checked?: boolean;
 }) {
+  const theme = useTheme()
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => onPress(exercise)}
       style={{
         ...styles.container,
         backgroundColor: theme.colors.backdrop,
@@ -64,7 +55,7 @@ function ExerciseDescriptor({
           }}
         >
           {exercise.name}
-          {setNum ? ` x ${setNum}` : ""}
+          {setNum > 1 && ` x ${setNum}`}
         </Text>
         <Text style={{ color: theme.colors.text, fontSize: RFValue(14) }}>
           {exercise.primaryMuscle + " - " + exercise.equipment}

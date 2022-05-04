@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useState } from "react"
-import { FlatList, StyleSheet, Text } from "react-native"
+import { FlatList, LogBox, StyleSheet, Text } from "react-native"
 import { Appbar } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../../dataDefinition/data"
@@ -11,6 +11,10 @@ import Loading from "../../../reusable/Loading"
 import { RootStackParamListModelNav } from "../Models/ModelNav"
 import ExerciseDescriptor from "./ExerciseDescriptor"
 import ExerciseSearch from "./ExerciseSearch"
+
+LogBox.ignoreLogs([
+  "Non-serializable values were found in the navigation state"
+])
 
 export default function ExerciseSelector({
   route,
@@ -28,7 +32,7 @@ export default function ExerciseSelector({
       setSelectedExercises((prevArr) => [...prevArr, exercise])
     }
   }
-  console.log(selectedExercises.map((ex) => ex.name))
+
   return (
     <>
       <Appbar>
@@ -45,14 +49,12 @@ export default function ExerciseSelector({
           renderItem={({ item, index }) => (
             <ExerciseDescriptor
               key={index}
-              theme={theme}
               exercise={item}
-              navigation={navigation}
-              onPress={() => handleExercisePress(item)}
+              onPress={handleExercisePress}
               checked={selectedExercises.includes(item)}
             />
           )}
-          getItemLayout={(data, index) => ({
+          getItemLayout={(_, index) => ({
             length: 70,
             offset: 70 * index,
             index

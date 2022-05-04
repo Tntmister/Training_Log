@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"emulator": "emulator -avd PIXEL_3_API_30",
 		"android": "react-native run-android",
 		"ios": "react-native run-ios",
 		"start": "react-native start",

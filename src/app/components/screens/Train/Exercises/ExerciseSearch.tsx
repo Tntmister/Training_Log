@@ -67,6 +67,7 @@ export default function ExerciseSearch({
     () => equipmentList.map((value) => ({ label: value, value: value })),
     [equipmentList]
   )
+
   const [init, setInit] = useState(true)
   useEffect(() => {
     const initEx = async () => {
@@ -106,7 +107,7 @@ export default function ExerciseSearch({
   }
 
   return (
-    <>
+    <View style={{ marginTop: theme.margins.s, alignItems: "center" }}>
       <Searchbar
         placeholder="Search Exercises"
         placeholderTextColor={theme.colors.placeholder}
@@ -203,6 +204,6 @@ export default function ExerciseSearch({
           }
         </View>
       </View>
-    </>
+    </View>
   )
 }

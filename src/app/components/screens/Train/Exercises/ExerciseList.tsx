@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { View, FlatList } from "react-native"
+import { FlatList } from "react-native"
 import Loading from "../../../reusable/Loading"
 import { useTheme } from "../../../../providers/Theme"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -17,14 +17,12 @@ export default function ExerciseList({
   const [loading, setLoading] = useState(true)
   const [exercises, setExercises] = useState<Exercise[]>([])
 
+  const onDescriptorPress = (item: Exercise) => {
+    navigation.navigate("Exercise", { exercise: item })
+  }
+
   return (
-    <View
-      style={{
-        marginTop: theme.margins.s,
-        alignItems: "center",
-        width: "100%"
-      }}
-    >
+    <>
       <ExerciseSearch setExercises={setExercises} setLoading={setLoading} />
       {loading ? (
         <Loading />
@@ -35,16 +33,11 @@ export default function ExerciseList({
           renderItem={({ item, index }) => (
             <ExerciseDescriptor
               key={index}
-              theme={theme}
               exercise={item}
-              navigation={navigation}
-              onPress={() =>
-                navigation.navigate("Exercise", { exercise: item })
-              }
-              checked={undefined}
+              onPress={onDescriptorPress}
             />
           )}
-          getItemLayout={(data, index) => ({
+          getItemLayout={(_, index) => ({
             length: 70,
             offset: 70 * index,
             index
@@ -61,6 +54,6 @@ export default function ExerciseList({
           showsVerticalScrollIndicator={true}
         />
       )}
-    </View>
+    </>
   )
 }
