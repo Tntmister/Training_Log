@@ -43,7 +43,13 @@ export async function deleteModel(uID: string, id: string, hasImages: boolean) {
     .collection("models")
     .doc(id)
     .delete()
-  if (hasImages) await storage().ref(`users/${uID}/models/${id}`).delete()
+  console.log(`/users/${uID}/models/${id}`)
+  if (hasImages) {
+    const list = await storage().ref(`/users/${uID}/models/${id}`).listAll()
+    for (const item of list.items) {
+      await item.delete()
+    }
+  }
 }
 
 export function getModels(
