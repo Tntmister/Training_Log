@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet } from "react-native"
+import { StyleSheet, View } from "react-native"
+import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { CardioSetClass, Exercise } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
-import { Button } from "../../../reusable/Button"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
-import { modelModes } from "../Models/EditModel"
+import { modelModes } from "../Models/Model"
 import CardioSet from "./Sets/CardioSet"
 
 export default function ProgrammedCardioExercise({
@@ -65,9 +65,6 @@ export default function ProgrammedCardioExercise({
 
   function deleteSet(setIndex: number) {
     setSets((prevSets) => {
-      console.log(
-        `DELETING SET N ${setIndex}:  ${JSON.stringify(prevSets[setIndex])}`
-      )
       return prevSets.filter((set, index) => index != setIndex)
     })
   }
@@ -132,29 +129,27 @@ export default function ProgrammedCardioExercise({
         >
           Duration
         </Text>
-        <Text
+        <View
           style={{
             ...styles.del,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
-        >
-          {""}
-        </Text>
+        />
       </InlineContainer>
 
       {setElements}
 
       {mode == modelModes.Edit && (
-        <Button
+        <IconButton
+          color={theme.colors.primary}
+          size={30}
           style={{
-            marginTop: theme.margins.m,
-            marginBottom: theme.margins.s
+            width: "100%",
+            alignSelf: "center"
           }}
           onPress={addSet}
-        >
-          Add Set
-        </Button>
+          icon={"plus"}
+        />
       )}
     </>
   )

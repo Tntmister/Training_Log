@@ -10,7 +10,7 @@ import { UserContext } from "../../../../providers/User"
 import { getModels } from "../../../../lib/firebaseFS"
 import Loading from "../../../reusable/Loading"
 import ModelDescriptor from "./ModelDescriptor"
-import { modelModes } from "./EditModel"
+import { modelModes } from "./Model"
 
 export type TrainingModelDoc = {
   model: TrainingModel;

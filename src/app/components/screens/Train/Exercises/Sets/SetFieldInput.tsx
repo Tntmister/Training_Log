@@ -5,7 +5,7 @@ import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "../../../../../providers/Theme"
 import { Text } from "../../../../reusable/Text"
 import { TextInput } from "../../../../reusable/TextInput"
-import { modelModes } from "../../Models/EditModel"
+import { modelModes } from "../../Models/Model"
 
 export default function SetFieldInput({
   inputMode,

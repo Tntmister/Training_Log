@@ -14,7 +14,7 @@ import { Theme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
-import { modelModes } from "../Models/EditModel"
+import { modelModes } from "../Models/Model"
 import ProgrammedCardioExercise from "./ProgrammedCardioExercise"
 import ProgrammedRegularExercise from "./ProgrammedRegularExercise"
 import ProgrammedStretchingExercise from "./ProgrammedStretchingExercise"
@@ -122,7 +122,6 @@ export default function ProgrammedExercise({
         />
       ) : exercise.category == "Stretching" ? (
         <ProgrammedStretchingExercise
-          theme={theme}
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}
@@ -130,7 +129,6 @@ export default function ProgrammedExercise({
         />
       ) : (
         <ProgrammedRegularExercise
-          theme={theme}
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}

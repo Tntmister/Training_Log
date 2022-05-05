@@ -6,7 +6,7 @@ import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import InlineContainer from "../../../../reusable/InlineContainer"
 import { Text } from "../../../../reusable/Text"
-import { modelModes } from "../../Models/EditModel"
+import { modelModes } from "../../Models/Model"
 import SetFieldInput from "./SetFieldInput"
 
 export default function CardioSet({
@@ -39,7 +39,7 @@ export default function CardioSet({
     <InlineContainer
       style={{
         ...styles.container,
-        paddingVertical: theme.margins.s
+        paddingVertical: theme.margins.xs
       }}
     >
       <Text

@@ -7,7 +7,7 @@ import { TrainingModelDoc } from "./ModelList"
 import { Text } from "../../../reusable/Text"
 import { RFValue } from "react-native-responsive-fontsize"
 import { IconButton, Menu } from "react-native-paper"
-import { modelModes } from "./EditModel"
+import { modelModes } from "./Model"
 
 function ModelDescriptor({
   model,
@@ -21,7 +21,9 @@ function ModelDescriptor({
   const [menuVisible, setMenuVisible] = useState(false)
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Model", { model })}
+      onPress={() =>
+        navigation.navigate("EditModel", { model, mode: modelModes.View })
+      }
       style={{
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,

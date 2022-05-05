@@ -1,39 +1,46 @@
 import React from "react"
-import { StyleSheet } from "react-native"
+import { StyleSheet, View } from "react-native"
+import { Checkbox, IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { Theme } from "../../../../../providers/Theme"
+import { images } from "../../../../../lib/extra"
+import { useTheme } from "../../../../../providers/Theme"
 import InlineContainer from "../../../../reusable/InlineContainer"
 import { Text } from "../../../../reusable/Text"
+import { modelModes } from "../../Models/Model"
 import SetFieldInput from "./SetFieldInput"
 
 export default function StretchingSet({
-  theme,
-  model,
+  mode,
   setNum,
   weight,
-  wantedDuration,
   duration,
+  wantedDuration,
+  done,
   onChangeWeight,
   onChangeWDuration,
-  onDeletePress
+  onChangeDuration,
+  onDeletePress,
+  onSetCheckbox
 }: {
-  theme: Theme;
-  model: boolean;
+  mode: modelModes;
   setNum: number;
   weight: number;
   wantedDuration?: string;
   duration: string;
   distance?: number;
+  done: boolean;
   onChangeWeight: (setIndex: number, weight: number) => void;
   onChangeWDuration: (setIndex: number, dur: string) => void;
   onChangeDuration: (setIndex: number, dur: string) => void;
   onDeletePress: (setIndex: number) => void;
+  onSetCheckbox: (setIndex: number) => void;
 }) {
+  const theme = useTheme()
   return (
     <InlineContainer
       style={{
         ...styles.container,
-        paddingVertical: theme.margins.s
+        paddingVertical: theme.margins.xs
       }}
     >
       <Text
@@ -48,19 +55,40 @@ export default function StretchingSet({
       </Text>
 
       <SetFieldInput
+        inputMode={mode}
         style={styles.weight}
         value={isNaN(weight) ? "0" : weight.toString()}
         onChangeText={(w) => onChangeWeight(setNum, parseFloat(w))}
       />
       <SetFieldInput
+        inputMode={mode}
         style={styles.goalTime}
-        disabled={model}
+        value={duration}
+        onChangeText={(time) => onChangeDuration(setNum, time)}
+      />
+      <SetFieldInput
+        inputMode={mode}
+        style={styles.goalTime}
         value={wantedDuration}
         onChangeText={(time) => onChangeWDuration(setNum, time)}
+        disabled={mode != modelModes.Edit}
       />
-
-      <SetFieldInput style={styles.time} value={duration} disabled={!model} />
-      <IconButton icon={images.Trash} onPress={() => onDeletePress(setNum)} />
+      <View style={{ width: "10%", alignItems: "center" }}>
+        {mode == modelModes.Edit ? (
+          <IconButton
+            style={{ backgroundColor: theme.colors.primary, borderRadius: 5 }}
+            icon={images.Trash}
+            onPress={() => onDeletePress(setNum)}
+          />
+        ) : (
+          mode == modelModes.Session && (
+            <Checkbox
+              status={done ? "checked" : "unchecked"}
+              onPress={() => onSetCheckbox(setNum)}
+            />
+          )
+        )}
+      </View>
     </InlineContainer>
   )
 }

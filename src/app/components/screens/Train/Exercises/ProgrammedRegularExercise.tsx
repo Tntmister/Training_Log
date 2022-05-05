@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet } from "react-native"
+import { StyleSheet, View } from "react-native"
+import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import {
-  Exercise,
-  WESet as Set,
-  WESetType
-} from "../../../../../dataDefinition/data"
-import { Theme } from "../../../../providers/Theme"
-import { Button } from "../../../reusable/Button"
+import { Exercise, WESetClass } from "../../../../../dataDefinition/data"
+import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
+import { modelModes } from "../Models/Model"
 import WESet from "./Sets/WESet"
 
 export default function ProgrammedRegularExercise({
-  theme,
   exNum,
   exercise,
-  isTS,
+  mode,
   onSetChange
 }: {
-  theme: Theme;
   exNum: number;
   exercise: Exercise;
-  isTS: boolean;
-  onSetChange: (exNum: number, sets: WESetType[]) => void;
+  mode: modelModes;
+  onSetChange: (exNum: number, sets: WESetClass[]) => void;
 }) {
-  const [sets, setSets] = useState<WESetType[]>([])
+  const theme = useTheme()
+  const [sets, setSets] = useState<WESetClass[]>([])
 
   useEffect(() => {
-    setSets(exercise.sets as WESetType[])
+    setSets(exercise.sets as WESetClass[])
   }, [])
-
+  function onSetCheckBox(setIndex: number) {
+    setSets((prevSets) => {
+      return prevSets.map((set, index) =>
+        index == setIndex ? { ...set, done: !set.done } : set
+      )
+    })
+  }
   function onWeightChange(setIndex: number, weight: number) {
     setSets((prevSets) => {
       return prevSets.map((set, index) =>
@@ -60,29 +62,25 @@ export default function ProgrammedRegularExercise({
   }
 
   function addSet() {
-    setSets((prevSets) => [...prevSets, new Set()])
+    setSets((prevSets) => [...prevSets, new WESetClass()])
   }
 
   function deleteSet(setIndex: number) {
     setSets((prevSets) => {
-      /*console.log(
-        `DELETING SET N ${setIndex}:  ${JSON.stringify(prevSets[setIndex])}`
-      )*/
       return prevSets.filter((set, index) => index != setIndex)
     })
   }
 
   useEffect(() => {
     onSetChange(exNum, sets)
-    //console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `)
   }, [sets])
 
-  const setElements = (exercise.sets as WESetType[]).map((set, index) => (
+  const setElements = (exercise.sets as WESetClass[]).map((set, index) => (
     <WESet
-      theme={theme}
-      model={isTS}
+      mode={mode}
       setNum={index}
       key={index}
+      done={set.done}
       weight={set.weight}
       min={set.repRange[0]}
       max={set.repRange[1]}
@@ -90,6 +88,7 @@ export default function ProgrammedRegularExercise({
       onChangeRepMin={onRepMinChange}
       onChangeRepMax={onRepMaxChange}
       onDeletePress={deleteSet}
+      onSetCheckbox={onSetCheckBox}
     />
   ))
   return (
@@ -133,28 +132,28 @@ export default function ProgrammedRegularExercise({
         >
           Reps
         </Text>
-        <Text
+        <View
           style={{
             ...styles.del,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
-        >
-          {""}
-        </Text>
+        />
       </InlineContainer>
 
       {setElements}
 
-      <Button
-        style={{
-          marginTop: theme.margins.m,
-          marginBottom: theme.margins.s
-        }}
-        onPress={addSet}
-      >
-        Add Set
-      </Button>
+      {mode == modelModes.Edit && (
+        <IconButton
+          color={theme.colors.primary}
+          size={30}
+          style={{
+            width: "100%",
+            alignSelf: "center"
+          }}
+          onPress={addSet}
+          icon={"plus"}
+        />
+      )}
     </>
   )
 }
