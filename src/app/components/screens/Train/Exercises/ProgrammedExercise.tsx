@@ -1,18 +1,20 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
+import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
-  CardioSetType,
+  CardioSetClass,
   Exercise,
-  StretchingSetType,
-  WESetType
+  StretchingSetClass,
+  WESetClass
 } from "../../../../../dataDefinition/data"
+import { categoryIcons } from "../../../../lib/exercises"
 import { images } from "../../../../lib/extra"
 import { Theme } from "../../../../providers/Theme"
-import { Button } from "../../../reusable/Button"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
+import { modelModes } from "../Models/EditModel"
 import ProgrammedCardioExercise from "./ProgrammedCardioExercise"
 import ProgrammedRegularExercise from "./ProgrammedRegularExercise"
 import ProgrammedStretchingExercise from "./ProgrammedStretchingExercise"
@@ -21,7 +23,7 @@ export default function ProgrammedExercise({
   exercise,
   theme,
   exNum,
-  isTS,
+  mode,
   onSetChange,
   onExerciseDel,
   onExerciseAnnotationChange
@@ -29,10 +31,10 @@ export default function ProgrammedExercise({
   exercise: Exercise;
   theme: Theme;
   exNum: number;
-  isTS: boolean;
+  mode: modelModes;
   onSetChange: (
     exNum: number,
-    sets: WESetType[] | StretchingSetType[] | CardioSetType[]
+    sets: WESetClass[] | StretchingSetClass[] | CardioSetClass[]
   ) => void;
   onExerciseDel: (exNum: number) => void;
   onExerciseAnnotationChange: (exNum: number, txt: string) => void;
@@ -44,49 +46,79 @@ export default function ProgrammedExercise({
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
         paddingVertical: theme.paddings.m,
-        paddingHorizontal: theme.paddings.m
+        paddingHorizontal: theme.paddings.l
       }}
     >
-      <InlineContainer style={{ justifyContent: "space-between" }}>
+      <InlineContainer
+        style={{
+          justifyContent: "space-between",
+          marginTop: theme.margins.s
+        }}
+      >
+        <Image
+          style={{
+            height: 40,
+            width: 40,
+            marginRight: theme.margins.s,
+            tintColor: theme.colors.text
+          }}
+          source={
+            categoryIcons[exercise.category as keyof typeof categoryIcons]
+          }
+        />
         <Text
           style={{
             ...styles.title,
-            color: theme.colors.primary
+            flexGrow: 1,
+            textAlign: "left",
+            paddingLeft: theme.paddings.xl,
+            color: theme.colors.primary,
+            fontSize: RFValue(20)
           }}
         >
           {exercise.name}
         </Text>
-        <Button
-          style={{
-            ...styles.del,
-            height: 40,
-            marginTop: 0,
-            borderRadius: 5
-          }}
-          labelStyle={{
-            fontSize: RFValue(26)
-          }}
-          onPress={() => onExerciseDel(exNum)}
-          icon={images.Trash}
-          compact={true}
-        >
-          {}
-        </Button>
+        {mode == modelModes.Edit && (
+          <IconButton
+            style={{
+              ...styles.del,
+              backgroundColor: theme.colors.primary,
+              height: 40,
+              margin: 0
+            }}
+            size={RFValue(26)}
+            onPress={() => onExerciseDel(exNum)}
+            icon={images.Trash}
+          />
+        )}
       </InlineContainer>
-      <VariableHeightTextInput
-        value={exercise.annotation}
-        placeholder={
-          exercise.annotation.length > 0 ? "" : "Exercise Annotation"
-        }
-        onChangeText={(txt) => onExerciseAnnotationChange(exNum, txt)}
-      />
+      {mode == modelModes.Edit ? (
+        <VariableHeightTextInput
+          value={exercise.annotation}
+          placeholder={
+            exercise.annotation.length > 0 ? "" : "Exercise Annotation"
+          }
+          onChangeText={(txt) => onExerciseAnnotationChange(exNum, txt)}
+        />
+      ) : (
+        exercise.annotation.length > 0 && (
+          <Text
+            style={{
+              borderRadius: 5,
+              borderColor: theme.colors.background,
+              borderWidth: 1
+            }}
+          >
+            {exercise.annotation}
+          </Text>
+        )
+      )}
       {exercise.category == "Cardio" ? (
         <ProgrammedCardioExercise
-          theme={theme}
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}
-          isTS={isTS}
+          mode={mode}
         />
       ) : exercise.category == "Stretching" ? (
         <ProgrammedStretchingExercise
@@ -94,7 +126,7 @@ export default function ProgrammedExercise({
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}
-          isTS={isTS}
+          mode={mode}
         />
       ) : (
         <ProgrammedRegularExercise
@@ -102,7 +134,7 @@ export default function ProgrammedExercise({
           exNum={exNum}
           exercise={exercise}
           onSetChange={onSetChange}
-          isTS={isTS}
+          mode={mode}
         />
       )}
     </View>
@@ -120,6 +152,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(18)
   },
   del: {
+    borderRadius: 5,
     width: "15%"
   }
 })

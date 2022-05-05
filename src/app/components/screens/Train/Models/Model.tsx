@@ -9,6 +9,7 @@ import MediaCarousel from "../../../reusable/MediaCarousel"
 
 import ExerciseDescriptor from "../Exercises/ExerciseDescriptor"
 import { Button } from "../../../reusable/Button"
+import { modelModes } from "./EditModel"
 
 export default function Model({
   route,
@@ -36,7 +37,10 @@ export default function Model({
         >
           <Menu.Item
             onPress={() => {
-              navigation.navigate("EditModel", { ...model, isTS: false })
+              navigation.navigate("EditModel", {
+                model: route.params.model,
+                mode: modelModes.Edit
+              })
               setMenuVisible(false)
             }}
             title={"Edit Model"}
@@ -75,10 +79,7 @@ export default function Model({
             <ExerciseDescriptor
               key={key}
               exercise={ex}
-              navigation={navigation}
-              theme={theme}
               onPress={() => navigation.navigate("Exercise", { exercise: ex })}
-              checked={undefined}
               setNum={ex.sets.length}
             />
           )
@@ -89,8 +90,8 @@ export default function Model({
           }}
           onPress={() => {
             navigation.navigate("EditModel", {
-              model: { ...route.params.model },
-              isTS: true
+              model: route.params.model,
+              mode: modelModes.Session
             })
             setMenuVisible(false)
           }}

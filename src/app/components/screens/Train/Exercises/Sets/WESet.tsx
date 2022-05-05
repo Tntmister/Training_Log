@@ -2,7 +2,6 @@ import React from "react"
 import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Theme } from "../../../../../providers/Theme"
-import { DeleteButton } from "../../../../reusable/DeleteButton"
 import InlineContainer from "../../../../reusable/InlineContainer"
 import { Text } from "../../../../reusable/Text"
 import SetFieldInput from "./SetFieldInput"
@@ -65,7 +64,7 @@ export default function WESet({
         onChangeText={(n) => onChangeRepMax(setNum, parseInt(n))}
       />
       <SetFieldInput style={styles.reps} disabled={!model} />
-      <DeleteButton onPress={() => onDeletePress(setNum)}>{}</DeleteButton>
+      <IconButton icon={images.Trash} onPress={() => onDeletePress(setNum)} />
     </InlineContainer>
   )
 }

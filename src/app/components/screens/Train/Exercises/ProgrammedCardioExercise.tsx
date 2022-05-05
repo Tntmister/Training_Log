@@ -1,40 +1,43 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import {
-  CardioSetType,
-  CardioSet as Set,
-  Exercise
-} from "../../../../../dataDefinition/data"
-import { Theme } from "../../../../providers/Theme"
+import { CardioSetClass, Exercise } from "../../../../../dataDefinition/data"
+import { useTheme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
 import InlineContainer from "../../../reusable/InlineContainer"
 import { Text } from "../../../reusable/Text"
+import { modelModes } from "../Models/EditModel"
 import CardioSet from "./Sets/CardioSet"
 
 export default function ProgrammedCardioExercise({
-  theme,
   exNum,
   exercise,
-  isTS,
+  mode,
   onSetChange
 }: {
-  theme: Theme;
   exNum: number;
   exercise: Exercise;
-  isTS: boolean;
-  onSetChange: (exNum: number, sets: CardioSetType[]) => void;
+  mode: modelModes;
+  onSetChange: (exNum: number, sets: CardioSetClass[]) => void;
 }) {
-  const [sets, setSets] = useState<CardioSetType[]>([])
+  const theme = useTheme()
+  const [sets, setSets] = useState<CardioSetClass[]>([])
 
   useEffect(() => {
-    setSets(exercise.sets as CardioSetType[])
+    setSets(exercise.sets as CardioSetClass[])
   }, [])
 
   useEffect(() => {
     onSetChange(exNum, sets)
-    /* console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `) */
   }, [sets])
+
+  function onSetCheckBox(setIndex: number) {
+    setSets((prevSets) => {
+      return prevSets.map((set, index) =>
+        index == setIndex ? { ...set, done: !set.done } : set
+      )
+    })
+  }
 
   function onWeightChange(setIndex: number, weight: number) {
     setSets((prevSets) => {
@@ -69,15 +72,15 @@ export default function ProgrammedCardioExercise({
     })
   }
   function addSet() {
-    setSets((prevSets) => [...prevSets, new Set()])
+    setSets((prevSets) => [...prevSets, new CardioSetClass()])
   }
 
-  const setElements = (exercise.sets as CardioSetType[]).map((set, index) => (
+  const setElements = (exercise.sets as CardioSetClass[]).map((set, index) => (
     <CardioSet
-      theme={theme}
-      model={isTS}
+      mode={mode}
       setNum={index}
       key={index}
+      done={set.done}
       weight={set.weight}
       duration={set.duration}
       distance={set.distance}
@@ -85,6 +88,7 @@ export default function ProgrammedCardioExercise({
       onChangeDistance={onDistanceChange}
       onChangeDuration={onDurationChange}
       onDeletePress={deleteSet}
+      onSetCheckbox={onSetCheckBox}
     />
   ))
   return (
@@ -141,15 +145,17 @@ export default function ProgrammedCardioExercise({
 
       {setElements}
 
-      <Button
-        style={{
-          marginTop: theme.margins.m,
-          marginBottom: theme.margins.s
-        }}
-        onPress={addSet}
-      >
-        Add Set
-      </Button>
+      {mode == modelModes.Edit && (
+        <Button
+          style={{
+            marginTop: theme.margins.m,
+            marginBottom: theme.margins.s
+          }}
+          onPress={addSet}
+        >
+          Add Set
+        </Button>
+      )}
     </>
   )
 }
@@ -180,6 +186,6 @@ const styles = StyleSheet.create({
   },
   del: {
     //backgroundColor: "green",
-    width: "15%"
+    width: "10%"
   }
 })

@@ -7,6 +7,7 @@ import { TrainingModelDoc } from "./ModelList"
 import { Text } from "../../../reusable/Text"
 import { RFValue } from "react-native-responsive-fontsize"
 import { IconButton, Menu } from "react-native-paper"
+import { modelModes } from "./EditModel"
 
 function ModelDescriptor({
   model,
@@ -50,8 +51,8 @@ function ModelDescriptor({
             title="Edit"
             onPress={() => {
               navigation.navigate("EditModel", {
-                model: { ...model },
-                isTS: false
+                model,
+                mode: modelModes.Edit
               }),
               setMenuVisible(false)
             }}

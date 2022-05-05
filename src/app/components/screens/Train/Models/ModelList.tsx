@@ -10,6 +10,7 @@ import { UserContext } from "../../../../providers/User"
 import { getModels } from "../../../../lib/firebaseFS"
 import Loading from "../../../reusable/Loading"
 import ModelDescriptor from "./ModelDescriptor"
+import { modelModes } from "./EditModel"
 
 export type TrainingModelDoc = {
   model: TrainingModel;
@@ -40,13 +41,16 @@ export default function ModelList({
           marginBottom: theme.margins.s
         }}
         onPress={() =>
-          navigation.navigate("EditModel", { model: undefined, isTS: false })
+          navigation.navigate("EditModel", {
+            model: undefined,
+            mode: modelModes.Edit
+          })
         }
       >
         Create your own Training Model
       </Button>
       {loading ? (
-        <Loading color={theme.colors.primary} marginVertical={50} />
+        <Loading />
       ) : (
         <FlatList
           data={models}

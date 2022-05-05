@@ -10,12 +10,9 @@ import {
 } from "react-native"
 import { Appbar, IconButton, Menu } from "react-native-paper"
 import {
-  CardioSet,
-  CardioSetType,
-  StretchingSet,
-  StretchingSetType,
-  WESetType,
-  WESet
+  CardioSetClass,
+  StretchingSetClass,
+  WESetClass
 } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
@@ -33,6 +30,13 @@ import {
 import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import { CachedImage } from "@georstat/react-native-image-cache"
+import { Text } from "../../../reusable/Text"
+
+export enum modelModes {
+  Edit = "edit",
+  View = "view",
+  Session = "session"
+}
 
 export default function EditModel({
   route,
@@ -42,7 +46,7 @@ export default function EditModel({
   const theme = useTheme()
 
   const id = route.params.model?.id
-  const isTS = route.params.isTS
+  const mode = route.params.mode
   const [model, setModel] = useState<TrainingModel>(
     route.params.model
       ? route.params.model.model
@@ -54,7 +58,7 @@ export default function EditModel({
         description: ""
       }
   )
-  console.log("isTS -> " + route.params.isTS)
+  console.log("mode -> " + route.params.mode)
   const [deletedImages] = useState<string[]>([])
 
   function onNameChange(newName: string) {
@@ -67,7 +71,7 @@ export default function EditModel({
 
   function onSetChange(
     exNum: number,
-    sets: WESetType[] | StretchingSetType[] | CardioSetType[]
+    sets: WESetClass[] | StretchingSetClass[] | CardioSetClass[]
   ) {
     setModel((prevModel) => ({
       ...prevModel,
@@ -132,7 +136,6 @@ export default function EditModel({
   }
 
   const [menuVisible, setMenuVisible] = useState(false)
-
   return (
     <>
       <Appbar>
@@ -149,7 +152,7 @@ export default function EditModel({
           visible={menuVisible}
         >
           <Menu.Item title={"Placeholder"} />
-          {id && (
+          {id && mode == modelModes.Edit && (
             <Menu.Item
               onPress={() =>
                 Alert.alert("Delete Model", "Delete the model?", [
@@ -160,73 +163,93 @@ export default function EditModel({
               title={"Delete Model"}
             />
           )}
+          {mode == modelModes.Session && (
+            <Menu.Item
+              onPress={() =>
+                Alert.alert(
+                  "Cancel Training Session",
+                  "Are you sure you want to cancel the training session?\nYour progress will not be saved.",
+                  [{ text: "Yes", onPress: onTSCancelled }, { text: "No" }]
+                )
+              }
+              title={"Cancel Session"}
+            />
+          )}
         </Menu>
       </Appbar>
       <ScrollView>
-        <TextInput
-          style={{ ...styles.name, marginLeft: theme.margins.m }}
-          value={model.name}
-          onChangeText={onNameChange}
-        />
-        <VariableHeightTextInput
-          style={{
-            ...styles.annotation,
-            marginLeft: theme.margins.m
-          }}
-          value={model.description}
-          placeholder={"Training Annotation"}
-          onChangeText={onAnnotationChange}
-        />
-        <InlineContainer
-          style={{
-            marginVertical: theme.margins.s
-          }}
-        >
-          <IconButton
-            size={30}
-            icon="file-upload"
-            onPress={() => {
-              launchImageLibrary({
-                mediaType: "mixed",
-                videoQuality: "high",
-                selectionLimit: 5,
-                quality: 0.2
-              }).then(onCameraExit)
-            }}
-            style={{
-              ...styles.mediaBtn,
-              backgroundColor: theme.colors.primary
-            }}
+        {mode == modelModes.Edit && (
+          <TextInput
+            style={{ ...styles.name, marginLeft: theme.margins.m }}
+            value={model.name}
+            onChangeText={onNameChange}
           />
-          <IconButton
-            size={30}
-            icon="video"
-            onPress={() => {
-              launchCamera({
-                mediaType: "video",
-                videoQuality: "low"
-              }).then(onCameraExit)
-            }}
+        )}
+        {mode == modelModes.Edit ? (
+          <VariableHeightTextInput
             style={{
-              ...styles.mediaBtn,
-              backgroundColor: theme.colors.primary
+              ...styles.annotation,
+              marginLeft: theme.margins.m
             }}
+            value={model.description}
+            placeholder={"Training Annotation"}
+            onChangeText={onAnnotationChange}
           />
-          <IconButton
-            size={30}
-            icon="video-image"
-            onPress={() => {
-              launchCamera({
-                mediaType: "photo",
-                quality: 0.2
-              }).then(onCameraExit)
-            }}
+        ) : (
+          <Text>{model.description}</Text>
+        )}
+        {mode == modelModes.Edit && (
+          <InlineContainer
             style={{
-              ...styles.mediaBtn,
-              backgroundColor: theme.colors.primary
+              marginVertical: theme.margins.s
             }}
-          />
-        </InlineContainer>
+          >
+            <IconButton
+              size={30}
+              icon="file-upload"
+              onPress={() => {
+                launchImageLibrary({
+                  mediaType: "mixed",
+                  videoQuality: "high",
+                  selectionLimit: 5,
+                  quality: 0.2
+                }).then(onCameraExit)
+              }}
+              style={{
+                ...styles.mediaBtn,
+                backgroundColor: theme.colors.primary
+              }}
+            />
+            <IconButton
+              size={30}
+              icon="video"
+              onPress={() => {
+                launchCamera({
+                  mediaType: "video",
+                  videoQuality: "low"
+                }).then(onCameraExit)
+              }}
+              style={{
+                ...styles.mediaBtn,
+                backgroundColor: theme.colors.primary
+              }}
+            />
+            <IconButton
+              size={30}
+              icon="video-image"
+              onPress={() => {
+                launchCamera({
+                  mediaType: "photo",
+                  quality: 0.2
+                }).then(onCameraExit)
+              }}
+              style={{
+                ...styles.mediaBtn,
+                backgroundColor: theme.colors.primary
+              }}
+            />
+          </InlineContainer>
+        )}
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={true}
@@ -256,17 +279,6 @@ export default function EditModel({
                   }}
                   source={asset.uri!}
                 />
-                {/* asset.type?.includes("video") && (
-                  <IconButton
-                    style={{
-                      position: "absolute",
-                      margin: 0,
-                      borderWidth: 1,
-                      borderColor: "#000000"
-                    }}
-                    icon={"play"}
-                  />
-                ) */}
               </>
             </TouchableOpacity>
           ))}
@@ -278,67 +290,46 @@ export default function EditModel({
               key={index}
               theme={theme}
               exNum={index}
-              isTS={isTS}
+              mode={mode}
               onSetChange={onSetChange}
               onExerciseDel={onExerciseDelete}
               onExerciseAnnotationChange={onExerciseAnnotationChange}
             />
           ))}
         </View>
-        <Button
-          style={{
-            marginTop: theme.margins.m,
-            marginBottom: theme.margins.s
-          }}
-          onPress={() => {
-            console.log("Add a new exercise")
-            navigation.navigate("ExerciseSelector", {
-              onSubmit: (exercises) => {
-                setModel((prevModel) => ({
-                  ...prevModel,
-                  exercises: [
-                    ...prevModel.exercises,
-                    ...exercises.map((ex) => ({
-                      ...ex,
-                      annotation: "",
-                      sets:
-                        ex.category == "Cardio"
-                          ? [new CardioSet()]
-                          : ex.category == "Stretching"
-                            ? [new StretchingSet()]
-                            : [new WESet()]
-                    }))
-                  ]
-                }))
-              }
-            })
-          }}
-        >
-          Add an Exercise
-        </Button>
-
-        {isTS ? (
-          <>
-            <Button
-              style={{
-                marginTop: theme.margins.s,
-                marginBottom: theme.margins.s
-              }}
-              onPress={onTSFinished}
-            >
-              Finish Training Session
-            </Button>
-            <Button
-              style={{
-                marginTop: theme.margins.s,
-                marginBottom: theme.margins.s
-              }}
-              onPress={onTSCancelled}
-            >
-              Cancel Training Session
-            </Button>
-          </>
-        ) : (
+      </ScrollView>
+      {mode == modelModes.Edit ? (
+        <>
+          <Button
+            style={{
+              marginTop: theme.margins.m,
+              marginBottom: theme.margins.s
+            }}
+            onPress={() => {
+              navigation.navigate("ExerciseSelector", {
+                onSubmit: (exercises) => {
+                  setModel((prevModel) => ({
+                    ...prevModel,
+                    exercises: [
+                      ...prevModel.exercises,
+                      ...exercises.map((ex) => ({
+                        ...ex,
+                        annotation: "",
+                        sets:
+                          ex.category == "Cardio"
+                            ? [new CardioSetClass()]
+                            : ex.category == "Stretching"
+                              ? [new StretchingSetClass()]
+                              : [new WESetClass()]
+                      }))
+                    ]
+                  }))
+                }
+              })
+            }}
+          >
+            Add an Exercise
+          </Button>
           <Button
             style={{
               marginTop: theme.margins.s,
@@ -348,8 +339,18 @@ export default function EditModel({
           >
             Save Training Model
           </Button>
-        )}
-      </ScrollView>
+        </>
+      ) : (
+        <Button
+          style={{
+            marginTop: theme.margins.s,
+            marginBottom: theme.margins.s
+          }}
+          onPress={onTSFinished}
+        >
+          Finish Training Session
+        </Button>
+      )}
     </>
   )
 }

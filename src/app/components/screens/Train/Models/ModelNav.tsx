@@ -3,14 +3,14 @@ import React from "react"
 import { Exercise } from "../../../../../dataDefinition/data"
 import ExerciseSelector from "../Exercises/ExerciseSelector"
 import { Exercise as ExerciseScreen } from "../Exercises/Exercise"
-import EditModel from "./EditModel"
+import EditModel, { modelModes } from "./EditModel"
 import Model from "./Model"
 import ModelList, { TrainingModelDoc } from "./ModelList"
 
 export type RootStackParamListModelNav = {
   ModelList: undefined;
   Model: { model: TrainingModelDoc };
-  EditModel: { model?: TrainingModelDoc; isTS: boolean };
+  EditModel: { model?: TrainingModelDoc; mode: modelModes };
   ExerciseSelector: { onSubmit: (selectedExercises: Exercise[]) => void };
   Exercise: { exercise: Exercise };
 };

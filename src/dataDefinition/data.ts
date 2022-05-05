@@ -1,62 +1,22 @@
 import { Asset } from "react-native-image-picker"
-
-class MediaComponent {
-  mediaContent: [] = [];
-  annotation = "";
-}
-
 // Sets
-
-export class WESet extends MediaComponent {
+export class ExerciseSet {
   weight = 0;
+  done = false;
+  mediaContent: Asset[] = [];
+}
+export class WESetClass extends ExerciseSet {
   repRange = [0, 0];
   repsDone? = 0;
 }
-
-export type WESetType = {
-  weight: number;
-  repRange: number[];
-  repsDone?: number;
-  mediaContent: Asset[];
-  annotation: string;
-};
-
-export type GeneralExercise = {
-  weight?: number;
-  repRange?: number[];
-  repsDone?: number;
-  wantedDuration?: string;
-  duration?: string;
-  mediaContent: Asset[];
-  annotation: string;
-};
-export class StretchingSet extends MediaComponent {
+export class StretchingSetClass extends ExerciseSet {
   wantedDuration = "00:00";
   duration = "00:00";
-  weight = 0;
 }
-
-export type StretchingSetType = {
-  wantedDuration: string;
-  duration: string;
-  mediaContent: Asset[];
-  annotation: string;
-  weight: number;
-};
-
-export class CardioSet extends MediaComponent {
+export class CardioSetClass extends ExerciseSet {
   duration = "00:00";
-  weight = 0;
   distance = 0;
 }
-
-export type CardioSetType = {
-  distance: number;
-  duration: string;
-  mediaContent: Asset[];
-  annotation: string;
-  weight: number;
-};
 
 // Exercises
 export type Exercise = {
@@ -66,7 +26,7 @@ export type Exercise = {
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
-  sets: WESetType[] | StretchingSetType[] | CardioSetType[];
+  sets: WESetClass[] | StretchingSetClass[] | CardioSetClass[];
   annotation: string;
 };
 
