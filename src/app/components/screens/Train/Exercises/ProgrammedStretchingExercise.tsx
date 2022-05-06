@@ -169,24 +169,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: RFValue(18)
   },
-  setNum: {
-    //backgroundColor: "green",
-    width: "10%"
-  },
-  weight: {
-    //backgroundColor: "purple",
-    width: "20%"
-  },
-  goalTime: {
-    //backgroundColor: "green",
-    width: "30%"
-  },
-  time: {
-    //backgroundColor: "purple",
-    width: "20%"
-  },
-  del: {
-    //backgroundColor: "green",
-    width: "15%"
-  }
+  setNum: { width: "10%" },
+  weight: { width: "20%" },
+  goalTime: { width: "30%" },
+  time: { width: "20%" },
+  del: { width: "10%" }
 })

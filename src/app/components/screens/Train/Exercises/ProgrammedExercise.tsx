@@ -51,55 +51,46 @@ export default function ProgrammedExercise({
         paddingVertical: theme.margins.m,
         paddingHorizontal: theme.paddings.l
       },
+      headerContainer: {
+        justifyContent: "space-between",
+        marginTop: theme.margins.s
+      },
       title: {
-        textAlign: "center",
-        fontSize: RFValue(18)
+        flexGrow: 1,
+        textAlign: "left",
+        paddingLeft: theme.paddings.s,
+        color: theme.colors.primary,
+        fontSize: theme.text.body_l.fontSize,
+        maxWidth: "70%"
+      },
+      categ: {
+        height: 40,
+        width: 40,
+        marginRight: theme.margins.xs,
+        tintColor: theme.colors.text
       },
       del: {
+        marginLeft: theme.margins.xs,
         borderRadius: 5,
-        width: "15%"
+        width: "15%",
+        backgroundColor: theme.colors.primary,
+        height: 40
       }
     })
   ).current
   return (
     <View style={styles.container}>
-      <InlineContainer
-        style={{
-          justifyContent: "space-between",
-          marginTop: theme.margins.s
-        }}
-      >
+      <InlineContainer style={styles.headerContainer}>
         <Image
-          style={{
-            height: 40,
-            width: 40,
-            marginRight: theme.margins.s,
-            tintColor: theme.colors.text
-          }}
+          style={styles.categ}
           source={
             categoryIcons[exercise.category as keyof typeof categoryIcons]
           }
         />
-        <Text
-          style={{
-            ...styles.title,
-            flexGrow: 1,
-            textAlign: "left",
-            paddingLeft: theme.paddings.xl,
-            color: theme.colors.primary,
-            fontSize: RFValue(20)
-          }}
-        >
-          {exercise.name}
-        </Text>
+        <Text style={styles.title}>{exercise.name}</Text>
         {mode == modelModes.Edit && (
           <IconButton
-            style={{
-              ...styles.del,
-              backgroundColor: theme.colors.primary,
-              height: 40,
-              margin: 0
-            }}
+            style={styles.del}
             size={RFValue(26)}
             onPress={() => onExerciseDel(exNum)}
             icon={images.Trash}

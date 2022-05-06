@@ -12,7 +12,7 @@ import {
   Theme as NavigationTheme
 } from "@react-navigation/native"
 import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
-import { StyleProp, TextStyle } from "react-native"
+import { TextStyle } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 
 export type Theme = {

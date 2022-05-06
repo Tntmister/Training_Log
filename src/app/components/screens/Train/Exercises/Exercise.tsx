@@ -17,12 +17,13 @@ export function Exercise({
 }: StackScreenProps<RootStackParamList, "Exercise">) {
   const { exercise } = route.params
   const theme = useTheme()
+
   const styles = StyleSheet.create({
     text: {
       width: "90%",
       marginBottom: theme.margins.s,
       marginHorizontal: theme.margins.l,
-      fontSize: RFValue(20)
+      fontSize: theme.text.subHeader.fontSize
     }
   })
   const [images, setImages] = useState<Asset[]>([])

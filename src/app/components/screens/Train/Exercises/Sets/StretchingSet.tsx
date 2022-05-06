@@ -1,7 +1,6 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import InlineContainer from "../../../../reusable/InlineView"
@@ -36,19 +35,40 @@ export default function StretchingSet({
   onSetCheckbox: (setIndex: number) => void;
 }) {
   const theme = useTheme()
+  const styles = StyleSheet.create({
+    container: {
+      justifyContent: "space-between",
+      paddingVertical: theme.margins.xs
+    },
+    box: {
+      textAlign: "center",
+      fontSize: theme.text.body_l.fontSize,
+      borderRadius: 5,
+      paddingHorizontal: 0,
+      height: 30,
+      marginTop: 0,
+      color: theme.colors.primary,
+      paddingVertical: theme.margins.xs
+    },
+    setNum: { width: "10%" },
+    weight: { width: "20%" },
+    goalTime: { width: "30%" },
+    time: { width: "20%" },
+    thrashContainer: {
+      width: "10%",
+      alignItems: "center"
+    },
+    iconBtn: {
+      backgroundColor: theme.colors.primary,
+      borderRadius: 5
+    }
+  })
   return (
-    <InlineContainer
-      style={{
-        ...styles.container,
-        paddingVertical: theme.margins.xs
-      }}
-    >
+    <InlineContainer style={styles.container}>
       <Text
         style={{
           ...styles.setNum,
-          ...styles.box,
-          color: theme.colors.primary,
-          paddingVertical: theme.margins.xs
+          ...styles.box
         }}
       >
         {setNum + 1}
@@ -68,15 +88,15 @@ export default function StretchingSet({
       />
       <SetFieldInput
         inputMode={mode}
-        style={styles.goalTime}
+        style={styles.time}
         value={wantedDuration}
         onChangeText={(time) => onChangeWDuration(setNum, time)}
         disabled={mode != modelModes.Edit}
       />
-      <View style={{ width: "10%", alignItems: "center" }}>
+      <View style={styles.thrashContainer}>
         {mode == modelModes.Edit ? (
           <IconButton
-            style={{ backgroundColor: theme.colors.primary, borderRadius: 5 }}
+            style={styles.iconBtn}
             icon={images.Trash}
             onPress={() => onDeletePress(setNum)}
           />
@@ -92,33 +112,3 @@ export default function StretchingSet({
     </InlineContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "space-between"
-  },
-  box: {
-    textAlign: "center",
-    fontSize: RFValue(18),
-    borderRadius: 5,
-    paddingHorizontal: 0,
-    height: 30,
-    marginTop: 0
-  },
-  setNum: {
-    //backgroundColor: "green",
-    width: "10%"
-  },
-  weight: {
-    //backgroundColor: "purple",
-    width: "20%"
-  },
-  goalTime: {
-    //backgroundColor: "green",
-    width: "30%"
-  },
-  time: {
-    //backgroundColor: "purple",
-    width: "20%"
-  }
-})

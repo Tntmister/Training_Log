@@ -35,19 +35,41 @@ export default function CardioSet({
   onSetCheckbox: (setIndex: number) => void;
 }) {
   const theme = useTheme()
+  const styles = StyleSheet.create({
+    container: {
+      justifyContent: "space-between",
+      paddingVertical: theme.margins.xs
+    },
+    box: {
+      textAlign: "center",
+      fontSize: RFValue(18),
+      borderRadius: 5,
+      paddingHorizontal: 0,
+      height: 30,
+      marginTop: 0,
+      color: theme.colors.primary,
+      paddingVertical: theme.margins.xs
+    },
+    setNum: { width: "10%" },
+    weight: { width: "20%" },
+    distance: { width: "25%" },
+    time: { width: "25%" },
+    thrashContainer: {
+      width: "10%",
+      alignItems: "center"
+    },
+    iconBtn: {
+      backgroundColor: theme.colors.primary,
+      borderRadius: 5
+    }
+  })
+
   return (
-    <InlineContainer
-      style={{
-        ...styles.container,
-        paddingVertical: theme.margins.xs
-      }}
-    >
+    <InlineContainer style={styles.container}>
       <Text
         style={{
           ...styles.setNum,
-          ...styles.box,
-          color: theme.colors.primary,
-          paddingVertical: theme.margins.xs
+          ...styles.box
         }}
       >
         {setNum + 1}
@@ -70,10 +92,10 @@ export default function CardioSet({
         value={duration}
         onChangeText={(time) => onChangeDuration(setNum, time)}
       />
-      <View style={{ width: "10%", alignItems: "center" }}>
+      <View style={styles.thrashContainer}>
         {mode == modelModes.Edit ? (
           <IconButton
-            style={{ backgroundColor: theme.colors.primary, borderRadius: 5 }}
+            style={styles.iconBtn}
             icon={images.Trash}
             onPress={() => onDeletePress(setNum)}
           />
@@ -89,40 +111,3 @@ export default function CardioSet({
     </InlineContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "space-between"
-  },
-  box: {
-    textAlign: "center",
-    fontSize: RFValue(18),
-    borderRadius: 5,
-    paddingHorizontal: 0,
-    height: 30,
-    marginTop: 0
-  },
-  setNum: {
-    //backgroundColor: "green",
-    width: "10%"
-  },
-  weight: {
-    //backgroundColor: "purple",
-    width: "20%"
-  },
-  distance: {
-    //backgroundColor: "green",
-    width: "25%"
-  },
-  time: {
-    //backgroundColor: "purple",
-    width: "25%"
-  },
-  del: {
-    //backgroundColor: "green",
-    width: "15%",
-    height: 40,
-    marginTop: 0,
-    borderRadius: 5
-  }
-})

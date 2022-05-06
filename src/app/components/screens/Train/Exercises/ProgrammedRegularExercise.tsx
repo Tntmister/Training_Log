@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise, WESetClass } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
@@ -21,6 +20,27 @@ export default function ProgrammedRegularExercise({
   onSetChange: (exNum: number, sets: WESetClass[]) => void;
 }) {
   const theme = useTheme()
+  const styles = StyleSheet.create({
+    subtitleContainer: {
+      justifyContent: "space-between",
+      marginTop: theme.margins.xs
+    },
+    subtitle: {
+      textAlign: "center",
+      fontSize: theme.text.body_l.fontSize,
+      color: theme.colors.text
+    },
+    setNum: { width: "10%" },
+    weight: { width: "20%" },
+    repRange: { width: "35%" },
+    reps: { width: "15%" },
+    del: { width: "10%" },
+    addBtn: {
+      width: "100%",
+      alignSelf: "center"
+    }
+  })
+
   const [sets, setSets] = useState<WESetClass[]>([])
 
   useEffect(() => {
@@ -93,14 +113,11 @@ export default function ProgrammedRegularExercise({
   ))
   return (
     <>
-      <InlineContainer
-        style={{ ...styles.subtitleContainer, marginTop: theme.margins.xs }}
-      >
+      <InlineContainer style={styles.subtitleContainer}>
         <Text
           style={{
             ...styles.setNum,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
         >
           Set
@@ -108,8 +125,7 @@ export default function ProgrammedRegularExercise({
         <Text
           style={{
             ...styles.weight,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
         >
           Weight
@@ -117,8 +133,7 @@ export default function ProgrammedRegularExercise({
         <Text
           style={{
             ...styles.repRange,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
         >
           Rep. Range
@@ -126,8 +141,7 @@ export default function ProgrammedRegularExercise({
         <Text
           style={{
             ...styles.reps,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
         >
           Reps
@@ -146,10 +160,7 @@ export default function ProgrammedRegularExercise({
         <IconButton
           color={theme.colors.primary}
           size={30}
-          style={{
-            width: "100%",
-            alignSelf: "center"
-          }}
+          style={styles.addBtn}
           onPress={addSet}
           icon={"plus"}
         />
@@ -157,33 +168,3 @@ export default function ProgrammedRegularExercise({
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  subtitleContainer: {
-    justifyContent: "space-between"
-  },
-  subtitle: {
-    textAlign: "center",
-    fontSize: RFValue(18)
-  },
-  setNum: {
-    //backgroundColor: "green",
-    width: "10%"
-  },
-  weight: {
-    //backgroundColor: "purple",
-    width: "20%"
-  },
-  repRange: {
-    //backgroundColor: "green",
-    width: "35%"
-  },
-  reps: {
-    //backgroundColor: "purple",
-    width: "15%"
-  },
-  del: {
-    //backgroundColor: "green",
-    width: "15%"
-  }
-})
