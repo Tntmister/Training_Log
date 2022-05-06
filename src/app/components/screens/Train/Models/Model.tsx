@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useState } from "react"
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from "react-native"
-import { Appbar, Checkbox, IconButton, Menu } from "react-native-paper"
+import { Alert, ScrollView, StyleSheet } from "react-native"
+import { Appbar, Checkbox, Menu } from "react-native-paper"
 import {
   CardioSetClass,
   StretchingSetClass,
@@ -19,19 +13,15 @@ import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModel } from "../../../../../dataDefinition/data"
 import { UserContext } from "../../../../providers/User"
 import { useTheme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineContainer"
+import InlineContainer from "../../../reusable/InlineView"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
-import {
-  launchImageLibrary,
-  launchCamera,
-  ImagePickerResponse
-} from "react-native-image-picker"
+import { Asset } from "react-native-image-picker"
 import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
-import { CachedImage } from "@georstat/react-native-image-cache"
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
+import MediaSelector from "../../../reusable/MediaSelector"
 
 export enum modelModes {
   Edit = "edit",
@@ -59,8 +49,7 @@ export default function Model({
         description: ""
       }
   )
-  console.log("mode -> " + route.params.mode)
-  const [deletedImages] = useState<string[]>([])
+  const [deletedAssets] = useState<Asset[]>([])
 
   function onNameChange(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))
@@ -91,15 +80,6 @@ export default function Model({
     }))
   }
 
-  function onCameraExit(response: ImagePickerResponse) {
-    if (response.assets !== undefined) {
-      setModel((prevModel) => ({
-        ...prevModel,
-        mediaContent: [...prevModel.mediaContent, ...response.assets!]
-      }))
-    }
-  }
-
   function onExerciseDelete(exNum: number) {
     setModel((prevModel) => ({
       ...prevModel,
@@ -107,16 +87,8 @@ export default function Model({
     }))
   }
 
-  function onImageDelete(imgNum: number) {
-    deletedImages.push(model.mediaContent[imgNum].fileName!)
-    setModel((prevModel) => ({
-      ...prevModel,
-      mediaContent: prevModel.mediaContent.filter((_, index) => imgNum != index)
-    }))
-  }
-
   async function onModelSave() {
-    await saveModel(user!.uid, model, deletedImages, id)
+    await saveModel(user!.uid, model, deletedAssets, id)
     navigation.navigate("ModelList")
   }
 
@@ -145,6 +117,7 @@ export default function Model({
             ...prevModel.exercises,
             ...exercises.map((ex) => ({
               ...ex,
+              userMediaContent: [],
               annotation: "",
               sets:
                 ex.category == "Cardio"
@@ -170,7 +143,7 @@ export default function Model({
     <>
       <Appbar>
         <Appbar.BackAction onPress={navigation.goBack} />
-        <Appbar.Content title={model.name} />
+        <Appbar.Content title={onetime ? "Training Session" : model.name} />
         <Menu
           anchor={
             <Appbar.Action
@@ -211,13 +184,15 @@ export default function Model({
         </Menu>
       </Appbar>
       <ScrollView>
-        <InlineContainer style={{ marginTop: theme.margins.s }}>
-          <Checkbox
-            status={onetime ? "checked" : "unchecked"}
-            onPress={() => setOneTime(!onetime)}
-          />
-          <Text>One time session?</Text>
-        </InlineContainer>
+        {mode == modelModes.Edit && (
+          <InlineContainer style={{ marginTop: theme.margins.s }}>
+            <Checkbox
+              status={onetime ? "checked" : "unchecked"}
+              onPress={() => setOneTime(!onetime)}
+            />
+            <Text>One time session?</Text>
+          </InlineContainer>
+        )}
         {mode == modelModes.Edit && !onetime && (
           <TextInput
             style={{ ...styles.name, marginLeft: theme.margins.m }}
@@ -225,7 +200,7 @@ export default function Model({
             onChangeText={onNameChange}
           />
         )}
-        {mode == modelModes.Edit ? (
+        {mode == modelModes.Edit && !onetime ? (
           <VariableHeightTextInput
             style={{
               ...styles.annotation,
@@ -236,140 +211,56 @@ export default function Model({
             onChangeText={onAnnotationChange}
           />
         ) : (
-          <Text>{model.description}</Text>
+          !onetime && <Text>{model.description}</Text>
         )}
-        {mode != modelModes.View ? (
-          <>
-            <InlineContainer
-              style={{
-                marginVertical: theme.margins.s
-              }}
-            >
-              <IconButton
-                size={30}
-                icon="file-upload"
-                onPress={() => {
-                  launchImageLibrary({
-                    mediaType: "mixed",
-                    videoQuality: "high",
-                    selectionLimit: 5,
-                    quality: 0.2
-                  }).then(onCameraExit)
-                }}
-                style={{
-                  ...styles.mediaBtn,
-                  backgroundColor: theme.colors.primary
-                }}
-              />
-              <IconButton
-                size={30}
-                icon="video"
-                onPress={() => {
-                  launchCamera({
-                    mediaType: "video",
-                    videoQuality: "low"
-                  }).then(onCameraExit)
-                }}
-                style={{
-                  ...styles.mediaBtn,
-                  backgroundColor: theme.colors.primary
-                }}
-              />
-              <IconButton
-                size={30}
-                icon="video-image"
-                onPress={() => {
-                  launchCamera({
-                    mediaType: "photo",
-                    quality: 0.2
-                  }).then(onCameraExit)
-                }}
-                style={{
-                  ...styles.mediaBtn,
-                  backgroundColor: theme.colors.primary
-                }}
-              />
-            </InlineContainer>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={true}
-              contentContainerStyle={{
-                paddingHorizontal: theme.margins.m,
-                paddingBottom: theme.paddings.m
-              }}
-            >
-              {model.mediaContent.map((asset, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onLongPress={() => {
-                    Alert.alert("Delete Image", "Delete the specified image?", [
-                      { text: "Yes", onPress: () => onImageDelete(index) },
-                      { text: "No" }
-                    ])
-                  }}
-                >
-                  <>
-                    <CachedImage
-                      key={asset.uri!}
-                      noCache={asset.uri?.startsWith("file")}
-                      resizeMode={"cover"}
-                      style={{
-                        ...styles.media,
-                        marginRight: theme.margins.s
-                      }}
-                      source={asset.uri!}
-                    />
-                  </>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </>
+        {mode == modelModes.Edit && !onetime ? (
+          <MediaSelector
+            assets={model.mediaContent}
+            deletedAssets={deletedAssets}
+          />
         ) : (
           model.mediaContent.length > 0 && (
             <MediaCarousel assets={model.mediaContent} />
           )
         )}
-        <View>
-          {model.exercises.map((ex, index) => (
-            <ProgrammedExercise
-              exercise={ex}
-              key={index}
-              theme={theme}
-              exNum={index}
-              mode={mode}
-              onSetChange={onSetChange}
-              onExerciseDel={onExerciseDelete}
-              onExerciseAnnotationChange={onExerciseAnnotationChange}
-            />
-          ))}
-        </View>
-      </ScrollView>
-      {mode == modelModes.Edit ? (
-        <>
-          <Button
-            style={{
-              marginTop: theme.margins.m,
-              marginBottom: theme.margins.s
-            }}
-            onPress={onModelAddEx}
-          >
-            Add an Exercise
-          </Button>
+        {model.exercises.map((ex, index) => (
+          <ProgrammedExercise
+            exercise={ex}
+            key={index}
+            theme={theme}
+            exNum={index}
+            mode={mode}
+            onSetChange={onSetChange}
+            onExerciseDel={onExerciseDelete}
+            onExerciseAnnotationChange={onExerciseAnnotationChange}
+          />
+        ))}
+        {mode == modelModes.Edit && (
           <Button
             style={{
               marginTop: theme.margins.s,
               marginBottom: theme.margins.s
             }}
-            onPress={onModelSave}
+            onPress={onModelAddEx}
           >
-            Save Training Model
+            Add Exercise
           </Button>
-        </>
+        )}
+      </ScrollView>
+      {mode == modelModes.Edit && !onetime ? (
+        <Button
+          disabled={model.exercises.length == 0}
+          style={{
+            marginTop: theme.margins.s
+          }}
+          onPress={onModelSave}
+        >
+          Save Training Model
+        </Button>
       ) : mode == modelModes.Session ? (
         <Button
           style={{
-            marginTop: theme.margins.s,
-            marginBottom: theme.margins.s
+            marginTop: theme.margins.s
           }}
           onPress={onTSFinished}
         >
@@ -377,6 +268,7 @@ export default function Model({
         </Button>
       ) : (
         <Button
+          disabled={model.exercises.length == 0}
           style={{
             marginTop: theme.margins.s
           }}
@@ -395,12 +287,5 @@ const styles = StyleSheet.create({
   },
   annotation: {
     width: "80%"
-  },
-  media: {
-    width: 100,
-    height: 100
-  },
-  mediaBtn: {
-    borderRadius: 5
   }
 })

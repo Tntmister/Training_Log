@@ -28,6 +28,7 @@ export type Exercise = {
   secondaryMuscles: string[];
   sets: WESetClass[] | StretchingSetClass[] | CardioSetClass[];
   annotation: string;
+  userMediaContent?: Asset[];
 };
 
 // Training Session

@@ -1,5 +1,6 @@
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
+import { Asset } from "react-native-image-picker"
 import { TrainingModel } from "../../dataDefinition/data"
 import { TrainingModelDoc } from "../components/screens/Train/Models/ModelList"
 
@@ -12,7 +13,7 @@ export async function createUserDoc(uID: string) {
 export async function saveModel(
   uID: string,
   model: TrainingModel,
-  deletedImages: string[],
+  deletedImages: Asset[],
   id?: string
 ) {
   const collectionReference = firestore()
@@ -22,7 +23,7 @@ export async function saveModel(
   if (id === undefined) {
     id = (await collectionReference.add({})).id
   } else {
-    for (const fileName of deletedImages) {
+    for (const { fileName } of deletedImages) {
       await storage().ref(`users/${uID}/models/${id}/${fileName}`).delete()
     }
   }

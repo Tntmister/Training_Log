@@ -45,7 +45,7 @@ export default function ExerciseList({
           ListEmptyComponent={<Text>No Exercises found!</Text>}
           style={{
             marginTop: theme.margins.s,
-            width: "100%"
+            flex: 1
           }}
           contentContainerStyle={{
             flexDirection: "column",

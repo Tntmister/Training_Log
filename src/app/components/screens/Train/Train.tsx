@@ -15,7 +15,7 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
   const Tab = createMaterialTopTabNavigator()
 
   const theme = useTheme()
-  const state = navigation.getState().routes[navigation.getState().index].state
+  const modelNavState = navigation.getState().routes[2].state?.routes[1].state
   return (
     <>
       <Tab.Navigator
@@ -33,7 +33,8 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
         <Tab.Screen component={ExerciseNav} name="Exercises" />
         <Tab.Screen component={ModelNav} name="Models" />
       </Tab.Navigator>
-      {state?.routes[state.index!].state?.index != 1 && (
+      {(modelNavState?.routeNames === undefined ||
+        modelNavState?.routeNames[modelNavState.index!] == "ModelList") && (
         <Button
           style={{
             marginTop: theme.margins.s

@@ -1,10 +1,8 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useCallback, useState } from "react"
-import { FlatList, LogBox, StyleSheet, Text } from "react-native"
+import { FlatList, LogBox, Text, View } from "react-native"
 import { Appbar } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
 import { Exercise } from "../../../../../dataDefinition/data"
-import { images } from "../../../../lib/extra"
 import { useTheme } from "../../../../providers/Theme"
 import { Button } from "../../../reusable/Button"
 import Loading from "../../../reusable/Loading"
@@ -45,59 +43,48 @@ export default function ExerciseSelector({
         <Appbar.Content title="Add Exercise to Model" />
       </Appbar>
       <ExerciseSearch setExercises={setExercises} setLoading={setLoading} />
-      {loading ? (
-        <Loading />
-      ) : (
-        <FlatList
-          data={exercises}
-          renderItem={({ item, index }) => (
-            <ExerciseDescriptor
-              key={index}
-              exercise={item}
-              onPress={handleExercisePress}
-            />
-          )}
-          getItemLayout={(_, index) => ({
-            length: 70,
-            offset: 70 * index,
-            index
-          })}
-          ListEmptyComponent={<Text>No Exercises found!</Text>}
-          style={{
-            marginTop: theme.margins.s,
-            width: "100%"
-          }}
-          contentContainerStyle={{
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-          showsVerticalScrollIndicator={true}
-        />
-      )}
+      <View style={{ flex: 1 }}>
+        {loading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            data={exercises}
+            renderItem={({ item, index }) => (
+              <ExerciseDescriptor
+                key={index}
+                exercise={item}
+                onPress={handleExercisePress}
+              />
+            )}
+            getItemLayout={(_, index) => ({
+              length: 70,
+              offset: 70 * index,
+              index
+            })}
+            ListEmptyComponent={<Text>No Exercises found!</Text>}
+            style={{
+              marginTop: theme.margins.s,
+              flex: 1
+            }}
+            contentContainerStyle={{
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+            showsVerticalScrollIndicator={true}
+          />
+        )}
+      </View>
       <Button
         disabled={selectedExercises.length === 0}
-        style={styles.addBtn}
-        labelStyle={{
-          fontSize: RFValue(26)
-        }}
+        style={{ marginTop: theme.margins.m }}
+        labelStyle={theme.text.body_l}
         onPress={() => {
           route.params.onSubmit(selectedExercises)
           navigation.goBack()
         }}
-        icon={images.Train}
-        compact={true}
       >
-        {}
+        Add Exercise
       </Button>
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  addBtn: {
-    width: 60,
-    height: 60,
-    marginTop: 0,
-    borderRadius: 10
-  }
-})

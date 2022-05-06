@@ -22,7 +22,6 @@ function ExerciseDescriptor({
 }) {
   const [checked, setChecked] = useState(false)
   const toggleCheck = useCallback(() => setChecked(!checked), [checked])
-  console.log(exercise.name)
   const theme = useTheme()
   return (
     <TouchableOpacity
