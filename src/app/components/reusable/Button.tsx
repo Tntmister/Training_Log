@@ -14,10 +14,9 @@ export function Button({
   return (
     <PaperButton
       labelStyle={{
+        ...theme.text.body_l,
         paddingVertical: theme.paddings.s,
         color: theme.colors.white,
-        fontSize: RFValue(16),
-        fontFamily: "Lato",
         ...(typeof labelStyle === "object" ? labelStyle : {})
       }}
       style={{

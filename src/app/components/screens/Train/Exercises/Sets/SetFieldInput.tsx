@@ -2,10 +2,23 @@
 import React from "react"
 import { StyleSheet } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { useTheme } from "../../../../../providers/Theme"
+import { Theme, useTheme } from "../../../../../providers/Theme"
 import { Text } from "../../../../reusable/Text"
 import { TextInput } from "../../../../reusable/TextInput"
 import { modelModes } from "../../Models/Model"
+
+const styles = (theme: Theme) =>
+  StyleSheet.create({
+    box: {
+      textAlignVertical: "center",
+      textAlign: "center",
+      fontSize: RFValue(18),
+      borderRadius: 5,
+      paddingHorizontal: 0,
+      height: 40,
+      marginTop: 0
+    }
+  })
 
 export default function SetFieldInput({
   inputMode,
@@ -13,16 +26,18 @@ export default function SetFieldInput({
   ...props
 }: { inputMode: modelModes } & React.ComponentProps<typeof TextInput>) {
   const theme = useTheme()
+  const style_hook = styles(theme)
 
   if (inputMode != modelModes.View)
     return (
       <TextInput
         style={{
-          ...styles.box,
-          ...(typeof style === "object" ? style : {}),
+          ...theme.text.header,
+          ...style_hook.box,
           backgroundColor: props.disabled
             ? theme.colors.backdrop
-            : theme.colors.background
+            : theme.colors.background,
+          ...(typeof style === "object" ? style : {})
         }}
         {...props}
         keyboardType="number-pad"
@@ -33,7 +48,7 @@ export default function SetFieldInput({
     return (
       <Text
         style={{
-          ...styles.box,
+          ...style_hook.box,
           ...(typeof style === "object" ? style : {})
         }}
       >
@@ -41,15 +56,3 @@ export default function SetFieldInput({
       </Text>
     )
 }
-
-const styles = StyleSheet.create({
-  box: {
-    textAlignVertical: "center",
-    textAlign: "center",
-    fontSize: RFValue(18),
-    borderRadius: 5,
-    paddingHorizontal: 0,
-    height: 40,
-    marginTop: 0
-  }
-})

@@ -12,6 +12,8 @@ import {
   Theme as NavigationTheme
 } from "@react-navigation/native"
 import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
+import { StyleProp, TextStyle } from "react-native"
+import { RFValue } from "react-native-responsive-fontsize"
 
 export type Theme = {
   margins: {
@@ -31,10 +33,44 @@ export type Theme = {
   colors: {
     white: string;
   };
+  text: {
+    header: TextStyle;
+    subHeader: TextStyle;
+    body_l: TextStyle;
+    body_m: TextStyle;
+    body_s: TextStyle;
+  };
 } & NavigationTheme &
 PaperTheme;
 
 const defaultTheme: Theme = {
+  text: {
+    header: {
+      fontSize: RFValue(28),
+      fontWeight: "bold",
+      fontFamily: "Lato"
+    },
+    subHeader: {
+      fontSize: RFValue(20),
+      fontWeight: "bold",
+      fontFamily: "Lato"
+    },
+    body_l: {
+      fontSize: RFValue(18),
+      fontWeight: "400",
+      fontFamily: "Lato"
+    },
+    body_m: {
+      fontSize: RFValue(16),
+      fontWeight: "400",
+      fontFamily: "Lato"
+    },
+    body_s: {
+      fontSize: RFValue(14),
+      fontWeight: "400",
+      fontFamily: "Lato"
+    }
+  },
   ...PaperDefaultTheme,
   ...NavigationDefaultTheme,
   fonts: {
