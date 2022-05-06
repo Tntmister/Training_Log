@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -11,7 +11,8 @@ import {
 import { categoryIcons } from "../../../../lib/exercises"
 import { images } from "../../../../lib/extra"
 import { Theme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineContainer"
+import InlineContainer from "../../../reusable/InlineView"
+import MediaSelector from "../../../reusable/MediaSelector"
 import { Text } from "../../../reusable/Text"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import { modelModes } from "../Models/Model"
@@ -39,16 +40,29 @@ export default function ProgrammedExercise({
   onExerciseDel: (exNum: number) => void;
   onExerciseAnnotationChange: (exNum: number, txt: string) => void;
 }) {
-  return (
-    <View
-      style={{
-        ...styles.container,
+  const styles = useRef(
+    StyleSheet.create({
+      container: {
+        width: "95%",
+        borderRadius: 10,
+        alignSelf: "center",
         backgroundColor: theme.colors.backdrop,
-        marginBottom: theme.margins.s,
-        paddingVertical: theme.paddings.m,
+        marginTop: theme.margins.m,
+        paddingVertical: theme.margins.m,
         paddingHorizontal: theme.paddings.l
-      }}
-    >
+      },
+      title: {
+        textAlign: "center",
+        fontSize: RFValue(18)
+      },
+      del: {
+        borderRadius: 5,
+        width: "15%"
+      }
+    })
+  ).current
+  return (
+    <View style={styles.container}>
       <InlineContainer
         style={{
           justifyContent: "space-between",
@@ -135,22 +149,9 @@ export default function ProgrammedExercise({
           mode={mode}
         />
       )}
+      {mode == modelModes.Session && (
+        <MediaSelector assets={exercise.userMediaContent!} />
+      )}
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "98%",
-    borderRadius: 10,
-    alignSelf: "center"
-  },
-  title: {
-    textAlign: "center",
-    fontSize: RFValue(18)
-  },
-  del: {
-    borderRadius: 5,
-    width: "15%"
-  }
-})
