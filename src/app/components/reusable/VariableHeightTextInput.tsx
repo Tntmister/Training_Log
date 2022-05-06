@@ -12,10 +12,12 @@ export function VariableHeightTextInput({
       multiline={true}
       textAlignVertical={"top"}
       numberOfLines={props.value!.split("\n").length + 1}
-      style={{
-        ...(typeof style === "object" ? style : {}),
-        height: ""
-      }}
+      style={[
+        {
+          height: ""
+        },
+        style
+      ]}
       maxLength={150}
       {...props}
     />

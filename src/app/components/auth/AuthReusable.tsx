@@ -9,10 +9,12 @@ export function AuthTextInput({
 }: React.ComponentProps<typeof TextInput>) {
   return (
     <TextInput
-      style={{
-        width: "80%",
-        ...(typeof style === "object" ? style : {})
-      }}
+      style={[
+        {
+          width: "80%"
+        },
+        style
+      ]}
       {...props}
     />
   )
@@ -20,19 +22,17 @@ export function AuthTextInput({
 
 export function AuthButton({
   style,
-  labelStyle,
   ...props
 }: React.ComponentProps<typeof Button>) {
   return (
     <Button
-      labelStyle={{
-        ...(typeof labelStyle === "object" ? labelStyle : {})
-      }}
-      style={{
-        width: "80%",
-        borderRadius: 50,
-        ...(typeof style === "object" ? style : {})
-      }}
+      style={[
+        {
+          width: "80%",
+          borderRadius: 50
+        },
+        style
+      ]}
       mode="contained"
       uppercase={false}
       {...props}

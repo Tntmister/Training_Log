@@ -10,11 +10,13 @@ export function Text({
 }: React.ComponentProps<typeof PaperText>) {
   return (
     <PaperText
-      style={{
-        fontFamily: "Lato",
-        fontSize: RFValue(16),
-        ...(typeof style === "object" ? style : {})
-      }}
+      style={[
+        {
+          fontFamily: "Lato",
+          fontSize: RFValue(16)
+        },
+        style
+      ]}
       {...props}
     >
       {children}

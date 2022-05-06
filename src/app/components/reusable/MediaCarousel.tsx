@@ -19,11 +19,13 @@ export default function MediaCarousel({
   const [activeImage, setActiveImage] = useState(0)
   return (
     <View
-      style={{
-        width: "100%",
-        marginVertical: theme.margins.m,
-        ...(typeof style === "object" ? style : {})
-      }}
+      style={[
+        {
+          width: "100%",
+          marginVertical: theme.margins.m
+        },
+        style
+      ]}
       {...props}
     >
       <PagerView

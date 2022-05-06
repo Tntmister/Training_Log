@@ -7,7 +7,7 @@ import {
   Exercise
 } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineContainer"
+import InlineContainer from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
 import { modelModes } from "../Models/Model"
 import StretchingSet from "./Sets/StretchingSet"
