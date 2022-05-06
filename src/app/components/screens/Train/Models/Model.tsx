@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native"
-import { Appbar, IconButton, Menu } from "react-native-paper"
+import { Appbar, Checkbox, IconButton, Menu } from "react-native-paper"
 import {
   CardioSetClass,
   StretchingSetClass,
@@ -42,7 +42,7 @@ export enum modelModes {
 export default function Model({
   route,
   navigation
-}: StackScreenProps<RootStackParamListModelNav, "EditModel">) {
+}: StackScreenProps<RootStackParamListModelNav, "Model">) {
   const user = useContext(UserContext)
   const theme = useTheme()
 
@@ -163,6 +163,7 @@ export default function Model({
     navigation.setParams({ mode: modelModes.Edit })
     setMenuVisible(false)
   }
+  const [onetime, setOneTime] = useState(false)
 
   const [menuVisible, setMenuVisible] = useState(false)
   return (
@@ -210,7 +211,14 @@ export default function Model({
         </Menu>
       </Appbar>
       <ScrollView>
-        {mode == modelModes.Edit && (
+        <InlineContainer style={{ marginTop: theme.margins.s }}>
+          <Checkbox
+            status={onetime ? "checked" : "unchecked"}
+            onPress={() => setOneTime(!onetime)}
+          />
+          <Text>One time session?</Text>
+        </InlineContainer>
+        {mode == modelModes.Edit && !onetime && (
           <TextInput
             style={{ ...styles.name, marginLeft: theme.margins.m }}
             value={model.name}

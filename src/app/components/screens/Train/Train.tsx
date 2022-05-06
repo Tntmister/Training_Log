@@ -1,17 +1,21 @@
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBarProps
+} from "@react-navigation/material-top-tabs"
 import React from "react"
 import ExerciseNav from "./Exercises/ExerciseNav"
 import { useTheme } from "../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Dimensions } from "react-native"
-import { Button } from "../../reusable/Button"
 import ModelNav from "./Models/ModelNav"
+import { Button } from "../../reusable/Button"
+import { modelModes } from "./Models/Model"
 
-export default function Train() {
+export default function Train({ navigation }: MaterialTopTabBarProps) {
   const Tab = createMaterialTopTabNavigator()
 
   const theme = useTheme()
-
+  const state = navigation.getState().routes[navigation.getState().index].state
   return (
     <>
       <Tab.Navigator
@@ -29,15 +33,24 @@ export default function Train() {
         <Tab.Screen component={ExerciseNav} name="Exercises" />
         <Tab.Screen component={ModelNav} name="Models" />
       </Tab.Navigator>
-
-      <Button
-        style={{
-          marginTop: theme.margins.s
-        }}
-        onPress={() => console.log("New Training Session")}
-      >
-        Start empty Training Session
-      </Button>
+      {state?.routes[state.index!].state?.index != 1 && (
+        <Button
+          style={{
+            marginTop: theme.margins.s
+          }}
+          onPress={() => {
+            navigation.navigate("Models", {
+              screen: "Model",
+              params: {
+                model: undefined,
+                mode: modelModes.Edit
+              }
+            })
+          }}
+        >
+          Create your own Training Model
+        </Button>
+      )}
     </>
   )
 }

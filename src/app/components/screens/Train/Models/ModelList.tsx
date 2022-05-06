@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { FlatList } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
-import { Button } from "../../../reusable/Button"
 import { Text } from "../../../reusable/Text"
 import { TrainingModel } from "../../../../../dataDefinition/data"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -10,8 +9,6 @@ import { UserContext } from "../../../../providers/User"
 import { getModels } from "../../../../lib/firebaseFS"
 import Loading from "../../../reusable/Loading"
 import ModelDescriptor from "./ModelDescriptor"
-import { modelModes } from "./Model"
-
 export type TrainingModelDoc = {
   model: TrainingModel;
   id: string;
@@ -35,20 +32,6 @@ export default function ModelList({
 
   return (
     <>
-      <Button
-        style={{
-          marginTop: theme.margins.s,
-          marginBottom: theme.margins.s
-        }}
-        onPress={() =>
-          navigation.navigate("EditModel", {
-            model: undefined,
-            mode: modelModes.Edit
-          })
-        }
-      >
-        Create your own Training Model
-      </Button>
       {loading ? (
         <Loading />
       ) : (

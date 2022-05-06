@@ -8,7 +8,7 @@ import ModelList, { TrainingModelDoc } from "./ModelList"
 
 export type RootStackParamListModelNav = {
   ModelList: undefined;
-  EditModel: { model?: TrainingModelDoc; mode: modelModes };
+  Model: { model?: TrainingModelDoc; mode: modelModes };
   ExerciseSelector: { onSubmit: (selectedExercises: Exercise[]) => void };
   Exercise: { exercise: Exercise };
 };
@@ -22,7 +22,7 @@ export default function ExerciseNav() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="ModelList" component={ModelList} />
-      <Stack.Screen name="EditModel" component={Model} />
+      <Stack.Screen name="Model" component={Model} />
       <Stack.Screen name="ExerciseSelector" component={ExerciseSelector} />
       <Stack.Screen name="Exercise" component={ExerciseScreen} />
     </Stack.Navigator>

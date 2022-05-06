@@ -12,7 +12,7 @@ import {
   exercises
 } from "../../../../lib/exercises"
 import { useTheme } from "../../../../providers/Theme"
-import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
+import { View, ViewStyle } from "react-native"
 import { Exercise } from "../../../../../dataDefinition/data"
 
 export default function ExerciseSearch({
@@ -101,11 +101,6 @@ export default function ExerciseSearch({
     borderWidth: 1
   }
 
-  const filterButtonLabelStyle: StyleProp<TextStyle> = {
-    marginVertical: theme.margins.s,
-    fontSize: RFValue(14)
-  }
-
   return (
     <View style={{ marginTop: theme.margins.s, alignItems: "center" }}>
       <Searchbar
@@ -138,7 +133,7 @@ export default function ExerciseSearch({
               <Button
                 mode="outlined"
                 style={filterButtonStyle}
-                labelStyle={filterButtonLabelStyle}
+                labelStyle={theme.text.body_s}
                 onPress={() => setCatVisible(true)}
               >
                 {category === undefined ? "Category: Any" : category}
@@ -161,7 +156,7 @@ export default function ExerciseSearch({
               <Button
                 mode="outlined"
                 style={{ ...filterButtonStyle, marginTop: theme.margins.s }}
-                labelStyle={filterButtonLabelStyle}
+                labelStyle={theme.text.body_s}
                 onPress={() => setMuscleVisible(true)}
               >
                 {muscle === undefined ? "Muscle: Any" : muscle}
@@ -197,6 +192,7 @@ export default function ExerciseSearch({
               showDropDown={() => setEquipmentVisible(true)}
               onDismiss={() => setEquipmentVisible(false)}
               value={equipments}
+              dropDownItemTextStyle={theme.text.body_m}
               setValue={setEquipments}
               list={equipmentSet()}
               multiSelect

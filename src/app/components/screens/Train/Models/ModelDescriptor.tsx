@@ -22,7 +22,7 @@ function ModelDescriptor({
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("EditModel", { model, mode: modelModes.View })
+        navigation.navigate("Model", { model, mode: modelModes.View })
       }
       style={{
         backgroundColor: theme.colors.backdrop,
@@ -52,7 +52,7 @@ function ModelDescriptor({
           <Menu.Item
             title="Edit"
             onPress={() => {
-              navigation.navigate("EditModel", {
+              navigation.navigate("Model", {
                 model,
                 mode: modelModes.Edit
               }),
