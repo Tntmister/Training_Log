@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
+import { CardioSetClass } from "../../../../../../dataDefinition/data"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import InlineContainer from "../../../../reusable/InlineView"
@@ -11,28 +12,14 @@ import SetFieldInput from "./SetFieldInput"
 
 export default function CardioSet({
   mode,
-  setNum,
-  weight,
-  duration,
-  distance,
-  done,
-  onChangeWeight,
-  onChangeDuration,
-  onChangeDistance,
-  onDeletePress,
-  onSetCheckbox
+  set,
+  index,
+  onSetDelete
 }: {
   mode: modelModes;
-  setNum: number;
-  weight: number;
-  duration: string;
-  distance: number;
-  done: boolean;
-  onChangeWeight: (setIndex: number, weight: number) => void;
-  onChangeDuration: (setIndex: number, dur: string) => void;
-  onChangeDistance: (setIndex: number, dist: number) => void;
-  onDeletePress: (setIndex: number) => void;
-  onSetCheckbox: (setIndex: number) => void;
+  set: CardioSetClass;
+  index: number;
+  onSetDelete: (setIndex: number) => void;
 }) {
   const theme = useTheme()
   const styles = StyleSheet.create({
@@ -42,72 +29,100 @@ export default function CardioSet({
     },
     box: {
       textAlign: "center",
+      textAlignVertical: "center",
       fontSize: RFValue(18),
-      borderRadius: 5,
-      paddingHorizontal: 0,
-      height: 30,
-      marginTop: 0,
-      color: theme.colors.primary,
-      paddingVertical: theme.margins.xs
+      color: theme.colors.primary
     },
-    setNum: { width: "10%" },
-    weight: { width: "20%" },
-    distance: { width: "25%" },
-    time: { width: "25%" },
-    thrashContainer: {
-      width: "10%",
-      alignItems: "center"
+    index: {
+      width: "5%",
+      marginRight: theme.margins.s
     },
-    iconBtn: {
+    input: {
+      width: "20%",
+      marginRight: theme.margins.s
+    },
+    button_checkbox: {
+      width: "10%"
+    },
+    button: {
       backgroundColor: theme.colors.primary,
-      borderRadius: 5
+      borderRadius: 5,
+      margin: 0,
+      padding: 0
     }
   })
+  const [set_state, setSet] = useState(set)
+
+  function onChangeWeight(weight: string) {
+    setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
+  }
+
+  function onChangeDistance(dist: string) {
+    setSet((prevSet) => ({ ...prevSet, distance: parseFloat(dist) || 0 }))
+  }
+
+  function onChangeDuration(dur: string) {
+    setSet((prevSet) => ({ ...prevSet, duration: dur }))
+  }
+
+  function onCheckBoxPress() {
+    setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
+  }
+
+  useEffect(() => {
+    set = set_state
+  }, [set_state])
+
+  const [timerActive, setTimerActive] = useState(false)
 
   return (
     <InlineContainer style={styles.container}>
-      <Text
-        style={{
-          ...styles.setNum,
-          ...styles.box
-        }}
-      >
-        {setNum + 1}
-      </Text>
+      <Text style={[styles.index, styles.box]}>{index + 1}</Text>
       <SetFieldInput
+        style={styles.input}
         inputMode={mode}
-        style={styles.weight}
-        value={isNaN(weight) ? "0" : weight.toString()}
-        onChangeText={(w) => onChangeWeight(setNum, parseFloat(w))}
+        value={set_state.weight.toString()}
+        onChangeText={onChangeWeight}
       />
       <SetFieldInput
+        style={styles.input}
         inputMode={mode}
-        style={styles.distance}
-        value={isNaN(distance) ? "0" : distance.toString()}
-        onChangeText={(dist) => onChangeDistance(setNum, parseFloat(dist))}
+        value={set_state.distance.toString()}
+        onChangeText={onChangeDistance}
       />
       <SetFieldInput
+        style={[styles.input]}
         inputMode={mode}
-        style={styles.time}
-        value={duration}
-        onChangeText={(time) => onChangeDuration(setNum, time)}
+        value={set_state.duration}
+        onChangeText={onChangeDuration}
       />
-      <View style={styles.thrashContainer}>
-        {mode == modelModes.Edit ? (
-          <IconButton
-            style={styles.iconBtn}
-            icon={images.Trash}
-            onPress={() => onDeletePress(setNum)}
-          />
-        ) : (
-          mode == modelModes.Session && (
-            <Checkbox
-              status={done ? "checked" : "unchecked"}
-              onPress={() => onSetCheckbox(setNum)}
+
+      {mode == modelModes.Session && (
+        <IconButton
+          icon={"play"}
+          style={[styles.button, { marginRight: theme.margins.s }]}
+          onPress={() => {
+            console.log(timerActive ? "stop timer" : "start timer")
+            setTimerActive(!timerActive)
+          }}
+        />
+      )}
+      {mode != modelModes.View && (
+        <View style={styles.button_checkbox}>
+          {mode == modelModes.Edit ? (
+            <IconButton
+              style={styles.button}
+              icon={images.Trash}
+              onPress={() => onSetDelete(index)}
             />
-          )
-        )}
-      </View>
+          ) : (
+            <Checkbox
+              status={set_state.done ? "checked" : "unchecked"}
+              onPress={onCheckBoxPress}
+            />
+          )}
+        </View>
+      )}
     </InlineContainer>
   )
 }

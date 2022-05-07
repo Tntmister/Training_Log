@@ -1,16 +1,11 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import {
-  CardioSetClass,
-  Exercise,
-  StretchingSetClass,
-  WESetClass
-} from "../../../../../dataDefinition/data"
+import { Exercise } from "../../../../../dataDefinition/data"
 import { categoryIcons } from "../../../../lib/exercises"
 import { images } from "../../../../lib/extra"
-import { Theme } from "../../../../providers/Theme"
+import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
 import MediaSelector from "../../../reusable/MediaSelector"
 import { Text } from "../../../reusable/Text"
@@ -22,24 +17,14 @@ import ProgrammedStretchingExercise from "./ProgrammedStretchingExercise"
 
 export default function ProgrammedExercise({
   exercise,
-  theme,
-  exNum,
   mode,
-  onSetChange,
-  onExerciseDel,
-  onExerciseAnnotationChange
+  onExerciseDel
 }: {
   exercise: Exercise;
-  theme: Theme;
-  exNum: number;
   mode: modelModes;
-  onSetChange: (
-    exNum: number,
-    sets: WESetClass[] | StretchingSetClass[] | CardioSetClass[]
-  ) => void;
-  onExerciseDel: (exNum: number) => void;
-  onExerciseAnnotationChange: (exNum: number, txt: string) => void;
+  onExerciseDel: (exercise: Exercise) => void;
 }) {
+  const theme = useTheme()
   const styles = useRef(
     StyleSheet.create({
       container: {
@@ -78,6 +63,17 @@ export default function ProgrammedExercise({
       }
     })
   ).current
+
+  const [exercise_state, setExercise] = useState(exercise)
+
+  function onAnnotationChange(text: string) {
+    exercise.annotation = text
+    setExercise((prevEx) => ({
+      ...prevEx,
+      annotation: text
+    }))
+  }
+
   return (
     <View style={styles.container}>
       <InlineContainer style={styles.headerContainer}>
@@ -92,7 +88,7 @@ export default function ProgrammedExercise({
           <IconButton
             style={styles.del}
             size={RFValue(26)}
-            onPress={() => onExerciseDel(exNum)}
+            onPress={() => onExerciseDel(exercise)}
             icon={images.Trash}
           />
         )}
@@ -103,10 +99,10 @@ export default function ProgrammedExercise({
           placeholder={
             exercise.annotation.length > 0 ? "" : "Exercise Annotation"
           }
-          onChangeText={(txt) => onExerciseAnnotationChange(exNum, txt)}
+          onChangeText={onAnnotationChange}
         />
       ) : (
-        exercise.annotation.length > 0 && (
+        exercise_state.annotation.length > 0 && (
           <Text
             style={{
               borderRadius: 5,
@@ -114,31 +110,16 @@ export default function ProgrammedExercise({
               borderWidth: 1
             }}
           >
-            {exercise.annotation}
+            {exercise_state.annotation}
           </Text>
         )
       )}
       {exercise.category == "Cardio" ? (
-        <ProgrammedCardioExercise
-          exNum={exNum}
-          exercise={exercise}
-          onSetChange={onSetChange}
-          mode={mode}
-        />
+        <ProgrammedCardioExercise exercise={exercise} mode={mode} />
       ) : exercise.category == "Stretching" ? (
-        <ProgrammedStretchingExercise
-          exNum={exNum}
-          exercise={exercise}
-          onSetChange={onSetChange}
-          mode={mode}
-        />
+        <ProgrammedStretchingExercise exercise={exercise} mode={mode} />
       ) : (
-        <ProgrammedRegularExercise
-          exNum={exNum}
-          exercise={exercise}
-          onSetChange={onSetChange}
-          mode={mode}
-        />
+        <ProgrammedRegularExercise exercise={exercise} mode={mode} />
       )}
       {mode == modelModes.Session && (
         <MediaSelector assets={exercise.userMediaContent!} />

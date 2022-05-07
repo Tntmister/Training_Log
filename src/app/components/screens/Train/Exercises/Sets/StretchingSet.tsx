@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
+import { StretchingSetClass } from "../../../../../../dataDefinition/data"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import InlineContainer from "../../../../reusable/InlineView"
@@ -10,29 +11,16 @@ import SetFieldInput from "./SetFieldInput"
 
 export default function StretchingSet({
   mode,
-  setNum,
-  weight,
-  duration,
-  wantedDuration,
+  set,
+  index,
   done,
-  onChangeWeight,
-  onChangeWDuration,
-  onChangeDuration,
-  onDeletePress,
-  onSetCheckbox
+  onSetDelete
 }: {
   mode: modelModes;
-  setNum: number;
-  weight: number;
-  wantedDuration?: string;
-  duration: string;
-  distance?: number;
+  set: StretchingSetClass;
+  index: number;
   done: boolean;
-  onChangeWeight: (setIndex: number, weight: number) => void;
-  onChangeWDuration: (setIndex: number, dur: string) => void;
-  onChangeDuration: (setIndex: number, dur: string) => void;
-  onDeletePress: (setIndex: number) => void;
-  onSetCheckbox: (setIndex: number) => void;
+  onSetDelete: (setIndex: number) => void;
 }) {
   const theme = useTheme()
   const styles = StyleSheet.create({
@@ -63,6 +51,24 @@ export default function StretchingSet({
       borderRadius: 5
     }
   })
+  const [set_state, setSet] = useState(set)
+
+  function onChangeWeight(weight: string) {
+    setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
+  }
+
+  function onChangeDuration(dur: string) {
+    setSet((prevSet) => ({ ...prevSet, duration: dur }))
+  }
+
+  function onCheckBoxPress() {
+    setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
+  }
+
+  useEffect(() => {
+    set = set_state
+  }, [set_state])
+
   return (
     <InlineContainer style={styles.container}>
       <Text
@@ -71,44 +77,37 @@ export default function StretchingSet({
           ...styles.box
         }}
       >
-        {setNum + 1}
+        {index + 1}
       </Text>
 
       <SetFieldInput
         inputMode={mode}
         style={styles.weight}
-        value={isNaN(weight) ? "0" : weight.toString()}
-        onChangeText={(w) => onChangeWeight(setNum, parseFloat(w))}
+        value={set_state.weight.toString()}
+        onChangeText={onChangeWeight}
       />
       <SetFieldInput
         inputMode={mode}
         style={styles.goalTime}
-        value={duration}
-        onChangeText={(time) => onChangeDuration(setNum, time)}
+        value={set_state.duration}
+        onChangeText={onChangeDuration}
       />
-      <SetFieldInput
-        inputMode={mode}
-        style={styles.time}
-        value={wantedDuration}
-        onChangeText={(time) => onChangeWDuration(setNum, time)}
-        disabled={mode != modelModes.Edit}
-      />
-      <View style={styles.thrashContainer}>
-        {mode == modelModes.Edit ? (
-          <IconButton
-            style={styles.iconBtn}
-            icon={images.Trash}
-            onPress={() => onDeletePress(setNum)}
-          />
-        ) : (
-          mode == modelModes.Session && (
+      {mode != modelModes.View && (
+        <View style={styles.thrashContainer}>
+          {mode == modelModes.Edit ? (
+            <IconButton
+              style={styles.iconBtn}
+              icon={images.Trash}
+              onPress={() => onSetDelete(index)}
+            />
+          ) : (
             <Checkbox
               status={done ? "checked" : "unchecked"}
-              onPress={() => onSetCheckbox(setNum)}
+              onPress={onCheckBoxPress}
             />
-          )
-        )}
-      </View>
+          )}
+        </View>
+      )}
     </InlineContainer>
   )
 }

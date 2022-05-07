@@ -1,166 +1,112 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
-import { Exercise, WESetClass } from "../../../../../dataDefinition/data"
+import { RFValue } from "react-native-responsive-fontsize"
+import { RegularSetClass, Exercise } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
 import { modelModes } from "../Models/Model"
-import WESet from "./Sets/WESet"
+import RegularSet from "./Sets/RegularSet"
 
-export default function ProgrammedRegularExercise({
-  exNum,
+export default function ProgrammedCardioExercise({
   exercise,
-  mode,
-  onSetChange
+  mode
 }: {
-  exNum: number;
   exercise: Exercise;
   mode: modelModes;
-  onSetChange: (exNum: number, sets: WESetClass[]) => void;
 }) {
   const theme = useTheme()
-  const styles = StyleSheet.create({
-    subtitleContainer: {
-      justifyContent: "space-between",
-      marginTop: theme.margins.xs
-    },
-    subtitle: {
-      textAlign: "center",
-      fontSize: theme.text.body_l.fontSize,
-      color: theme.colors.text
-    },
-    setNum: { width: "10%" },
-    weight: { width: "20%" },
-    repRange: { width: "35%" },
-    reps: { width: "15%" },
-    del: { width: "10%" },
-    addBtn: {
-      width: "100%",
-      alignSelf: "center"
-    }
-  })
-
-  const [sets, setSets] = useState<WESetClass[]>([])
-
-  useEffect(() => {
-    setSets(exercise.sets as WESetClass[])
-  }, [])
-  function onSetCheckBox(setIndex: number) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex ? { ...set, done: !set.done } : set
-      )
+  const styles = useRef(
+    StyleSheet.create({
+      subtitleContainer: {
+        justifyContent: "space-between"
+      },
+      subtitle: {
+        textAlign: "center",
+        fontSize: RFValue(16)
+      },
+      index: { width: "10%" },
+      weight: { width: "20%" },
+      distance: { width: "25%" },
+      time: { width: "20%" },
+      del: { width: "10%" }
     })
-  }
-  function onWeightChange(setIndex: number, weight: number) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex ? { ...set, weight: weight } : set
-      )
-    })
-  }
+  ).current
+  const [sets, setSets] = useState<RegularSetClass[]>(
+    exercise.sets as RegularSetClass[]
+  )
 
-  function onRepMinChange(setIndex: number, newMin: number) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex
-          ? { ...set, repRange: [newMin, set.repRange[1]] }
-          : set
-      )
-    })
-  }
-
-  function onRepMaxChange(setIndex: number, newMax: number) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex
-          ? { ...set, repRange: [set.repRange[0], newMax] }
-          : set
-      )
-    })
+  function onSetDelete(index: number) {
+    setSets((prevSets) => prevSets.filter((_, i) => i != index))
   }
 
   function addSet() {
-    setSets((prevSets) => [...prevSets, new WESetClass()])
-  }
-
-  function deleteSet(setIndex: number) {
-    setSets((prevSets) => {
-      return prevSets.filter((set, index) => index != setIndex)
-    })
+    setSets((prevSets) => [...prevSets, new RegularSetClass()])
   }
 
   useEffect(() => {
-    onSetChange(exNum, sets)
+    exercise.sets = sets
   }, [sets])
 
-  const setElements = (exercise.sets as WESetClass[]).map((set, index) => (
-    <WESet
-      mode={mode}
-      setNum={index}
-      key={index}
-      done={set.done}
-      weight={set.weight}
-      min={set.repRange[0]}
-      max={set.repRange[1]}
-      onChangeWeight={onWeightChange}
-      onChangeRepMin={onRepMinChange}
-      onChangeRepMax={onRepMaxChange}
-      onDeletePress={deleteSet}
-      onSetCheckbox={onSetCheckBox}
-    />
-  ))
   return (
     <>
-      <InlineContainer style={styles.subtitleContainer}>
-        <Text
+      <InlineContainer
+        style={{ ...styles.subtitleContainer, marginTop: theme.margins.xs }}
+      >
+        <View
           style={{
-            ...styles.setNum,
+            ...styles.index,
             ...styles.subtitle
           }}
-        >
-          Set
-        </Text>
+        />
         <Text
           style={{
             ...styles.weight,
-            ...styles.subtitle
+            ...styles.subtitle,
+            color: theme.colors.text
           }}
         >
           Weight
         </Text>
         <Text
           style={{
-            ...styles.repRange,
-            ...styles.subtitle
-          }}
-        >
-          Rep. Range
-        </Text>
-        <Text
-          style={{
-            ...styles.reps,
-            ...styles.subtitle
+            ...styles.distance,
+            ...styles.subtitle,
+            color: theme.colors.text
           }}
         >
           Reps
         </Text>
-        <View
-          style={{
-            ...styles.del,
-            ...styles.subtitle
-          }}
-        />
+        {mode != modelModes.View && (
+          <View
+            style={{
+              ...styles.del,
+              ...styles.subtitle
+            }}
+          />
+        )}
       </InlineContainer>
 
-      {setElements}
+      {sets.map((set, index) => (
+        <RegularSet
+          key={index}
+          mode={mode}
+          set={set}
+          index={index}
+          done={set.done}
+          onSetDelete={onSetDelete}
+        />
+      ))}
 
       {mode == modelModes.Edit && (
         <IconButton
           color={theme.colors.primary}
           size={30}
-          style={styles.addBtn}
+          style={{
+            width: "100%",
+            alignSelf: "center"
+          }}
           onPress={addSet}
           icon={"plus"}
         />

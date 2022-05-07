@@ -5,12 +5,10 @@ export class ExerciseSet {
   done = false;
   mediaContent: Asset[] = [];
 }
-export class WESetClass extends ExerciseSet {
-  repRange = [0, 0];
-  repsDone? = 0;
+export class RegularSetClass extends ExerciseSet {
+  reps = 0;
 }
 export class StretchingSetClass extends ExerciseSet {
-  wantedDuration = "00:00";
   duration = "00:00";
 }
 export class CardioSetClass extends ExerciseSet {
@@ -26,7 +24,7 @@ export type Exercise = {
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
-  sets: WESetClass[] | StretchingSetClass[] | CardioSetClass[];
+  sets: ExerciseSet[];
   annotation: string;
   userMediaContent?: Asset[];
 };

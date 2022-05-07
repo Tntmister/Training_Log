@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -13,87 +13,45 @@ import { modelModes } from "../Models/Model"
 import StretchingSet from "./Sets/StretchingSet"
 
 export default function ProgrammedStretchingExercise({
-  exNum,
   exercise,
-  mode,
-  onSetChange
+  mode
 }: {
-  exNum: number;
   exercise: Exercise;
-  onSetChange: (exNum: number, sets: StretchingSetClass[]) => void;
   mode: modelModes;
 }) {
   const theme = useTheme()
-  const [sets, setSets] = useState<StretchingSetClass[]>([])
-
-  useEffect(() => {
-    setSets(exercise.sets as StretchingSetClass[])
-  }, [])
-
-  useEffect(() => {
-    onSetChange(exNum, sets)
-    /* console.log(`(PRE) SETS EXERCICIO ${exNum} -> ${JSON.stringify(sets)} `) */
-  }, [sets])
-
-  function onSetCheckBox(setIndex: number) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex ? { ...set, done: !set.done } : set
-      )
+  const styles = useRef(
+    StyleSheet.create({
+      subtitleContainer: {
+        justifyContent: "space-between"
+      },
+      subtitle: {
+        textAlign: "center",
+        fontSize: RFValue(16)
+      },
+      setNum: { width: "10%" },
+      weight: { width: "20%" },
+      goalTime: { width: "30%" },
+      time: { width: "20%" },
+      del: { width: "10%" }
     })
+  ).current
+  const [sets, setSets] = useState<StretchingSetClass[]>(
+    exercise.sets as StretchingSetClass[]
+  )
+
+  function onSetDelete(index: number) {
+    setSets((prevSets) => prevSets.filter((_, i) => i != index))
   }
 
-  function onWeightChange(setIndex: number, weight: number) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex ? { ...set, weight: weight } : set
-      )
-    })
-  }
-
-  function onChangeWDuration(setIndex: number, dur: string) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex ? { ...set, wantedDuration: dur } : set
-      )
-    })
-  }
-
-  function onChangeDuration(setIndex: number, dur: string) {
-    setSets((prevSets) => {
-      return prevSets.map((set, index) =>
-        index == setIndex ? { ...set, duration: dur } : set
-      )
-    })
-  }
-
-  function deleteSet(setIndex: number) {
-    setSets((prevSets) => {
-      return prevSets.filter((set, index) => index != setIndex)
-    })
-  }
   function addSet() {
     setSets((prevSets) => [...prevSets, new StretchingSetClass()])
   }
 
-  const setElements = (exercise.sets as StretchingSetClass[]).map(
-    (set, index) => (
-      <StretchingSet
-        mode={mode}
-        setNum={index}
-        key={index}
-        done={set.done}
-        weight={set.weight}
-        wantedDuration={set.wantedDuration}
-        duration={set.duration}
-        onChangeWeight={onWeightChange}
-        onChangeWDuration={onChangeWDuration}
-        onChangeDuration={onChangeDuration}
-        onDeletePress={deleteSet}
-        onSetCheckbox={onSetCheckBox}
-      />
-    )
-  )
+  useEffect(() => {
+    exercise.sets = sets
+  }, [sets])
+
   return (
     <>
       <InlineContainer
@@ -119,15 +77,6 @@ export default function ProgrammedStretchingExercise({
         </Text>
         <Text
           style={{
-            ...styles.goalTime,
-            ...styles.subtitle,
-            color: theme.colors.text
-          }}
-        >
-          Goal Time
-        </Text>
-        <Text
-          style={{
             ...styles.time,
             ...styles.subtitle,
             color: theme.colors.text
@@ -135,15 +84,26 @@ export default function ProgrammedStretchingExercise({
         >
           Time
         </Text>
-        <View
-          style={{
-            ...styles.del,
-            ...styles.subtitle
-          }}
-        />
+        {mode != modelModes.View && (
+          <View
+            style={{
+              ...styles.del,
+              ...styles.subtitle
+            }}
+          />
+        )}
       </InlineContainer>
 
-      {setElements}
+      {sets.map((set, index) => (
+        <StretchingSet
+          mode={mode}
+          set={set}
+          index={index}
+          key={index}
+          done={set.done}
+          onSetDelete={onSetDelete}
+        />
+      ))}
 
       {mode == modelModes.Edit && (
         <IconButton
@@ -160,18 +120,3 @@ export default function ProgrammedStretchingExercise({
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  subtitleContainer: {
-    justifyContent: "space-between"
-  },
-  subtitle: {
-    textAlign: "center",
-    fontSize: RFValue(18)
-  },
-  setNum: { width: "10%" },
-  weight: { width: "20%" },
-  goalTime: { width: "30%" },
-  time: { width: "20%" },
-  del: { width: "10%" }
-})

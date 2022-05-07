@@ -5,8 +5,9 @@ import { Alert, ScrollView, StyleSheet } from "react-native"
 import { Appbar, Checkbox, Menu } from "react-native-paper"
 import {
   CardioSetClass,
+  Exercise,
   StretchingSetClass,
-  WESetClass
+  RegularSetClass
 } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
@@ -59,31 +60,10 @@ export default function Model({
     setModel((prevModel) => ({ ...prevModel, description: newDescription }))
   }
 
-  function onSetChange(
-    exNum: number,
-    sets: WESetClass[] | StretchingSetClass[] | CardioSetClass[]
-  ) {
+  function onExerciseDelete(exercise: Exercise) {
     setModel((prevModel) => ({
       ...prevModel,
-      exercises: prevModel.exercises.map((ex, index) =>
-        index == exNum ? { ...ex, sets: sets } : ex
-      )
-    }))
-  }
-
-  function onExerciseAnnotationChange(exNum: number, text: string) {
-    setModel((prevModel) => ({
-      ...prevModel,
-      exercises: prevModel.exercises.map((ex, index) =>
-        index == exNum ? { ...ex, annotation: text } : ex
-      )
-    }))
-  }
-
-  function onExerciseDelete(exNum: number) {
-    setModel((prevModel) => ({
-      ...prevModel,
-      exercises: prevModel.exercises.filter((_, index) => exNum != index)
+      exercises: prevModel.exercises.filter((ex) => ex.name != exercise.name)
     }))
   }
 
@@ -124,7 +104,7 @@ export default function Model({
                   ? [new CardioSetClass()]
                   : ex.category == "Stretching"
                     ? [new StretchingSetClass()]
-                    : [new WESetClass()]
+                    : [new RegularSetClass()]
             }))
           ]
         }))
@@ -225,14 +205,10 @@ export default function Model({
         )}
         {model.exercises.map((ex, index) => (
           <ProgrammedExercise
-            exercise={ex}
             key={index}
-            theme={theme}
-            exNum={index}
+            exercise={ex}
             mode={mode}
-            onSetChange={onSetChange}
             onExerciseDel={onExerciseDelete}
-            onExerciseAnnotationChange={onExerciseAnnotationChange}
           />
         ))}
         {mode == modelModes.Edit && (
