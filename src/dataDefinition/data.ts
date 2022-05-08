@@ -50,6 +50,7 @@ export type TrainingModel = {
   exercises: Exercise[];
   mediaContent: Asset[];
   description: string;
+  duration: number;
 };
 
 // auxiliar

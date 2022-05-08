@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useState } from "react"
-import { Alert, ScrollView, StyleSheet } from "react-native"
-import { Appbar, Checkbox, Menu } from "react-native-paper"
+import React, { useContext, useRef, useState } from "react"
+import { Alert, ScrollView, StyleSheet, View } from "react-native"
+import { Appbar, Checkbox, IconButton, Menu } from "react-native-paper"
 import {
   CardioSetClass,
   Exercise,
@@ -23,6 +23,7 @@ import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInp
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
+import { RFValue } from "react-native-responsive-fontsize"
 
 export enum modelModes {
   Edit = "edit",
@@ -47,7 +48,8 @@ export default function Model({
         author: user!.displayName!,
         exercises: [],
         mediaContent: [],
-        description: ""
+        description: "",
+        duration: 0
       }
   )
   const [deletedAssets] = useState<Asset[]>([])
@@ -119,6 +121,25 @@ export default function Model({
   const [onetime, setOneTime] = useState(false)
 
   const [menuVisible, setMenuVisible] = useState(false)
+
+  const [timerActive, setTimerActive] = useState(false)
+
+  const interval = useRef<NodeJS.Timer>()
+
+  function onTimerToggle() {
+    if (timerActive) {
+      clearInterval(interval.current!)
+    } else {
+      console.log("start timer")
+      interval.current = setInterval(() => {
+        setModel((prevModel) => ({
+          ...prevModel,
+          duration: prevModel.duration + 1
+        }))
+      }, 1000)
+    }
+    setTimerActive(!timerActive)
+  }
   return (
     <>
       <Appbar>
@@ -163,7 +184,31 @@ export default function Model({
           )}
         </Menu>
       </Appbar>
-      <ScrollView>
+      {mode == modelModes.Session && (
+        <View
+          style={{
+            width: "100%",
+            height: "10%",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            flexDirection: "row",
+            alignSelf: "center"
+          }}
+        >
+          <IconButton size={RFValue(30)} icon={"clock"} />
+          <Text style={theme.text.header}>
+            {new Date(model.duration * 1000)
+              .toISOString()
+              .substring(11, 11 + 8)}
+          </Text>
+          <IconButton
+            size={RFValue(36)}
+            icon={timerActive ? "pause" : "play"}
+            onPress={onTimerToggle}
+          />
+        </View>
+      )}
+      <ScrollView pointerEvents={timerActive ? undefined : "none"}>
         {mode == modelModes.Edit && (
           <InlineContainer style={{ marginTop: theme.margins.s }}>
             <Checkbox
