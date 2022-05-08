@@ -15,100 +15,155 @@ export class CardioSetClass extends ExerciseSet {
   distance = 0;
 }
 
-// Exercises
-export type Exercise = {
+export interface IExercise {
   name: string;
   instructions: string[];
   category: string;
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
-  sets: ExerciseSet[];
-  annotation: string;
-  userMediaContent?: Asset[];
-};
-
-// Training Session
-export class TrainingSession {
+}
+export class Exercise implements IExercise {
   name: string;
-  description = "";
-  exercises: Exercise[] = [];
-  done = false;
-  volume = 0;
-  time = "";
-  date = getTimestamp();
+  instructions: string[];
+  category: string;
+  equipment: string;
+  primaryMuscle: string;
+  secondaryMuscles: string[];
+  sets: ExerciseSet[] = [];
+  userAnnotation = "";
+  userMediaContent: Asset[] = [];
 
-  constructor(exercises: Exercise[], name: string) {
-    this.exercises = exercises
-    this.name = name
+  constructor(params: IExercise) {
+    this.name = params.name
+    this.instructions = params.instructions
+    this.category = params.category
+    this.equipment = params.equipment
+    this.primaryMuscle = params.primaryMuscle
+    this.secondaryMuscles = params.secondaryMuscles
+  }
+
+  clone() {
+    return new Exercise({
+      name: this.name,
+      instructions: [...this.instructions],
+      category: this.category,
+      equipment: this.equipment,
+      primaryMuscle: this.primaryMuscle,
+      secondaryMuscles: [...this.secondaryMuscles]
+    })
+  }
+
+  withAnnotation(annotation: string) {
+    this.userAnnotation = annotation
+    return this
+  }
+
+  withNewSet() {
+    this.sets.push(
+      this.category == "Cardio"
+        ? new CardioSetClass()
+        : this.category == "Stretching"
+          ? new StretchingSetClass()
+          : new RegularSetClass()
+    )
+    return this
   }
 }
 
-export type TrainingModel = {
-  name: string;
+/* export class ExerciseSession extends Exercise {
+  sets: ExerciseSet[] = [];
+  userAnnotation = "";
+  userMediaContent: Asset[] = [];
+
+  constructor(exercise: Exercise) {
+    super(exercise.clone())
+  }
+} */
+
+export class TrainingModel {
+  name = "New Training Model";
   author: string;
-  exercises: Exercise[];
-  mediaContent: Asset[];
-  description: string;
-  duration: number;
-};
+  exercises: Exercise[] = [];
+  mediaContent: Asset[] = [];
+  description = "";
+  duration = 0;
+  done = false;
 
-// auxiliar
-function getTimestamp(): string {
-  const curdate = new Date()
-  const day =
-    curdate.getDate() < 10 ? "0" + curdate.getDate() : curdate.getDate()
-  const month =
-    curdate.getMonth() < 9
-      ? "0" + (curdate.getMonth() + 1)
-      : curdate.getMonth() + 1
-  const year = curdate.getFullYear()
-  const hours =
-    curdate.getHours() < 10 ? "0" + curdate.getHours() : curdate.getHours()
-  const minutes =
-    curdate.getMinutes() < 10
-      ? "0" + curdate.getMinutes()
-      : curdate.getMinutes()
-  const seconds =
-    curdate.getSeconds() < 10
-      ? "0" + curdate.getSeconds()
-      : curdate.getSeconds()
-  const date =
-    day +
-    "/" +
-    month +
-    "/" +
-    year +
-    " | " +
-    hours +
-    ":" +
-    minutes +
-    ":" +
-    seconds
+  constructor(author: string) {
+    this.author = author
+  }
 
-  return date
+  withBeginSession() {
+    const clone = this.clone()
+    clone.duration = 0
+    clone.done = false
+    return clone
+  }
+
+  withFinishSession() {
+    const clone = this.clone()
+    clone.done = true
+    return clone
+  }
+
+  withName(name: string) {
+    const clone = this.clone()
+    clone.name = name
+    return clone
+  }
+
+  withDescription(description: string) {
+    const clone = this.clone()
+    clone.description = description
+    return clone
+  }
+
+  withoutExercise(exercise: Exercise) {
+    const clone = this.clone()
+    this.exercises = clone.exercises.filter((ex) => ex.name != exercise.name)
+    return clone
+  }
+
+  withExercises(exercises: Exercise[]) {
+    const clone = this.clone()
+    exercises.forEach((ex) => clone.exercises.push(ex.withNewSet()))
+    return clone
+  }
+
+  withIncrementDuration() {
+    const clone = this.clone()
+    clone.duration!++
+    return clone
+  }
+
+  clone() {
+    const model = new TrainingModel(this.author)
+    model.name = this.name
+    model.exercises = this.exercises.map((ex) => ex.clone())
+    model.mediaContent = this.mediaContent.map((asset) => ({ ...asset }))
+    model.description = this.description
+    model.duration = this.duration
+    model.done = this.done
+    return model
+  }
 }
 
-//--------------------------------------------------------------------------------//
-/*const model1 = new TrainingModel()
+/* export class TrainingSession {
+  name: string;
+  author: string;
+  exercises: ExerciseSession[];
+  mediaContent: Asset[];
+  description: string;
+  duration = 0;
+  done = false;
+  date = Date.now();
 
-console.log(model1)
-
-model1.author = "Rafael Pardal"
-model1.description = "Upper Body Workout - From Upper-Lower Split"
-
-console.log(model1)
-
-/*const ex1 = new BarbellExercise("Bench Press", 1, "Barbell Bench Press")
-const ex2 = new BodyWeightExercise("Pull-Up", 2, "Overhand grip Pull-Up")
-
-model1.exercises.push(ex1)
-model1.exercises.push(ex2)
-
-//console.log('\n' + JSON.stringify(model1, null, 1))
-
-const session1 = model1.startSession()
-
-console.log("TRAINING SESSION \n", JSON.stringify(session1, null, 1))
-
-console.log(new Date().getTime())*/
+  constructor(model: TrainingModel) {
+    this.name = model.name
+    this.author = model.author
+    this.exercises = model.exercises.map((ex) => new ExerciseSession(ex))
+    this.mediaContent = model.mediaContent
+    this.description = model.description
+  }
+} */

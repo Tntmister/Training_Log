@@ -3,12 +3,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useRef, useState } from "react"
 import { Alert, ScrollView, StyleSheet, View } from "react-native"
 import { Appbar, Checkbox, IconButton, Menu } from "react-native-paper"
-import {
-  CardioSetClass,
-  Exercise,
-  StretchingSetClass,
-  RegularSetClass
-} from "../../../../../dataDefinition/data"
+import { Exercise } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModel } from "../../../../../dataDefinition/data"
@@ -43,30 +38,20 @@ export default function Model({
   const [model, setModel] = useState<TrainingModel>(
     route.params.model
       ? route.params.model.model
-      : {
-        name: "New Training Model",
-        author: user!.displayName!,
-        exercises: [],
-        mediaContent: [],
-        description: "",
-        duration: 0
-      }
+      : new TrainingModel(user!.displayName!)
   )
   const [deletedAssets] = useState<Asset[]>([])
 
   function onNameChange(newName: string) {
-    setModel((prevModel) => ({ ...prevModel, name: newName }))
+    setModel(model.withName(newName))
   }
 
-  function onAnnotationChange(newDescription: string) {
-    setModel((prevModel) => ({ ...prevModel, description: newDescription }))
+  function onDescriptionChange(newDescription: string) {
+    setModel(model.withDescription(newDescription))
   }
 
   function onExerciseDelete(exercise: Exercise) {
-    setModel((prevModel) => ({
-      ...prevModel,
-      exercises: prevModel.exercises.filter((ex) => ex.name != exercise.name)
-    }))
+    setModel(model.withoutExercise(exercise))
   }
 
   async function onModelSave() {
@@ -93,23 +78,7 @@ export default function Model({
   function onModelAddEx() {
     navigation.navigate("ExerciseSelector", {
       onSubmit: (exercises) => {
-        setModel((prevModel) => ({
-          ...prevModel,
-          exercises: [
-            ...prevModel.exercises,
-            ...exercises.map((ex) => ({
-              ...ex,
-              userMediaContent: [],
-              annotation: "",
-              sets:
-                ex.category == "Cardio"
-                  ? [new CardioSetClass()]
-                  : ex.category == "Stretching"
-                    ? [new StretchingSetClass()]
-                    : [new RegularSetClass()]
-            }))
-          ]
-        }))
+        setModel(model.withExercises(exercises))
       }
     })
   }
@@ -132,10 +101,7 @@ export default function Model({
     } else {
       console.log("start timer")
       interval.current = setInterval(() => {
-        setModel((prevModel) => ({
-          ...prevModel,
-          duration: prevModel.duration + 1
-        }))
+        setModel(model.withIncrementDuration())
       }, 1000)
     }
     setTimerActive(!timerActive)
@@ -197,7 +163,7 @@ export default function Model({
         >
           <IconButton size={RFValue(30)} icon={"clock"} />
           <Text style={theme.text.header}>
-            {new Date(model.duration * 1000)
+            {new Date(model.duration! * 1000)
               .toISOString()
               .substring(11, 11 + 8)}
           </Text>
@@ -208,7 +174,7 @@ export default function Model({
           />
         </View>
       )}
-      <ScrollView pointerEvents={timerActive ? undefined : "none"}>
+      <ScrollView>
         {mode == modelModes.Edit && (
           <InlineContainer style={{ marginTop: theme.margins.s }}>
             <Checkbox
@@ -228,12 +194,12 @@ export default function Model({
         {mode == modelModes.Edit && !onetime ? (
           <VariableHeightTextInput
             style={{
-              ...styles.annotation,
+              ...styles.description,
               marginLeft: theme.margins.m
             }}
             value={model.description}
-            placeholder={"Training Annotation"}
-            onChangeText={onAnnotationChange}
+            placeholder={"Description"}
+            onChangeText={onDescriptionChange}
           />
         ) : (
           !onetime && <Text>{model.description}</Text>
@@ -306,7 +272,7 @@ const styles = StyleSheet.create({
   name: {
     width: "60%"
   },
-  annotation: {
+  description: {
     width: "80%"
   }
 })

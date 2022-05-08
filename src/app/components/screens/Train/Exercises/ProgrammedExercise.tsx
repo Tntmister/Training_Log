@@ -67,11 +67,8 @@ export default function ProgrammedExercise({
   const [exercise_state, setExercise] = useState(exercise)
 
   function onAnnotationChange(text: string) {
-    exercise.annotation = text
-    setExercise((prevEx) => ({
-      ...prevEx,
-      annotation: text
-    }))
+    exercise = exercise.withAnnotation(text)
+    setExercise(exercise)
   }
 
   return (
@@ -95,14 +92,14 @@ export default function ProgrammedExercise({
       </InlineContainer>
       {mode == modelModes.Edit ? (
         <VariableHeightTextInput
-          value={exercise.annotation}
+          value={exercise.userAnnotation}
           placeholder={
-            exercise.annotation.length > 0 ? "" : "Exercise Annotation"
+            exercise.userAnnotation.length > 0 ? "" : "Exercise Annotation"
           }
           onChangeText={onAnnotationChange}
         />
       ) : (
-        exercise_state.annotation.length > 0 && (
+        exercise_state.userAnnotation.length > 0 && (
           <Text
             style={{
               borderRadius: 5,
@@ -110,7 +107,7 @@ export default function ProgrammedExercise({
               borderWidth: 1
             }}
           >
-            {exercise_state.annotation}
+            {exercise_state.userAnnotation}
           </Text>
         )
       )}

@@ -1,7 +1,7 @@
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
-import { Exercise } from "../../dataDefinition/data"
+import { Exercise, IExercise } from "../../dataDefinition/data"
 
 export const categoryIcons = {
   Cardio: require("../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
@@ -14,7 +14,9 @@ export const categoryIcons = {
 export const exercises: Exercise[] = []
 export async function initExercises() {
   const result = await firestore().collection("exercises").get()
-  result.forEach((doc) => exercises.push({ ...(doc.data() as Exercise) }))
+  result.forEach((doc) =>
+    exercises.push(new Exercise(doc.data() as IExercise))
+  )
   muscles = [...new Set(exercises.map((attr) => attr.primaryMuscle))].sort()
   equipments = [...new Set(exercises.map((attr) => attr.equipment))].sort()
   categories = [...new Set(exercises.map((attr) => attr.category))].sort()
