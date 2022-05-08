@@ -14,14 +14,14 @@ export function Button({
       labelStyle={[
         {
           ...theme.text.body_l,
-          paddingVertical: theme.paddings.s,
+          textAlign: "center",
+          textAlignVertical: "center",
           color: theme.colors.white
         },
         labelStyle
       ]}
       style={[
         {
-          marginTop: theme.margins.s,
           alignSelf: "center"
         },
         style

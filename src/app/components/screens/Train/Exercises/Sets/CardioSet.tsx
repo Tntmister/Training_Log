@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
 import { CardioSetClass } from "../../../../../../dataDefinition/data"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
@@ -28,9 +27,9 @@ export default function CardioSet({
       paddingVertical: theme.margins.xs
     },
     box: {
+      ...theme.text.body_l,
       textAlign: "center",
       textAlignVertical: "center",
-      fontSize: RFValue(18),
       color: theme.colors.primary
     },
     index: {
