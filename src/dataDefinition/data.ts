@@ -55,19 +55,21 @@ export class Exercise implements IExercise {
   }
 
   withAnnotation(annotation: string) {
-    this.userAnnotation = annotation
-    return this
+    const clone = this.clone()
+    clone.userAnnotation = annotation
+    return clone
   }
 
   withNewSet() {
-    this.sets.push(
-      this.category == "Cardio"
+    const clone = this.clone()
+    clone.sets.push(
+      clone.category == "Cardio"
         ? new CardioSetClass()
-        : this.category == "Stretching"
+        : clone.category == "Stretching"
           ? new StretchingSetClass()
           : new RegularSetClass()
     )
-    return this
+    return clone
   }
 }
 
