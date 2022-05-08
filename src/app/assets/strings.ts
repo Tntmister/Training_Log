@@ -35,7 +35,7 @@ export const strings_en = {
     },
     models: {
       newModel: "New Training Model",
-      createModel: "Create your own Training Model",
+      createModel: "Start Training",
       noTrainingModels: "You have no Training Models",
       deleteModel: "Delete Model",
       trainingAnnotation: "Training Annotation",

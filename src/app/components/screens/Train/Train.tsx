@@ -49,7 +49,7 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
             })
           }}
         >
-          Create your own Training Model
+          Start Training
         </Button>
       )}
     </>
