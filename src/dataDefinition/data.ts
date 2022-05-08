@@ -3,7 +3,6 @@ import { Asset } from "react-native-image-picker"
 export class ExerciseSet {
   weight = 0;
   done = false;
-  mediaContent: Asset[] = [];
 }
 export class RegularSetClass extends ExerciseSet {
   reps = 0;

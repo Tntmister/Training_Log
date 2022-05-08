@@ -100,7 +100,6 @@ export default function ProgrammedStretchingExercise({
           set={set}
           index={index}
           key={index}
-          done={set.done}
           onSetDelete={onSetDelete}
         />
       ))}

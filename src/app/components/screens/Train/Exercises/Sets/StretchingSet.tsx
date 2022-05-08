@@ -13,13 +13,11 @@ export default function StretchingSet({
   mode,
   set,
   index,
-  done,
   onSetDelete
 }: {
   mode: modelModes;
   set: StretchingSetClass;
   index: number;
-  done: boolean;
   onSetDelete: (setIndex: number) => void;
 }) {
   const theme = useTheme()
@@ -102,7 +100,7 @@ export default function StretchingSet({
             />
           ) : (
             <Checkbox
-              status={done ? "checked" : "unchecked"}
+              status={set_state.done ? "checked" : "unchecked"}
               onPress={onCheckBoxPress}
             />
           )}

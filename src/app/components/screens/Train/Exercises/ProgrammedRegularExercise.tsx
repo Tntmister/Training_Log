@@ -94,7 +94,6 @@ export default function ProgrammedCardioExercise({
           mode={mode}
           set={set}
           index={index}
-          done={set.done}
           onSetDelete={onSetDelete}
         />
       ))}

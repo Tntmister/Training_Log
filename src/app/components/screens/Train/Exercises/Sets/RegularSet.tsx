@@ -13,13 +13,11 @@ export default function RegularSet({
   mode,
   set,
   index,
-  done,
   onSetDelete
 }: {
   mode: modelModes;
   set: RegularSetClass;
   index: number;
-  done: boolean;
   onSetDelete: (setIndex: number) => void;
 }) {
   const theme = useTheme()
@@ -101,7 +99,7 @@ export default function RegularSet({
             />
           ) : (
             <Checkbox
-              status={done ? "checked" : "unchecked"}
+              status={set_state.done ? "checked" : "unchecked"}
               onPress={onCheckBoxPress}
             />
           )}
