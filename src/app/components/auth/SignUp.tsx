@@ -1,11 +1,12 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { StyleSheet, ToastAndroid, View } from "react-native"
 import { Checkbox } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { register } from "../../lib/firebaseAuth"
 import { useTheme } from "../../providers/Theme"
+import { Button } from "../reusable/Button"
 import { Text } from "../reusable/Text"
-import { AuthButton, AuthTextInput } from "./AuthReusable"
+import { TextInput } from "../reusable/TextInput"
 
 export default function SignUp() {
   const [email, setEmail] = useState("")
@@ -25,44 +26,52 @@ export default function SignUp() {
       )
     register(email, password, username)
   }
-
-  return (
-    <View
-      style={{
-        ...styles.container,
+  const styles = useRef(
+    StyleSheet.create({
+      container: {
+        alignItems: "center",
         paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
-      }}
-    >
-      <AuthTextInput
+      },
+      tosContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: theme.margins.s
+      },
+      input: {
+        width: "80%"
+      }
+    })
+  ).current
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
         value={username}
         onChangeText={setUsername}
         placeholder="Username"
       />
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
       />
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={password}
         onChangeText={setPassword}
         placeholder="Password"
         secureTextEntry={true}
       />
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={password2}
         onChangeText={setPassword2}
         placeholder="Confirm Password"
         secureTextEntry={true}
       />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: theme.margins.m
-        }}
-      >
+      <View style={styles.tosContainer}>
         <Checkbox
           status={checkedTOS ? "checked" : "unchecked"}
           onPress={() => {
@@ -78,13 +87,9 @@ export default function SignUp() {
         </Text>
       </View>
 
-      <AuthButton onPress={onSubmit}>Sign Up</AuthButton>
+      <Button style={styles.input} onPress={onSubmit}>
+        Sign Up
+      </Button>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center"
-  }
-})

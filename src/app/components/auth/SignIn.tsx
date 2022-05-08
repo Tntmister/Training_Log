@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
@@ -9,8 +9,9 @@ import {
 } from "../../lib/firebaseAuth"
 import { useTheme } from "../../providers/Theme"
 import { UserContext } from "../../providers/User"
+import { Button } from "../reusable/Button"
 import { Text } from "../reusable/Text"
-import { AuthButton, AuthTextInput } from "./AuthReusable"
+import { TextInput } from "../reusable/TextInput"
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
@@ -26,6 +27,28 @@ export default function SignIn() {
   function onForgotPassword() {
     resetPassword(email)
   }
+  const styles = useRef(
+    StyleSheet.create({
+      container: {
+        alignItems: "center"
+      },
+      googleTextContainer: {
+        width: "90%",
+        borderTopWidth: 1,
+        marginTop: theme.margins.l,
+        borderTopColor: theme.colors.primary
+      },
+      googleText: {
+        textAlign: "center",
+        fontSize: RFValue(12),
+        paddingTop: theme.paddings.m
+      },
+      input: {
+        width: "80%"
+      }
+    })
+  ).current
+
   return (
     <View
       style={{
@@ -34,67 +57,41 @@ export default function SignIn() {
         backgroundColor: theme.colors.background
       }}
     >
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
       />
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={password}
         onChangeText={setPassword}
         placeholder="Password"
         secureTextEntry={true}
       />
-      <AuthButton
+      <Button
         mode="text"
         onPress={onForgotPassword}
         labelStyle={{ color: theme.colors.primary, fontSize: RFValue(12) }}
-        style={{ marginTop: theme.margins.s }}
+        style={[styles.input, { marginTop: theme.margins.s }]}
       >
         Forgot Password?
-      </AuthButton>
-      <AuthButton mode="contained" onPress={onSubmit}>
+      </Button>
+      <Button style={styles.input} mode="contained" onPress={onSubmit}>
         Sign In
-      </AuthButton>
-      <View
-        style={{
-          ...styles.bottomContainer,
-          marginTop: theme.margins.l,
-          borderTopColor: theme.colors.primary
-        }}
-      >
-        <Text
-          style={{
-            ...styles.bottomText,
-            color: theme.colors.primary,
-            paddingTop: theme.paddings.m
-          }}
-        >
-          Or Sign In With
-        </Text>
+      </Button>
+      <View style={styles.googleTextContainer}>
+        <Text style={styles.googleText}>Or Sign In With</Text>
       </View>
-      <AuthButton
+      <Button
         onPress={loginGoogle}
         color={theme.colors.text}
-        style={{ marginTop: theme.margins.l }}
+        style={[styles.input, { marginTop: theme.margins.m }]}
         labelStyle={{ color: theme.colors.surface }}
       >
         Sign In With Google
-      </AuthButton>
+      </Button>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center"
-  },
-  bottomContainer: {
-    width: "90%",
-    borderTopWidth: 1
-  },
-  bottomText: {
-    textAlign: "center",
-    fontSize: RFValue(12)
-  }
-})

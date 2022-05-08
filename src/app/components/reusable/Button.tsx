@@ -21,7 +21,7 @@ export function Button({
       ]}
       style={[
         {
-          marginTop: theme.margins.l,
+          marginTop: theme.margins.s,
           alignSelf: "center"
         },
         style
