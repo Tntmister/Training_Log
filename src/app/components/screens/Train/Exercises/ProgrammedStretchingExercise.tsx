@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
@@ -20,22 +20,18 @@ export default function ProgrammedStretchingExercise({
   mode: modelModes;
 }) {
   const theme = useTheme()
-  const styles = useRef(
-    StyleSheet.create({
-      subtitleContainer: {
-        justifyContent: "space-between"
-      },
-      subtitle: {
-        textAlign: "center",
-        fontSize: RFValue(16)
-      },
-      setNum: { width: "10%" },
-      weight: { width: "20%" },
-      goalTime: { width: "30%" },
-      time: { width: "20%" },
-      del: { width: "10%" }
-    })
-  ).current
+  const styles = StyleSheet.create({
+    subtitleContainer: {
+      justifyContent: "space-between",
+      marginTop: theme.margins.s
+    },
+    subtitle: {
+      width: "20%",
+      marginRight: theme.margins.s,
+      textAlign: "center",
+      fontSize: RFValue(16)
+    }
+  })
   const [sets, setSets] = useState<StretchingSetClass[]>(
     exercise.sets as StretchingSetClass[]
   )
@@ -54,43 +50,49 @@ export default function ProgrammedStretchingExercise({
 
   return (
     <>
-      <InlineContainer
-        style={{ ...styles.subtitleContainer, marginTop: theme.margins.xs }}
-      >
+      <InlineContainer style={styles.subtitleContainer}>
         <Text
           style={{
-            ...styles.setNum,
             ...styles.subtitle,
-            color: theme.colors.text
+            width: "5%"
           }}
         >
-          Set
+          {" "}
         </Text>
         <Text
           style={{
-            ...styles.weight,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
         >
           Weight
         </Text>
         <Text
           style={{
-            ...styles.time,
-            ...styles.subtitle,
-            color: theme.colors.text
+            ...styles.subtitle
           }}
         >
-          Time
+          Duration
         </Text>
-        {mode != modelModes.View && (
-          <View
+        {mode == modelModes.Session && (
+          <Text
             style={{
-              ...styles.del,
-              ...styles.subtitle
+              ...styles.subtitle,
+              width: "10%"
             }}
-          />
+          >
+            {" "}
+          </Text>
+        )}
+        {mode != modelModes.View && (
+          <Text
+            style={{
+              ...styles.subtitle,
+              marginRight: 0,
+              width: "10%"
+            }}
+          >
+            {" "}
+          </Text>
         )}
       </InlineContainer>
 

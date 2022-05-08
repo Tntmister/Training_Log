@@ -40,7 +40,7 @@ export default function RegularSet({
       marginRight: theme.margins.s
     },
     repsInput: {
-      width: "50%",
+      width: mode == modelModes.View ? "20%" : "50%",
       backgroundColor: theme.colors.background,
       flexDirection: "row",
       borderTopLeftRadius: 5,
@@ -94,30 +94,35 @@ export default function RegularSet({
         onChangeText={onChangeWeight}
       />
       <View style={[styles.input, styles.repsInput]}>
-        <Button
-          mode="text"
-          style={[styles.button, styles.repsButton]}
-          labelStyle={styles.repsButtonLabel}
-          onPress={onRepsMinus}
-        >
-          -
-        </Button>
+        {mode != modelModes.View && (
+          <Button
+            mode="text"
+            style={[styles.button, styles.repsButton]}
+            labelStyle={styles.repsButtonLabel}
+            onPress={onRepsMinus}
+          >
+            -
+          </Button>
+        )}
         <Text style={[styles.box, { flexGrow: 1, color: theme.colors.text }]}>
           {set_state.reps}
         </Text>
-        <Button
-          mode="text"
-          style={[styles.button, styles.repsButton]}
-          labelStyle={styles.repsButtonLabel}
-          onPress={onRepsPlus}
-        >
-          +
-        </Button>
+        {mode != modelModes.View && (
+          <Button
+            mode="text"
+            style={[styles.button, styles.repsButton]}
+            labelStyle={styles.repsButtonLabel}
+            onPress={onRepsPlus}
+          >
+            +
+          </Button>
+        )}
       </View>
       {mode != modelModes.View && (
         <View style={styles.button_checkbox}>
           {mode == modelModes.Edit ? (
             <IconButton
+              borderless={false}
               style={styles.button}
               icon={images.Trash}
               onPress={() => onSetDelete(index)}

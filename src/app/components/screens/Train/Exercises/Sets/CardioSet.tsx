@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import React, { useEffect, useRef, useState } from "react"
+import { Alert, StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
 import { CardioSetClass } from "../../../../../../dataDefinition/data"
 import { images } from "../../../../../lib/extra"
@@ -44,8 +44,6 @@ export default function CardioSet({
       width: "10%"
     },
     button: {
-      backgroundColor: theme.colors.primary,
-      borderRadius: 5,
       margin: 0,
       padding: 0
     }
@@ -60,10 +58,6 @@ export default function CardioSet({
     setSet((prevSet) => ({ ...prevSet, distance: parseFloat(dist) || 0 }))
   }
 
-  function onChangeDuration(dur: string) {
-    setSet((prevSet) => ({ ...prevSet, duration: dur }))
-  }
-
   function onCheckBoxPress() {
     setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
   }
@@ -74,6 +68,37 @@ export default function CardioSet({
 
   const [timerActive, setTimerActive] = useState(false)
 
+  const interval = useRef<NodeJS.Timer>()
+
+  function onTimerToggle() {
+    if (timerActive) {
+      clearInterval(interval.current!)
+    } else {
+      console.log("start timer")
+      interval.current = setInterval(() => {
+        setSet((prevSet) => ({ ...prevSet, duration: prevSet.duration + 1 }))
+      }, 1000)
+    }
+    setTimerActive(!timerActive)
+  }
+
+  function onTimerReset() {
+    Alert.alert(
+      "Reset Timer",
+      `Are you sure you want to reset the timer for set ${index}?`,
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            setSet((prevSet) => ({ ...prevSet, duration: 0 }))
+            clearInterval(interval.current!)
+            setTimerActive(false)
+          }
+        },
+        { text: "No" }
+      ]
+    )
+  }
   return (
     <InlineContainer style={styles.container}>
       <Text style={[styles.index, styles.box]}>{index + 1}</Text>
@@ -90,20 +115,18 @@ export default function CardioSet({
         onChangeText={onChangeDistance}
       />
       <SetFieldInput
-        style={[styles.input]}
-        inputMode={mode}
-        value={set_state.duration}
-        onChangeText={onChangeDuration}
+        style={styles.input}
+        inputMode={modelModes.View}
+        value={set_state.duration.toString()}
       />
 
       {mode == modelModes.Session && (
         <IconButton
+          rippleColor={theme.colors.primary}
           icon={"play"}
           style={[styles.button, { marginRight: theme.margins.s }]}
-          onPress={() => {
-            console.log(timerActive ? "stop timer" : "start timer")
-            setTimerActive(!timerActive)
-          }}
+          onPress={onTimerToggle}
+          onLongPress={onTimerReset}
         />
       )}
       {mode != modelModes.View && (

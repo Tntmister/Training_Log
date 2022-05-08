@@ -8,10 +8,10 @@ export class RegularSetClass extends ExerciseSet {
   reps = 0;
 }
 export class StretchingSetClass extends ExerciseSet {
-  duration = "00:00";
+  duration = 0;
 }
 export class CardioSetClass extends ExerciseSet {
-  duration = "00:00";
+  duration = 0;
   distance = 0;
 }
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import React, { useEffect, useRef, useState } from "react"
+import { Alert, StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
 import { StretchingSetClass } from "../../../../../../dataDefinition/data"
 import { images } from "../../../../../lib/extra"
@@ -27,36 +27,31 @@ export default function StretchingSet({
       paddingVertical: theme.margins.xs
     },
     box: {
+      ...theme.text.body_l,
       textAlign: "center",
-      fontSize: theme.text.body_l.fontSize,
-      borderRadius: 5,
-      paddingHorizontal: 0,
-      height: 30,
-      marginTop: 0,
-      color: theme.colors.primary,
-      paddingVertical: theme.margins.xs
+      textAlignVertical: "center",
+      color: theme.colors.primary
     },
-    setNum: { width: "10%" },
-    weight: { width: "20%" },
-    goalTime: { width: "30%" },
-    time: { width: "20%" },
-    thrashContainer: {
-      width: "10%",
-      alignItems: "center"
+    index: {
+      width: "5%",
+      marginRight: theme.margins.s
     },
-    iconBtn: {
-      backgroundColor: theme.colors.primary,
-      borderRadius: 5
+    input: {
+      width: "20%",
+      marginRight: theme.margins.s
+    },
+    button_checkbox: {
+      width: "10%"
+    },
+    button: {
+      margin: 0,
+      padding: 0
     }
   })
   const [set_state, setSet] = useState(set)
 
   function onChangeWeight(weight: string) {
     setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
-  }
-
-  function onChangeDuration(dur: string) {
-    setSet((prevSet) => ({ ...prevSet, duration: dur }))
   }
 
   function onCheckBoxPress() {
@@ -67,34 +62,69 @@ export default function StretchingSet({
     set = set_state
   }, [set_state])
 
+  const [timerActive, setTimerActive] = useState(false)
+
+  const interval = useRef<NodeJS.Timer>()
+
+  function onTimerToggle() {
+    if (timerActive) {
+      clearInterval(interval.current!)
+    } else {
+      console.log("start timer")
+      interval.current = setInterval(() => {
+        setSet((prevSet) => ({ ...prevSet, duration: prevSet.duration + 1 }))
+      }, 1000)
+    }
+    setTimerActive(!timerActive)
+  }
+
+  function onTimerReset() {
+    Alert.alert(
+      "Reset Timer",
+      `Are you sure you want to reset the timer for set ${index}?`,
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            setSet((prevSet) => ({ ...prevSet, duration: 0 }))
+            clearInterval(interval.current!)
+            setTimerActive(false)
+          }
+        },
+        { text: "No" }
+      ]
+    )
+  }
   return (
     <InlineContainer style={styles.container}>
-      <Text
-        style={{
-          ...styles.setNum,
-          ...styles.box
-        }}
-      >
-        {index + 1}
-      </Text>
+      <Text style={[styles.index, styles.box]}>{index + 1}</Text>
 
       <SetFieldInput
         inputMode={mode}
-        style={styles.weight}
+        style={styles.input}
         value={set_state.weight.toString()}
         onChangeText={onChangeWeight}
       />
       <SetFieldInput
-        inputMode={mode}
-        style={styles.goalTime}
-        value={set_state.duration}
-        onChangeText={onChangeDuration}
+        style={styles.input}
+        inputMode={modelModes.View}
+        value={set_state.duration.toString()}
       />
+
+      {mode == modelModes.Session && (
+        <IconButton
+          rippleColor={theme.colors.primary}
+          icon={"play"}
+          style={[styles.button, { marginRight: theme.margins.s }]}
+          onPress={onTimerToggle}
+          onLongPress={onTimerReset}
+        />
+      )}
       {mode != modelModes.View && (
-        <View style={styles.thrashContainer}>
+        <View style={styles.button_checkbox}>
           {mode == modelModes.Edit ? (
             <IconButton
-              style={styles.iconBtn}
+              style={styles.button}
               icon={images.Trash}
               onPress={() => onSetDelete(index)}
             />

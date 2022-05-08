@@ -66,7 +66,7 @@ export default function ProgrammedCardioExercise({
         <Text
           style={{
             ...styles.subtitle,
-            width: "50%"
+            width: mode == modelModes.View ? "20%" : "50%"
           }}
         >
           Reps
