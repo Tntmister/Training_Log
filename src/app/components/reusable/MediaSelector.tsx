@@ -35,7 +35,6 @@ export default function MediaSelector({
   }
 
   function onCameraExit(response: ImagePickerResponse) {
-    console.log("Asset: ", response.assets)
     if (response.assets !== undefined) {
       setAssetsState((prevAssets) => [...prevAssets, ...response.assets!])
       assets.push(...response.assets)

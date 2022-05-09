@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useRef, useState } from "react"
-import { Alert, ScrollView, StyleSheet, View } from "react-native"
-import { Appbar, Checkbox, IconButton, Menu } from "react-native-paper"
-import { Exercise } from "../../../../../dataDefinition/data"
+import React, { useContext, useState } from "react"
+import { Alert, ScrollView, StyleSheet } from "react-native"
+import { Appbar, Checkbox, Menu } from "react-native-paper"
+import { ExerciseModel } from "../../../../../dataDefinition/data"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModel } from "../../../../../dataDefinition/data"
@@ -18,7 +17,6 @@ import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInp
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
-import { RFValue } from "react-native-responsive-fontsize"
 
 export enum modelModes {
   Edit = "edit",
@@ -30,15 +28,13 @@ export default function Model({
   route,
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "Model">) {
-  const user = useContext(UserContext)
+  const user = useContext(UserContext)!
   const theme = useTheme()
 
   const id = route.params.model?.id
   const mode = route.params.mode
   const [model, setModel] = useState<TrainingModel>(
-    route.params.model
-      ? route.params.model.model
-      : new TrainingModel(user!.displayName!)
+    id ? route.params.model.model : new TrainingModel(user.displayName!)
   )
   const [deletedAssets] = useState<Asset[]>([])
 
@@ -50,29 +46,19 @@ export default function Model({
     setModel(model.withDescription(newDescription))
   }
 
-  function onExerciseDelete(exercise: Exercise) {
+  function onExerciseDelete(exercise: ExerciseModel) {
     setModel(model.withoutExercise(exercise))
   }
 
   async function onModelSave() {
-    await saveModel(user!.uid, model, deletedAssets, id)
+    await saveModel(user.uid, model, deletedAssets, id)
     navigation.navigate("ModelList")
   }
 
   async function onModelDelete() {
-    await deleteModel(user!.uid, id!, model.mediaContent.length > 0)
+    await deleteModel(user.uid, id!, model.mediaContent.length > 0)
     navigation.navigate("ModelList")
     setMenuVisible(false)
-  }
-
-  async function onTSFinished() {
-    navigation.navigate("ModelList")
-    console.log("Trainig Session Finished")
-  }
-
-  function onTSCancelled() {
-    navigation.navigate("ModelList")
-    console.log("Trainig Session Cancelled")
   }
 
   function onModelAddEx() {
@@ -91,21 +77,6 @@ export default function Model({
 
   const [menuVisible, setMenuVisible] = useState(false)
 
-  const [timerActive, setTimerActive] = useState(false)
-
-  const interval = useRef<NodeJS.Timer>()
-
-  function onTimerToggle() {
-    if (timerActive) {
-      clearInterval(interval.current!)
-    } else {
-      console.log("start timer")
-      interval.current = setInterval(() => {
-        setModel(model.withIncrementDuration())
-      }, 1000)
-    }
-    setTimerActive(!timerActive)
-  }
   return (
     <>
       <Appbar>
@@ -133,47 +104,11 @@ export default function Model({
               title={"Delete Model"}
             />
           )}
-          {mode == modelModes.Session && (
-            <Menu.Item
-              onPress={() =>
-                Alert.alert(
-                  "Cancel Training Session",
-                  "Are you sure you want to cancel the training session?\nYour progress will not be saved.",
-                  [{ text: "Yes", onPress: onTSCancelled }, { text: "No" }]
-                )
-              }
-              title={"Cancel Session"}
-            />
-          )}
           {mode == modelModes.View && (
             <Menu.Item onPress={onModelEdit} title={"Edit Model"} />
           )}
         </Menu>
       </Appbar>
-      {mode == modelModes.Session && (
-        <View
-          style={{
-            width: "100%",
-            height: "10%",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-            flexDirection: "row",
-            alignSelf: "center"
-          }}
-        >
-          <IconButton size={RFValue(30)} icon={"clock"} />
-          <Text style={theme.text.header}>
-            {new Date(model.duration! * 1000)
-              .toISOString()
-              .substring(11, 11 + 8)}
-          </Text>
-          <IconButton
-            size={RFValue(36)}
-            icon={timerActive ? "pause" : "play"}
-            onPress={onTimerToggle}
-          />
-        </View>
-      )}
       <ScrollView>
         {mode == modelModes.Edit && (
           <InlineContainer style={{ marginTop: theme.margins.s }}>
@@ -204,16 +139,17 @@ export default function Model({
         ) : (
           !onetime && <Text>{model.description}</Text>
         )}
-        {mode == modelModes.Edit && !onetime ? (
-          <MediaSelector
-            assets={model.mediaContent}
-            deletedAssets={deletedAssets}
-          />
-        ) : (
-          model.mediaContent.length > 0 && (
-            <MediaCarousel assets={model.mediaContent} />
-          )
-        )}
+        {!onetime &&
+          (mode == modelModes.Edit ? (
+            <MediaSelector
+              assets={model.mediaContent}
+              deletedAssets={deletedAssets}
+            />
+          ) : (
+            model.mediaContent.length > 0 && (
+              <MediaCarousel assets={model.mediaContent} />
+            )
+          ))}
         {model.exercises.map((ex, index) => (
           <ProgrammedExercise
             key={index}
@@ -244,22 +180,13 @@ export default function Model({
         >
           Save Training Model
         </Button>
-      ) : mode == modelModes.Session ? (
-        <Button
-          style={{
-            marginTop: theme.margins.s
-          }}
-          onPress={onTSFinished}
-        >
-          Finish Training Session
-        </Button>
       ) : (
         <Button
           disabled={model.exercises.length == 0}
           style={{
             marginTop: theme.margins.s
           }}
-          onPress={() => navigation.setParams({ mode: modelModes.Session })}
+          onPress={() => navigation.navigate("Session", { model: model })}
         >
           Start Training Session
         </Button>

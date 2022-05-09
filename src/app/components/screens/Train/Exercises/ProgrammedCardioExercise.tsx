@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { CardioSetClass, Exercise } from "../../../../../dataDefinition/data"
+import {
+  CardioSetClass,
+  ExerciseModel
+} from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
@@ -13,7 +16,7 @@ export default function ProgrammedCardioExercise({
   exercise,
   mode
 }: {
-  exercise: Exercise;
+  exercise: ExerciseModel;
   mode: modelModes;
 }) {
   const theme = useTheme()

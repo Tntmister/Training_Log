@@ -4,7 +4,7 @@ import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
   StretchingSetClass,
-  Exercise
+  ExerciseModel
 } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
@@ -16,7 +16,7 @@ export default function ProgrammedStretchingExercise({
   exercise,
   mode
 }: {
-  exercise: Exercise;
+  exercise: ExerciseModel;
   mode: modelModes;
 }) {
   const theme = useTheme()

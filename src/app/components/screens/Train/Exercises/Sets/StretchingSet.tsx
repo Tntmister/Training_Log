@@ -51,11 +51,11 @@ export default function StretchingSet({
   const [set_state, setSet] = useState(set)
 
   function onChangeWeight(weight: string) {
-    setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
+    setSet(set_state.withWeight(parseFloat(weight) || 0) as StretchingSetClass)
   }
 
   function onCheckBoxPress() {
-    setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
+    setSet(set_state.withToggledDone() as StretchingSetClass)
   }
 
   useEffect(() => {
@@ -70,9 +70,8 @@ export default function StretchingSet({
     if (timerActive) {
       clearInterval(interval.current!)
     } else {
-      console.log("start timer")
       interval.current = setInterval(() => {
-        setSet((prevSet) => ({ ...prevSet, duration: prevSet.duration + 1 }))
+        setSet(set_state.withDuration(set_state.duration + 1))
       }, 1000)
     }
     setTimerActive(!timerActive)
@@ -86,7 +85,7 @@ export default function StretchingSet({
         {
           text: "Yes",
           onPress: () => {
-            setSet((prevSet) => ({ ...prevSet, duration: 0 }))
+            setSet(set_state.withDuration(0))
             clearInterval(interval.current!)
             setTimerActive(false)
           }

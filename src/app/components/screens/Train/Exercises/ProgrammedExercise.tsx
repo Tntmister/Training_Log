@@ -1,8 +1,11 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { Exercise } from "../../../../../dataDefinition/data"
+import {
+  ExerciseModel,
+  ExerciseSession
+} from "../../../../../dataDefinition/data"
 import { categoryIcons } from "../../../../lib/exercises"
 import { images } from "../../../../lib/extra"
 import { useTheme } from "../../../../providers/Theme"
@@ -20,9 +23,9 @@ export default function ProgrammedExercise({
   mode,
   onExerciseDel
 }: {
-  exercise: Exercise;
+  exercise: ExerciseModel;
   mode: modelModes;
-  onExerciseDel: (exercise: Exercise) => void;
+  onExerciseDel?: (exercise: ExerciseModel) => void;
 }) {
   const theme = useTheme()
   const styles = useRef(
@@ -67,9 +70,12 @@ export default function ProgrammedExercise({
   const [exercise_state, setExercise] = useState(exercise)
 
   function onAnnotationChange(text: string) {
-    exercise = exercise.withAnnotation(text)
-    setExercise(exercise)
+    setExercise((prevEx) => prevEx.withAnnotation(text))
   }
+
+  useEffect(() => {
+    exercise.annotation = exercise_state.annotation
+  }, [exercise_state])
 
   return (
     <View style={styles.container}>
@@ -85,21 +91,21 @@ export default function ProgrammedExercise({
           <IconButton
             style={styles.del}
             size={RFValue(26)}
-            onPress={() => onExerciseDel(exercise)}
+            onPress={() => onExerciseDel!(exercise)}
             icon={images.Trash}
           />
         )}
       </InlineContainer>
       {mode == modelModes.Edit ? (
         <VariableHeightTextInput
-          value={exercise.userAnnotation}
+          value={exercise.annotation}
           placeholder={
-            exercise.userAnnotation.length > 0 ? "" : "Exercise Annotation"
+            exercise.annotation.length > 0 ? "" : "Exercise Annotation"
           }
           onChangeText={onAnnotationChange}
         />
       ) : (
-        exercise_state.userAnnotation.length > 0 && (
+        exercise_state.annotation.length > 0 && (
           <Text
             style={{
               borderRadius: 5,
@@ -107,7 +113,7 @@ export default function ProgrammedExercise({
               borderWidth: 1
             }}
           >
-            {exercise_state.userAnnotation}
+            {exercise_state.annotation}
           </Text>
         )
       )}
@@ -119,7 +125,9 @@ export default function ProgrammedExercise({
         <ProgrammedRegularExercise exercise={exercise} mode={mode} />
       )}
       {mode == modelModes.Session && (
-        <MediaSelector assets={exercise.userMediaContent!} />
+        <MediaSelector
+          assets={(exercise as ExerciseSession).userMediaContent!}
+        />
       )}
     </View>
   )

@@ -65,23 +65,25 @@ export default function RegularSet({
   const [set_state, setSet] = useState(set)
 
   function onChangeWeight(weight: string) {
-    setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
+    setSet(set_state.withWeight(parseFloat(weight) || 0) as RegularSetClass)
   }
 
   function onRepsPlus() {
-    setSet((prevSet) => ({ ...prevSet, reps: prevSet.reps + 1 }))
+    setSet(set_state.withReps(set_state.reps + 1))
   }
 
   function onRepsMinus() {
-    setSet((prevSet) => ({ ...prevSet, reps: Math.max(1, prevSet.reps - 1) }))
+    setSet(set_state.withReps(Math.max(1, set_state.reps - 1)))
   }
 
   function onCheckBoxPress() {
-    setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
+    setSet(set_state.withToggledDone() as RegularSetClass)
   }
 
   useEffect(() => {
-    set = set_state
+    set.reps = set_state.reps
+    set.weight = set_state.weight
+    set.done = set_state.done
   }, [set_state])
 
   return (

@@ -51,17 +51,16 @@ export default function CardioSet({
   const [set_state, setSet] = useState(set)
 
   function onChangeWeight(weight: string) {
-    setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
+    setSet(set_state.withWeight(parseFloat(weight)) as CardioSetClass)
   }
 
   function onChangeDistance(dist: string) {
-    setSet((prevSet) => ({ ...prevSet, distance: parseFloat(dist) || 0 }))
+    setSet(set_state.withDistance(parseFloat(dist) || 0))
   }
 
   function onCheckBoxPress() {
-    setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
+    setSet(set_state.withToggledDone() as CardioSetClass)
   }
-
   useEffect(() => {
     set = set_state
   }, [set_state])
@@ -74,9 +73,8 @@ export default function CardioSet({
     if (timerActive) {
       clearInterval(interval.current!)
     } else {
-      console.log("start timer")
       interval.current = setInterval(() => {
-        setSet((prevSet) => ({ ...prevSet, duration: prevSet.duration + 1 }))
+        setSet(set_state.withDuration(set_state.duration + 1))
       }, 1000)
     }
     setTimerActive(!timerActive)
@@ -90,7 +88,7 @@ export default function CardioSet({
         {
           text: "Yes",
           onPress: () => {
-            setSet((prevSet) => ({ ...prevSet, duration: 0 }))
+            setSet(set_state.withDuration(0))
             clearInterval(interval.current!)
             setTimerActive(false)
           }

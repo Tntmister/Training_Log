@@ -2,18 +2,21 @@ import React, { useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { RegularSetClass, Exercise } from "../../../../../dataDefinition/data"
+import {
+  RegularSetClass,
+  ExerciseModel
+} from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
 import { modelModes } from "../Models/Model"
 import RegularSet from "./Sets/RegularSet"
 
-export default function ProgrammedCardioExercise({
+export default function ProgrammeRegularExercise({
   exercise,
   mode
 }: {
-  exercise: Exercise;
+  exercise: ExerciseModel;
   mode: modelModes;
 }) {
   const theme = useTheme()
