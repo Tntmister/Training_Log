@@ -2,7 +2,7 @@ import auth from "@react-native-firebase/auth"
 import { FirebaseError } from "@firebase/util"
 import { Alert, ToastAndroid } from "react-native"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
-import { createUserDoc } from "./firebaseFS"
+import firestore from "@react-native-firebase/firestore"
 
 GoogleSignin.configure({
   webClientId:
@@ -12,7 +12,7 @@ GoogleSignin.configure({
 export async function loginGoogle() {
   const { idToken } = await GoogleSignin.signIn()
   const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-  return auth().signInWithCredential(googleCredential)
+  auth().signInWithCredential(googleCredential)
 }
 
 export async function login(email: string, password: string) {
@@ -38,6 +38,12 @@ export async function login(email: string, password: string) {
   }
 }
 
+export async function initFirestore(uID: string) {
+  firestore().collection("users").doc(uID).set({
+    models: []
+  })
+}
+
 export async function register(
   email: string,
   password: string,
@@ -55,7 +61,7 @@ export async function register(
         result.user.updateProfile({
           displayName: username
         })
-        createUserDoc(result.user.uid)
+        initFirestore(result.user.uid)
       })
   } catch (error) {
     switch ((error as FirebaseError).code) {

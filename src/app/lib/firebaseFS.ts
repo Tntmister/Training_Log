@@ -4,12 +4,6 @@ import { Asset } from "react-native-image-picker"
 import { ITrainingModel, TrainingModel } from "../../dataDefinition/data"
 import { TrainingModelDoc } from "../components/screens/Train/Models/ModelList"
 
-export async function createUserDoc(uID: string) {
-  firestore().collection("users").doc(uID).set({
-    models: []
-  })
-}
-
 export async function saveModel(
   uID: string,
   model: TrainingModel,
@@ -44,6 +38,7 @@ export async function deleteModel(uID: string, id: string, hasImages: boolean) {
     .collection("models")
     .doc(id)
     .delete()
+  console.log(`/users/${uID}/models/${id}`)
   if (hasImages) {
     const list = await storage().ref(`/users/${uID}/models/${id}`).listAll()
     for (const item of list.items) {

@@ -94,38 +94,40 @@ export default function ExerciseSearch({
   }, [searchQuery, category, muscle, equipments])
 
   const filterButtonStyle: ViewStyle = {
-    marginHorizontal: theme.margins.s,
     width: "100%",
-    marginTop: 0,
     borderColor: theme.colors.placeholder,
     borderWidth: 1
   }
 
   return (
-    <View style={{ marginTop: theme.margins.s, alignItems: "center" }}>
+    <View
+      style={{
+        marginTop: theme.margins.s,
+        alignItems: "center",
+        alignSelf: "center",
+        width: "95%"
+      }}
+    >
       <Searchbar
         placeholder="Search Exercises"
         placeholderTextColor={theme.colors.placeholder}
         onChangeText={setSearchQuery}
         value={searchQuery}
         style={{
-          width: "95%",
-          height: 40,
-          borderRadius: 10,
-          backgroundColor: theme.colors.surface
+          height: RFValue(36),
+          borderRadius: 10
         }}
         selectionColor={theme.colors.primary}
-        inputStyle={{ fontSize: RFValue(18), paddingVertical: 0 }}
+        inputStyle={[theme.text.body_l, { padding: 0 }]}
       />
       <View
         style={{
-          width: "95%",
+          height: 80,
           flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center"
+          marginTop: theme.margins.s
         }}
       >
-        <View style={{ marginTop: theme.margins.s, flexBasis: 0, flexGrow: 1 }}>
+        <View style={{ width: "40%", justifyContent: "space-between" }}>
           <Menu
             visible={categoryVisible}
             onDismiss={() => setCatVisible(false)}
@@ -155,7 +157,7 @@ export default function ExerciseSearch({
             anchor={
               <Button
                 mode="outlined"
-                style={{ ...filterButtonStyle, marginTop: theme.margins.s }}
+                style={filterButtonStyle}
                 labelStyle={theme.text.body_s}
                 onPress={() => setMuscleVisible(true)}
               >
@@ -175,15 +177,15 @@ export default function ExerciseSearch({
         </View>
         <View
           style={{
+            height: 80,
             marginHorizontal: theme.margins.s,
-            flexGrow: 1,
-            flexBasis: 0
+            flexGrow: 1
           }}
         >
           {
             <DropDown
               inputProps={{
-                style: { height: RFValue(86), paddingTop: 0 }
+                style: { height: 80 - theme.margins.m }
               }}
               dropDownContainerHeight={RFPercentage(50)}
               label="Equipment"
