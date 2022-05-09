@@ -208,7 +208,7 @@ export default function Model({
           />
         </View>
       )}
-      <ScrollView pointerEvents={timerActive ? undefined : "none"}>
+      <ScrollView /*pointerEvents={/*timerActive ? undefined : "none"}*/>
         {mode == modelModes.Edit && (
           <InlineContainer style={{ marginTop: theme.margins.s }}>
             <Checkbox

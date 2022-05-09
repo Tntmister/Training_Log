@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { FlatList } from "react-native"
+import { FlatList, StyleSheet } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
 import { Text } from "../../../reusable/Text"
 import { TrainingModel } from "../../../../../dataDefinition/data"
@@ -21,6 +21,17 @@ export default function ModelList({
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
   const [models, setModels] = useState<TrainingModelDoc[]>([])
+
+  const styles = StyleSheet.create({
+    empty: {
+      alignSelf: "center",
+      marginTop: theme.margins.s
+    },
+    list: {
+      marginTop: theme.margins.s,
+      flex: 1
+    }
+  })
 
   useEffect(() => {
     const subscriber = getModels(user!.uid, (models) => {
@@ -46,11 +57,10 @@ export default function ModelList({
               key={index}
             />
           )}
-          ListEmptyComponent={<Text>You have no training models!</Text>}
-          style={{
-            marginTop: theme.margins.s,
-            flex: 1
-          }}
+          ListEmptyComponent={
+            <Text style={styles.empty}>You have no Training Models!</Text>
+          }
+          style={styles.list}
         />
       )}
     </>

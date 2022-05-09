@@ -5,7 +5,7 @@ export class ExerciseSet {
   done = false;
 }
 export class RegularSetClass extends ExerciseSet {
-  reps = 0;
+  reps = 1;
 }
 export class StretchingSetClass extends ExerciseSet {
   duration = 0;

@@ -39,7 +39,7 @@ export const strings_en = {
       noTrainingModels: "You have no Training Models",
       deleteModel: "Delete Model",
       trainingAnnotation: "Training Annotation",
-      addExercise: "Add an Exercise",
+      addExercise: "Add Exercise",
       saveModel: "Save Training Model",
       author: "Author",
       startTS: "Start Training Session"
@@ -50,5 +50,9 @@ export const strings_en = {
   },
   history: {},
   home: {},
-  user: {}
+  user: {
+    models: "Models",
+    followers: "Followers",
+    following: "Following"
+  }
 }
