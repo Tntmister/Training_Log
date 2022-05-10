@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Alert, ScrollView, StyleSheet } from "react-native"
 import { Appbar, Checkbox, Menu } from "react-native-paper"
 import { ExerciseModel } from "../../../../../dataDefinition/data"
@@ -12,11 +12,12 @@ import InlineContainer from "../../../reusable/InlineView"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import { Asset } from "react-native-image-picker"
-import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
+import { deleteModel, saveModel } from "../../../../lib/models"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
+import { getUsername } from "../../../../lib/firebaseAuth"
 
 export enum modelModes {
   Edit = "edit",
@@ -34,7 +35,7 @@ export default function Model({
   const id = route.params.model?.id
   const mode = route.params.mode
   const [model, setModel] = useState<TrainingModel>(
-    id ? route.params.model.model : new TrainingModel(user.displayName!)
+    id ? route.params.model.model : new TrainingModel(user.uid)
   )
   const [deletedAssets] = useState<Asset[]>([])
 
@@ -77,6 +78,15 @@ export default function Model({
 
   const [menuVisible, setMenuVisible] = useState(false)
 
+  const [authorName, setAuthorName] = useState("")
+
+  useEffect(() => {
+    const init = async () => {
+      setAuthorName(await getUsername(model.author))
+    }
+    init()
+  }, [model.author])
+
   return (
     <>
       <Appbar>
@@ -110,6 +120,7 @@ export default function Model({
         </Menu>
       </Appbar>
       <ScrollView>
+        {mode == modelModes.View && <Text>Author: {authorName}</Text>}
         {mode == modelModes.Edit && (
           <InlineContainer style={{ marginTop: theme.margins.s }}>
             <Checkbox
@@ -186,7 +197,12 @@ export default function Model({
           style={{
             marginTop: theme.margins.s
           }}
-          onPress={() => navigation.navigate("Session", { model: model })}
+          onPress={() =>
+            navigation.navigate("Session", {
+              model: model,
+              id: onetime ? undefined : id
+            })
+          }
         >
           Start Training Session
         </Button>

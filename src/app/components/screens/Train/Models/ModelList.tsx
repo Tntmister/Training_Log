@@ -6,7 +6,7 @@ import { TrainingModel } from "../../../../../dataDefinition/data"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { UserContext } from "../../../../providers/User"
-import { getModels } from "../../../../lib/firebaseFS"
+import { getModels } from "../../../../lib/models"
 import Loading from "../../../reusable/Loading"
 import ModelDescriptor from "./ModelDescriptor"
 export type TrainingModelDoc = {

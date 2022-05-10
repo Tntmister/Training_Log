@@ -237,13 +237,15 @@ export class TrainingSession extends TrainingModel {
   duration = 0;
   done = false;
   date = Date.now();
+  model?: string;
 
-  constructor(model: TrainingModel) {
+  constructor(model: TrainingModel, id?: string) {
     super(model.author)
     this.name = model.name
     this.exercises = model.exercises.map((ex) => new ExerciseSession(ex))
     this.mediaContent = model.mediaContent
     this.description = model.description
+    this.model = id
   }
 
   withIncrementDuration() {
@@ -259,7 +261,7 @@ export class TrainingSession extends TrainingModel {
   }
 
   clone(): TrainingSession {
-    const clone = new TrainingSession(super.clone())
+    const clone = new TrainingSession(super.clone(), this.model)
     clone.duration = this.duration
     clone.done = this.done
     clone.date = this.date

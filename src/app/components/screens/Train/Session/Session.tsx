@@ -1,12 +1,15 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useRef, useState } from "react"
-import { Alert, ScrollView, Text, View } from "react-native"
+import React, { useContext, useRef, useState } from "react"
+import { Alert, ScrollView, View } from "react-native"
 import { Appbar, IconButton, Menu } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { TrainingSession } from "../../../../../dataDefinition/data"
+import { finishSession } from "../../../../lib/models"
 import { useTheme } from "../../../../providers/Theme"
+import { UserContext } from "../../../../providers/User"
 import { Button } from "../../../reusable/Button"
 import MediaCarousel from "../../../reusable/MediaCarousel"
+import { Text } from "../../../reusable/Text"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import { modelModes } from "../Models/Model"
 import { RootStackParamListModelNav } from "../Models/ModelNav"
@@ -16,10 +19,13 @@ export default function Session({
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "Session">) {
   const theme = useTheme()
-  const [model, setModel] = useState(new TrainingSession(route.params.model))
+  const user = useContext(UserContext)!
+  const [session, setSession] = useState(
+    new TrainingSession(route.params.model, route.params.id)
+  )
   async function onSessionFinished() {
+    await finishSession(user.uid, session)
     navigation.navigate("ModelList")
-    console.log("Trainig Session Finished")
   }
 
   const [menuVisible, setMenuVisible] = useState(false)
@@ -31,7 +37,7 @@ export default function Session({
       clearInterval(interval.current!)
     } else {
       interval.current = setInterval(() => {
-        setModel(model.withIncrementDuration())
+        setSession(session.withIncrementDuration())
       }, 1000)
     }
     setTimerActive(!timerActive)
@@ -48,6 +54,7 @@ export default function Session({
             )
           }
         />
+        <Appbar.Content title={session.name} />
         <Menu
           anchor={
             <Appbar.Action
@@ -73,7 +80,9 @@ export default function Session({
       >
         <IconButton size={RFValue(30)} icon={"clock"} />
         <Text style={theme.text.header}>
-          {new Date(model.duration! * 1000).toISOString().substring(11, 11 + 8)}
+          {new Date(session.duration! * 1000)
+            .toISOString()
+            .substring(11, 11 + 8)}
         </Text>
         <IconButton
           size={RFValue(36)}
@@ -82,10 +91,10 @@ export default function Session({
         />
       </View>
       <ScrollView>
-        {model.mediaContent.length > 0 && (
-          <MediaCarousel assets={model.mediaContent} />
+        {session.mediaContent.length > 0 && (
+          <MediaCarousel assets={session.mediaContent} />
         )}
-        {model.exercises.map((ex, index) => (
+        {session.exercises.map((ex, index) => (
           <ProgrammedExercise
             key={index}
             exercise={ex}

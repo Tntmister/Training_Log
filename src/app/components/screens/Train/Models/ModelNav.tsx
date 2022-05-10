@@ -9,7 +9,7 @@ import Session from "../Session/Session"
 
 export type RootStackParamListModelNav = {
   ModelList: undefined;
-  Session: { model: TrainingModel };
+  Session: { model: TrainingModel; id?: string };
   Model: { model?: TrainingModelDoc; mode: modelModes };
   ExerciseSelector: { onSubmit: (selectedExercises: Exercise[]) => void };
   Exercise: { exercise: Exercise };
