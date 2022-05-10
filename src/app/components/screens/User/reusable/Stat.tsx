@@ -8,7 +8,12 @@ export default function Stat({ name, value }: { name: string; value: number }) {
   const styles = StyleSheet.create({
     container: {
       //backgroundColor: "red",
-      marginHorizontal: theme.margins.s
+      borderRadius: 15,
+      borderWidth: 2,
+      borderColor: theme.colors.primary,
+      marginHorizontal: theme.margins.s,
+      paddingVertical: theme.margins.xs,
+      width: "30%"
     },
     name: {
       textAlign: "center",

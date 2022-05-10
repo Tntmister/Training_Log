@@ -53,6 +53,11 @@ export const strings_en = {
   user: {
     models: "Models",
     followers: "Followers",
-    following: "Following"
+    following: "Following",
+    startedIn: "Started In",
+    editProfile: "Edit Profile",
+    name: "Name",
+    email: "Email Adress",
+    bio: "Bio"
   }
 }
