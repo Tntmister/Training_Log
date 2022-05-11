@@ -4,12 +4,6 @@ import { Asset } from "react-native-image-picker"
 import { TrainingModel } from "../../dataDefinition/data"
 import { TrainingModelDoc } from "../components/screens/Train/Models/ModelList"
 
-export async function createUserDoc(uID: string) {
-  firestore().collection("users").doc(uID).set({
-    models: []
-  })
-}
-
 export async function saveModel(
   uID: string,
   model: TrainingModel,
