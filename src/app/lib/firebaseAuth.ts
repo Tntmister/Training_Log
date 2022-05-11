@@ -51,6 +51,7 @@ export async function login(email: string, password: string) {
 export async function initFirestore(user: FirebaseAuthTypes.User) {
   firestore().collection("users").doc(user.uid).set({
     username: user.displayName,
+    bio: "",
     birthday: null,
     phone: null
   })
@@ -72,6 +73,7 @@ export async function register(
         result.user.sendEmailVerification()
         result.user.updateProfile({
           displayName: username
+
         })
         initFirestore(result.user)
       })
