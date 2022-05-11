@@ -50,6 +50,7 @@ export type TrainingModel = {
   exercises: Exercise[];
   mediaContent: Asset[];
   description: string;
+  date: number;
   duration: number;
 };
 

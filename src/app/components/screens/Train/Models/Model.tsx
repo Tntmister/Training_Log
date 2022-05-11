@@ -18,7 +18,11 @@ import InlineContainer from "../../../reusable/InlineView"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import { Asset } from "react-native-image-picker"
-import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
+import {
+  deleteModel,
+  finishSession,
+  saveModel
+} from "../../../../lib/firebaseFS"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
@@ -35,20 +39,22 @@ export default function Model({
   route,
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "Model">) {
-  const user = useContext(UserContext)
+  const user = useContext(UserContext)!
   const theme = useTheme()
 
   const id = route.params.model?.id
   const mode = route.params.mode
+  console.log(Date.now())
   const [model, setModel] = useState<TrainingModel>(
     route.params.model
       ? route.params.model.model
       : {
         name: "New Training Model",
-        author: user!.displayName!,
+        author: user.uid,
         exercises: [],
         mediaContent: [],
         description: "",
+        date: Date.now(),
         duration: 0
       }
   )
@@ -81,8 +87,8 @@ export default function Model({
   }
 
   async function onTSFinished() {
+    await finishSession(user.uid, { model: model, id: id })
     navigation.navigate("ModelList")
-    console.log("Trainig Session Finished")
   }
 
   function onTSCancelled() {
@@ -134,7 +140,7 @@ export default function Model({
       interval.current = setInterval(() => {
         setModel((prevModel) => ({
           ...prevModel,
-          duration: prevModel.duration + 1
+          date: prevModel.date + 1
         }))
       }, 1000)
     }
@@ -197,9 +203,7 @@ export default function Model({
         >
           <IconButton size={RFValue(30)} icon={"clock"} />
           <Text style={theme.text.header}>
-            {new Date(model.duration * 1000)
-              .toISOString()
-              .substring(11, 11 + 8)}
+            {new Date(model.duration).toISOString().substring(11, 11 + 8)}
           </Text>
           <IconButton
             size={RFValue(36)}

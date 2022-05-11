@@ -74,3 +74,19 @@ export function getModels(
       onLoad(models)
     })
 }
+
+export async function finishSession(uid: string, session: TrainingModelDoc) {
+  const collectionReference = firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("sessions")
+  await collectionReference.add(session.model).then((documentReference) =>
+    documentReference.update({
+      model: firestore()
+        .collection("users")
+        .doc(session.model.author)
+        .collection("models")
+        .doc(session.id)
+    })
+  )
+}
