@@ -3,6 +3,7 @@ import firestore from "@react-native-firebase/firestore"
 import { FirebaseError } from "@firebase/util"
 import { Alert, ToastAndroid } from "react-native"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { User } from "./user"
 
 GoogleSignin.configure({
   webClientId:
@@ -17,12 +18,15 @@ export async function loginGoogle() {
 }
 
 export async function initFirestore(user: FirebaseAuthTypes.User) {
-  firestore().collection("users").doc(user.uid).set({
-    username: user.displayName,
-    bio: "",
-    birthday: null,
-    phone: null
-  })
+  firestore()
+    .collection("users")
+    .doc(user.uid)
+    .set({
+      bio: "",
+      creationTime: Date.now(),
+      profileURL: null,
+      username: user.displayName!
+    } as User)
 }
 
 export async function login(email: string, password: string) {

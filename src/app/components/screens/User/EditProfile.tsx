@@ -15,7 +15,7 @@ import { RootStackParamUserNav } from "./UserNav"
 export default function EditProfile({
   navigation
 }: StackScreenProps<RootStackParamUserNav, "Profile">) {
-  const user = useContext(UserContext)
+  const user = useContext(UserContext)!
   const theme = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -55,7 +55,7 @@ export default function EditProfile({
   const [bio, setBio] = useState("")
   function saveChanges() {
     if (validName(name) && validEmail(email)) {
-      navigation.navigate("Profile")
+      navigation.navigate("Profile", { uid: user.uid })
     }
   }
   function handleChangeName(name: string) {
@@ -67,6 +67,7 @@ export default function EditProfile({
   function handleChangeBio(bio: string) {
     setBio(bio)
   }
+  //TODO: selecionar imagem galeria e dar crop com react-native-image-crop-picker
   console.log(name, email, bio)
   return (
     <View style={styles.container}>

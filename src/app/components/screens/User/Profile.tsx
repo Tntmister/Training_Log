@@ -1,20 +1,21 @@
-import React, { useContext } from "react"
-import { Image, StyleSheet, View } from "react-native"
+import React, { useContext, useEffect, useState } from "react"
+import { StyleSheet, View } from "react-native"
 import InlineContainer from "../../reusable/InlineView"
 import { useTheme } from "../../../providers/Theme"
-import { getDate, images } from "../../../lib/extra"
+import { images } from "../../../lib/extra"
 import Stat from "./reusable/Stat"
 import { Text } from "../../reusable/Text"
 import { UserContext } from "../../../providers/User"
 import { Button } from "../../reusable/Button"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamUserNav } from "./UserNav"
+import { subscribeUser, User } from "../../../lib/user"
+import { CachedImage } from "@georstat/react-native-image-cache"
 
 export default function Profile({
-  navigation
+  navigation,
+  route
 }: StackScreenProps<RootStackParamUserNav, "Profile">) {
-  const user = useContext(UserContext)
-  console.log(user)
   const theme = useTheme()
   const styles = StyleSheet.create({
     headerContainer: {
@@ -64,30 +65,53 @@ export default function Profile({
       marginVertical: theme.margins.m
     }
   })
-  const date = getDate(user!.metadata.creationTime)
+  const user = useContext(UserContext)!
+  // user obtido por params (autenticado por default)
+  const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
+  useEffect(() => {
+    if (user.uid === route.params.uid) {
+      return subscribeUser(route.params.uid, (user) => setUserProfile(user))
+    }
+  }, [route.params.uid])
+
+  console.log(userProfile)
   return (
     <>
       <InlineContainer style={styles.headerContainer}>
         <View style={styles.imgContainer}>
-          <Image source={images.User} style={styles.img} />
+          <CachedImage
+            source={
+              userProfile?.profileURL ? images.User : userProfile?.profileURL
+            }
+            style={styles.img}
+          />
         </View>
         <InlineContainer style={styles.statsContainer}>
+          {/* TODO: queries nº posts, followers, following */}
           <Stat name={"Shared"} value={25} />
           <Stat name={"Followers"} value={1467} />
           <Stat name={"Following"} value={217} />
         </InlineContainer>
       </InlineContainer>
       <View style={styles.infoContainer}>
-        <Text style={styles.info}>{user!.displayName}</Text>
-        <Text style={styles.info}>Started in {date}</Text>
-        <Text style={styles.description}>Some description...</Text>
+        <Text style={styles.info}>{userProfile?.username}</Text>
+        {userProfile?.creationTime !== undefined && (
+          <Text style={styles.info}>
+            Joined {new Date(userProfile?.creationTime).toISOString()}
+          </Text>
+        )}
+        {userProfile?.bio !== "" && (
+          <Text style={styles.description}>{userProfile?.bio}</Text>
+        )}
       </View>
-      <Button
-        style={styles.editBtn}
-        onPress={() => navigation.navigate("EditProfile")}
-      >
-        Edit Profile
-      </Button>
+      {user.uid === route.params.uid && (
+        <Button
+          style={styles.editBtn}
+          onPress={() => navigation.navigate("EditProfile")}
+        >
+          Edit Profile
+        </Button>
+      )}
     </>
   )
 }

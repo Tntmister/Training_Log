@@ -27,11 +27,19 @@ export default function MediaSelector({
   const theme = useTheme()
 
   function onImageDelete(imgNum: number) {
-    deletedAssets?.push(assets[imgNum])
-    setAssetsState((prevAssets) =>
-      prevAssets.filter((_, index) => imgNum != index)
-    )
-    assets.splice(imgNum, 1)
+    Alert.alert("Delete Image", "Delete the specified image?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          deletedAssets?.push(assets[imgNum])
+          setAssetsState((prevAssets) =>
+            prevAssets.filter((_, index) => imgNum != index)
+          )
+          assets.splice(imgNum, 1)
+        }
+      },
+      { text: "No" }
+    ])
   }
 
   function onCameraExit(response: ImagePickerResponse) {
@@ -101,12 +109,7 @@ export default function MediaSelector({
         {assetsState.map((asset, index) => (
           <TouchableOpacity
             key={index}
-            onLongPress={() => {
-              Alert.alert("Delete Image", "Delete the specified image?", [
-                { text: "Yes", onPress: () => onImageDelete(index) },
-                { text: "No" }
-              ])
-            }}
+            onLongPress={() => onImageDelete(index)}
           >
             <>
               <CachedImage
