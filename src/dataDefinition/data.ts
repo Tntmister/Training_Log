@@ -235,7 +235,6 @@ export class TrainingModel implements ITrainingModel {
 
 export class TrainingSession extends TrainingModel {
   duration = 0;
-  done = false;
   date = Date.now();
   model?: string;
 
@@ -254,16 +253,9 @@ export class TrainingSession extends TrainingModel {
     return clone
   }
 
-  withFinishSession() {
-    const clone = this.clone()
-    clone.done = true
-    return clone
-  }
-
   clone(): TrainingSession {
     const clone = new TrainingSession(super.clone(), this.model)
     clone.duration = this.duration
-    clone.done = this.done
     clone.date = this.date
     return clone
   }
