@@ -33,7 +33,6 @@ export default function Profile({
     img: {
       height: 80,
       width: 80,
-      borderRadius: 15,
       borderWidth: 2,
       borderColor: theme.colors.primary
     },
@@ -73,7 +72,6 @@ export default function Profile({
     return subscribeUser(user_uid, setUserProfile)
   }, [route.params])
 
-  console.log(userProfile)
   return (
     <>
       <InlineContainer style={styles.headerContainer}>

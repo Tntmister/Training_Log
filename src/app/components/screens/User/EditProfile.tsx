@@ -1,10 +1,10 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { Appbar } from "react-native-paper"
 import { images } from "../../../lib/extra"
-import { User } from "../../../lib/user"
+import { saveUserDetails, User } from "../../../lib/user"
 import { useTheme } from "../../../providers/Theme"
 import { Button } from "../../reusable/Button"
 import ImageCropPicker, {
@@ -15,6 +15,7 @@ import { TextInput } from "../../reusable/TextInput"
 import { VariableHeightTextInput } from "../../reusable/VariableHeightTextInput"
 import { RootStackParamUserNav } from "./UserNav"
 import { CachedImage } from "@georstat/react-native-image-cache"
+import { UserContext } from "../../../providers/User"
 
 export default function EditProfile({
   navigation,
@@ -54,21 +55,31 @@ export default function EditProfile({
   })
   const user = route.params.user
   const [userChanges, setUserChanges] = useState({ ...user } as User)
+  const uid = useContext(UserContext)!.uid
 
   function saveChanges() {
+    saveUserDetails(
+      uid,
+      Object.fromEntries(
+        Object.entries(userChanges).filter(
+          (value) =>
+            !Object.entries(user).some((oldValue) => value[1] == oldValue[1])
+        )
+      )
+    )
     navigation.navigate("Profile")
   }
   function onNameChange(name: string) {
-    setUserChanges({ ...user, username: name })
+    setUserChanges({ ...userChanges, username: name })
   }
   function onBioChange(bio: string) {
-    setUserChanges({ ...user, bio: bio })
+    setUserChanges({ ...userChanges, bio: bio })
   }
   function onGalleryExit(image: ImageResponse) {
-    setUserChanges({ ...user, profileURL: image.path })
+    setUserChanges({ ...userChanges, profileURL: image.path })
     console.log(image.path)
   }
-  console.log(userChanges.profileURL)
+
   //TODO: upload alteracoes para firestore/auth
   return (
     <View style={styles.container}>
@@ -83,7 +94,6 @@ export default function EditProfile({
             height: 300,
             compressImageMaxHeight: 300,
             compressImageMaxWidth: 300,
-            cropperCircleOverlay: true,
             cropping: true,
             mediaType: "photo"
           }).then(onGalleryExit, (reason) => console.log(reason))

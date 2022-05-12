@@ -1,6 +1,7 @@
 import firestore from "@react-native-firebase/firestore"
+import storage from "@react-native-firebase/storage"
 
-interface IUser {
+export interface IUser {
   username: string;
   bio: string;
   profileURL: string | null;
@@ -19,6 +20,15 @@ export class User implements IUser {
     this.profileURL = user.profileURL
     this.creationTime = user.creationTime
   }
+}
+
+export async function saveUserDetails(uid: string, user: Partial<User>) {
+  const profileRef = storage().ref(`users/${uid}/profile`)
+  if (user.profileURL) {
+    await profileRef.putFile(user.profileURL)
+    user.profileURL = await profileRef.getDownloadURL()
+  } else profileRef.delete()
+  firestore().collection("users").doc(uid).set(user, { merge: true })
 }
 
 export function getProfileURL(uid: string, onFinish: (url: string) => void) {
