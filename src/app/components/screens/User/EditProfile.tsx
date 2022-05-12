@@ -1,21 +1,25 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import { Appbar } from "react-native-paper"
 import { images } from "../../../lib/extra"
+import { User } from "../../../lib/user"
 import { useTheme } from "../../../providers/Theme"
-import { UserContext } from "../../../providers/User"
 import { Button } from "../../reusable/Button"
-import InlineContainer from "../../reusable/InlineView"
+import ImageCropPicker, {
+  Image as ImageResponse
+} from "react-native-image-crop-picker"
 import { Text } from "../../reusable/Text"
 import { TextInput } from "../../reusable/TextInput"
 import { VariableHeightTextInput } from "../../reusable/VariableHeightTextInput"
 import { RootStackParamUserNav } from "./UserNav"
+import { CachedImage } from "@georstat/react-native-image-cache"
 
 export default function EditProfile({
-  navigation
-}: StackScreenProps<RootStackParamUserNav, "Profile">) {
-  const user = useContext(UserContext)!
+  navigation,
+  route
+}: StackScreenProps<RootStackParamUserNav, "EditProfile">) {
   const theme = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -28,7 +32,6 @@ export default function EditProfile({
     img: {
       height: 120,
       width: 120,
-      borderRadius: 15,
       borderWidth: 2,
       borderColor: theme.colors.primary
     },
@@ -49,72 +52,73 @@ export default function EditProfile({
       marginVertical: theme.margins.l
     }
   })
+  const user = route.params.user
+  const [userChanges, setUserChanges] = useState({ ...user } as User)
 
-  const [name, setName] = useState(user!.displayName)
-  const [email, setEmail] = useState(user!.email)
-  const [bio, setBio] = useState("")
   function saveChanges() {
-    if (validName(name) && validEmail(email)) {
-      navigation.navigate("Profile", { uid: user.uid })
-    }
+    navigation.navigate("Profile")
   }
-  function handleChangeName(name: string) {
-    setName(name)
+  function onNameChange(name: string) {
+    setUserChanges({ ...user, username: name })
   }
-  function handleChangeEmail(email: string) {
-    setEmail(email)
+  function onBioChange(bio: string) {
+    setUserChanges({ ...user, bio: bio })
   }
-  function handleChangeBio(bio: string) {
-    setBio(bio)
+  function onGalleryExit(image: ImageResponse) {
+    setUserChanges({ ...user, profileURL: image.path })
+    console.log(image.path)
   }
-  //TODO: selecionar imagem galeria e dar crop com react-native-image-crop-picker
-  console.log(name, email, bio)
+  console.log(userChanges.profileURL)
+  //TODO: upload alteracoes para firestore/auth
   return (
     <View style={styles.container}>
       <Appbar>
         <Appbar.BackAction onPress={navigation.goBack}></Appbar.BackAction>
         <Appbar.Content title={"Profile Edition"} />
       </Appbar>
-      <InlineContainer style={styles.imgContainer}>
-        <Image source={images.User} style={styles.img} />
-      </InlineContainer>
+      <TouchableOpacity
+        onLongPress={() =>
+          ImageCropPicker.openPicker({
+            width: 300,
+            height: 300,
+            compressImageMaxHeight: 300,
+            compressImageMaxWidth: 300,
+            cropperCircleOverlay: true,
+            cropping: true,
+            mediaType: "photo"
+          }).then(onGalleryExit, (reason) => console.log(reason))
+        }
+        style={styles.imgContainer}
+      >
+        {userChanges.profileURL ? (
+          <CachedImage
+            noCache={userChanges.profileURL.startsWith("file")}
+            source={userChanges.profileURL}
+            style={styles.img}
+          />
+        ) : (
+          <Image source={images.User} style={styles.img} />
+        )}
+      </TouchableOpacity>
       <View style={styles.form}>
         <Text style={styles.label}>Name</Text>
         <TextInput
-          placeholder={user!.displayName ? user!.displayName : ""}
+          placeholder={user.username}
           style={styles.input}
-          value={name ? name : ""}
-          onChangeText={handleChangeName}
-        />
-        <Text style={styles.label}>Email Adress</Text>
-        <TextInput
-          placeholder={user!.email ? user!.email : ""}
-          style={styles.input}
-          value={email ? email : ""}
-          onChangeText={handleChangeEmail}
+          value={userChanges.username}
+          onChangeText={onNameChange}
         />
         <Text style={styles.label}>Bio</Text>
         <VariableHeightTextInput
           placeholder={"Your bio"}
           style={styles.input}
-          value={bio}
-          onChangeText={handleChangeBio}
+          value={userChanges.bio}
+          onChangeText={onBioChange}
         ></VariableHeightTextInput>
       </View>
-
       <Button style={styles.save} onPress={saveChanges}>
         Save Changes
       </Button>
     </View>
   )
-}
-
-function validName(name: string | null): boolean {
-  console.log("Validating name -> " + name)
-  return true
-}
-
-function validEmail(email: string | null): boolean {
-  console.log("Validating email -> " + email)
-  return true
 }

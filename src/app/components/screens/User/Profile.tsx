@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
 import InlineContainer from "../../reusable/InlineView"
 import { useTheme } from "../../../providers/Theme"
 import { images } from "../../../lib/extra"
@@ -66,25 +66,26 @@ export default function Profile({
     }
   })
   const user = useContext(UserContext)!
+  const user_uid = route.params ? route.params.uid : user.uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   useEffect(() => {
-    if (user.uid === route.params.uid) {
-      return subscribeUser(route.params.uid, (user) => setUserProfile(user))
-    }
-  }, [route.params.uid])
+    return subscribeUser(user_uid, setUserProfile)
+  }, [route.params])
 
   console.log(userProfile)
   return (
     <>
       <InlineContainer style={styles.headerContainer}>
         <View style={styles.imgContainer}>
-          <CachedImage
-            source={
-              userProfile?.profileURL ? images.User : userProfile?.profileURL
-            }
-            style={styles.img}
-          />
+          {userProfile?.profileURL ? (
+            <CachedImage source={userProfile.profileURL} style={styles.img} />
+          ) : (
+            <Image
+              source={images.User}
+              style={[styles.img, { tintColor: theme.colors.text }]}
+            />
+          )}
         </View>
         <InlineContainer style={styles.statsContainer}>
           {/* TODO: queries nº posts, followers, following */}
@@ -104,10 +105,12 @@ export default function Profile({
           <Text style={styles.description}>{userProfile?.bio}</Text>
         )}
       </View>
-      {user.uid === route.params.uid && (
+      {user.uid === user_uid && (
         <Button
           style={styles.editBtn}
-          onPress={() => navigation.navigate("EditProfile")}
+          onPress={() =>
+            navigation.navigate("EditProfile", { user: userProfile! })
+          }
         >
           Edit Profile
         </Button>

@@ -11,7 +11,7 @@ export function VariableHeightTextInput({
     <TextInput
       multiline={true}
       textAlignVertical={"top"}
-      numberOfLines={props.value!.split("\n").length + 1}
+      numberOfLines={props.value ? props.value.split("\n").length + 1 : 1}
       style={[
         {
           height: ""

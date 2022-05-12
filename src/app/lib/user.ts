@@ -29,11 +29,8 @@ export function getProfileURL(uid: string, onFinish: (url: string) => void) {
     .then((documentSnapshot) => onFinish(documentSnapshot.get("profileURL")))
 }
 
-export function subscribeUser(
-  uid: string,
-  onUpdate: (documentSnapshot: User) => void
-) {
-  return firestore()
+export function subscribeUser(uid: string, onUpdate: (user: User) => void) {
+  firestore()
     .collection("users")
     .doc(uid)
     .onSnapshot((documentSnapshot) =>
