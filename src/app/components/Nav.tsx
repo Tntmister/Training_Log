@@ -3,7 +3,7 @@ import React from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import Home from "./screens/Home"
 import Search from "./screens/Search"
-import History from "./screens/History"
+import HistoryNav from "./screens/History/HistoryNav"
 import UserNav from "./screens/User/UserNav"
 import Train from "./screens/Train/Train"
 import { useTheme } from "../providers/Theme"
@@ -39,7 +39,7 @@ export default function Nav() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Train" component={Train} />
-      <Tab.Screen name="History" component={History} />
+      <Tab.Screen name="History" component={HistoryNav} />
       <Tab.Screen name="User" component={UserNav} />
     </Tab.Navigator>
   )

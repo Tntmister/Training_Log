@@ -74,6 +74,7 @@ export default function Profile({
   }, [route.params])
 
   console.log(userProfile)
+  console.log(user)
   return (
     <>
       <InlineContainer style={styles.headerContainer}>
