@@ -17,6 +17,15 @@ export async function loginGoogle() {
   if (user.additionalUserInfo?.isNewUser) initFirestore(user.user)
 }
 
+export async function getUsername(uid: string) {
+  const username = await firestore()
+    .collection("users")
+    .doc(uid)
+    .get()
+    .then((documentSnapshot) => documentSnapshot.get("username")?.toString())
+  return username === undefined ? "Unknown User" : username
+}
+
 export async function initFirestore(user: FirebaseAuthTypes.User) {
   firestore()
     .collection("users")

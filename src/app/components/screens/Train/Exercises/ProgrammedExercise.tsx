@@ -3,7 +3,6 @@ import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
-  Exercise,
   ModelExercise,
   SessionExercise
 } from "../../../../../dataDefinition/data"
@@ -24,9 +23,9 @@ export default function ProgrammedExercise({
   mode,
   onExerciseDel
 }: {
-  exercise: ModelExercise;
+  exercise: ModelExercise | SessionExercise;
   mode: modelModes;
-  onExerciseDel?: (exercise: Exercise) => void;
+  onExerciseDel?: (exercise: ModelExercise) => void;
 }) {
   const theme = useTheme()
   const styles = useRef(

@@ -5,6 +5,7 @@ import ExerciseSelector from "../Exercises/ExerciseSelector"
 import { Exercise as ExerciseScreen } from "../Exercises/Exercise"
 import Model, { modelModes } from "./Model"
 import ModelList, { TrainingModelDoc } from "./ModelList"
+import Session from "./ModelSession"
 
 export type RootStackParamListModelNav = {
   ModelList: undefined;
@@ -24,6 +25,7 @@ export default function ExerciseNav() {
     >
       <Stack.Screen name="ModelList" component={ModelList} />
       <Stack.Screen name="Model" component={Model} />
+      <Stack.Screen name="Session" component={Session} />
       <Stack.Screen name="ExerciseSelector" component={ExerciseSelector} />
       <Stack.Screen name="Exercise" component={ExerciseScreen} />
     </Stack.Navigator>

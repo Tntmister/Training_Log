@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useRef, useState } from "react"
-import { Alert, ScrollView, StyleSheet, View } from "react-native"
-import { Appbar, Checkbox, IconButton, Menu } from "react-native-paper"
+import React, { useContext, useEffect, useState } from "react"
+import { Alert, ScrollView, StyleSheet } from "react-native"
+import { Appbar, Checkbox, Menu } from "react-native-paper"
 import {
   CardioSetClass,
   Exercise,
@@ -18,16 +18,12 @@ import InlineContainer from "../../../reusable/InlineView"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import { Asset } from "react-native-image-picker"
-import {
-  deleteModel,
-  finishSession,
-  saveModel
-} from "../../../../lib/firebaseFS"
+import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
-import { RFValue } from "react-native-responsive-fontsize"
+import { getUsername } from "../../../../lib/firebaseAuth"
 
 export enum modelModes {
   Edit = "edit",
@@ -44,9 +40,9 @@ export default function Model({
 
   const id = route.params.model?.id
   const mode = route.params.mode
-  console.log(Date.now())
+
   const [model, setModel] = useState<TrainingModel>(
-    route.params.model
+    id
       ? route.params.model.model
       : {
         name: "New Training Model",
@@ -62,7 +58,7 @@ export default function Model({
     setModel((prevModel) => ({ ...prevModel, name: newName }))
   }
 
-  function onAnnotationChange(newDescription: string) {
+  function onDescriptionChange(newDescription: string) {
     setModel((prevModel) => ({ ...prevModel, description: newDescription }))
   }
 
@@ -74,12 +70,12 @@ export default function Model({
   }
 
   async function onModelSave() {
-    await saveModel(user!.uid, model, deletedAssets, id)
+    await saveModel(user.uid, model, deletedAssets, id)
     navigation.navigate("ModelList")
   }
 
   async function onModelDelete() {
-    await deleteModel(user!.uid, id!, model.mediaContent.length > 0)
+    await deleteModel(user.uid, id!, model.mediaContent.length > 0)
     navigation.navigate("ModelList")
     setMenuVisible(false)
   }
@@ -93,7 +89,6 @@ export default function Model({
             ...prevModel.exercises,
             ...exercises.map((ex) => ({
               ...ex,
-              userMediaContent: [],
               annotation: "",
               sets:
                 ex.category == "Cardio"
@@ -129,6 +124,15 @@ export default function Model({
 
   const [menuVisible, setMenuVisible] = useState(false)
 
+  const [authorName, setAuthorName] = useState("")
+
+  useEffect(() => {
+    const init = async () => {
+      setAuthorName(await getUsername(model.author))
+    }
+    init()
+  }, [model.author])
+
   return (
     <>
       <Appbar>
@@ -161,7 +165,8 @@ export default function Model({
           )}
         </Menu>
       </Appbar>
-      <ScrollView /*pointerEvents={/*timerActive ? undefined : "none"}*/>
+      <ScrollView>
+        {mode == modelModes.View && <Text>Author: {authorName}</Text>}
         {mode == modelModes.Edit && (
           <InlineContainer style={{ marginTop: theme.margins.s }}>
             <Checkbox
@@ -181,12 +186,12 @@ export default function Model({
         {mode == modelModes.Edit && !onetime ? (
           <VariableHeightTextInput
             style={{
-              ...styles.annotation,
+              ...styles.description,
               marginLeft: theme.margins.m
             }}
             value={model.description}
-            placeholder={"Training Annotation"}
-            onChangeText={onAnnotationChange}
+            placeholder={"Training Description"}
+            onChangeText={onDescriptionChange}
           />
         ) : (
           !onetime && <Text>{model.description}</Text>
@@ -237,7 +242,9 @@ export default function Model({
           style={{
             marginTop: theme.margins.s
           }}
-          onPress={() => navigation.setParams({ mode: modelModes.Session })}
+          onPress={() =>
+            navigation.navigate("Session", { model: model, id: id })
+          }
         >
           Start Training Session
         </Button>
@@ -250,7 +257,7 @@ const styles = StyleSheet.create({
   name: {
     width: "60%"
   },
-  annotation: {
+  description: {
     width: "80%"
   }
 })
