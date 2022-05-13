@@ -8,7 +8,7 @@ import { Text } from "../../reusable/Text"
 import { UserContext } from "../../../providers/User"
 import { Button } from "../../reusable/Button"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamUserNav } from "./UserNav"
+import { RootStackParamUserNav } from "./ProfileNav"
 import { subscribeUser, User } from "../../../lib/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
 

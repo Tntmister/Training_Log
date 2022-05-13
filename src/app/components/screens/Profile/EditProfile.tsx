@@ -13,7 +13,7 @@ import ImageCropPicker, {
 import { Text } from "../../reusable/Text"
 import { TextInput } from "../../reusable/TextInput"
 import { VariableHeightTextInput } from "../../reusable/VariableHeightTextInput"
-import { RootStackParamUserNav } from "./UserNav"
+import { RootStackParamUserNav } from "./ProfileNav"
 import { CachedImage } from "@georstat/react-native-image-cache"
 import { UserContext } from "../../../providers/User"
 
@@ -60,6 +60,7 @@ export default function EditProfile({
   function saveChanges() {
     saveUserDetails(
       uid,
+      // cria objeto com apenas campos alterados entre alteracoes feitas e user atual
       Object.fromEntries(
         Object.entries(userChanges).filter(
           (value) =>
@@ -77,10 +78,11 @@ export default function EditProfile({
   }
   function onGalleryExit(image: ImageResponse) {
     setUserChanges({ ...userChanges, profileURL: image.path })
-    console.log(image.path)
+  }
+  function clearProfileURL() {
+    setUserChanges({ ...userChanges, profileURL: null })
   }
 
-  //TODO: upload alteracoes para firestore/auth
   return (
     <View style={styles.container}>
       <Appbar>
@@ -110,6 +112,9 @@ export default function EditProfile({
           <Image source={images.User} style={styles.img} />
         )}
       </TouchableOpacity>
+      <Button style={styles.save} onPress={clearProfileURL}>
+        Clear Profile Picture
+      </Button>
       <View style={styles.form}>
         <Text style={styles.label}>Name</Text>
         <TextInput

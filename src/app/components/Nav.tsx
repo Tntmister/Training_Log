@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Home from "./screens/Home"
 import Search from "./screens/Search"
 import HistoryNav from "./screens/History/HistoryNav"
-import UserNav from "./screens/User/UserNav"
+import ProfileNav from "./screens/Profile/ProfileNav"
 import Train from "./screens/Train/Train"
 import { useTheme } from "../providers/Theme"
 import { images } from "../lib/extra"
@@ -40,7 +40,7 @@ export default function Nav() {
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Train" component={Train} />
       <Tab.Screen name="History" component={HistoryNav} />
-      <Tab.Screen name="User" component={UserNav} />
+      <Tab.Screen name="User" component={ProfileNav} />
     </Tab.Navigator>
   )
 }

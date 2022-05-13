@@ -9,7 +9,7 @@ export type RootStackParamUserNav = {
   EditProfile: { user: User };
 };
 
-export default function UserNav() {
+export default function ProfileNav() {
   const Stack = createStackNavigator<RootStackParamUserNav>()
 
   return (
