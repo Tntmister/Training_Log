@@ -1,7 +1,7 @@
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
-import { TrainingModel } from "../../dataDefinition/data"
+import { TrainingModel, TrainingSession } from "../../dataDefinition/data"
 import { TrainingModelDoc } from "../components/screens/Train/Models/ModelList"
 
 export async function saveModel(
@@ -90,18 +90,18 @@ export function getSessions(
     })
 }
 
-export async function finishSession(uid: string, session: TrainingModelDoc) {
-  const collectionReference = firestore()
+export async function finishSession(uid: string, session: TrainingSession) {
+  const documentRef = firestore()
     .collection("users")
     .doc(uid)
     .collection("sessions")
-  await collectionReference.add(session.model).then((documentReference) =>
-    documentReference.update({
-      model: firestore()
-        .collection("users")
-        .doc(session.model.author)
-        .collection("models")
-        .doc(session.id)
-    })
-  )
+    .doc(session.date.toString())
+  await documentRef.set(session)
+  await documentRef.update({
+    model: firestore()
+      .collection("users")
+      .doc(session.author)
+      .collection("models")
+      .doc(session.model)
+  })
 }

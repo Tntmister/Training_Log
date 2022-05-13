@@ -33,19 +33,20 @@ export type SessionExercise = ModelExercise & {
   userMediaContent: Asset[];
 };
 
-export type TrainingModel = {
+export interface TrainingModel {
   name: string;
   author: string;
   exercises: ModelExercise[];
   mediaContent: Asset[];
   description: string;
-};
+}
 
-export type TrainingSession = TrainingModel & {
+export interface TrainingSession extends TrainingModel {
+  exercises: SessionExercise[];
   duration: number;
   date: number;
   model?: string;
-};
+}
 
 //--------------------------------------------------------------------------------//
 /*const model1 = new TrainingModel()

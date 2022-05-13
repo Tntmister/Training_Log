@@ -53,9 +53,7 @@ export default function Model({
         author: user.uid,
         exercises: [],
         mediaContent: [],
-        description: "",
-        date: Date.now(),
-        duration: 0
+        description: ""
       }
   )
   const [deletedAssets] = useState<Asset[]>([])
@@ -86,16 +84,6 @@ export default function Model({
     setMenuVisible(false)
   }
 
-  async function onTSFinished() {
-    await finishSession(user.uid, { model: model, id: id })
-    navigation.navigate("ModelList")
-  }
-
-  function onTSCancelled() {
-    navigation.navigate("ModelList")
-    console.log("Trainig Session Cancelled")
-  }
-
   function onModelAddEx() {
     navigation.navigate("ExerciseSelector", {
       onSubmit: (exercises) => {
@@ -109,10 +97,23 @@ export default function Model({
               annotation: "",
               sets:
                 ex.category == "Cardio"
-                  ? [new CardioSetClass()]
+                  ? [
+                    {
+                      distance: 0,
+                      done: false,
+                      duration: 0,
+                      weight: 0
+                    } as CardioSetClass
+                  ]
                   : ex.category == "Stretching"
-                    ? [new StretchingSetClass()]
-                    : [new RegularSetClass()]
+                    ? [
+                      {
+                        done: false,
+                        duration: 0,
+                        weight: 0
+                      } as StretchingSetClass
+                    ]
+                    : [{ done: false, weight: 0, reps: 0 } as RegularSetClass]
             }))
           ]
         }))
@@ -128,24 +129,6 @@ export default function Model({
 
   const [menuVisible, setMenuVisible] = useState(false)
 
-  const [timerActive, setTimerActive] = useState(false)
-
-  const interval = useRef<NodeJS.Timer>()
-
-  function onTimerToggle() {
-    if (timerActive) {
-      clearInterval(interval.current!)
-    } else {
-      console.log("start timer")
-      interval.current = setInterval(() => {
-        setModel((prevModel) => ({
-          ...prevModel,
-          date: prevModel.date + 1
-        }))
-      }, 1000)
-    }
-    setTimerActive(!timerActive)
-  }
   return (
     <>
       <Appbar>
@@ -173,45 +156,11 @@ export default function Model({
               title={"Delete Model"}
             />
           )}
-          {mode == modelModes.Session && (
-            <Menu.Item
-              onPress={() =>
-                Alert.alert(
-                  "Cancel Training Session",
-                  "Are you sure you want to cancel the training session?\nYour progress will not be saved.",
-                  [{ text: "Yes", onPress: onTSCancelled }, { text: "No" }]
-                )
-              }
-              title={"Cancel Session"}
-            />
-          )}
           {mode == modelModes.View && (
             <Menu.Item onPress={onModelEdit} title={"Edit Model"} />
           )}
         </Menu>
       </Appbar>
-      {mode == modelModes.Session && (
-        <View
-          style={{
-            width: "100%",
-            height: "10%",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-            flexDirection: "row",
-            alignSelf: "center"
-          }}
-        >
-          <IconButton size={RFValue(30)} icon={"clock"} />
-          <Text style={theme.text.header}>
-            {new Date(model.duration).toISOString().substring(11, 11 + 8)}
-          </Text>
-          <IconButton
-            size={RFValue(36)}
-            icon={timerActive ? "pause" : "play"}
-            onPress={onTimerToggle}
-          />
-        </View>
-      )}
       <ScrollView /*pointerEvents={/*timerActive ? undefined : "none"}*/>
         {mode == modelModes.Edit && (
           <InlineContainer style={{ marginTop: theme.margins.s }}>
@@ -281,15 +230,6 @@ export default function Model({
           onPress={onModelSave}
         >
           Save Training Model
-        </Button>
-      ) : mode == modelModes.Session ? (
-        <Button
-          style={{
-            marginTop: theme.margins.s
-          }}
-          onPress={onTSFinished}
-        >
-          Finish Training Session
         </Button>
       ) : (
         <Button

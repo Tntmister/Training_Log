@@ -9,9 +9,10 @@ import { UserContext } from "../../../../providers/User"
 import { getModels } from "../../../../lib/firebaseFS"
 import Loading from "../../../reusable/Loading"
 import ModelDescriptor from "./ModelDescriptor"
+
 export type TrainingModelDoc = {
   model: TrainingModel;
-  id?: string;
+  id: string;
 };
 
 export default function ModelList({
