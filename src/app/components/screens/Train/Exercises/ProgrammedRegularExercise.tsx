@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { RegularSetClass, Exercise } from "../../../../../dataDefinition/data"
+import {
+  RegularSetClass,
+  ModelExercise
+} from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
@@ -13,7 +16,7 @@ export default function ProgrammedCardioExercise({
   exercise,
   mode
 }: {
-  exercise: Exercise;
+  exercise: ModelExercise;
   mode: modelModes;
 }) {
   const theme = useTheme()
@@ -38,7 +41,7 @@ export default function ProgrammedCardioExercise({
   }
 
   function addSet() {
-    setSets((prevSets) => [...prevSets, new RegularSetClass()])
+    setSets((prevSets) => [...prevSets, { done: false, reps: 1, weight: 0 }])
   }
 
   useEffect(() => {

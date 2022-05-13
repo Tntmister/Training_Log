@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { Exercise } from "../../../../../dataDefinition/data"
+import { Exercise, SessionExercise } from "../../../../../dataDefinition/data"
 import { categoryIcons } from "../../../../lib/exercises"
 import { images } from "../../../../lib/extra"
 import { useTheme } from "../../../../providers/Theme"
@@ -20,7 +20,7 @@ export default function ProgrammedExercise({
   mode,
   onExerciseDel
 }: {
-  exercise: Exercise;
+  exercise: SessionExercise;
   mode: modelModes;
   onExerciseDel: (exercise: Exercise) => void;
 }) {

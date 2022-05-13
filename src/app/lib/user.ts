@@ -1,26 +1,12 @@
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 
-export interface IUser {
+export type User = {
   username: string;
   bio: string;
   profileURL: string | null;
   creationTime: number;
-}
-
-export class User implements IUser {
-  username: string;
-  bio: string;
-  profileURL: string | null;
-  creationTime: number;
-
-  constructor(user: IUser) {
-    this.username = user.username
-    this.bio = user.bio
-    this.profileURL = user.profileURL
-    this.creationTime = user.creationTime
-  }
-}
+};
 
 export async function saveUserDetails(uid: string, user: Partial<User>) {
   const profileRef = storage().ref(`users/${uid}/profile`)
@@ -44,6 +30,6 @@ export function subscribeUser(uid: string, onUpdate: (user: User) => void) {
     .collection("users")
     .doc(uid)
     .onSnapshot((documentSnapshot) =>
-      onUpdate(new User(documentSnapshot.data() as IUser))
+      onUpdate(documentSnapshot.data() as User)
     )
 }

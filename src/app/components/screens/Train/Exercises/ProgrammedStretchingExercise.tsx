@@ -4,7 +4,7 @@ import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
   StretchingSetClass,
-  Exercise
+  ModelExercise
 } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
 import InlineContainer from "../../../reusable/InlineView"
@@ -16,7 +16,7 @@ export default function ProgrammedStretchingExercise({
   exercise,
   mode
 }: {
-  exercise: Exercise;
+  exercise: ModelExercise;
   mode: modelModes;
 }) {
   const theme = useTheme()
@@ -41,7 +41,10 @@ export default function ProgrammedStretchingExercise({
   }
 
   function addSet() {
-    setSets((prevSets) => [...prevSets, new StretchingSetClass()])
+    setSets((prevSets) => [
+      ...prevSets,
+      { done: false, duration: 0, weight: 0 }
+    ])
   }
 
   useEffect(() => {

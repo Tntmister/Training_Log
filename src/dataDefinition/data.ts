@@ -1,21 +1,20 @@
 import { Asset } from "react-native-image-picker"
-// Sets
-export class ExerciseSet {
-  weight = 0;
-  done = false;
-}
-export class RegularSetClass extends ExerciseSet {
-  reps = 1;
-}
-export class StretchingSetClass extends ExerciseSet {
-  duration = 0;
-}
-export class CardioSetClass extends ExerciseSet {
-  duration = 0;
-  distance = 0;
-}
 
-// Exercises
+export type ExerciseSet = {
+  weight: number;
+  done: boolean;
+};
+export type RegularSetClass = ExerciseSet & {
+  reps: number;
+};
+export type StretchingSetClass = ExerciseSet & {
+  duration: number;
+};
+export type CardioSetClass = ExerciseSet & {
+  duration: number;
+  distance: number;
+};
+
 export type Exercise = {
   name: string;
   instructions: string[];
@@ -23,72 +22,30 @@ export type Exercise = {
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
-  sets: ExerciseSet[];
-  annotation: string;
-  userMediaContent?: Asset[];
 };
 
-// Training Session
-export class TrainingSession {
-  name: string;
-  description = "";
-  exercises: Exercise[] = [];
-  done = false;
-  volume = 0;
-  time = "";
-  date = getTimestamp();
+export type ModelExercise = Exercise & {
+  sets: ExerciseSet[];
+  annotation: string;
+};
 
-  constructor(exercises: Exercise[], name: string) {
-    this.exercises = exercises
-    this.name = name
-  }
-}
+export type SessionExercise = ModelExercise & {
+  userMediaContent: Asset[];
+};
 
 export type TrainingModel = {
   name: string;
   author: string;
-  exercises: Exercise[];
+  exercises: ModelExercise[];
   mediaContent: Asset[];
   description: string;
-  date: number;
-  duration: number;
 };
 
-// auxiliar
-function getTimestamp(): string {
-  const curdate = new Date()
-  const day =
-    curdate.getDate() < 10 ? "0" + curdate.getDate() : curdate.getDate()
-  const month =
-    curdate.getMonth() < 9
-      ? "0" + (curdate.getMonth() + 1)
-      : curdate.getMonth() + 1
-  const year = curdate.getFullYear()
-  const hours =
-    curdate.getHours() < 10 ? "0" + curdate.getHours() : curdate.getHours()
-  const minutes =
-    curdate.getMinutes() < 10
-      ? "0" + curdate.getMinutes()
-      : curdate.getMinutes()
-  const seconds =
-    curdate.getSeconds() < 10
-      ? "0" + curdate.getSeconds()
-      : curdate.getSeconds()
-  const date =
-    day +
-    "/" +
-    month +
-    "/" +
-    year +
-    " | " +
-    hours +
-    ":" +
-    minutes +
-    ":" +
-    seconds
-
-  return date
-}
+export type TrainingSession = TrainingModel & {
+  duration: number;
+  date: number;
+  model?: string;
+};
 
 //--------------------------------------------------------------------------------//
 /*const model1 = new TrainingModel()
