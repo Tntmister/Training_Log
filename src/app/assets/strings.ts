@@ -48,7 +48,9 @@ export const strings_en = {
     finishTS: "Finish Training Session",
     cancelTS: "Cancel Training Session"
   },
-  history: {},
+  history: {
+    noTS: "You haven't concluded any Training Sessions. Start Training and check your Training History here!"
+  },
   home: {},
   user: {
     models: "Models",

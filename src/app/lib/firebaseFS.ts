@@ -68,6 +68,27 @@ export function getModels(
       onLoad(models)
     })
 }
+export function getSessions(
+  uid: string,
+  onLoad: (sessions: TrainingModelDoc[]) => void
+): () => void {
+  return firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("sessions")
+    .onSnapshot((querySnapshot) => {
+      const sessions: TrainingModelDoc[] = []
+      querySnapshot.forEach((documentSnapshot) => {
+        if (Object.keys(documentSnapshot.data()).length != 0) {
+          sessions.push({
+            model: documentSnapshot.data() as TrainingModel,
+            id: documentSnapshot.id
+          })
+        }
+      })
+      onLoad(sessions)
+    })
+}
 
 export async function finishSession(uid: string, session: TrainingModelDoc) {
   const collectionReference = firestore()
