@@ -7,10 +7,12 @@ export const images = {
   Camera: require("../assets/icons/camera/camera(-xxxhdpi).png"),
   Checked: require("../assets/icons/checked/checked(-xxxhdpi).png"),
   Trash: require("../assets/icons/trash/trash(-xxxhdpi).png"),
+  Calendar: require("../assets/icons/calendar/calendar-100.png"),
+  Weight: require("../assets/icons/weight/weight-52.png"),
   Logo: require("../assets/logo/logo1.png")
 }
 
-export function getDate(timestamp: string | undefined): string {
+export function getDate(timestamp: number | string | undefined): string {
   if (timestamp === undefined) return "Invalid Date"
   const date = new Date(timestamp)
   const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()

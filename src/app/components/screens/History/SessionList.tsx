@@ -1,13 +1,13 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
-import { FlatList, StyleSheet, View } from "react-native"
+import { FlatList, StyleSheet } from "react-native"
+import { TrainingSession } from "../../../../dataDefinition/data"
 import { getSessions } from "../../../lib/firebaseFS"
 import { useTheme } from "../../../providers/Theme"
 import { UserContext } from "../../../providers/User"
 import InlineContainer from "../../reusable/InlineView"
 import Loading from "../../reusable/Loading"
 import { Text } from "../../reusable/Text"
-import ModelDescriptor from "../Train/Models/ModelDescriptor"
 import { TrainingModelDoc } from "../Train/Models/ModelList"
 import { RootStackParamHistoryNav } from "./HistoryNav"
 import SessionDescriptor from "./SessionDescriptor"
@@ -21,14 +21,6 @@ export default function SessionList({
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
   const [sessions, setSessions] = useState<TrainingModelDoc[]>([])
-
-  useEffect(() => {
-    const subscriber = getSessions(user!.uid, (sessions) => {
-      setSessions(sessions)
-      setLoading(false)
-    })
-    return () => subscriber()
-  }, [])
 
   const styles = StyleSheet.create({
     titleContainer: {
@@ -51,6 +43,15 @@ export default function SessionList({
       flex: 1
     }
   })
+
+  useEffect(() => {
+    const subscriber = getSessions(user!.uid, (sessions) => {
+      setSessions(sessions)
+      setLoading(false)
+    })
+    return () => subscriber()
+  }, [])
+
   return (
     <>
       <InlineContainer style={styles.titleContainer}>
@@ -64,7 +65,7 @@ export default function SessionList({
           initialNumToRender={8}
           renderItem={({ item, index }) => (
             <SessionDescriptor
-              session={item}
+              session={item.model as TrainingSession}
               navigation={navigation}
               key={index}
             />

@@ -1,14 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import { TrainingModelDoc } from "../Train/Models/ModelList"
+import { TrainingSession } from "../../../../dataDefinition/data"
 import Session from "./Session"
 import SessionList from "./SessionList"
-import SessionSummary from "./SessionSummary"
 
 export type RootStackParamHistoryNav = {
   SessionList: undefined;
-  SessionSummary: { session: TrainingModelDoc };
-  Session: { session: TrainingModelDoc };
+  Session: TrainingSession;
 };
 
 export default function HistoryNav() {
@@ -19,7 +17,6 @@ export default function HistoryNav() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="SessionList" component={SessionList} />
-      <Stack.Screen name="SessionSummary" component={SessionSummary} />
       <Stack.Screen name="Session" component={Session} />
     </Stack.Navigator>
   )
