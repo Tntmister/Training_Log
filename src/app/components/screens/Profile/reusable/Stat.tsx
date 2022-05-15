@@ -2,8 +2,15 @@ import { Text } from "../../../reusable/Text"
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
+import { User } from "../../../../lib/user"
 
-export default function Stat({ name, value }: { name: string; value: number }) {
+export enum Stats {
+  Followers = "followers",
+  Following = "following",
+  Shared = "posts"
+}
+
+export default function Stat({ type, user }: { type: Stats; user?: User }) {
   const theme = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -27,10 +34,13 @@ export default function Stat({ name, value }: { name: string; value: number }) {
       color: theme.colors.text
     }
   })
+
   return (
     <View style={styles.container}>
-      <Text style={styles.value}>{value}</Text>
-      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.value}>{user ? user[type] : 0}</Text>
+      <Text style={styles.name}>
+        {type.charAt(0).toUpperCase() + type.substring(1)}
+      </Text>
     </View>
   )
 }

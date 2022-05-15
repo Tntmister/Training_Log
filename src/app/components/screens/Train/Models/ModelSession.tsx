@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { Alert, ScrollView, View } from "react-native"
 import { Appbar, IconButton, Menu } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -27,12 +27,31 @@ export default function Session({
     exercises: model.exercises.map((ex) => ({ ...ex, userMediaContent: [] })),
     date: Date.now(),
     duration: 0,
-    model: route.params.id
+    model: route.params.id && `users/${model.author}/models/${route.params.id}`
   })
 
-  async function onSessionFinished() {
-    await finishSession(user.uid, session)
-    navigation.navigate("ModelList")
+  function onSessionFinished() {
+    Alert.alert(
+      "Finish Session",
+      "Do you want to share this training session publicly?",
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            await finishSession(user.uid, session, true)
+            navigation.navigate("ModelList")
+          }
+        },
+        {
+          text: "No",
+          onPress: async () => {
+            await finishSession(user.uid, session, false)
+            navigation.navigate("ModelList")
+          }
+        },
+        { text: "Cancel" }
+      ]
+    )
   }
 
   const [menuVisible, setMenuVisible] = useState(false)
@@ -49,6 +68,11 @@ export default function Session({
     }
     setTimerActive(!timerActive)
   }
+
+  useEffect(() => {
+    setTimerActive(true)
+  }, [])
+
   return (
     <>
       <Appbar>

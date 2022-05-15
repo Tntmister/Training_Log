@@ -6,6 +6,15 @@ export type User = {
   bio: string;
   profileURL: string | null;
   creationTime: number;
+  followers: number;
+  following: number;
+  posts: number;
+};
+
+export type Follow = {
+  dateFollowed: number;
+  id: string;
+  mutual: boolean;
 };
 
 export async function saveUserDetails(uid: string, user: Partial<User>) {
@@ -26,10 +35,23 @@ export function getProfileURL(uid: string, onFinish: (url: string) => void) {
 }
 
 export function subscribeUser(uid: string, onUpdate: (user: User) => void) {
-  firestore()
+  return firestore()
     .collection("users")
     .doc(uid)
     .onSnapshot((documentSnapshot) =>
       onUpdate(documentSnapshot.data() as User)
     )
+}
+
+export function subscribeFollowing(
+  uid: string,
+  uid_self: string,
+  onUpdate: (follow?: Follow) => void
+) {
+  return firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("followers")
+    .where("id", "==", uid_self)
+    .onSnapshot((query) => onUpdate(query.docs[0].data() as Follow))
 }

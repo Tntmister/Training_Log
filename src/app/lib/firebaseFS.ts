@@ -1,3 +1,4 @@
+import { firebase } from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
@@ -90,18 +91,15 @@ export function getSessions(
     })
 }
 
-export async function finishSession(uid: string, session: TrainingSession) {
-  const documentRef = firestore()
-    .collection("users")
-    .doc(uid)
-    .collection("sessions")
-    .doc(session.date.toString())
-  await documentRef.set(session)
-  await documentRef.update({
-    model: firestore()
-      .collection("users")
-      .doc(session.author)
-      .collection("models")
-      .doc(session.model)
-  })
+export async function finishSession(
+  uid: string,
+  session: TrainingSession,
+  share: boolean
+) {
+  const userDoc = firestore().collection("users").doc(uid)
+  await userDoc.collection("sessions").add(session)
+  if (share) {
+    await firestore().collection("posts").add(session)
+    await userDoc.update({ posts: firebase.firestore.FieldValue.increment(1) })
+  }
 }

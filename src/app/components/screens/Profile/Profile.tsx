@@ -3,13 +3,18 @@ import { Image, StyleSheet, View } from "react-native"
 import InlineContainer from "../../reusable/InlineView"
 import { useTheme } from "../../../providers/Theme"
 import { images } from "../../../lib/extra"
-import Stat from "./reusable/Stat"
+import Stat, { Stats } from "./reusable/Stat"
 import { Text } from "../../reusable/Text"
 import { UserContext } from "../../../providers/User"
 import { Button } from "../../reusable/Button"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamUserNav } from "./ProfileNav"
-import { subscribeUser, User } from "../../../lib/user"
+import {
+  Follow,
+  subscribeFollowing,
+  subscribeUser,
+  User
+} from "../../../lib/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
 
 export default function Profile({
@@ -66,12 +71,18 @@ export default function Profile({
   })
   const user = useContext(UserContext)!
   const user_uid = route.params ? route.params.uid : user.uid
+  const other = user.uid !== user.uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
+  const [follow, setFollow] = useState<Follow | undefined>(undefined)
   useEffect(() => {
+    if (other)
+      return () => {
+        subscribeFollowing(user_uid, user.uid, setFollow)
+        subscribeUser(user_uid, setUserProfile)
+      }
     return subscribeUser(user_uid, setUserProfile)
   }, [route.params])
-
   console.log(userProfile)
   console.log(user)
   return (
@@ -89,11 +100,12 @@ export default function Profile({
         </View>
         <InlineContainer style={styles.statsContainer}>
           {/* TODO: queries nº posts, followers, following */}
-          <Stat name={"Shared"} value={25} />
-          <Stat name={"Followers"} value={1467} />
-          <Stat name={"Following"} value={217} />
+          <Stat type={Stats.Shared} user={userProfile} />
+          <Stat type={Stats.Followers} user={userProfile} />
+          <Stat type={Stats.Following} user={userProfile} />
         </InlineContainer>
       </InlineContainer>
+      {other && (follow ? <Button>Unfollow</Button> : <Button>Follow</Button>)}
       <View style={styles.infoContainer}>
         <Text style={styles.info}>{userProfile?.username}</Text>
         {userProfile?.creationTime !== undefined && (
