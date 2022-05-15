@@ -11,8 +11,10 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamUserNav } from "./ProfileNav"
 import {
   Follow,
+  followUser,
   subscribeFollowing,
   subscribeUser,
+  unfollowUser,
   User
 } from "../../../lib/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
@@ -71,7 +73,7 @@ export default function Profile({
   })
   const user = useContext(UserContext)!
   const user_uid = route.params ? route.params.uid : user.uid
-  const other = user.uid !== user.uid
+  const other = user.uid !== user_uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   const [follow, setFollow] = useState<Follow | undefined>(undefined)
@@ -83,8 +85,6 @@ export default function Profile({
       }
     return subscribeUser(user_uid, setUserProfile)
   }, [route.params])
-  console.log(userProfile)
-  console.log(user)
   return (
     <>
       <InlineContainer style={styles.headerContainer}>
@@ -105,7 +105,14 @@ export default function Profile({
           <Stat type={Stats.Following} user={userProfile} />
         </InlineContainer>
       </InlineContainer>
-      {other && (follow ? <Button>Unfollow</Button> : <Button>Follow</Button>)}
+      {other &&
+        (follow ? (
+          <Button onPress={() => unfollowUser(user.uid, user_uid)}>
+            Unfollow
+          </Button>
+        ) : (
+          <Button onPress={() => followUser(user.uid, user_uid)}>Follow</Button>
+        ))}
       <View style={styles.infoContainer}>
         <Text style={styles.info}>{userProfile?.username}</Text>
         {userProfile?.creationTime !== undefined && (

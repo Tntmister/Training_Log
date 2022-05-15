@@ -40,7 +40,7 @@ export default function Nav() {
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Train" component={Train} />
       <Tab.Screen name="History" component={HistoryNav} />
-      <Tab.Screen name="User" component={ProfileNav} />
+      <Tab.Screen name="User" component={ProfileNav}/>
     </Tab.Navigator>
   )
 }
