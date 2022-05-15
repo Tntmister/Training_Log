@@ -18,12 +18,12 @@ import InlineContainer from "../../../reusable/InlineView"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import { Asset } from "react-native-image-picker"
-import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
 import { getUsername } from "../../../../lib/firebaseAuth"
+import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
 
 export enum modelModes {
   Edit = "edit",
