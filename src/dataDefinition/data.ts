@@ -45,7 +45,7 @@ export interface TrainingSession extends TrainingModel {
   exercises: SessionExercise[];
   duration: number;
   date: number;
-  model?: string;
+  model: string | null;
 }
 
 //--------------------------------------------------------------------------------//

@@ -97,9 +97,11 @@ export async function finishSession(
   share: boolean
 ) {
   const userDoc = firestore().collection("users").doc(uid)
-  await userDoc.collection("sessions").add(session)
-  if (share) {
-    await firestore().collection("posts").add(session)
-    await userDoc.update({ posts: firebase.firestore.FieldValue.increment(1) })
-  }
+  firestore().runTransaction(async (t) => {
+    t.set(userDoc.collection("sessions").doc(), session)
+    if (share) {
+      t.set(firestore().collection("posts").doc(), session)
+      t.update(userDoc, { posts: firebase.firestore.FieldValue.increment(1) })
+    }
+  })
 }
