@@ -1,17 +1,13 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { StackNavigationProp } from "@react-navigation/stack"
+import { StackScreenProps } from "@react-navigation/stack"
 import React from "react"
 import { Image, ScrollView, StyleSheet } from "react-native"
-import { Appbar, IconButton } from "react-native-paper"
+import { Appbar } from "react-native-paper"
 import { TrainingSession } from "../../../../dataDefinition/data"
 import { getDate, images } from "../../../lib/extra"
 import { useTheme } from "../../../providers/Theme"
 import InlineContainer from "../../reusable/InlineView"
 import MediaCarousel from "../../reusable/MediaCarousel"
 import { Text } from "../../reusable/Text"
-import { TextInput } from "../../reusable/TextInput"
-import { VariableHeightTextInput } from "../../reusable/VariableHeightTextInput"
 import ProgrammedExercise from "../Train/Exercises/ProgrammedExercise"
 import { modelModes } from "../Train/Models/Model"
 import { RootStackParamHistoryNav } from "./HistoryNav"
@@ -19,9 +15,7 @@ import { RootStackParamHistoryNav } from "./HistoryNav"
 export default function Session({
   route,
   navigation
-}: {
-  navigation: StackNavigationProp<RootStackParamHistoryNav, "Session">;
-}) {
+}: StackScreenProps<RootStackParamHistoryNav, "Session">) {
   const theme = useTheme()
   const session = route.params as TrainingSession
   console.log(route.params)
@@ -48,7 +42,7 @@ export default function Session({
       tintColor: theme.colors.text,
       width: 20,
       height: 20,
-      marginRight: 5
+      marginRight: theme.margins.xs
     }
   })
 
@@ -75,15 +69,6 @@ export default function Session({
           </InlineContainer>
         </InlineContainer>
 
-        <VariableHeightTextInput
-          style={{
-            ...styles.description,
-            marginLeft: theme.margins.m
-          }}
-          value={session.description}
-          placeholder={"Training Description"}
-          disabled={true}
-        />
         <Text>{session.description}</Text>
 
         {session.mediaContent.length > 0 && (
