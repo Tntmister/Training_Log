@@ -1,10 +1,10 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useContext } from "react"
-import { Image, TouchableOpacity, View } from "react-native"
-import { RFValue } from "react-native-responsive-fontsize"
+import React from "react"
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import { TrainingSession } from "../../../../dataDefinition/data"
+import { getDate, images } from "../../../lib/extra"
 import { useTheme } from "../../../providers/Theme"
-import { UserContext } from "../../../providers/User"
+import InlineContainer from "../../reusable/InlineView"
 import { Text } from "../../reusable/Text"
 import { RootStackParamHistoryNav } from "./HistoryNav"
 
@@ -15,47 +15,76 @@ export default function SessionDescriptor({
   session: TrainingSession;
   navigation: StackNavigationProp<RootStackParamHistoryNav, "SessionList">;
 }) {
-  const user = useContext(UserContext)
   const theme = useTheme()
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.backdrop,
+      marginBottom: theme.margins.s,
+      alignSelf: "center",
+      padding: theme.paddings.l,
+      width: "95%",
+      borderRadius: 10,
+      elevation: 6
+    },
+    nameContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      marginBottom: theme.margins.s
+    },
+    name: {
+      ...theme.text.body_l,
+      marginRight: theme.margins.m
+    },
+    dateContainer: {
+      justifyContent: "flex-start",
+      marginLeft: theme.margins.s
+    },
+    icon: {
+      tintColor: theme.colors.text,
+      width: 20,
+      height: 20,
+      marginRight: theme.margins.xs
+    },
+    exercise: {
+      ...theme.text.body_s
+    },
+    image: {
+      borderRadius: 10,
+      width: 80,
+      height: 80,
+      marginLeft: "auto",
+      marginRight: theme.margins.m
+    }
+  })
 
   return (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate("Session", session)
       }}
-      style={{
-        backgroundColor: theme.colors.backdrop,
-        marginBottom: theme.margins.s,
-        alignSelf: "center",
-        paddingLeft: theme.paddings.l,
-        paddingBottom: theme.paddings.l,
-        paddingTop: theme.paddings.l,
-        width: "95%",
-        borderRadius: 10,
-        elevation: 6
-      }}
+      style={styles.container}
     >
-      <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-        <Text style={{ flexGrow: 1, fontSize: RFValue(18) }}>
-          {session.name}
-        </Text>
+      <View style={styles.nameContainer}>
+        <Text style={styles.name}>{session.name}</Text>
+        <InlineContainer style={styles.dateContainer}>
+          <Image source={images.Calendar} style={styles.icon}></Image>
+          <Text>{getDate(session.date)}</Text>
+        </InlineContainer>
       </View>
+
       <View>
         <>
           {session.exercises.map((ex, key) => (
-            <Text style={{ fontSize: RFValue(14) }} key={key}>
+            <Text style={styles.exercise} key={key}>
               {ex.sets.length} x {ex.name}
             </Text>
           ))}
         </>
         <Image
-          style={{
-            borderRadius: 10,
-            width: 80,
-            height: 80,
-            marginLeft: "auto",
-            marginRight: theme.margins.m
-          }}
+          style={styles.image}
           source={{ uri: session.mediaContent[0]?.uri }}
         />
       </View>
