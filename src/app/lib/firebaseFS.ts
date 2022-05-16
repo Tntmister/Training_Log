@@ -45,6 +45,19 @@ export function deleteModel(uID: string, id: string) {
     .then((list) => list.items.forEach((ref) => ref.delete()))
 }
 
+export function deleteSession(uID: string, id: string) {
+  firestore()
+    .collection("users")
+    .doc(uID)
+    .collection("sessions")
+    .doc(id)
+    .delete()
+  storage()
+    .ref(`/users/${uID}/sessions/${id}`)
+    .listAll()
+    .then((list) => list.items.forEach((ref) => ref.delete()))
+}
+
 export function getModels(
   uid: string,
   onLoad: (models: TrainingModelDoc[]) => void

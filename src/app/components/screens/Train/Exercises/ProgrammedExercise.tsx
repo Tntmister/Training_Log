@@ -40,8 +40,7 @@ export default function ProgrammedExercise({
         paddingHorizontal: theme.paddings.l
       },
       headerContainer: {
-        justifyContent: "space-between",
-        marginTop: theme.margins.s
+        justifyContent: "space-between"
       },
       title: {
         flexGrow: 1,

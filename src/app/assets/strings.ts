@@ -50,7 +50,8 @@ export const strings_en = {
   },
   history: {
     yourTH: "Your Training History",
-    noTS: "You haven't concluded any Training Sessions. Start Training and check your Training History here!"
+    noTS: "You haven't concluded any Training Sessions. Start Training and check your Training History here!",
+    deleteSession: "Delete Session"
   },
   home: {},
   user: {

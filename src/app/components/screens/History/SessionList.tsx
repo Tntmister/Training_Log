@@ -66,6 +66,7 @@ export default function SessionList({
           renderItem={({ item, index }) => (
             <SessionDescriptor
               session={item.model as TrainingSession}
+              id={item.id}
               navigation={navigation}
               key={index}
             />

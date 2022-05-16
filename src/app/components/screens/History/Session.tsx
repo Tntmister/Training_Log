@@ -3,7 +3,12 @@ import React from "react"
 import { Image, ScrollView, StyleSheet } from "react-native"
 import { Appbar } from "react-native-paper"
 import { TrainingSession } from "../../../../dataDefinition/data"
-import { getDate, images } from "../../../lib/extra"
+import {
+  getDate,
+  getDuration,
+  getTotalWeight,
+  images
+} from "../../../lib/extra"
 import { useTheme } from "../../../providers/Theme"
 import InlineView from "../../reusable/InlineView"
 import MediaCarousel from "../../reusable/MediaCarousel"
@@ -23,11 +28,14 @@ export default function Session({
   const styles = StyleSheet.create({
     header: {
       marginVertical: theme.margins.m,
-      justifyContent: "space-around"
+      justifyContent: "flex-start",
+      width: "95%",
+      alignSelf: "center"
+      //backgroundColor: "green"
     },
     headerContainer: {
-      width: "30%",
-      backgroundColor: "red"
+      width: "32%"
+      //backgroundColor: "red"
     },
     name: {
       width: "60%",
@@ -36,13 +44,17 @@ export default function Session({
       ...theme.text.header
     },
     description: {
-      width: "80%"
+      width: "80%",
+      marginLeft: theme.margins.m
     },
     icon: {
-      tintColor: theme.colors.text,
+      tintColor: theme.colors.primary,
       width: 20,
       height: 20,
       marginRight: theme.margins.xs
+    },
+    info: {
+      color: theme.colors.text
     }
   })
 
@@ -57,19 +69,19 @@ export default function Session({
         <InlineView style={styles.header}>
           <InlineView style={styles.headerContainer}>
             <Image source={images.Calendar} style={styles.icon}></Image>
-            <Text>{getDate(session.date)}</Text>
+            <Text style={styles.info}>{getDate(session.date)}</Text>
           </InlineView>
           <InlineView style={styles.headerContainer}>
             <Image source={images.History} style={styles.icon}></Image>
-            <Text>{session.duration}</Text>
+            <Text style={styles.info}>{getDuration(session.duration)}</Text>
           </InlineView>
           <InlineView style={styles.headerContainer}>
             <Image source={images.Weight} style={styles.icon}></Image>
-            <Text>{session.duration}</Text>
+            <Text style={styles.info}>{getTotalWeight(session)} Kg</Text>
           </InlineView>
         </InlineView>
 
-        <Text>{session.description}</Text>
+        <Text style={styles.description}>{session.description}</Text>
 
         {session.mediaContent.length > 0 && (
           <MediaCarousel assets={session.mediaContent} />

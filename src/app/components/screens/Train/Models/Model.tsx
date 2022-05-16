@@ -135,6 +135,23 @@ export default function Model({
     init()
   }, [model.author])
 
+  const styles = StyleSheet.create({
+    name: {
+      width: "60%"
+    },
+    description: {
+      width: "80%"
+    },
+    author: {
+      marginLeft: theme.margins.m,
+      marginTop: theme.margins.m
+    },
+    viewDesc: {
+      marginLeft: theme.margins.m,
+      marginTop: theme.margins.s
+    }
+  })
+
   return (
     <>
       <Appbar>
@@ -150,7 +167,6 @@ export default function Model({
           onDismiss={() => setMenuVisible(false)}
           visible={menuVisible}
         >
-          <Menu.Item title={"Placeholder"} />
           {id && mode == modelModes.Edit && (
             <Menu.Item
               onPress={() =>
@@ -168,7 +184,9 @@ export default function Model({
         </Menu>
       </Appbar>
       <ScrollView>
-        {mode == modelModes.View && <Text>Author: {authorName}</Text>}
+        {mode == modelModes.View && (
+          <Text style={styles.author}>Author: {authorName}</Text>
+        )}
         {mode == modelModes.Edit && (
           <InlineView style={{ marginTop: theme.margins.s }}>
             <Checkbox
@@ -196,7 +214,7 @@ export default function Model({
             onChangeText={onDescriptionChange}
           />
         ) : (
-          !onetime && <Text>{model.description}</Text>
+          !onetime && <Text style={styles.viewDesc}>{model.description}</Text>
         )}
         {mode == modelModes.Edit && !onetime ? (
           <MediaSelector
@@ -254,12 +272,3 @@ export default function Model({
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  name: {
-    width: "60%"
-  },
-  description: {
-    width: "80%"
-  }
-})

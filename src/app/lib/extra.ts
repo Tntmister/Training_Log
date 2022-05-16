@@ -1,3 +1,5 @@
+import { RegularSetClass, TrainingSession } from "../../dataDefinition/data"
+
 export const images = {
   User: require("../assets/icons/user/user(-xxxhdpi).png"),
   History: require("../assets/icons/history/history(-xxxhdpi).png"),
@@ -21,4 +23,32 @@ export function getDate(timestamp: number | string | undefined): string {
   const year = date.getFullYear()
 
   return `${day}/${month}/${year}`
+}
+
+export function getDuration(millis: number): string {
+  if (millis === undefined) return "Invalid Duration"
+  const totalSecs = millis / 1000
+  console.log(totalSecs)
+  const hours = Math.floor(totalSecs / 3600)
+  const minutes = Math.floor((totalSecs % 3600) / 60)
+
+  const fHours = hours < 10 ? "0" + hours : hours
+  const fMinutes = minutes < 10 ? "0" + minutes : minutes
+  return `${fHours}h ${fMinutes}m`
+}
+
+export function getTotalWeight(session: TrainingSession): number {
+  let total = 0
+  for (const exercise of session.exercises) {
+    const multiplier = exercise.equipment == "Dumbbell" ? 2 : 1
+    for (const set of exercise.sets) {
+      const reps =
+        exercise.category == "Stretching" || exercise.category == "Cardio"
+          ? 1
+          : (set as RegularSetClass).reps
+      total += set.weight * reps * multiplier
+    }
+  }
+
+  return total
 }
