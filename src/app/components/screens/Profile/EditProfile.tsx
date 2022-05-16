@@ -71,16 +71,19 @@ export default function EditProfile({
     navigation.navigate("Profile")
   }
   function onNameChange(name: string) {
-    setUserChanges({ ...userChanges, username: name })
+    setUserChanges((prevChanges) => ({ ...prevChanges, username: name }))
   }
   function onBioChange(bio: string) {
-    setUserChanges({ ...userChanges, bio: bio })
+    setUserChanges((prevChanges) => ({ ...prevChanges, bio: bio }))
   }
   function onGalleryExit(image: ImageResponse) {
-    setUserChanges({ ...userChanges, profileURL: image.path })
+    setUserChanges((prevChanges) => ({
+      ...prevChanges,
+      profileURL: image.path
+    }))
   }
   function clearProfileURL() {
-    setUserChanges({ ...userChanges, profileURL: null })
+    setUserChanges((prevChanges) => ({ ...prevChanges, profileURL: null }))
   }
 
   return (
@@ -109,7 +112,10 @@ export default function EditProfile({
             style={styles.img}
           />
         ) : (
-          <Image source={images.User} style={styles.img} />
+          <Image
+            source={images.User}
+            style={[styles.img, { tintColor: theme.colors.text }]}
+          />
         )}
       </TouchableOpacity>
       <Button style={styles.save} onPress={clearProfileURL}>

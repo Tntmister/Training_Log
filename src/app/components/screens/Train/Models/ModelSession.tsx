@@ -31,7 +31,7 @@ export default function Session({
   })
 
   function onSessionFinished() {
-    session.duration = session.date - Date.now()
+    session.duration = Date.now() - session.date
     Alert.alert(
       "Finish Session",
       "Do you want to share this training session publicly?",
