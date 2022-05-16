@@ -39,7 +39,6 @@ export type Theme = {
     body_l: TextStyle;
     body_m: TextStyle;
     body_s: TextStyle;
-    stats_val: TextStyle;
   };
 } & NavigationTheme &
 PaperTheme;
@@ -67,11 +66,6 @@ const defaultTheme: Theme = {
       fontFamily: "Lato"
     },
     body_s: {
-      fontSize: RFValue(14),
-      fontWeight: "400",
-      fontFamily: "Lato"
-    },
-    stats_val: {
       fontSize: RFValue(14),
       fontWeight: "400",
       fontFamily: "Lato"

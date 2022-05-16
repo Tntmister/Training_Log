@@ -15,7 +15,7 @@ import {
 } from "react-native-image-picker"
 import { IconButton } from "react-native-paper"
 import { useTheme } from "../../providers/Theme"
-import InlineContainer from "./InlineView"
+import InlineView from "./InlineView"
 
 export default function MediaSelector({
   assets,
@@ -52,7 +52,7 @@ export default function MediaSelector({
 
   return (
     <View style={[{ marginTop: theme.margins.s }, style]} {...props}>
-      <InlineContainer>
+      <InlineView>
         <IconButton
           size={30}
           icon="file-upload"
@@ -97,7 +97,7 @@ export default function MediaSelector({
             backgroundColor: theme.colors.primary
           }}
         />
-      </InlineContainer>
+      </InlineView>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={true}

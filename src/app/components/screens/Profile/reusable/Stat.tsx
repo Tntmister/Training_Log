@@ -2,15 +2,16 @@ import { Text } from "../../../reusable/Text"
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
-import { User } from "../../../../lib/user"
 
-export enum Stats {
-  Followers = "followers",
-  Following = "following",
-  Shared = "posts"
-}
-
-export default function Stat({ type, user }: { type: Stats; user?: User }) {
+function Stat({
+  title,
+  stat = 0,
+  plural
+}: {
+  title: string;
+  stat?: number;
+  plural?: boolean;
+}) {
   const theme = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -34,13 +35,17 @@ export default function Stat({ type, user }: { type: Stats; user?: User }) {
       color: theme.colors.text
     }
   })
-
   return (
     <View style={styles.container}>
-      <Text style={styles.value}>{user ? user[type] : 0}</Text>
+      <Text style={styles.value}>{stat}</Text>
       <Text style={styles.name}>
-        {type.charAt(0).toUpperCase() + type.substring(1)}
+        {title.substring(
+          0,
+          plural && stat && stat == 1 ? title.length - 1 : title.length
+        )}
       </Text>
     </View>
   )
 }
+
+export default React.memo(Stat)

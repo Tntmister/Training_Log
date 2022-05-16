@@ -5,7 +5,7 @@ import { Appbar } from "react-native-paper"
 import { TrainingSession } from "../../../../dataDefinition/data"
 import { getDate, images } from "../../../lib/extra"
 import { useTheme } from "../../../providers/Theme"
-import InlineContainer from "../../reusable/InlineView"
+import InlineView from "../../reusable/InlineView"
 import MediaCarousel from "../../reusable/MediaCarousel"
 import { Text } from "../../reusable/Text"
 import ProgrammedExercise from "../Train/Exercises/ProgrammedExercise"
@@ -54,20 +54,20 @@ export default function Session({
       </Appbar>
       <ScrollView>
         <Text style={styles.name}>{session.name}</Text>
-        <InlineContainer style={styles.header}>
-          <InlineContainer style={styles.headerContainer}>
+        <InlineView style={styles.header}>
+          <InlineView style={styles.headerContainer}>
             <Image source={images.Calendar} style={styles.icon}></Image>
             <Text>{getDate(session.date)}</Text>
-          </InlineContainer>
-          <InlineContainer style={styles.headerContainer}>
+          </InlineView>
+          <InlineView style={styles.headerContainer}>
             <Image source={images.History} style={styles.icon}></Image>
             <Text>{session.duration}</Text>
-          </InlineContainer>
-          <InlineContainer style={styles.headerContainer}>
+          </InlineView>
+          <InlineView style={styles.headerContainer}>
             <Image source={images.Weight} style={styles.icon}></Image>
             <Text>{session.duration}</Text>
-          </InlineContainer>
-        </InlineContainer>
+          </InlineView>
+        </InlineView>
 
         <Text>{session.description}</Text>
 

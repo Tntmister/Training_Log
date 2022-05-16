@@ -14,7 +14,7 @@ import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModel } from "../../../../../dataDefinition/data"
 import { UserContext } from "../../../../providers/User"
 import { useTheme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineView"
+import InlineView from "../../../reusable/InlineView"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import { Asset } from "react-native-image-picker"
@@ -168,13 +168,13 @@ export default function Model({
       <ScrollView>
         {mode == modelModes.View && <Text>Author: {authorName}</Text>}
         {mode == modelModes.Edit && (
-          <InlineContainer style={{ marginTop: theme.margins.s }}>
+          <InlineView style={{ marginTop: theme.margins.s }}>
             <Checkbox
               status={onetime ? "checked" : "unchecked"}
               onPress={() => setOneTime(!onetime)}
             />
             <Text>One time session?</Text>
-          </InlineContainer>
+          </InlineView>
         )}
         {mode == modelModes.Edit && !onetime && (
           <TextInput

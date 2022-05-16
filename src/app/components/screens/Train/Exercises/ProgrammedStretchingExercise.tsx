@@ -7,7 +7,7 @@ import {
   ModelExercise
 } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineView"
+import InlineView from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
 import { modelModes } from "../Models/Model"
 import StretchingSet from "./Sets/StretchingSet"
@@ -53,7 +53,7 @@ export default function ProgrammedStretchingExercise({
 
   return (
     <>
-      <InlineContainer style={styles.subtitleContainer}>
+      <InlineView style={styles.subtitleContainer}>
         <Text
           style={{
             ...styles.subtitle,
@@ -97,7 +97,7 @@ export default function ProgrammedStretchingExercise({
             {" "}
           </Text>
         )}
-      </InlineContainer>
+      </InlineView>
 
       {sets.map((set, index) => (
         <StretchingSet

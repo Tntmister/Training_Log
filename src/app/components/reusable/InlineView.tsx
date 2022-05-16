@@ -2,7 +2,7 @@
 import React from "react"
 import { View, ViewProps } from "react-native"
 
-export default function InlineContainer({ style, ...props }: ViewProps) {
+export default function InlineView({ style, ...props }: ViewProps) {
   return (
     <View
       style={[

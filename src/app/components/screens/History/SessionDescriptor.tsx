@@ -4,7 +4,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import { TrainingSession } from "../../../../dataDefinition/data"
 import { getDate, images } from "../../../lib/extra"
 import { useTheme } from "../../../providers/Theme"
-import InlineContainer from "../../reusable/InlineView"
+import InlineView from "../../reusable/InlineView"
 import { Text } from "../../reusable/Text"
 import { RootStackParamHistoryNav } from "./HistoryNav"
 
@@ -69,10 +69,10 @@ export default function SessionDescriptor({
     >
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{session.name}</Text>
-        <InlineContainer style={styles.dateContainer}>
+        <InlineView style={styles.dateContainer}>
           <Image source={images.Calendar} style={styles.icon}></Image>
           <Text>{getDate(session.date)}</Text>
-        </InlineContainer>
+        </InlineView>
       </View>
 
       <View>

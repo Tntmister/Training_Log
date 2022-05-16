@@ -9,7 +9,7 @@ import {
 import { categoryIcons } from "../../../../lib/exercises"
 import { images } from "../../../../lib/extra"
 import { useTheme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineView"
+import InlineView from "../../../reusable/InlineView"
 import MediaSelector from "../../../reusable/MediaSelector"
 import { Text } from "../../../reusable/Text"
 import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInput"
@@ -79,7 +79,7 @@ export default function ProgrammedExercise({
 
   return (
     <View style={styles.container}>
-      <InlineContainer style={styles.headerContainer}>
+      <InlineView style={styles.headerContainer}>
         <Image
           style={styles.categ}
           source={
@@ -95,7 +95,7 @@ export default function ProgrammedExercise({
             icon={images.Trash}
           />
         )}
-      </InlineContainer>
+      </InlineView>
       {mode == modelModes.Edit ? (
         <VariableHeightTextInput
           value={exercise.annotation}

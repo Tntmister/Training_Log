@@ -7,7 +7,7 @@ import {
   ModelExercise
 } from "../../../../../dataDefinition/data"
 import { useTheme } from "../../../../providers/Theme"
-import InlineContainer from "../../../reusable/InlineView"
+import InlineView from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
 import { modelModes } from "../Models/Model"
 import CardioSet from "./Sets/CardioSet"
@@ -53,7 +53,7 @@ export default function ProgrammedCardioExercise({
 
   return (
     <>
-      <InlineContainer style={styles.subtitleContainer}>
+      <InlineView style={styles.subtitleContainer}>
         <Text
           style={{
             ...styles.subtitle,
@@ -105,7 +105,7 @@ export default function ProgrammedCardioExercise({
             {" "}
           </Text>
         )}
-      </InlineContainer>
+      </InlineView>
 
       {sets.map((set, index) => (
         <CardioSet

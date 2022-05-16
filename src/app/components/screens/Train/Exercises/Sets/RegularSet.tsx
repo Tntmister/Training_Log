@@ -5,7 +5,7 @@ import { RegularSetClass } from "../../../../../../dataDefinition/data"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import { Button } from "../../../../reusable/Button"
-import InlineContainer from "../../../../reusable/InlineView"
+import InlineView from "../../../../reusable/InlineView"
 import { Text } from "../../../../reusable/Text"
 import { modelModes } from "../../Models/Model"
 import SetFieldInput from "./SetFieldInput"
@@ -87,7 +87,7 @@ export default function RegularSet({
   }, [set_state])
 
   return (
-    <InlineContainer style={styles.container}>
+    <InlineView style={styles.container}>
       <Text style={[styles.index, styles.box]}>{index + 1}</Text>
       <SetFieldInput
         inputMode={mode}
@@ -137,6 +137,6 @@ export default function RegularSet({
           )}
         </View>
       )}
-    </InlineContainer>
+    </InlineView>
   )
 }

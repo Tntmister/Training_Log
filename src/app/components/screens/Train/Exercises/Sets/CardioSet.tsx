@@ -4,7 +4,7 @@ import { Checkbox, IconButton } from "react-native-paper"
 import { CardioSetClass } from "../../../../../../dataDefinition/data"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
-import InlineContainer from "../../../../reusable/InlineView"
+import InlineView from "../../../../reusable/InlineView"
 import { Text } from "../../../../reusable/Text"
 import { modelModes } from "../../Models/Model"
 import SetFieldInput from "./SetFieldInput"
@@ -102,7 +102,7 @@ export default function CardioSet({
     )
   }
   return (
-    <InlineContainer style={styles.container}>
+    <InlineView style={styles.container}>
       <Text style={[styles.index, styles.box]}>{index + 1}</Text>
       <SetFieldInput
         style={styles.input}
@@ -147,6 +147,6 @@ export default function CardioSet({
           )}
         </View>
       )}
-    </InlineContainer>
+    </InlineView>
   )
 }

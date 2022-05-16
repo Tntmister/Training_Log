@@ -5,7 +5,7 @@ import { TrainingSession } from "../../../../dataDefinition/data"
 import { getSessions } from "../../../lib/firebaseFS"
 import { useTheme } from "../../../providers/Theme"
 import { UserContext } from "../../../providers/User"
-import InlineContainer from "../../reusable/InlineView"
+import InlineView from "../../reusable/InlineView"
 import Loading from "../../reusable/Loading"
 import { Text } from "../../reusable/Text"
 import { TrainingModelDoc } from "../Train/Models/ModelList"
@@ -54,9 +54,9 @@ export default function SessionList({
 
   return (
     <>
-      <InlineContainer style={styles.titleContainer}>
+      <InlineView style={styles.titleContainer}>
         <Text style={styles.title}>Your Training History</Text>
-      </InlineContainer>
+      </InlineView>
       {loading ? (
         <Loading />
       ) : sessions.length > 0 ? (
@@ -76,13 +76,13 @@ export default function SessionList({
           style={styles.list}
         />
       ) : (
-        <InlineContainer>
+        <InlineView>
           <Text style={styles.noTS}>
             {
               "You haven't concluded any Training Sessions. Start Training and check your Training History here!"
             }
           </Text>
-        </InlineContainer>
+        </InlineView>
       )}
     </>
   )

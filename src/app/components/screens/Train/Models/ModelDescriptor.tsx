@@ -68,11 +68,7 @@ function ModelDescriptor({
                 {
                   text: "Yes",
                   onPress: async () => {
-                    await deleteModel(
-                      user!.uid,
-                      model.id!,
-                      model.model.mediaContent.length > 0
-                    )
+                    await deleteModel(user!.uid, model.id!)
                     setMenuVisible(false)
                   }
                 },

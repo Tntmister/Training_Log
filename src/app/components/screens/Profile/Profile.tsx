@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
-import InlineContainer from "../../reusable/InlineView"
+import InlineView from "../../reusable/InlineView"
 import { useTheme } from "../../../providers/Theme"
 import { images } from "../../../lib/extra"
-import Stat, { Stats } from "./reusable/Stat"
+import Stat from "./reusable/Stat"
 import { Text } from "../../reusable/Text"
 import { UserContext } from "../../../providers/User"
 import { Button } from "../../reusable/Button"
@@ -18,6 +18,9 @@ import {
   User
 } from "../../../lib/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
+import { IconButton, Menu } from "react-native-paper"
+import Divider from "../../reusable/divider"
+import { RFValue } from "react-native-responsive-fontsize"
 
 export default function Profile({
   navigation,
@@ -25,17 +28,18 @@ export default function Profile({
 }: StackScreenProps<RootStackParamUserNav, "Profile">) {
   const theme = useTheme()
   const styles = StyleSheet.create({
+    titleContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between"
+    },
+    username: {
+      textAlignVertical: "center",
+      paddingLeft: theme.paddings.m
+    },
     headerContainer: {
-      //backgroundColor: "green",
-      marginTop: theme.margins.xl,
+      //backgroundColor: "green",,
       justifyContent: "space-evenly"
       //paddingLeft: theme.margins.xs,
-    },
-    imgContainer: {
-      width: 80,
-      //backgroundColor: "red",
-      justifyContent: "flex-start"
-      //alignItems: "center",
     },
     img: {
       height: 80,
@@ -49,9 +53,9 @@ export default function Profile({
       width: "70%"
     },
     infoContainer: {
-      paddingVertical: theme.margins.s,
+      paddingVertical: theme.margins.m,
+      flex: 1
       //backgroundColor: "magenta",
-      justifyContent: "flex-start"
     },
     emailContainer: {
       justifyContent: "flex-start"
@@ -68,44 +72,69 @@ export default function Profile({
       marginTop: theme.margins.m
     },
     editBtn: {
-      marginVertical: theme.margins.m
+      marginTop: theme.margins.m
     }
   })
   const user = useContext(UserContext)!
   const user_uid = route.params ? route.params.uid : user.uid
-  const other = user.uid !== user_uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   const [follow, setFollow] = useState<Follow | undefined>(undefined)
   useEffect(() => {
-    if (other)
+    if (user.uid !== user_uid)
       return () => {
         subscribeFollowing(user_uid, user.uid, setFollow)
         subscribeUser(user_uid, setUserProfile)
       }
     return subscribeUser(user_uid, setUserProfile)
   }, [route.params])
+
+  const [menuVisible, setMenuVisible] = useState(false)
   return (
     <>
-      <InlineContainer style={styles.headerContainer}>
-        <View style={styles.imgContainer}>
-          {userProfile?.profileURL ? (
-            <CachedImage source={userProfile.profileURL} style={styles.img} />
-          ) : (
-            <Image
-              source={images.User}
-              style={[styles.img, { tintColor: theme.colors.text }]}
+      <View style={styles.titleContainer}>
+        <Text style={[theme.text.header, styles.username]}>
+          {userProfile?.username}
+        </Text>
+        <Menu
+          anchor={
+            <IconButton
+              onPress={() => setMenuVisible(true)}
+              size={RFValue(26)}
+              icon={"dots-vertical"}
+            />
+          }
+          onDismiss={() => setMenuVisible(false)}
+          visible={menuVisible}
+        >
+          {user.uid === user_uid && (
+            <Menu.Item
+              onPress={() => {
+                navigation.navigate("EditProfile", { user: userProfile! })
+                setMenuVisible(false)
+              }}
+              title={"Edit Profile"}
             />
           )}
-        </View>
-        <InlineContainer style={styles.statsContainer}>
-          {/* TODO: queries nº posts, followers, following */}
-          <Stat type={Stats.Shared} user={userProfile} />
-          <Stat type={Stats.Followers} user={userProfile} />
-          <Stat type={Stats.Following} user={userProfile} />
-        </InlineContainer>
-      </InlineContainer>
-      {other &&
+        </Menu>
+      </View>
+      <InlineView style={styles.headerContainer}>
+        {userProfile?.profileURL ? (
+          <CachedImage source={userProfile.profileURL} style={styles.img} />
+        ) : (
+          <Image
+            source={images.User}
+            style={[styles.img, { tintColor: theme.colors.text }]}
+          />
+        )}
+        <InlineView style={styles.statsContainer}>
+          <Stat title={"Posts"} plural stat={userProfile?.posts} />
+          <Stat title={"Followers"} plural stat={userProfile?.followers} />
+          <Stat title={"Following"} stat={userProfile?.following} />
+        </InlineView>
+      </InlineView>
+      <Divider />
+      {user.uid !== user_uid &&
         (follow ? (
           <Button onPress={() => unfollowUser(user.uid, user_uid)}>
             Unfollow
@@ -114,26 +143,16 @@ export default function Profile({
           <Button onPress={() => followUser(user.uid, user_uid)}>Follow</Button>
         ))}
       <View style={styles.infoContainer}>
-        <Text style={styles.info}>{userProfile?.username}</Text>
         {userProfile?.creationTime !== undefined && (
-          <Text style={styles.info}>
-            Joined {new Date(userProfile?.creationTime).toISOString()}
+          <Text style={[styles.info, theme.text.body_s]}>
+            Registered{" "}
+            {new Date(userProfile?.creationTime).toLocaleDateString()}
           </Text>
         )}
         {userProfile?.bio !== "" && (
           <Text style={styles.description}>{userProfile?.bio}</Text>
         )}
       </View>
-      {user.uid === user_uid && (
-        <Button
-          style={styles.editBtn}
-          onPress={() =>
-            navigation.navigate("EditProfile", { user: userProfile! })
-          }
-        >
-          Edit Profile
-        </Button>
-      )}
     </>
   )
 }
