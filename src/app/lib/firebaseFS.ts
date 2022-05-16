@@ -32,20 +32,17 @@ export async function saveModel(
   await collectionReference.doc(id).update(model)
 }
 
-export async function deleteModel(uID: string, id: string, hasImages: boolean) {
-  await firestore()
+export function deleteModel(uID: string, id: string) {
+  firestore()
     .collection("users")
     .doc(uID)
     .collection("models")
     .doc(id)
     .delete()
-  console.log(`/users/${uID}/models/${id}`)
-  if (hasImages) {
-    const list = await storage().ref(`/users/${uID}/models/${id}`).listAll()
-    for (const item of list.items) {
-      await item.delete()
-    }
-  }
+  storage()
+    .ref(`/users/${uID}/models/${id}`)
+    .listAll()
+    .then((list) => list.items.forEach((ref) => ref.delete()))
 }
 
 export function getModels(

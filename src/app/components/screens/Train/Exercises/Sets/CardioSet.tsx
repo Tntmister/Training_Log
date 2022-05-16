@@ -61,9 +61,11 @@ export default function CardioSet({
   function onCheckBoxPress() {
     setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
   }
-
   useEffect(() => {
-    set = set_state
+    set.done = set_state.done
+    set.distance = set_state.distance
+    set.duration = set_state.duration
+    set.weight = set_state.weight
   }, [set_state])
 
   const [timerActive, setTimerActive] = useState(false)

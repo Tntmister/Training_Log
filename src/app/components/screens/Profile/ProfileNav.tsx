@@ -17,11 +17,7 @@ export default function ProfileNav() {
       initialRouteName="Profile"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        initialParams={{ uid: "ZbTJ6s3yDnVUlvKPLwXSRlFyjku1" }}
-      />
+      <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
   )

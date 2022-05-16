@@ -59,7 +59,9 @@ export default function StretchingSet({
   }
 
   useEffect(() => {
-    set = set_state
+    set.done = set_state.done
+    set.duration = set_state.duration
+    set.weight = set_state.weight
   }, [set_state])
 
   const [timerActive, setTimerActive] = useState(false)

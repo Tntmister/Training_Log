@@ -75,7 +75,7 @@ export default function Model({
   }
 
   async function onModelDelete() {
-    await deleteModel(user.uid, id!, model.mediaContent.length > 0)
+    await deleteModel(user.uid, id!)
     navigation.navigate("ModelList")
     setMenuVisible(false)
   }

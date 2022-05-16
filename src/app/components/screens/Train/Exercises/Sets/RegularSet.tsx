@@ -81,7 +81,9 @@ export default function RegularSet({
   }
 
   useEffect(() => {
-    set = set_state
+    set.done = set_state.done
+    set.reps = set_state.reps
+    set.weight = set_state.weight
   }, [set_state])
 
   return (
