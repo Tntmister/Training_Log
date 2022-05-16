@@ -1,13 +1,13 @@
 import { Dimensions, Image, StyleSheet } from "react-native"
 import React from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import Home from "./screens/Home"
 import Search from "./screens/Search"
 import HistoryNav from "./screens/History/HistoryNav"
 import ProfileNav from "./screens/Profile/ProfileNav"
 import Train from "./screens/Train/Train"
 import { useTheme } from "../providers/Theme"
 import { images } from "../lib/extra"
+import HomeNav from "./screens/Home/HomeNav"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -36,11 +36,11 @@ export default function Nav() {
         )
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={HomeNav} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Train" component={Train} />
       <Tab.Screen name="History" component={HistoryNav} />
-      <Tab.Screen name="User" component={ProfileNav}/>
+      <Tab.Screen name="User" component={ProfileNav} />
     </Tab.Navigator>
   )
 }

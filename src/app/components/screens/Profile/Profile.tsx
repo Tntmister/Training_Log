@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import InlineView from "../../reusable/InlineView"
-import { useTheme } from "../../../providers/Theme"
+import { ThemeContext, useTheme } from "../../../providers/Theme"
 import { images } from "../../../lib/extra"
 import Stat from "./reusable/Stat"
 import { Text } from "../../reusable/Text"
@@ -21,6 +21,7 @@ import { CachedImage } from "@georstat/react-native-image-cache"
 import { IconButton, Menu } from "react-native-paper"
 import Divider from "../../reusable/divider"
 import { RFValue } from "react-native-responsive-fontsize"
+import { logout } from "../../../lib/firebaseAuth"
 
 export default function Profile({
   navigation,
@@ -76,6 +77,7 @@ export default function Profile({
     }
   })
   const user = useContext(UserContext)!
+  const { toggleTheme } = useContext(ThemeContext)
   const user_uid = route.params ? route.params.uid : user.uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
@@ -107,6 +109,8 @@ export default function Profile({
           onDismiss={() => setMenuVisible(false)}
           visible={menuVisible}
         >
+          <Menu.Item title="Logout" onPress={logout} />
+          <Menu.Item title="Toggle Theme" onPress={toggleTheme} />
           {user.uid === user_uid && (
             <Menu.Item
               onPress={() => {

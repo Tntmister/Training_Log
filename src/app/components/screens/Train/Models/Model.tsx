@@ -49,7 +49,8 @@ export default function Model({
         author: user.uid,
         exercises: [],
         mediaContent: [],
-        description: ""
+        description: "",
+        date: 0
       }
   )
   const [deletedAssets] = useState<Asset[]>([])
@@ -70,6 +71,7 @@ export default function Model({
   }
 
   async function onModelSave() {
+    model.date = Date.now()
     await saveModel(user.uid, model, deletedAssets, id)
     navigation.navigate("ModelList")
   }

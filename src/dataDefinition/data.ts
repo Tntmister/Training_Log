@@ -39,12 +39,12 @@ export interface TrainingModel {
   exercises: ModelExercise[];
   mediaContent: Asset[];
   description: string;
+  date: number;
 }
 
 export interface TrainingSession extends TrainingModel {
   exercises: SessionExercise[];
   duration: number;
-  date: number;
   model: string | null;
 }
 
