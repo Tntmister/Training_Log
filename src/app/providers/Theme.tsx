@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { ReactNode, useCallback, useMemo, useState } from "react"
 import {
   DarkTheme as PaperDarkTheme,
@@ -14,6 +15,7 @@ import {
 import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
 import { TextStyle } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
+import { strings, strings_en, strings_pt } from "../assets/strings"
 
 export type Theme = {
   margins: {
@@ -40,6 +42,7 @@ export type Theme = {
     body_m: TextStyle;
     body_s: TextStyle;
   };
+  strings: { en: strings; pt: strings };
 } & NavigationTheme &
 PaperTheme;
 
@@ -120,6 +123,14 @@ const defaultTheme: Theme = {
     error: "#FF0000",
     placeholder: "#424242",
     white: "#FFFFFF"
+  },
+  strings: {
+    en: {
+      ...strings_en
+    },
+    pt: {
+      ...strings_pt
+    }
   }
 }
 
@@ -152,19 +163,33 @@ export const useTheme = () => {
 export const ThemeContext = React.createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  switchLang: (lang: string) => {},
+  lang: "pt",
   dark: true
 })
 
 export function PaperNavigationProvider({ children }: { children: ReactNode }) {
   const [dark, setDark] = useState(true)
+  const [lang, setLang] = useState("pt")
 
   const toggleTheme = useCallback(() => {
     return setDark(!dark)
   }, [dark])
 
+  const switchLang = useCallback(
+    (lang: string) => {
+      return setLang(lang)
+    },
+    [lang]
+  )
+
   const theme = dark ? darkTheme : defaultTheme
 
-  const theming = useMemo(() => ({ toggleTheme, dark }), [toggleTheme, dark])
+  const theming = useMemo(
+    () => ({ toggleTheme, switchLang, dark, lang }),
+    [toggleTheme, switchLang, dark, lang]
+  )
 
   return (
     <ThemeContext.Provider value={theming}>
@@ -173,4 +198,9 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
       </PaperProvider>
     </ThemeContext.Provider>
   )
+}
+export type langs = "en" | "pt";
+export function langStrings(theme: Theme, lang: langs) {
+  console.log("LANG ->", lang)
+  return theme.strings[lang]
 }

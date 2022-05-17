@@ -61,13 +61,13 @@ export default function SignIn() {
         style={styles.input}
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder={theme.strings.en.auth.email}
       />
       <TextInput
         style={styles.input}
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder={theme.strings.en.auth.password}
         secureTextEntry={true}
       />
       <Button
