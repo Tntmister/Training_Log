@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import InlineView from "../../reusable/InlineView"
-import { ThemeContext, useTheme } from "../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
 import { images } from "../../../lib/extra"
 import Stat from "./reusable/Stat"
 import { Text } from "../../reusable/Text"
@@ -77,6 +82,7 @@ export default function Profile({
     }
   })
   const user = useContext(UserContext)!
+  const { lang } = useContext(ThemeContext)
   const { toggleTheme } = useContext(ThemeContext)
   const user_uid = route.params ? route.params.uid : user.uid
   // user obtido por params (autenticado por default)
@@ -149,7 +155,7 @@ export default function Profile({
       <View style={styles.infoContainer}>
         {userProfile?.creationTime !== undefined && (
           <Text style={[styles.info, theme.text.body_s]}>
-            Registered{" "}
+            {langStrings(theme, lang as langs).user.registered}{" "}
             {new Date(userProfile?.creationTime).toLocaleDateString()}
           </Text>
         )}
