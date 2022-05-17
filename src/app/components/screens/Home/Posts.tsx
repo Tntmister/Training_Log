@@ -4,12 +4,13 @@ import {
   TrainingModel,
   TrainingSession
 } from "../../../../dataDefinition/data"
-import { Text } from "../../reusable/Text"
 import { RootStackParamHomeNav } from "./HomeNav"
 import firestore from "@react-native-firebase/firestore"
 import Loading from "../../reusable/Loading"
 import { FlatList } from "react-native"
 import { UserContext } from "../../../providers/User"
+import PostDescriptor from "./PostDescriptor"
+import { modelModes } from "../Train/Models/Model"
 
 export default function Posts({
   navigation
@@ -95,12 +96,24 @@ export default function Posts({
 
   const [scrollEnd, setScrollEnd] = useState(false)
 
+  function onSessionPress(session: TrainingSession) {
+    navigation.navigate("SessionSummary", { session: session })
+  }
+  function onModelPress(model: TrainingModel) {
+    navigation.navigate("Model", { model: model, mode: modelModes.View })
+  }
+
   return (
     <FlatList
-      style={{ borderWidth: 1, borderColor: "#ffffff" }}
       onRefresh={refreshData}
       data={posts}
-      renderItem={({ item }) => <Text>{item.name}</Text>}
+      renderItem={({ item }) => (
+        <PostDescriptor
+          onModelPress={onModelPress}
+          onSessionPress={onSessionPress}
+          post={item}
+        />
+      )}
       ListFooterComponent={postsFooter}
       onEndReached={() => setScrollEnd(true)}
       onMomentumScrollEnd={() => {

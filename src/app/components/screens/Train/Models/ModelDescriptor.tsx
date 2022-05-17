@@ -22,11 +22,18 @@ function ModelDescriptor({
 }) {
   const user = useContext(UserContext)
   const [menuVisible, setMenuVisible] = useState(false)
+
+  function modelAction(mode: modelModes) {
+    navigation.navigate("Model", {
+      model: model.model,
+      id: model.id,
+      mode: mode
+    })
+  }
+
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Model", { model, mode: modelModes.View })
-      }
+      onPress={() => modelAction(modelModes.View)}
       style={{
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
@@ -55,11 +62,7 @@ function ModelDescriptor({
           <Menu.Item
             title="Edit"
             onPress={() => {
-              navigation.navigate("Model", {
-                model,
-                mode: modelModes.Edit
-              }),
-              setMenuVisible(false)
+              modelAction(modelModes.Edit), setMenuVisible(false)
             }}
           />
           <Menu.Item

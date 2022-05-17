@@ -4,13 +4,13 @@ import { Exercise, TrainingModel } from "../../../../../dataDefinition/data"
 import ExerciseSelector from "../Exercises/ExerciseSelector"
 import { Exercise as ExerciseScreen } from "../Exercises/Exercise"
 import Model, { modelModes } from "./Model"
-import ModelList, { TrainingModelDoc } from "./ModelList"
+import ModelList from "./ModelList"
 import Session from "./ModelSession"
 
 export type RootStackParamListModelNav = {
   ModelList: undefined;
   Session: { model: TrainingModel; id?: string };
-  Model: { model?: TrainingModelDoc; mode: modelModes };
+  Model: { model?: TrainingModel; id?: string; mode: modelModes };
   ExerciseSelector: { onSubmit: (selectedExercises: Exercise[]) => void };
   Exercise: { exercise: Exercise };
 };

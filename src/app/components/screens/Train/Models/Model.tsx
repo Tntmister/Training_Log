@@ -38,13 +38,12 @@ export default function Model({
   const user = useContext(UserContext)!
   const theme = useTheme()
 
-  const id = route.params.model?.id
+  const id = route.params.id
   const mode = route.params.mode
 
   const [model, setModel] = useState<TrainingModel>(
-    id
-      ? route.params.model.model
-      : {
+    route.params.model !== undefined
+      ? {
         name: "New Training Model",
         author: user.uid,
         exercises: [],
@@ -52,6 +51,7 @@ export default function Model({
         description: "",
         date: 0
       }
+      : route.params.model!
   )
   const [deletedAssets] = useState<Asset[]>([])
 
