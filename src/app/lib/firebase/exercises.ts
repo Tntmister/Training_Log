@@ -4,11 +4,11 @@ import { Asset } from "react-native-image-picker"
 import { Exercise } from "../types/train"
 
 export const categoryIcons = {
-  Cardio: require("../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
-  Plyometrics: require("../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"),
-  Strength: require("../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"),
-  Stretching: require("../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"),
-  Weightlifting: require("../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png")
+  Cardio: require("../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
+  Plyometrics: require("../../assets/icons/ex_categ/plyometrics/plyometrics(-xxxhdpi).png"),
+  Strength: require("../../assets/icons/ex_categ/strength/strength(-xxxhdpi).png"),
+  Stretching: require("../../assets/icons/ex_categ/stretching/stretching(-xxxhdpi).png"),
+  Weightlifting: require("../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png")
 }
 
 export const exercises: Exercise[] = []
