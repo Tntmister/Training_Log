@@ -5,14 +5,14 @@ import { useTheme } from "../../../../providers/Theme"
 
 function Stat({
   title,
-  stat = 0,
-  plural
+  stat = 0
 }: {
   title: string;
   stat?: number;
   plural?: boolean;
 }) {
   const theme = useTheme()
+
   const styles = StyleSheet.create({
     container: {
       //backgroundColor: "red",
@@ -21,7 +21,7 @@ function Stat({
       borderColor: theme.colors.primary,
       marginHorizontal: theme.margins.s,
       paddingVertical: theme.margins.xs,
-      width: "30%"
+      width: "33%"
     },
     name: {
       textAlign: "center",
@@ -38,12 +38,7 @@ function Stat({
   return (
     <View style={styles.container}>
       <Text style={styles.value}>{stat}</Text>
-      <Text style={styles.name}>
-        {title.substring(
-          0,
-          plural && stat && stat == 1 ? title.length - 1 : title.length
-        )}
-      </Text>
+      <Text style={styles.name}>{title}</Text>
     </View>
   )
 }
