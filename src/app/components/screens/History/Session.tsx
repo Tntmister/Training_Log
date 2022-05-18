@@ -31,11 +31,9 @@ export default function Session({
       justifyContent: "flex-start",
       width: "95%",
       alignSelf: "center"
-      //backgroundColor: "green"
     },
     headerContainer: {
       width: "32%"
-      //backgroundColor: "red"
     },
     name: {
       width: "60%",

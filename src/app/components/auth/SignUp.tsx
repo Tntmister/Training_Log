@@ -51,6 +51,7 @@ export default function SignUp() {
       }
     })
   ).current
+
   return (
     <View style={styles.container}>
       <TextInput

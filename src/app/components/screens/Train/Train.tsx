@@ -2,10 +2,14 @@ import {
   createMaterialTopTabNavigator,
   MaterialTopTabBarProps
 } from "@react-navigation/material-top-tabs"
-import React from "react"
+import React, { useContext } from "react"
 import ExerciseNav from "./Exercises/ExerciseNav"
-import { useTheme } from "../../../providers/Theme"
-import { RFValue } from "react-native-responsive-fontsize"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
 import { Dimensions } from "react-native"
 import ModelNav from "./Models/ModelNav"
 import { Button } from "../../reusable/Button"
@@ -15,6 +19,8 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
   const Tab = createMaterialTopTabNavigator()
 
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const modelNavState = navigation.getState().routes[2].state?.routes[1].state
   return (
     <>
@@ -22,16 +28,16 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
         backBehavior="none"
         initialLayout={{ width: Dimensions.get("window").width }}
         screenOptions={{
-          tabBarLabelStyle: {
-            fontSize: RFValue(28),
-            fontFamily: "Lato"
-          },
+          tabBarLabelStyle: { ...theme.text.header },
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text
         }}
       >
-        <Tab.Screen component={ExerciseNav} name="Exercises" />
-        <Tab.Screen component={ModelNav} name="Models" />
+        <Tab.Screen
+          component={ExerciseNav}
+          name={STRS.train.exercises.exercises}
+        />
+        <Tab.Screen component={ModelNav} name={STRS.train.models.models} />
       </Tab.Navigator>
       {(modelNavState?.routeNames === undefined ||
         modelNavState?.routeNames[modelNavState.index!] == "ModelList") && (
@@ -40,7 +46,7 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
             marginTop: theme.margins.s
           }}
           onPress={() => {
-            navigation.navigate("Models", {
+            navigation.navigate(STRS.train.models.models, {
               screen: "Model",
               params: {
                 model: undefined,
@@ -49,7 +55,7 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
             })
           }}
         >
-          Start Training
+          {STRS.train.startTraining}
         </Button>
       )}
     </>

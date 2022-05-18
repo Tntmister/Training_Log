@@ -1,6 +1,11 @@
 import React, { useContext, useState } from "react"
 import { Alert, Image, TouchableOpacity, View } from "react-native"
-import { useTheme } from "../../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import { Text } from "../../../reusable/Text"
 import { RFValue } from "react-native-responsive-fontsize"
 import { IconButton, Menu } from "react-native-paper"
@@ -23,6 +28,8 @@ function ModelDescriptor({
   ) => void;
 }) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const user = useContext(UserContext)
   const [menuVisible, setMenuVisible] = useState(false)
 
@@ -53,7 +60,7 @@ function ModelDescriptor({
           }
         >
           <Menu.Item
-            title="Edit"
+            title={STRS.edit}
             onPress={() => {
               onModelPress(model, modelId, modelModes.Edit),
               setMenuVisible(false)
@@ -61,18 +68,22 @@ function ModelDescriptor({
           />
           <Menu.Item
             onPress={() =>
-              Alert.alert("Delete Model", `Delete "${model.name}"?`, [
-                {
-                  text: "Yes",
-                  onPress: async () => {
-                    await deleteModel(user!.uid, modelId)
-                    setMenuVisible(false)
-                  }
-                },
-                { text: "No" }
-              ])
+              Alert.alert(
+                STRS.train.models.deleteModel,
+                `${STRS.delete} "${model.name}"?`,
+                [
+                  {
+                    text: STRS.yes,
+                    onPress: async () => {
+                      await deleteModel(user!.uid, modelId)
+                      setMenuVisible(false)
+                    }
+                  },
+                  { text: STRS.no, onPress: () => setMenuVisible(false) }
+                ]
+              )
             }
-            title={"Delete Model"}
+            title={STRS.train.models.deleteModel}
           />
         </Menu>
       </View>
@@ -80,7 +91,7 @@ function ModelDescriptor({
         <>
           {model.exercises.map((ex, key) => (
             <Text style={{ fontSize: RFValue(14) }} key={key}>
-              {ex.sets.length} x {ex.name}
+              {ex.sets.length} {STRS.train.exercises.times} {ex.name}
             </Text>
           ))}
         </>

@@ -56,7 +56,7 @@ PaperTheme;
 const defaultTheme: Theme = {
   text: {
     header: {
-      fontSize: RFValue(28),
+      fontSize: RFValue(24),
       fontWeight: "400",
       fontFamily: "Lato"
     },
@@ -173,7 +173,7 @@ export const ThemeContext = React.createContext({
   toggleTheme: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   switchLang: (lang: langs) => {},
-  lang: "pt",
+  lang: "en",
   dark: true
 })
 
@@ -209,6 +209,5 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
 }
 export type langs = "en" | "pt";
 export function langStrings(theme: Theme, lang: langs) {
-  console.log("LANG ->", lang)
   return theme.strings[lang]
 }

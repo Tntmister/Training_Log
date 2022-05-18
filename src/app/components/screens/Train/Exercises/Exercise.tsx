@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import type { StackScreenProps } from "@react-navigation/stack"
 import type { RootStackParamList } from "./ExerciseNav"
 import { Appbar } from "react-native-paper"
 import { Text } from "../../../reusable/Text"
 import { ScrollView } from "react-native-gesture-handler"
-import { StyleSheet } from "react-native"
-import { useTheme } from "../../../../providers/Theme"
-import { RFValue } from "react-native-responsive-fontsize"
+import { StyleSheet, TextStyle } from "react-native"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import { getImages } from "../../../../lib/firebase/exercises"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import { Asset } from "react-native-image-picker"
@@ -17,13 +21,29 @@ export function Exercise({
 }: StackScreenProps<RootStackParamList, "Exercise">) {
   const { exercise } = route.params
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
 
+  const textStyle: TextStyle = {
+    width: "90%",
+    marginBottom: theme.margins.s,
+    marginHorizontal: theme.margins.l,
+    fontSize: theme.text.subHeader.fontSize
+  }
   const styles = StyleSheet.create({
+    scrollContainer: {
+      alignItems: "center"
+    },
     text: {
-      width: "90%",
-      marginBottom: theme.margins.s,
-      marginHorizontal: theme.margins.l,
-      fontSize: theme.text.subHeader.fontSize
+      ...textStyle
+    },
+    categoryText: {
+      ...textStyle,
+      marginBottom: theme.margins.l
+    },
+    instructionsText: {
+      ...textStyle,
+      ...theme.text.body_m
     }
   })
   const [images, setImages] = useState<Asset[]>([])
@@ -40,26 +60,26 @@ export function Exercise({
         <Appbar.BackAction onPress={navigation.goBack}></Appbar.BackAction>
         <Appbar.Content title={exercise.name} />
       </Appbar>
-      <ScrollView contentContainerStyle={{ alignItems: "center" }}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <MediaCarousel assets={images} />
         <Text style={styles.text}>
-          Primary Muscle: {exercise.primaryMuscle}
+          {STRS.train.exercises.primaryMuscle}: {exercise.primaryMuscle}
         </Text>
         {exercise.secondaryMuscles.length > 0 && (
           <Text style={styles.text}>
-            Secondary Muscles:{" "}
+            {STRS.train.exercises.secondaryMuscles}:{" "}
             {exercise.secondaryMuscles[0] +
               exercise.secondaryMuscles.slice(1).map((value) => {
                 return `, ${value}`
               })}
           </Text>
         )}
-        <Text style={{ ...styles.text, marginBottom: theme.margins.l }}>
-          Category: {exercise.category}
+        <Text style={styles.categoryText}>
+          {`${STRS.train.exercises.category}: ${exercise.category}`}
         </Text>
         {exercise.instructions.map((value, key) => {
           return (
-            <Text style={{ ...styles.text, fontSize: RFValue(16) }} key={key}>
+            <Text style={styles.instructionsText} key={key}>
               {value}
             </Text>
           )

@@ -13,7 +13,12 @@ import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
 import { TrainingModel } from "../../../../lib/types/train"
 import { UserContext } from "../../../../providers/User"
-import { useTheme } from "../../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import InlineView from "../../../reusable/InlineView"
 import { Button } from "../../../reusable/Button"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
@@ -38,13 +43,15 @@ export default function Model({
   const user = useContext(UserContext)!
   const theme = useTheme()
 
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const id = route.params.id
   const mode = route.params.mode
 
   const [model, setModel] = useState<TrainingModel>(
     route.params.model === undefined
       ? {
-        name: "",
+        name: STRS.train.models.defaultName,
         author: user.uid,
         exercises: [],
         mediaContent: [],
@@ -137,10 +144,12 @@ export default function Model({
 
   const styles = StyleSheet.create({
     name: {
-      width: "60%"
+      width: "60%",
+      marginLeft: theme.margins.m
     },
     description: {
-      width: "80%"
+      width: "80%",
+      marginLeft: theme.margins.m
     },
     author: {
       marginLeft: theme.margins.m,
@@ -148,6 +157,16 @@ export default function Model({
     },
     viewDesc: {
       marginLeft: theme.margins.m,
+      marginTop: theme.margins.s
+    },
+    oneTimeContainer: {
+      marginTop: theme.margins.s
+    },
+    addBtn: {
+      marginTop: theme.margins.s,
+      marginBottom: theme.margins.s
+    },
+    saveStartBtn: {
       marginTop: theme.margins.s
     }
   })
@@ -157,7 +176,11 @@ export default function Model({
       <Appbar>
         <Appbar.BackAction onPress={navigation.goBack} />
         <Appbar.Content
-          title={onetime || model.name === "" ? "Training Session" : model.name}
+          title={
+            onetime || model.name === ""
+              ? STRS.train.models.defaultName
+              : model.name
+          }
         />
         <Menu
           anchor={
@@ -172,48 +195,51 @@ export default function Model({
           {id && mode == modelModes.Edit && (
             <Menu.Item
               onPress={() =>
-                Alert.alert("Delete Model", "Delete the model?", [
-                  { text: "Yes", onPress: onModelDelete },
-                  { text: "No" }
-                ])
+                Alert.alert(
+                  STRS.train.models.deleteModel,
+                  STRS.train.models.confirmDelete,
+                  [
+                    { text: STRS.yes, onPress: onModelDelete },
+                    { text: STRS.no }
+                  ]
+                )
               }
-              title={"Delete Model"}
+              title={STRS.train.models.deleteModel}
             />
           )}
           {mode == modelModes.View && (
-            <Menu.Item onPress={onModelEdit} title={"Edit Model"} />
+            <Menu.Item onPress={onModelEdit} title={STRS.edit} />
           )}
         </Menu>
       </Appbar>
       <ScrollView>
         {mode == modelModes.View && (
-          <Text style={styles.author}>Author: {authorName}</Text>
+          <Text
+            style={styles.author}
+          >{`${STRS.train.models.author}: ${authorName}`}</Text>
         )}
         {mode == modelModes.Edit && (
-          <InlineView style={{ marginTop: theme.margins.s }}>
+          <InlineView style={styles.oneTimeContainer}>
             <Checkbox
               status={onetime ? "checked" : "unchecked"}
               onPress={() => setOneTime(!onetime)}
             />
-            <Text>One time session?</Text>
+            <Text>{STRS.train.models.oneTimeSession}</Text>
           </InlineView>
         )}
         {mode == modelModes.Edit && !onetime && (
           <TextInput
-            style={{ ...styles.name, marginLeft: theme.margins.m }}
-            placeholder={"New Training Model"}
+            style={styles.name}
+            placeholder={STRS.train.models.newModel}
             value={model.name}
             onChangeText={onNameChange}
           />
         )}
         {mode == modelModes.Edit && !onetime ? (
           <VariableHeightTextInput
-            style={{
-              ...styles.description,
-              marginLeft: theme.margins.m
-            }}
+            style={styles.description}
             value={model.description}
-            placeholder={"Training Description"}
+            placeholder={STRS.train.models.trainingAnnotation}
             onChangeText={onDescriptionChange}
           />
         ) : (
@@ -238,38 +264,28 @@ export default function Model({
           />
         ))}
         {mode == modelModes.Edit && (
-          <Button
-            style={{
-              marginTop: theme.margins.s,
-              marginBottom: theme.margins.s
-            }}
-            onPress={onModelAddEx}
-          >
-            Add Exercise
+          <Button style={styles.addBtn} onPress={onModelAddEx}>
+            {STRS.train.models.addExercise}
           </Button>
         )}
       </ScrollView>
       {mode == modelModes.Edit && !onetime ? (
         <Button
           disabled={model.exercises.length == 0}
-          style={{
-            marginTop: theme.margins.s
-          }}
+          style={styles.saveStartBtn}
           onPress={onModelSave}
         >
-          Save Training Model
+          {STRS.train.models.saveModel}
         </Button>
       ) : (
         <Button
           disabled={model.exercises.length == 0}
-          style={{
-            marginTop: theme.margins.s
-          }}
+          style={styles.saveStartBtn}
           onPress={() =>
             navigation.navigate("Session", { model: model, id: id })
           }
         >
-          Start Training Session
+          {STRS.train.models.startTS}
         </Button>
       )}
     </>

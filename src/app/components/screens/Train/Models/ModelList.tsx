@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useState } from "react"
 import { FlatList, StyleSheet } from "react-native"
-import { useTheme } from "../../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import { Text } from "../../../reusable/Text"
 import { TrainingModel } from "../../../../lib/types/train"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -15,11 +20,15 @@ export default function ModelList({
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "ModelList">) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
   const [models, setModels] = useState<{ model: TrainingModel; id: string }[]>(
     []
   )
+
+  const NUM_TO_RENDER = 8
 
   const styles = StyleSheet.create({
     empty: {
@@ -59,7 +68,7 @@ export default function ModelList({
       ) : (
         <FlatList
           data={models}
-          initialNumToRender={8}
+          initialNumToRender={NUM_TO_RENDER}
           renderItem={({ item, index }) => (
             <ModelDescriptor
               model={item.model}
@@ -69,7 +78,9 @@ export default function ModelList({
             />
           )}
           ListEmptyComponent={
-            <Text style={styles.empty}>You have no Training Models!</Text>
+            <Text style={styles.empty}>
+              {STRS.train.models.noTrainingModels}
+            </Text>
           }
           style={styles.list}
         />

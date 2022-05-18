@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { CardioSetClass, ModelExercise } from "../../../../lib/types/train"
-import { useTheme } from "../../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import InlineView from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
 import { modelModes } from "../Models/Model"
@@ -17,18 +22,9 @@ export default function ProgrammedCardioExercise({
   mode: modelModes;
 }) {
   const theme = useTheme()
-  const styles = StyleSheet.create({
-    subtitleContainer: {
-      justifyContent: "space-between",
-      marginTop: theme.margins.s
-    },
-    subtitle: {
-      width: "20%",
-      marginRight: theme.margins.s,
-      textAlign: "center",
-      fontSize: RFValue(16)
-    }
-  })
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
+
   const [sets, setSets] = useState<CardioSetClass[]>(
     exercise.sets as CardioSetClass[]
   )
@@ -48,6 +44,19 @@ export default function ProgrammedCardioExercise({
     exercise.sets = sets
   }, [sets])
 
+  const styles = StyleSheet.create({
+    subtitleContainer: {
+      justifyContent: "space-between",
+      marginTop: theme.margins.s
+    },
+    subtitle: {
+      width: "20%",
+      marginRight: theme.margins.s,
+      textAlign: "center",
+      fontSize: RFValue(16)
+    }
+  })
+
   return (
     <>
       <InlineView style={styles.subtitleContainer}>
@@ -64,21 +73,21 @@ export default function ProgrammedCardioExercise({
             ...styles.subtitle
           }}
         >
-          Weight
+          {STRS.train.exercises.weight}
         </Text>
         <Text
           style={{
             ...styles.subtitle
           }}
         >
-          Distance
+          {STRS.train.exercises.distance}
         </Text>
         <Text
           style={{
             ...styles.subtitle
           }}
         >
-          Duration
+          {STRS.train.exercises.duration}
         </Text>
 
         {mode == modelModes.Session && (

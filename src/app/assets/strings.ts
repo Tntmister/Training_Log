@@ -15,6 +15,7 @@ export type strings = {
   };
   train: {
     exercises: {
+      exercises: string;
       muscle: string;
       primaryMuscle: string;
       secondaryMuscles: string;
@@ -34,8 +35,10 @@ export type strings = {
       time: string;
       goalTime: string;
       times: string;
+      searchExercises: string;
     };
     models: {
+      models: string;
       newModel: string;
       createModel: string;
       noTrainingModels: string;
@@ -45,8 +48,12 @@ export type strings = {
       saveModel: string;
       author: string;
       startTS: string;
+      tSession: string;
+      defaultName: string;
+      confirmDelete: string;
+      oneTimeSession: string;
     };
-    starEmptyTS: string;
+    startTraining: string;
     finishTS: string;
     cancelTS: string;
   };
@@ -77,6 +84,8 @@ export type strings = {
   };
   yes: string;
   no: string;
+  delete: string;
+  edit: string;
 };
 
 export type strings_global_lang = {
@@ -110,6 +119,7 @@ export const strings_en: strings = {
   },
   train: {
     exercises: {
+      exercises: "Exercises",
       muscle: "Muscle",
       primaryMuscle: "Primary Muscle",
       secondaryMuscles: "Secondary Muscles",
@@ -118,7 +128,7 @@ export const strings_en: strings = {
       noExercisesFound: "No Exercises found!",
       equipment: "Equipment",
       exerciseSelector: "Exercise Selector",
-      exerciseAnnotation: "Exercise Annotation",
+      exerciseAnnotation: "Add an annotation to the Exercise",
       set: "Set",
       weight: "Weight",
       distance: "Distance",
@@ -128,20 +138,26 @@ export const strings_en: strings = {
       reps: "Reps",
       time: "Time",
       goalTime: "Goal Time",
-      times: "x"
+      times: "x",
+      searchExercises: "Search Exercises"
     },
     models: {
+      models: "Models",
       newModel: "New Training Model",
       createModel: "Start Training",
       noTrainingModels: "You have no Training Models",
       deleteModel: "Delete Model",
-      trainingAnnotation: "Training Annotation",
+      trainingAnnotation: "Training Description",
       addExercise: "Add Exercise",
       saveModel: "Save Training Model",
       author: "Author",
-      startTS: "Start Training Session"
+      startTS: "Start Training Session",
+      tSession: "Training Session",
+      defaultName: "Workout",
+      confirmDelete: "Are you sure you want to delete the model?",
+      oneTimeSession: "One time session?"
     },
-    starEmptyTS: "Start empty Training Session",
+    startTraining: "Start Training",
     finishTS: "Finish Training Session",
     cancelTS: "Cancel Training Session"
   },
@@ -171,7 +187,9 @@ export const strings_en: strings = {
     unfollow: "Unfollow"
   },
   yes: "Yes",
-  no: "No"
+  no: "No",
+  delete: "Delete",
+  edit: "Edit"
 }
 
 export const strings_pt: strings = {
@@ -191,6 +209,7 @@ export const strings_pt: strings = {
   },
   train: {
     exercises: {
+      exercises: "Exercícios",
       muscle: "Músculo",
       primaryMuscle: "Músculo Principal",
       secondaryMuscles: "Músculos Secundários",
@@ -199,7 +218,7 @@ export const strings_pt: strings = {
       noExercisesFound: "Nenhum Exercício Encontrado!",
       equipment: "Equipamento",
       exerciseSelector: "Exercise Selector",
-      exerciseAnnotation: "Exercise Annotation",
+      exerciseAnnotation: "Adicione uma nota ao Exercício",
       set: "Série",
       weight: "Peso",
       distance: "Distância",
@@ -209,20 +228,26 @@ export const strings_pt: strings = {
       reps: "Repetições",
       time: "Tempo",
       goalTime: "Objetivo de Tempo",
-      times: "x"
+      times: "x",
+      searchExercises: "Pesquisar Exercícios"
     },
     models: {
+      models: "Modelos",
       newModel: "Novo Modelo de Treino",
       createModel: "Começar a Treinar",
       noTrainingModels: "Não existem Modelos de Treino",
       deleteModel: "Apagar Modelo",
-      trainingAnnotation: "Nota do Treino",
+      trainingAnnotation: "Descrição do Treino",
       addExercise: "Adicionar Exercício",
       saveModel: "Guardar Modelo de Treino",
       author: "Autor",
-      startTS: "Começar Sessão de Treino"
+      startTS: "Começar Sessão de Treino",
+      tSession: "Sessão de Treino",
+      defaultName: "Treino",
+      confirmDelete: "Tem a certeza de que quer eliminar o modelo?",
+      oneTimeSession: "Sessão única?"
     },
-    starEmptyTS: "Começar Seesão de treino Vazia",
+    startTraining: "Começar a Treinar",
     finishTS: "Concluir Sessão de Treino",
     cancelTS: "Cancelar Sessão de Treino"
   },
@@ -252,5 +277,7 @@ export const strings_pt: strings = {
     unfollow: "Deixar de Seguir"
   },
   yes: "Sim",
-  no: "Não"
+  no: "Não",
+  delete: "Eliminar",
+  edit: "Editar"
 }

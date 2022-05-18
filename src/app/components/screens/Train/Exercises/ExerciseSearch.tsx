@@ -1,4 +1,10 @@
-import React, { SetStateAction, useCallback, useEffect, useState } from "react"
+import React, {
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react"
 import { Button } from "../../../reusable/Button"
 import DropDown from "react-native-paper-dropdown"
 import { Menu, Searchbar } from "react-native-paper"
@@ -9,8 +15,13 @@ import {
   equipments as equipmentList,
   searchExercises
 } from "../../../../lib/firebase/exercises"
-import { useTheme } from "../../../../providers/Theme"
-import { View, ViewStyle } from "react-native"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
+import { StyleSheet, View, ViewStyle } from "react-native"
 import { Exercise } from "../../../../lib/types/train"
 import { exercises } from "../../../../assets/exercises"
 
@@ -22,6 +33,8 @@ export default function ExerciseSearch({
   setLoading: React.Dispatch<SetStateAction<boolean>>;
 }) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const [searchQuery, setSearchQuery] = useState("")
 
   // visibilidade dos menus
@@ -96,42 +109,76 @@ export default function ExerciseSearch({
     borderWidth: 1
   }
 
+  const styles = StyleSheet.create({
+    container: {
+      marginTop: theme.margins.s,
+      alignItems: "center"
+    },
+    search: {
+      width: "95%",
+      height: 40,
+      borderRadius: 10,
+      backgroundColor: theme.colors.surface
+    },
+    searchInput: {
+      ...theme.text.body_l,
+      paddingVertical: 0
+    },
+    btnContainer: {
+      width: "95%",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center"
+    },
+    btnLeftContainer: {
+      marginTop: theme.margins.s,
+      flexBasis: 0,
+      flexGrow: 1
+    },
+    category: {
+      ...filterButtonStyle
+    },
+    muscle: {
+      ...filterButtonStyle,
+      marginTop: theme.margins.s
+    },
+    btnLabel: {
+      ...theme.text.body_s,
+      marginHorizontal: 0
+    },
+    dropDownContainer: {
+      marginHorizontal: theme.margins.s,
+      flexGrow: 1,
+      flexBasis: 0
+    }
+  })
+
   return (
-    <View style={{ marginTop: theme.margins.s, alignItems: "center" }}>
+    <View style={styles.container}>
       <Searchbar
-        placeholder="Search Exercises"
+        placeholder={STRS.train.exercises.searchExercises}
         placeholderTextColor={theme.colors.placeholder}
         onChangeText={setSearchQuery}
         value={searchQuery}
-        style={{
-          width: "95%",
-          height: 40,
-          borderRadius: 10,
-          backgroundColor: theme.colors.surface
-        }}
+        style={styles.search}
         selectionColor={theme.colors.primary}
-        inputStyle={{ fontSize: RFValue(18), paddingVertical: 0 }}
+        inputStyle={styles.searchInput}
       />
-      <View
-        style={{
-          width: "95%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center"
-        }}
-      >
-        <View style={{ marginTop: theme.margins.s, flexBasis: 0, flexGrow: 1 }}>
+      <View style={styles.btnContainer}>
+        <View style={styles.btnLeftContainer}>
           <Menu
             visible={categoryVisible}
             onDismiss={() => setCatVisible(false)}
             anchor={
               <Button
                 mode="outlined"
-                style={filterButtonStyle}
-                labelStyle={theme.text.body_s}
+                style={styles.category}
+                labelStyle={styles.btnLabel}
                 onPress={() => setCatVisible(true)}
               >
-                {category === undefined ? "Category: Any" : category}
+                {category === undefined
+                  ? `${STRS.train.exercises.category}: ${STRS.train.exercises.any}`
+                  : category}
               </Button>
             }
           >
@@ -140,7 +187,7 @@ export default function ExerciseSearch({
                 setCategory(undefined)
                 setCatVisible(false)
               }}
-              title="Any"
+              title={STRS.train.exercises.any}
             />
             {categorySet()}
           </Menu>
@@ -150,11 +197,13 @@ export default function ExerciseSearch({
             anchor={
               <Button
                 mode="outlined"
-                style={{ ...filterButtonStyle, marginTop: theme.margins.s }}
-                labelStyle={theme.text.body_s}
+                style={styles.muscle}
+                labelStyle={styles.btnLabel}
                 onPress={() => setMuscleVisible(true)}
               >
-                {muscle === undefined ? "Muscle: Any" : muscle}
+                {muscle === undefined
+                  ? `${STRS.train.exercises.muscle}: ${STRS.train.exercises.any}`
+                  : muscle}
               </Button>
             }
           >
@@ -163,25 +212,19 @@ export default function ExerciseSearch({
                 setMuscle(undefined)
                 setMuscleVisible(false)
               }}
-              title="Any"
+              title={STRS.train.exercises.any}
             />
             {muscleSet()}
           </Menu>
         </View>
-        <View
-          style={{
-            marginHorizontal: theme.margins.s,
-            flexGrow: 1,
-            flexBasis: 0
-          }}
-        >
+        <View style={styles.dropDownContainer}>
           {
             <DropDown
               inputProps={{
                 style: { height: RFValue(86), paddingTop: 0 }
               }}
               dropDownContainerHeight={RFPercentage(50)}
-              label="Equipment"
+              label={STRS.train.exercises.equipment}
               mode="outlined"
               visible={equipmentVisible}
               showDropDown={() => setEquipmentVisible(true)}

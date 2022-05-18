@@ -1,7 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React, { useContext } from "react"
 import { Dimensions, Image, StyleSheet, View } from "react-native"
-import { RFValue } from "react-native-responsive-fontsize"
 import { images } from "../../lib/extra"
 import {
   langs,
@@ -33,10 +32,7 @@ export default function AuthNav() {
             marginHorizontal: "10%",
             elevation: 0
           },
-          tabBarLabelStyle: {
-            fontSize: RFValue(24),
-            fontFamily: "Lato"
-          },
+          tabBarLabelStyle: { ...theme.text.header },
           tabBarIndicatorStyle: {
             width: barWidth * 0.4,
             left: barWidth * 0.05

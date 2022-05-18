@@ -1,11 +1,16 @@
-import React, { useRef, useState } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { ModelExercise, SessionExercise } from "../../../../lib/types/train"
 import { categoryIcons } from "../../../../lib/firebase/exercises"
 import { images } from "../../../../lib/extra"
-import { useTheme } from "../../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import InlineView from "../../../reusable/InlineView"
 import MediaSelector from "../../../reusable/MediaSelector"
 import { Text } from "../../../reusable/Text"
@@ -25,6 +30,8 @@ export default function ProgrammedExercise({
   onExerciseDel?: (exercise: ModelExercise) => void;
 }) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const styles = useRef(
     StyleSheet.create({
       container: {
@@ -96,7 +103,9 @@ export default function ProgrammedExercise({
         <VariableHeightTextInput
           value={exercise.annotation}
           placeholder={
-            exercise.annotation.length > 0 ? "" : "Exercise Annotation"
+            exercise.annotation.length > 0
+              ? ""
+              : STRS.train.exercises.exerciseAnnotation
           }
           onChangeText={onAnnotationChange}
         />
