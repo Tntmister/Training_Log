@@ -32,27 +32,31 @@ export default function Session({
 
   function onSessionFinished() {
     session.duration = Date.now() - session.date
+    console.log("a")
     Alert.alert(
       "Finish Session",
-      "Do you want to share this training session publicly?",
+      "Do you want to share this training session with your followers?",
       [
+        { text: "Cancel" },
         {
           text: "Yes",
-          onPress: async () => {
-            await finishSession(user.uid, session, true)
+          onPress: () => {
+            finishSession(user.uid, session, {
+              comment: "Post Comment"
+            })
             navigation.navigate("ModelList")
           }
         },
         {
           text: "No",
-          onPress: async () => {
-            await finishSession(user.uid, session, false)
+          onPress: () => {
+            finishSession(user.uid, session)
             navigation.navigate("ModelList")
           }
-        },
-        { text: "Cancel" }
+        }
       ]
     )
+    console.log("b")
   }
 
   const [menuVisible, setMenuVisible] = useState(false)

@@ -1,4 +1,3 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useContext, useState } from "react"
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import { IconButton, Menu } from "react-native-paper"
@@ -14,16 +13,15 @@ import {
 import { UserContext } from "../../../providers/User"
 import InlineView from "../../reusable/InlineView"
 import { Text } from "../../reusable/Text"
-import { RootStackParamHistoryNav } from "./HistoryNav"
 
 export default function SessionDescriptor({
   session,
-  navigation,
-  id
+  sessionId,
+  onSessionPress
 }: {
   session: TrainingSession;
-  navigation: StackNavigationProp<RootStackParamHistoryNav, "SessionList">;
-  id: string;
+  sessionId: string;
+  onSessionPress: (session: TrainingSession) => void;
 }) {
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
@@ -82,9 +80,7 @@ export default function SessionDescriptor({
   const [menuVisible, setMenuVisible] = useState(false)
   return (
     <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("Session", session)
-      }}
+      onPress={() => onSessionPress(session)}
       style={styles.container}
     >
       <View style={styles.headerContainer}>
@@ -114,7 +110,7 @@ export default function SessionDescriptor({
                   {
                     text: STRS.yes,
                     onPress: async () => {
-                      await deleteSession(user!.uid, id)
+                      await deleteSession(user!.uid, sessionId)
                       setMenuVisible(false)
                     }
                   },

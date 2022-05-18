@@ -13,7 +13,6 @@ import { UserContext } from "../../../providers/User"
 import InlineView from "../../reusable/InlineView"
 import Loading from "../../reusable/Loading"
 import { Text } from "../../reusable/Text"
-import { TrainingModelDoc } from "../Train/Models/ModelList"
 import { RootStackParamHistoryNav } from "./HistoryNav"
 import SessionDescriptor from "./SessionDescriptor"
 
@@ -27,7 +26,9 @@ export default function SessionList({
   const STRS = langStrings(theme, lang as langs)
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
-  const [sessions, setSessions] = useState<TrainingModelDoc[]>([])
+  const [sessions, setSessions] = useState<
+  { session: TrainingSession; id: string }[]
+  >([])
 
   const styles = StyleSheet.create({
     titleContainer: {
@@ -59,6 +60,9 @@ export default function SessionList({
     return () => subscriber()
   }, [])
 
+  function onSessionPress(session: TrainingSession) {
+    navigation.navigate("Session", session)
+  }
   return (
     <>
       <InlineView style={styles.titleContainer}>
@@ -72,9 +76,9 @@ export default function SessionList({
           initialNumToRender={8}
           renderItem={({ item, index }) => (
             <SessionDescriptor
-              session={item.model as TrainingSession}
-              id={item.id}
-              navigation={navigation}
+              session={item.session}
+              sessionId={item.id}
+              onSessionPress={onSessionPress}
               key={index}
             />
           )}

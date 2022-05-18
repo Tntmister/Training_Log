@@ -1,3 +1,5 @@
+import { TrainingModel, TrainingSession } from "./train"
+
 export type User = {
   username: string;
   bio: string;
@@ -12,4 +14,11 @@ export type Follow = {
   dateFollowed: number;
   id: string;
   mutual: boolean;
+};
+
+export type Post = {
+  authorComment: string;
+  author: string;
+  post: TrainingModel | TrainingSession;
+  postId: string;
 };

@@ -8,12 +8,13 @@ import { FlatList } from "react-native"
 import { UserContext } from "../../../providers/User"
 import PostDescriptor from "./PostDescriptor"
 import { modelModes } from "../Train/Models/Model"
+import { Post } from "../../../lib/types/user"
 
 export default function Posts({
   navigation
 }: StackScreenProps<RootStackParamHomeNav, "Posts">) {
   const user = useContext(UserContext)!
-  const [posts, setPosts] = useState<(TrainingSession | TrainingModel)[]>([])
+  const [posts, setPosts] = useState<Post[]>([])
 
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -25,6 +26,7 @@ export default function Posts({
   const followingChunks = useRef<string[][]>([])
 
   async function initFollowing() {
+    followingChunks.current = []
     const following = (
       await firestore()
         .collection("users")
@@ -38,54 +40,77 @@ export default function Posts({
   }
 
   async function retrieveData() {
+    /* for (const followingChunk of followingChunks.current) {
+      const querySnapshot = await firestore()
+        .collection("posts")
+        .where("author", "in", followingChunk)
+        .orderBy("date", "desc")
+        .startAfter(oldest.current)
+        .limit(10)
+        .get()
+      console.log(querySnapshot.empty)
+      if (!querySnapshot.empty) {
+        const olderPosts = querySnapshot.docs.map(
+          (document) => document.data() as Post
+        )
+        setPosts((newerPosts) => [...newerPosts, ...olderPosts])
+        oldest.current = olderPosts[olderPosts.length - 1].post.date
+      }
+    } */
     setLoading(true)
-    for await (const querySnapshot of followingChunks.current.map(
-      async (followingChunk) =>
-        await firestore()
-          .collection("posts")
-          .where("author", "in", followingChunk)
-          .orderBy("date", "desc")
-          .startAfter(oldest.current)
-          .limit(10)
-          .get()
+    for (const querySnapshot of await Promise.all(
+      followingChunks.current.map(
+        async (followingChunk) =>
+          await firestore()
+            .collection("posts")
+            .where("author", "in", followingChunk)
+            .orderBy("post.date", "desc")
+            .startAfter(oldest.current)
+            .limit(10)
+            .get()
+      )
     )) {
       if (!querySnapshot.empty) {
         const olderPosts = querySnapshot.docs.map(
-          (document) => document.data() as TrainingModel | TrainingSession
+          (document) => document.data() as Post
         )
         setPosts((newerPosts) => [...newerPosts, ...olderPosts])
-        oldest.current = olderPosts[olderPosts.length - 1].date
+        oldest.current = olderPosts[olderPosts.length - 1].post.date
       }
     }
     setLoading(false)
   }
-
   async function refreshData() {
     setRefreshing(true)
-    for await (const querySnapshot of followingChunks.current.map(
-      async (followingChunk) =>
-        await firestore()
+    for (const querySnapshot of await Promise.all(
+      followingChunks.current.map(async (followingChunk) =>
+        firestore()
           .collection("posts")
           .where("author", "in", followingChunk)
-          .orderBy("date", "desc")
+          .orderBy("post.date", "desc")
           .endBefore(newest.current)
           .limit(10)
           .get()
+      )
     )) {
+      console.log(querySnapshot)
+      console.log(querySnapshot.empty)
       if (!querySnapshot.empty) {
         const newerPosts = querySnapshot.docs.map(
-          (document) => document.data() as TrainingModel | TrainingSession
+          (document) => document.data() as Post
         )
         setPosts((olderPosts) => [...newerPosts, ...olderPosts])
-        newest.current = newerPosts[0].date
+        newest.current = newerPosts[0].post.date
       }
     }
     setRefreshing(false)
   }
 
   useEffect(() => {
-    initFollowing()
-    retrieveData()
+    (async () => {
+      await initFollowing()
+      retrieveData()
+    })()
   }, [])
 
   const postsFooter = () => {

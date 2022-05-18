@@ -44,7 +44,7 @@ export default function Model({
   const [model, setModel] = useState<TrainingModel>(
     route.params.model === undefined
       ? {
-        name: "New Training Model",
+        name: "",
         author: user.uid,
         exercises: [],
         mediaContent: [],
@@ -156,7 +156,9 @@ export default function Model({
     <>
       <Appbar>
         <Appbar.BackAction onPress={navigation.goBack} />
-        <Appbar.Content title={onetime ? "Training Session" : model.name} />
+        <Appbar.Content
+          title={onetime || model.name === "" ? "Training Session" : model.name}
+        />
         <Menu
           anchor={
             <Appbar.Action
@@ -199,6 +201,7 @@ export default function Model({
         {mode == modelModes.Edit && !onetime && (
           <TextInput
             style={{ ...styles.name, marginLeft: theme.margins.m }}
+            placeholder={"New Training Model"}
             value={model.name}
             onChangeText={onNameChange}
           />

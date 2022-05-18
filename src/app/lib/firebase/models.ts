@@ -3,7 +3,7 @@ import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
 import { TrainingModel, TrainingSession } from "../types/train"
-import { TrainingModelDoc } from "../../components/screens/Train/Models/ModelList"
+import { Post } from "../types/user"
 
 export async function saveModel(
   uID: string,
@@ -60,14 +60,14 @@ export function deleteSession(uID: string, id: string) {
 
 export function getModels(
   uid: string,
-  onLoad: (models: TrainingModelDoc[]) => void
+  onLoad: (models: { model: TrainingModel; id: string }[]) => void
 ): () => void {
   return firestore()
     .collection("users")
     .doc(uid)
     .collection("models")
     .onSnapshot((querySnapshot) => {
-      const models: TrainingModelDoc[] = []
+      const models: { model: TrainingModel; id: string }[] = []
       querySnapshot.forEach((documentSnapshot) => {
         if (Object.keys(documentSnapshot.data()).length != 0) {
           models.push({
@@ -81,18 +81,18 @@ export function getModels(
 }
 export function getSessions(
   uid: string,
-  onLoad: (sessions: TrainingModelDoc[]) => void
+  onLoad: (sessions: { session: TrainingSession; id: string }[]) => void
 ): () => void {
   return firestore()
     .collection("users")
     .doc(uid)
     .collection("sessions")
     .onSnapshot((querySnapshot) => {
-      const sessions: TrainingModelDoc[] = []
+      const sessions: { session: TrainingSession; id: string }[] = []
       querySnapshot.forEach((documentSnapshot) => {
         if (Object.keys(documentSnapshot.data()).length != 0) {
           sessions.push({
-            model: documentSnapshot.data() as TrainingModel,
+            session: documentSnapshot.data() as TrainingSession,
             id: documentSnapshot.id
           })
         }
@@ -104,13 +104,17 @@ export function getSessions(
 export async function finishSession(
   uid: string,
   session: TrainingSession,
-  share: boolean
+  share?: { comment?: string }
 ) {
   const userDoc = firestore().collection("users").doc(uid)
   firestore().runTransaction(async (t) => {
     t.set(userDoc.collection("sessions").doc(), session)
     if (share) {
-      t.set(firestore().collection("posts").doc(), session)
+      t.set(firestore().collection("posts").doc(), {
+        authorComment: share.comment,
+        author: uid,
+        post: session
+      } as Post)
       t.update(userDoc, { posts: firebase.firestore.FieldValue.increment(1) })
     }
   })

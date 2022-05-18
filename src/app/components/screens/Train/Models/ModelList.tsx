@@ -9,11 +9,7 @@ import { UserContext } from "../../../../providers/User"
 import { getModels } from "../../../../lib/firebase/models"
 import Loading from "../../../reusable/Loading"
 import ModelDescriptor from "./ModelDescriptor"
-
-export type TrainingModelDoc = {
-  model: TrainingModel;
-  id: string;
-};
+import { modelModes } from "./Model"
 
 export default function ModelList({
   navigation
@@ -21,7 +17,9 @@ export default function ModelList({
   const theme = useTheme()
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
-  const [models, setModels] = useState<TrainingModelDoc[]>([])
+  const [models, setModels] = useState<{ model: TrainingModel; id: string }[]>(
+    []
+  )
 
   const styles = StyleSheet.create({
     empty: {
@@ -42,6 +40,18 @@ export default function ModelList({
     return () => subscriber()
   }, [])
 
+  function onModelPress(
+    model: TrainingModel,
+    modelId: string,
+    mode: modelModes
+  ) {
+    navigation.navigate("Model", {
+      model: model,
+      id: modelId,
+      mode: mode
+    })
+  }
+
   return (
     <>
       {loading ? (
@@ -52,9 +62,9 @@ export default function ModelList({
           initialNumToRender={8}
           renderItem={({ item, index }) => (
             <ModelDescriptor
-              model={item}
-              navigation={navigation}
-              theme={theme}
+              model={item.model}
+              modelId={item.id}
+              onModelPress={onModelPress}
               key={index}
             />
           )}

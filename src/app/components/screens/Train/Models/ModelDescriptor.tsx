@@ -1,39 +1,34 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useContext, useState } from "react"
 import { Alert, Image, TouchableOpacity, View } from "react-native"
-import { Theme } from "../../../../providers/Theme"
-import { RootStackParamListModelNav } from "./ModelNav"
-import { TrainingModelDoc } from "./ModelList"
+import { useTheme } from "../../../../providers/Theme"
 import { Text } from "../../../reusable/Text"
 import { RFValue } from "react-native-responsive-fontsize"
 import { IconButton, Menu } from "react-native-paper"
 import { modelModes } from "./Model"
 import { deleteModel } from "../../../../lib/firebase/models"
 import { UserContext } from "../../../../providers/User"
+import { TrainingModel } from "../../../../lib/types/train"
 
 function ModelDescriptor({
   model,
-  navigation,
-  theme
+  modelId,
+  onModelPress
 }: {
-  model: TrainingModelDoc;
-  navigation: StackNavigationProp<RootStackParamListModelNav, "ModelList">;
-  theme: Theme;
+  model: TrainingModel;
+  modelId: string;
+  onModelPress: (
+    model: TrainingModel,
+    modelId: string,
+    mode: modelModes
+  ) => void;
 }) {
+  const theme = useTheme()
   const user = useContext(UserContext)
   const [menuVisible, setMenuVisible] = useState(false)
 
-  function modelAction(mode: modelModes) {
-    navigation.navigate("Model", {
-      model: model.model,
-      id: model.id,
-      mode: mode
-    })
-  }
-
   return (
     <TouchableOpacity
-      onPress={() => modelAction(modelModes.View)}
+      onPress={() => onModelPress(model, modelId, modelModes.View)}
       style={{
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
@@ -46,9 +41,7 @@ function ModelDescriptor({
       }}
     >
       <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-        <Text style={{ flexGrow: 1, fontSize: RFValue(18) }}>
-          {model.model.name}
-        </Text>
+        <Text style={{ flexGrow: 1, fontSize: RFValue(18) }}>{model.name}</Text>
         <Menu
           visible={menuVisible}
           onDismiss={() => setMenuVisible(false)}
@@ -62,16 +55,17 @@ function ModelDescriptor({
           <Menu.Item
             title="Edit"
             onPress={() => {
-              modelAction(modelModes.Edit), setMenuVisible(false)
+              onModelPress(model, modelId, modelModes.Edit),
+              setMenuVisible(false)
             }}
           />
           <Menu.Item
             onPress={() =>
-              Alert.alert("Delete Model", `Delete "${model.model.name}"?`, [
+              Alert.alert("Delete Model", `Delete "${model.name}"?`, [
                 {
                   text: "Yes",
                   onPress: async () => {
-                    await deleteModel(user!.uid, model.id!)
+                    await deleteModel(user!.uid, modelId)
                     setMenuVisible(false)
                   }
                 },
@@ -84,7 +78,7 @@ function ModelDescriptor({
       </View>
       <View>
         <>
-          {model.model.exercises.map((ex, key) => (
+          {model.exercises.map((ex, key) => (
             <Text style={{ fontSize: RFValue(14) }} key={key}>
               {ex.sets.length} x {ex.name}
             </Text>
@@ -98,7 +92,7 @@ function ModelDescriptor({
             marginLeft: "auto",
             marginRight: theme.margins.m
           }}
-          source={{ uri: model.model.mediaContent[0]?.uri }}
+          source={{ uri: model.mediaContent[0]?.uri }}
         />
       </View>
     </TouchableOpacity>
