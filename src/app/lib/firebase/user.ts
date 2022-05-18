@@ -1,22 +1,7 @@
 import { firebase } from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
-
-export type User = {
-  username: string;
-  bio: string;
-  profileURL: string | null;
-  creationTime: number;
-  followers: number;
-  following: number;
-  posts: number;
-};
-
-export type Follow = {
-  dateFollowed: number;
-  id: string;
-  mutual: boolean;
-};
+import { User, Follow } from "../types/user"
 
 export async function saveUserDetails(uid: string, user: Partial<User>) {
   const profileRef = storage().ref(`users/${uid}/profile`)

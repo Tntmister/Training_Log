@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
-import { RegularSetClass } from "../../../../../../dataDefinition/data"
+import { RegularSetClass } from "../../../../../lib/types/train"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import { Button } from "../../../../reusable/Button"

@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import { Exercise, TrainingModel } from "../../../../../dataDefinition/data"
+import { Exercise, TrainingModel } from "../../../../lib/types/train"
 import ExerciseSelector from "../Exercises/ExerciseSelector"
 import { Exercise as ExerciseScreen } from "../Exercises/Exercise"
 import Model, { modelModes } from "./Model"

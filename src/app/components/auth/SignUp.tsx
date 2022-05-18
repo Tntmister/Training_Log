@@ -2,13 +2,14 @@ import React, { useContext, useRef, useState } from "react"
 import { StyleSheet, ToastAndroid, View } from "react-native"
 import { Checkbox } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { register } from "../../lib/firebaseAuth"
+
 import {
   langs,
   langStrings,
   ThemeContext,
   useTheme
 } from "../../providers/Theme"
+import { register } from "../../lib/firebase/auth"
 import { Button } from "../reusable/Button"
 import { Text } from "../reusable/Text"
 import { TextInput } from "../reusable/TextInput"

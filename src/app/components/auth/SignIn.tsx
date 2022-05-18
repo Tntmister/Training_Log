@@ -6,13 +6,14 @@ import {
   loginGoogle,
   logout,
   resetPassword
-} from "../../lib/firebaseAuth"
+} from "../../lib/firebase/auth"
 import {
   langs,
   langStrings,
   ThemeContext,
   useTheme
 } from "../../providers/Theme"
+
 import { UserContext } from "../../providers/User"
 import { Button } from "../reusable/Button"
 import { Text } from "../reusable/Text"

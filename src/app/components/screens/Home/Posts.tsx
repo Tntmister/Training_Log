@@ -1,9 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useRef, useState } from "react"
-import {
-  TrainingModel,
-  TrainingSession
-} from "../../../../dataDefinition/data"
+import { TrainingModel, TrainingSession } from "../../../lib/types/train"
 import { RootStackParamHomeNav } from "./HomeNav"
 import firestore from "@react-native-firebase/firestore"
 import Loading from "../../reusable/Loading"
@@ -26,6 +23,7 @@ export default function Posts({
 
   // firebase query por conter em lista está limitado a blocos de 10 ids
   const followingChunks = useRef<string[][]>([])
+
   async function initFollowing() {
     const following = (
       await firestore()

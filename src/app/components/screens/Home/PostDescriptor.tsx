@@ -1,9 +1,6 @@
 import React from "react"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import {
-  TrainingModel,
-  TrainingSession
-} from "../../../../dataDefinition/data"
+import { TrainingModel, TrainingSession } from "../../../lib/types/train"
 import { useTheme } from "../../../providers/Theme"
 import { Text } from "../../reusable/Text"
 

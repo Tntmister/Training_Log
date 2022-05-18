@@ -1,7 +1,7 @@
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
-import { Exercise } from "../../dataDefinition/data"
+import { Exercise } from "../types/train"
 
 export const categoryIcons = {
   Cardio: require("../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),

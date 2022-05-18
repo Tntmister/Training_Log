@@ -8,7 +8,7 @@ import { Text } from "../../../reusable/Text"
 import { RFValue } from "react-native-responsive-fontsize"
 import { IconButton, Menu } from "react-native-paper"
 import { modelModes } from "./Model"
-import { deleteModel } from "../../../../lib/firebaseFS"
+import { deleteModel } from "../../../../lib/firebase/models"
 import { UserContext } from "../../../../providers/User"
 
 function ModelDescriptor({

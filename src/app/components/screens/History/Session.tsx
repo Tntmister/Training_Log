@@ -2,7 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import React from "react"
 import { Image, ScrollView, StyleSheet } from "react-native"
 import { Appbar } from "react-native-paper"
-import { TrainingSession } from "../../../../dataDefinition/data"
+import { TrainingSession } from "../../../lib/types/train"
 import {
   getDate,
   getDuration,

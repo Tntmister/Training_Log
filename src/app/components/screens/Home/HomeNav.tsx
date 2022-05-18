@@ -1,9 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import {
-  TrainingModel,
-  TrainingSession
-} from "../../../../dataDefinition/data"
+import { TrainingModel, TrainingSession } from "../../../lib/types/train"
 import SessionSummary from "../History/SessionSummary"
 import Model, { modelModes } from "../Train/Models/Model"
 import Post from "./Post"

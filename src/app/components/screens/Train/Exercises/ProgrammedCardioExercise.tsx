@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import {
-  CardioSetClass,
-  ModelExercise
-} from "../../../../../dataDefinition/data"
+import { CardioSetClass, ModelExercise } from "../../../../lib/types/train"
 import { useTheme } from "../../../../providers/Theme"
 import InlineView from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"

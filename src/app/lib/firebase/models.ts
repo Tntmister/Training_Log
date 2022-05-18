@@ -2,8 +2,8 @@ import { firebase } from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
-import { TrainingModel, TrainingSession } from "../../dataDefinition/data"
-import { TrainingModelDoc } from "../components/screens/Train/Models/ModelList"
+import { TrainingModel, TrainingSession } from "../types/train"
+import { TrainingModelDoc } from "../../components/screens/Train/Models/ModelList"
 
 export async function saveModel(
   uID: string,

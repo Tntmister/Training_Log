@@ -8,10 +8,10 @@ import {
   Exercise,
   StretchingSetClass,
   RegularSetClass
-} from "../../../../../dataDefinition/data"
+} from "../../../../lib/types/train"
 import { TextInput } from "../../../reusable/TextInput"
 import { RootStackParamListModelNav } from "./ModelNav"
-import { TrainingModel } from "../../../../../dataDefinition/data"
+import { TrainingModel } from "../../../../lib/types/train"
 import { UserContext } from "../../../../providers/User"
 import { useTheme } from "../../../../providers/Theme"
 import InlineView from "../../../reusable/InlineView"
@@ -22,8 +22,8 @@ import { VariableHeightTextInput } from "../../../reusable/VariableHeightTextInp
 import { Text } from "../../../reusable/Text"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
-import { getUsername } from "../../../../lib/firebaseAuth"
-import { deleteModel, saveModel } from "../../../../lib/firebaseFS"
+import { getUsername } from "../../../../lib/firebase/auth"
+import { deleteModel, saveModel } from "../../../../lib/firebase/models"
 
 export enum modelModes {
   Edit = "edit",
