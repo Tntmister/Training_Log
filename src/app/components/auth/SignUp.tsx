@@ -1,9 +1,14 @@
-import React, { useRef, useState } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { StyleSheet, ToastAndroid, View } from "react-native"
 import { Checkbox } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { register } from "../../lib/firebaseAuth"
-import { useTheme } from "../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../providers/Theme"
 import { Button } from "../reusable/Button"
 import { Text } from "../reusable/Text"
 import { TextInput } from "../reusable/TextInput"
@@ -15,15 +20,17 @@ export default function SignUp() {
   const [password2, setPassword2] = useState("")
   const [checkedTOS, setCheckedTOS] = useState(false)
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
 
   function onSubmit() {
     if (password !== password2)
-      return ToastAndroid.show("Passwords do not match!", ToastAndroid.SHORT)
-    if (!checkedTOS)
       return ToastAndroid.show(
-        "You must agree to the Terms of Use",
+        STRS.auth.passwordsDoNotMatch,
         ToastAndroid.SHORT
       )
+    if (!checkedTOS)
+      return ToastAndroid.show(STRS.auth.mustAgrreToTerms, ToastAndroid.SHORT)
     register(email, password, username)
   }
   const styles = useRef(
@@ -49,26 +56,26 @@ export default function SignUp() {
         style={styles.input}
         value={username}
         onChangeText={setUsername}
-        placeholder="Username"
+        placeholder={STRS.auth.username}
       />
       <TextInput
         style={styles.input}
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder={STRS.auth.email}
       />
       <TextInput
         style={styles.input}
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder={STRS.auth.password}
         secureTextEntry={true}
       />
       <TextInput
         style={styles.input}
         value={password2}
         onChangeText={setPassword2}
-        placeholder="Confirm Password"
+        placeholder={STRS.auth.confirmPassword}
         secureTextEntry={true}
       />
       <View style={styles.tosContainer}>
@@ -83,12 +90,12 @@ export default function SignUp() {
             fontSize: RFValue(14)
           }}
         >
-          I agree to the Terms of Use
+          {STRS.auth.termsAgreement}
         </Text>
       </View>
 
       <Button style={styles.input} onPress={onSubmit}>
-        Sign Up
+        {STRS.auth.signUp}
       </Button>
     </View>
   )

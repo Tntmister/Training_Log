@@ -82,8 +82,7 @@ export default function Profile({
     }
   })
   const user = useContext(UserContext)!
-  const { lang } = useContext(ThemeContext)
-  const { switchLang, toggleTheme } = useContext(ThemeContext)
+  const { switchLang, toggleTheme, lang } = useContext(ThemeContext)
   const user_uid = route.params ? route.params.uid : user.uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)

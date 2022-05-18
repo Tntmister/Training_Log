@@ -7,7 +7,12 @@ import {
   logout,
   resetPassword
 } from "../../lib/firebaseAuth"
-import { useTheme } from "../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../providers/Theme"
 import { UserContext } from "../../providers/User"
 import { Button } from "../reusable/Button"
 import { Text } from "../reusable/Text"
@@ -18,6 +23,8 @@ export default function SignIn() {
   const [password, setPassword] = useState("")
   const theme = useTheme()
   const user = useContext(UserContext)
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
 
   function onSubmit() {
     if (user) logout()
@@ -61,13 +68,13 @@ export default function SignIn() {
         style={styles.input}
         value={email}
         onChangeText={setEmail}
-        placeholder={theme.strings.en.auth.email}
+        placeholder={STRS.auth.email}
       />
       <TextInput
         style={styles.input}
         value={password}
         onChangeText={setPassword}
-        placeholder={theme.strings.en.auth.password}
+        placeholder={STRS.auth.password}
         secureTextEntry={true}
       />
       <Button
@@ -76,13 +83,13 @@ export default function SignIn() {
         labelStyle={{ color: theme.colors.primary, fontSize: RFValue(12) }}
         style={[styles.input, { marginTop: theme.margins.s }]}
       >
-        Forgot Password?
+        {STRS.auth.forgotPassword}
       </Button>
       <Button style={styles.input} mode="contained" onPress={onSubmit}>
-        Sign In
+        {STRS.auth.signIn}
       </Button>
       <View style={styles.googleTextContainer}>
-        <Text style={styles.googleText}>Or Sign In With</Text>
+        <Text style={styles.googleText}>{STRS.auth.signInWith}</Text>
       </View>
       <Button
         onPress={loginGoogle}
@@ -90,7 +97,7 @@ export default function SignIn() {
         style={[styles.input, { marginTop: theme.margins.m }]}
         labelStyle={{ color: theme.colors.surface }}
       >
-        Sign In With Google
+        {STRS.auth.googleSignIn}
       </Button>
     </View>
   )

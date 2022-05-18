@@ -1,15 +1,22 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import React from "react"
+import React, { useContext } from "react"
 import { Dimensions, Image, StyleSheet, View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { images } from "../../lib/extra"
-import { useTheme } from "../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../providers/Theme"
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
 
 export default function AuthNav() {
   const Tab = createMaterialTopTabNavigator()
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const barWidth = Dimensions.get("window").width * 0.8
   return (
     <View
@@ -27,7 +34,7 @@ export default function AuthNav() {
             elevation: 0
           },
           tabBarLabelStyle: {
-            fontSize: RFValue(28),
+            fontSize: RFValue(24),
             fontFamily: "Lato"
           },
           tabBarIndicatorStyle: {
@@ -37,8 +44,8 @@ export default function AuthNav() {
           tabBarPressOpacity: 1
         }}
       >
-        <Tab.Screen component={SignIn} name="Sign In" />
-        <Tab.Screen component={SignUp} name="Sign Up" />
+        <Tab.Screen component={SignIn} name={STRS.auth.signIn} />
+        <Tab.Screen component={SignUp} name={STRS.auth.signUp} />
       </Tab.Navigator>
     </View>
   )
