@@ -42,7 +42,7 @@ export default function Model({
   const mode = route.params.mode
 
   const [model, setModel] = useState<TrainingModel>(
-    route.params.model !== undefined
+    route.params.model === undefined
       ? {
         name: "New Training Model",
         author: user.uid,

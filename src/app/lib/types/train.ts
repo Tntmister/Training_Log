@@ -47,27 +47,3 @@ export interface TrainingSession extends TrainingModel {
   duration: number;
   model: string | null;
 }
-
-//--------------------------------------------------------------------------------//
-/*const model1 = new TrainingModel()
-
-console.log(model1)
-
-model1.author = "Rafael Pardal"
-model1.description = "Upper Body Workout - From Upper-Lower Split"
-
-console.log(model1)
-
-/*const ex1 = new BarbellExercise("Bench Press", 1, "Barbell Bench Press")
-const ex2 = new BodyWeightExercise("Pull-Up", 2, "Overhand grip Pull-Up")
-
-model1.exercises.push(ex1)
-model1.exercises.push(ex2)
-
-//console.log('\n' + JSON.stringify(model1, null, 1))
-
-const session1 = model1.startSession()
-
-console.log("TRAINING SESSION \n", JSON.stringify(session1, null, 1))
-
-console.log(new Date().getTime())*/

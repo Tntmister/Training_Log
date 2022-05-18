@@ -44,7 +44,6 @@ export default function Profile({
     headerContainer: {
       //backgroundColor: "green",,
       justifyContent: "space-evenly"
-      //paddingLeft: theme.margins.xs,
     },
     img: {
       height: 80,
@@ -82,6 +81,7 @@ export default function Profile({
   })
   const user = useContext(UserContext)!
   const { switchLang, toggleTheme, lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const user_uid = route.params ? route.params.uid : user.uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
@@ -114,15 +114,15 @@ export default function Profile({
           onDismiss={() => setMenuVisible(false)}
           visible={menuVisible}
         >
-          <Menu.Item title="Logout" onPress={logout} />
-          <Menu.Item title="Toggle Theme" onPress={toggleTheme} />
+          <Menu.Item title={STRS.user.logout} onPress={logout} />
+          <Menu.Item title={STRS.user.toggleTheme} onPress={toggleTheme} />
           {user.uid === user_uid && (
             <Menu.Item
               onPress={() => {
                 navigation.navigate("EditProfile", { user: userProfile! })
                 setMenuVisible(false)
               }}
-              title={"Edit Profile"}
+              title={STRS.user.editProfile}
             />
           )}
           <Menu.Item
@@ -151,19 +151,21 @@ export default function Profile({
           />
         )}
         <InlineView style={styles.statsContainer}>
-          <Stat title={"Posts"} plural stat={userProfile?.posts} />
-          <Stat title={"Followers"} plural stat={userProfile?.followers} />
-          <Stat title={"Following"} stat={userProfile?.following} />
+          <Stat title={STRS.user.posts} stat={userProfile?.posts} />
+          <Stat title={STRS.user.followers} stat={userProfile?.followers} />
+          <Stat title={STRS.user.following} stat={userProfile?.following} />
         </InlineView>
       </InlineView>
       <Divider />
       {user.uid !== user_uid &&
         (follow ? (
           <Button onPress={() => unfollowUser(user.uid, user_uid)}>
-            Unfollow
+            {STRS.user.unfollow}
           </Button>
         ) : (
-          <Button onPress={() => followUser(user.uid, user_uid)}>Follow</Button>
+          <Button onPress={() => followUser(user.uid, user_uid)}>
+            {STRS.user.follow}
+          </Button>
         ))}
       <View style={styles.infoContainer}>
         {userProfile?.creationTime !== undefined && (

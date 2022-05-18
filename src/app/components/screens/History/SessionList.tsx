@@ -3,7 +3,12 @@ import React, { useContext, useEffect, useState } from "react"
 import { FlatList, StyleSheet } from "react-native"
 import { TrainingSession } from "../../../lib/types/train"
 import { getSessions } from "../../../lib/firebase/models"
-import { useTheme } from "../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
 import { UserContext } from "../../../providers/User"
 import InlineView from "../../reusable/InlineView"
 import Loading from "../../reusable/Loading"
@@ -18,6 +23,8 @@ export default function SessionList({
   navigation: StackNavigationProp<RootStackParamHistoryNav, "SessionList">;
 }) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
   const [sessions, setSessions] = useState<TrainingModelDoc[]>([])
@@ -55,7 +62,7 @@ export default function SessionList({
   return (
     <>
       <InlineView style={styles.titleContainer}>
-        <Text style={styles.title}>Your Training History</Text>
+        <Text style={styles.title}>{STRS.history.yourTH}</Text>
       </InlineView>
       {loading ? (
         <Loading />
@@ -71,18 +78,12 @@ export default function SessionList({
               key={index}
             />
           )}
-          ListEmptyComponent={
-            <Text style={styles.empty}>You have no Training Models!</Text>
-          }
+          ListEmptyComponent={<></>}
           style={styles.list}
         />
       ) : (
         <InlineView>
-          <Text style={styles.noTS}>
-            {
-              "You haven't concluded any Training Sessions. Start Training and check your Training History here!"
-            }
-          </Text>
+          <Text style={styles.noTS}>{STRS.history.noTS}</Text>
         </InlineView>
       )}
     </>

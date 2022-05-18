@@ -5,7 +5,12 @@ import { IconButton, Menu } from "react-native-paper"
 import { TrainingSession } from "../../../lib/types/train"
 import { getDate, images } from "../../../lib/extra"
 import { deleteSession } from "../../../lib/firebase/models"
-import { useTheme } from "../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
 import { UserContext } from "../../../providers/User"
 import InlineView from "../../reusable/InlineView"
 import { Text } from "../../reusable/Text"
@@ -21,6 +26,8 @@ export default function SessionDescriptor({
   id: string;
 }) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const user = useContext(UserContext)
 
   const styles = StyleSheet.create({
@@ -100,18 +107,27 @@ export default function SessionDescriptor({
         >
           <Menu.Item
             onPress={() =>
-              Alert.alert("Delete Model", "Delete ?", [
-                {
-                  text: "Yes",
-                  onPress: async () => {
-                    await deleteSession(user!.uid, id)
-                    setMenuVisible(false)
+              Alert.alert(
+                STRS.history.deleteSession,
+                STRS.history.confirmDeleteSession,
+                [
+                  {
+                    text: STRS.yes,
+                    onPress: async () => {
+                      await deleteSession(user!.uid, id)
+                      setMenuVisible(false)
+                    }
+                  },
+                  {
+                    text: STRS.no,
+                    onPress: async () => {
+                      setMenuVisible(false)
+                    }
                   }
-                },
-                { text: "No" }
-              ])
+                ]
+              )
             }
-            title={"Delete Session"}
+            title={STRS.history.deleteSession}
           />
         </Menu>
       </View>

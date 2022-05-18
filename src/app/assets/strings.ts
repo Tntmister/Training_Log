@@ -54,6 +54,7 @@ export type strings = {
     yourTH: string;
     noTS: string;
     deleteSession: string;
+    confirmDeleteSession: string;
   };
   home: {
     home: string;
@@ -68,7 +69,14 @@ export type strings = {
     email: string;
     bio: string;
     registered: string;
+    logout: string;
+    toggleTheme: string;
+    posts: string;
+    follow: string;
+    unfollow: string;
   };
+  yes: string;
+  no: string;
 };
 
 export type strings_global_lang = {
@@ -140,7 +148,8 @@ export const strings_en: strings = {
   history: {
     yourTH: "Your Training History",
     noTS: "You haven't concluded any Training Sessions. Start Training and check your Training History here!",
-    deleteSession: "Delete Session"
+    deleteSession: "Delete Session?",
+    confirmDeleteSession: "Confirm?"
   },
   home: {
     home: "Home"
@@ -154,8 +163,15 @@ export const strings_en: strings = {
     name: "Name",
     email: "Email Adress",
     bio: "Bio",
-    registered: "Registered"
-  }
+    registered: "Registered",
+    logout: "Log Out",
+    toggleTheme: "Toggle Theme",
+    posts: "Posts",
+    follow: "Follow",
+    unfollow: "Unfollow"
+  },
+  yes: "Yes",
+  no: "No"
 }
 
 export const strings_pt: strings = {
@@ -213,7 +229,8 @@ export const strings_pt: strings = {
   history: {
     yourTH: "Histórico de Treinos",
     noTS: "Ainda não existem Sessões de Treino concluídas. Comece a Treinar e verifique o seu Histórico aqui!",
-    deleteSession: "Eliminar Sessão"
+    deleteSession: "Eliminar Sessão",
+    confirmDeleteSession: "Confirmar?"
   },
   home: {
     home: "Home"
@@ -227,6 +244,13 @@ export const strings_pt: strings = {
     name: "Nome",
     email: "Email",
     bio: "Bio",
-    registered: "Registado"
-  }
+    registered: "Registado",
+    logout: "Sair",
+    toggleTheme: "Mudar Tema",
+    posts: "Partilhas",
+    follow: "Seguir",
+    unfollow: "Deixar de Seguir"
+  },
+  yes: "Sim",
+  no: "Não"
 }
