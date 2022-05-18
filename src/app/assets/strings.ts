@@ -69,6 +69,20 @@ export type strings = {
   };
 };
 
+export type strings_global_lang = {
+  langs: {
+    pt: string;
+    en: string;
+  };
+};
+
+export const strings_global: strings_global_lang = {
+  langs: {
+    pt: "Português",
+    en: "English"
+  }
+}
+
 export const strings_en: strings = {
   auth: {
     signIn: "Sign In",

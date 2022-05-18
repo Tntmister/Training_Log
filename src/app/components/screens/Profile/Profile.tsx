@@ -83,7 +83,7 @@ export default function Profile({
   })
   const user = useContext(UserContext)!
   const { lang } = useContext(ThemeContext)
-  const { toggleTheme } = useContext(ThemeContext)
+  const { switchLang, toggleTheme } = useContext(ThemeContext)
   const user_uid = route.params ? route.params.uid : user.uid
   // user obtido por params (autenticado por default)
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
@@ -98,6 +98,7 @@ export default function Profile({
   }, [route.params])
 
   const [menuVisible, setMenuVisible] = useState(false)
+
   return (
     <>
       <View style={styles.titleContainer}>
@@ -126,6 +127,20 @@ export default function Profile({
               title={"Edit Profile"}
             />
           )}
+          <Menu.Item
+            title={theme.global_strings.langs.en}
+            onPress={() => {
+              switchLang("en")
+              setMenuVisible(false)
+            }}
+          />
+          <Menu.Item
+            title={theme.global_strings.langs.pt}
+            onPress={() => {
+              switchLang("pt")
+              setMenuVisible(false)
+            }}
+          />
         </Menu>
       </View>
       <InlineView style={styles.headerContainer}>

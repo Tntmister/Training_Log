@@ -15,7 +15,13 @@ import {
 import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
 import { TextStyle } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { strings, strings_en, strings_pt } from "../assets/strings"
+import {
+  strings,
+  strings_en,
+  strings_global,
+  strings_global_lang,
+  strings_pt
+} from "../assets/strings"
 
 export type Theme = {
   margins: {
@@ -42,6 +48,7 @@ export type Theme = {
     body_m: TextStyle;
     body_s: TextStyle;
   };
+  global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
 } & NavigationTheme &
 PaperTheme;
@@ -124,6 +131,7 @@ const defaultTheme: Theme = {
     placeholder: "#424242",
     white: "#FFFFFF"
   },
+  global_strings: strings_global,
   strings: {
     en: {
       ...strings_en
@@ -164,7 +172,7 @@ export const ThemeContext = React.createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  switchLang: (lang: string) => {},
+  switchLang: (lang: langs) => {},
   lang: "pt",
   dark: true
 })
@@ -178,7 +186,7 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
   }, [dark])
 
   const switchLang = useCallback(
-    (lang: string) => {
+    (lang: langs) => {
       return setLang(lang)
     },
     [lang]
