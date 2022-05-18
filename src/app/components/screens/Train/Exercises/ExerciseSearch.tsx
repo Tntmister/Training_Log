@@ -10,10 +10,10 @@ import {
   searchExercises,
   initExercises,
   exercises
-} from "../../../../lib/exercises"
+} from "../../../../lib/firebase/exercises"
 import { useTheme } from "../../../../providers/Theme"
 import { View, ViewStyle } from "react-native"
-import { Exercise } from "../../../../../dataDefinition/data"
+import { Exercise } from "../../../../lib/types/train"
 
 export default function ExerciseSearch({
   setExercises,

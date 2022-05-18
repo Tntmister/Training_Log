@@ -15,18 +15,17 @@ import { Button } from "../../reusable/Button"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamUserNav } from "./ProfileNav"
 import {
-  Follow,
   followUser,
   subscribeFollowing,
   subscribeUser,
-  unfollowUser,
-  User
-} from "../../../lib/user"
+  unfollowUser
+} from "../../../lib/firebase/user"
+import { Follow, User } from "../../../lib/types/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
 import { IconButton, Menu } from "react-native-paper"
 import Divider from "../../reusable/divider"
 import { RFValue } from "react-native-responsive-fontsize"
-import { logout } from "../../../lib/firebaseAuth"
+import { logout } from "../../../lib/firebase/auth"
 
 export default function Profile({
   navigation,

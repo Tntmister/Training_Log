@@ -7,7 +7,7 @@ import { RootStackParamList } from "./ExerciseNav"
 import ExerciseDescriptor from "./ExerciseDescriptor"
 import { Text } from "../../../reusable/Text"
 import ExerciseSearch from "./ExerciseSearch"
-import { Exercise } from "../../../../../dataDefinition/data"
+import { Exercise } from "../../../../lib/types/train"
 
 export default function ExerciseList({
   navigation

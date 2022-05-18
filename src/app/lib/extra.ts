@@ -1,4 +1,4 @@
-import { RegularSetClass, TrainingSession } from "../../dataDefinition/data"
+import { RegularSetClass, TrainingSession } from "./types/train"
 
 export const images = {
   User: require("../assets/icons/user/user(-xxxhdpi).png"),

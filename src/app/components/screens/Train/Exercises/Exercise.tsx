@@ -7,7 +7,7 @@ import { ScrollView } from "react-native-gesture-handler"
 import { StyleSheet } from "react-native"
 import { useTheme } from "../../../../providers/Theme"
 import { RFValue } from "react-native-responsive-fontsize"
-import { getImages } from "../../../../lib/exercises"
+import { getImages } from "../../../../lib/firebase/exercises"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import { Asset } from "react-native-image-picker"
 

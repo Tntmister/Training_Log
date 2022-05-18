@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Alert, StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
-import { CardioSetClass } from "../../../../../../dataDefinition/data"
+import { CardioSetClass } from "../../../../../lib/types/train"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import InlineView from "../../../../reusable/InlineView"

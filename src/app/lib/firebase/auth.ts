@@ -3,7 +3,7 @@ import firestore from "@react-native-firebase/firestore"
 import { FirebaseError } from "@firebase/util"
 import { Alert, ToastAndroid } from "react-native"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
-import { User } from "./user"
+import { User } from "../types/user"
 
 GoogleSignin.configure({
   webClientId:

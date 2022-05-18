@@ -2,11 +2,8 @@ import React, { useRef, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import {
-  ModelExercise,
-  SessionExercise
-} from "../../../../../dataDefinition/data"
-import { categoryIcons } from "../../../../lib/exercises"
+import { ModelExercise, SessionExercise } from "../../../../lib/types/train"
+import { categoryIcons } from "../../../../lib/firebase/exercises"
 import { images } from "../../../../lib/extra"
 import { useTheme } from "../../../../providers/Theme"
 import InlineView from "../../../reusable/InlineView"
