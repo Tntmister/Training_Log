@@ -1,11 +1,18 @@
-import React, { useState } from "react"
-import { ToastAndroid, View } from "react-native"
+import React, { useContext, useRef, useState } from "react"
+import { StyleSheet, ToastAndroid, View } from "react-native"
 import { Checkbox } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { register } from "../../lib/firebase"
-import { useTheme } from "../../providers/Theme"
+
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../providers/Theme"
+import { register } from "../../lib/firebase/auth"
+import { Button } from "../reusable/Button"
 import { Text } from "../reusable/Text"
-import { AuthButton, AuthTextInput } from "./AuthReusable"
+import { TextInput } from "../reusable/TextInput"
 
 export default function SignUp() {
   const [email, setEmail] = useState("")
@@ -14,55 +21,65 @@ export default function SignUp() {
   const [password2, setPassword2] = useState("")
   const [checkedTOS, setCheckedTOS] = useState(false)
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
 
   function onSubmit() {
     if (password !== password2)
-      return ToastAndroid.show("Passwords do not match!", ToastAndroid.SHORT)
-    if (!checkedTOS)
       return ToastAndroid.show(
-        "You must agree to the Terms of Use",
+        STRS.auth.passwordsDoNotMatch,
         ToastAndroid.SHORT
       )
+    if (!checkedTOS)
+      return ToastAndroid.show(STRS.auth.mustAgrreToTerms, ToastAndroid.SHORT)
     register(email, password, username)
   }
-
-  return (
-    <View
-      style={{
+  const styles = useRef(
+    StyleSheet.create({
+      container: {
         alignItems: "center",
         paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
-      }}
-    >
-      <AuthTextInput
+      },
+      tosContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: theme.margins.s
+      },
+      input: {
+        width: "80%"
+      }
+    })
+  ).current
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
         value={username}
         onChangeText={setUsername}
-        placeholder="Username"
+        placeholder={STRS.auth.username}
       />
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder={STRS.auth.email}
       />
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder={STRS.auth.password}
         secureTextEntry={true}
       />
-      <AuthTextInput
+      <TextInput
+        style={styles.input}
         value={password2}
         onChangeText={setPassword2}
-        placeholder="Confirm Password"
+        placeholder={STRS.auth.confirmPassword}
         secureTextEntry={true}
       />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: theme.margins.m
-        }}
-      >
+      <View style={styles.tosContainer}>
         <Checkbox
           status={checkedTOS ? "checked" : "unchecked"}
           onPress={() => {
@@ -74,11 +91,13 @@ export default function SignUp() {
             fontSize: RFValue(14)
           }}
         >
-          I agree to the Terms of Use
+          {STRS.auth.termsAgreement}
         </Text>
       </View>
 
-      <AuthButton onPress={onSubmit}>Sign Up</AuthButton>
+      <Button style={styles.input} onPress={onSubmit}>
+        {STRS.auth.signUp}
+      </Button>
     </View>
   )
 }

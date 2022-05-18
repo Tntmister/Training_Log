@@ -1,25 +1,31 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import React from "react"
-import { Dimensions, Image, View } from "react-native"
+import React, { useContext } from "react"
+import { Dimensions, Image, StyleSheet, View } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { useTheme } from "../../providers/Theme"
+import { images } from "../../lib/extra"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../providers/Theme"
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
 
 export default function AuthNav() {
   const Tab = createMaterialTopTabNavigator()
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const barWidth = Dimensions.get("window").width * 0.8
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View
+      style={{ ...styles.container, backgroundColor: theme.colors.background }}
+    >
       <Image
-        style={{
-          width: "100%",
-          height: "30%",
-          marginTop: theme.margins.m
-        }}
+        style={{ ...styles.logo, marginTop: theme.margins.m }}
         resizeMode="contain"
-        source={require("../../assets/logo/logo1.png")}
+        source={images.Logo}
       />
       <Tab.Navigator
         screenOptions={{
@@ -28,7 +34,7 @@ export default function AuthNav() {
             elevation: 0
           },
           tabBarLabelStyle: {
-            fontSize: RFValue(30),
+            fontSize: RFValue(24),
             fontFamily: "Lato"
           },
           tabBarIndicatorStyle: {
@@ -38,9 +44,19 @@ export default function AuthNav() {
           tabBarPressOpacity: 1
         }}
       >
-        <Tab.Screen component={SignIn} name="Sign In" />
-        <Tab.Screen component={SignUp} name="Sign Up" />
+        <Tab.Screen component={SignIn} name={STRS.auth.signIn} />
+        <Tab.Screen component={SignUp} name={STRS.auth.signUp} />
       </Tab.Navigator>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  logo: {
+    width: "100%",
+    height: "30%"
+  }
+})

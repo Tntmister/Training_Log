@@ -9,7 +9,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged((firebaseUser) => {
-      console.log(firebaseUser)
       setUser(firebaseUser)
       if (firebaseUser && !firebaseUser.emailVerified) {
         Alert.alert(

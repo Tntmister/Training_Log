@@ -1,12 +1,13 @@
-import { Dimensions, Image } from "react-native"
+import { Dimensions, Image, StyleSheet } from "react-native"
 import React from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import Home from "./screens/Home"
 import Search from "./screens/Search"
-import History from "./screens/History"
-import User from "./screens/User"
-import Train from "./screens/Train"
+import HistoryNav from "./screens/History/HistoryNav"
+import ProfileNav from "./screens/Profile/ProfileNav"
+import Train from "./screens/Train/Train"
 import { useTheme } from "../providers/Theme"
+import { images } from "../lib/extra"
+import HomeNav from "./screens/Home/HomeNav"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -23,34 +24,34 @@ export default function Nav() {
         tabBarInactiveTintColor: theme.colors.text,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarShowLabel: false,
-        tabBarIconStyle: {
-          width: 30,
-          height: 30
-        },
+        tabBarIconStyle: styles.icon,
         tabBarIcon: ({ color }) => (
           <Image
             source={images[route.name as keyof typeof images]}
             style={{
-              width: "100%", //focused ? 30 : 25,
-              height: "100%", //focused ? 30 : 25,
+              ...styles.img,
               tintColor: color
             }}
           />
         )
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={HomeNav} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Train" component={Train} />
-      <Tab.Screen name="History" component={History} />
-      <Tab.Screen name="User" component={User} />
+      <Tab.Screen name="History" component={HistoryNav} />
+      <Tab.Screen name="User" component={ProfileNav} />
     </Tab.Navigator>
   )
 }
-const images = {
-  User: require("../assets/icons/user/user(-xxxhdpi).png"),
-  History: require("../assets/icons/history/history(-xxxhdpi).png"),
-  Home: require("../assets/icons/home/home(-xxxhdpi).png"),
-  Search: require("../assets/icons/search/search(-xxxhdpi).png"),
-  Train: require("../assets/icons/train/train(-xxxhdpi).png")
-}
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30
+  },
+  img: {
+    width: "100%",
+    height: "100%"
+  }
+})

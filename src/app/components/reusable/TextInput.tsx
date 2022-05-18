@@ -12,16 +12,17 @@ export function TextInput({
   return (
     <PaperTextInput
       underlineColor={theme.colors.primary}
-      style={{
-        borderBottomColor: theme.colors.primary,
-        marginTop: theme.margins.m,
-        paddingHorizontal: theme.paddings.l,
-        height: 50,
-        borderBottomWidth: 2,
-        fontSize: RFValue(16),
-        ...(typeof style === "object" ? style : {})
-      }}
-      theme={theme}
+      style={[
+        {
+          borderBottomColor: theme.colors.primary,
+          marginTop: theme.margins.m,
+          paddingHorizontal: theme.paddings.l,
+          height: 50,
+          borderBottomWidth: 2,
+          fontSize: RFValue(16)
+        },
+        style
+      ]}
       placeholderTextColor={theme.colors.placeholder}
       {...props}
     />
