@@ -1,7 +1,6 @@
-import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
-import { Exercise } from "../types/train"
+import { exercises } from "../../assets/exercises"
 
 export const categoryIcons = {
   Cardio: require("../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
@@ -11,14 +10,25 @@ export const categoryIcons = {
   Weightlifting: require("../../assets/icons/ex_categ/weightlifting/weightlifting(-xxxhdpi).png")
 }
 
-export const exercises: Exercise[] = []
-export async function initExercises() {
+export const muscles = [
+  ...new Set(exercises.map((attr) => attr.primaryMuscle))
+].sort()
+
+export const equipments = [
+  ...new Set(exercises.map((attr) => attr.equipment))
+].sort()
+
+export const categories = [
+  ...new Set(exercises.map((attr) => attr.category))
+].sort()
+
+/* export async function initExercises() {
   const result = await firestore().collection("exercises").get()
   result.forEach((doc) => exercises.push({ ...(doc.data() as Exercise) }))
   muscles = [...new Set(exercises.map((attr) => attr.primaryMuscle))].sort()
   equipments = [...new Set(exercises.map((attr) => attr.equipment))].sort()
   categories = [...new Set(exercises.map((attr) => attr.category))].sort()
-}
+} */
 
 /**
  * @param name Nome do Exercício
@@ -67,9 +77,3 @@ export function searchExercises(
   }
   return result
 }
-
-export let muscles: string[] = []
-
-export let equipments: string[] = []
-
-export let categories: string[] = []

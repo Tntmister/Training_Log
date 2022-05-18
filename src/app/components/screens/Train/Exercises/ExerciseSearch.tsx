@@ -7,13 +7,12 @@ import {
   categories as categoryList,
   muscles as muscleList,
   equipments as equipmentList,
-  searchExercises,
-  initExercises,
-  exercises
+  searchExercises
 } from "../../../../lib/firebase/exercises"
 import { useTheme } from "../../../../providers/Theme"
 import { View, ViewStyle } from "react-native"
 import { Exercise } from "../../../../lib/types/train"
+import { exercises } from "../../../../assets/exercises"
 
 export default function ExerciseSearch({
   setExercises,
@@ -70,13 +69,9 @@ export default function ExerciseSearch({
 
   const [init, setInit] = useState(true)
   useEffect(() => {
-    const initEx = async () => {
-      await initExercises()
-      setInit(false)
-      setExercises(exercises)
-      setLoading(false)
-    }
-    initEx()
+    setInit(false)
+    setExercises(exercises)
+    setLoading(false)
   }, [])
   useEffect(() => {
     if (!init) {
