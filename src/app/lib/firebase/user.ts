@@ -12,21 +12,29 @@ export async function saveUserDetails(uid: string, user: Partial<User>) {
   firestore().collection("users").doc(uid).set(user, { merge: true })
 }
 
-export function getProfileURL(uid: string, onFinish: (url: string) => void) {
-  firestore()
+export function getProfileURL(uid: string) {
+  return firestore()
     .collection("users")
     .doc(uid)
     .get()
-    .then((documentSnapshot) => onFinish(documentSnapshot.get("profileURL")))
+    .then((documentSnapshot) => documentSnapshot.get("profileURL") as string)
 }
 
 export function subscribeUser(uid: string, onUpdate: (user: User) => void) {
-  return firestore()
+  firestore()
     .collection("users")
     .doc(uid)
     .onSnapshot((documentSnapshot) =>
       onUpdate(documentSnapshot.data() as User)
     )
+}
+
+export function getUser(uid: string) {
+  return firestore()
+    .collection("users")
+    .doc(uid)
+    .get()
+    .then((documentSnapshot) => documentSnapshot.data() as User)
 }
 
 export async function followUser(self_uid: string, user_uid: string) {

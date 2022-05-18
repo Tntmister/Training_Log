@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import { TouchableOpacity } from "react-native"
 import { Appbar } from "react-native-paper"
 import { images } from "../../../lib/extra"
 import { saveUserDetails } from "../../../lib/firebase/user"

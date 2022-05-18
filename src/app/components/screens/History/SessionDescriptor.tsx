@@ -26,7 +26,7 @@ export default function SessionDescriptor({
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
-  const user = useContext(UserContext)
+  const user = useContext(UserContext)!
 
   const styles = StyleSheet.create({
     container: {
@@ -41,7 +41,8 @@ export default function SessionDescriptor({
     headerContainer: {
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      paddingVertical: theme.paddings.m
     },
     nameContainer: {
       flexDirection: "row",
@@ -91,41 +92,43 @@ export default function SessionDescriptor({
             <Text>{getDate(session.date)}</Text>
           </InlineView>
         </View>
-        <Menu
-          visible={menuVisible}
-          onDismiss={() => setMenuVisible(false)}
-          anchor={
-            <IconButton
-              onPress={() => setMenuVisible(true)}
-              icon={"dots-vertical"}
-            />
-          }
-        >
-          <Menu.Item
-            onPress={() =>
-              Alert.alert(
-                STRS.history.deleteSession,
-                STRS.history.confirmDeleteSession,
-                [
-                  {
-                    text: STRS.yes,
-                    onPress: async () => {
-                      await deleteSession(user!.uid, sessionId)
-                      setMenuVisible(false)
-                    }
-                  },
-                  {
-                    text: STRS.no,
-                    onPress: async () => {
-                      setMenuVisible(false)
-                    }
-                  }
-                ]
-              )
+        {session.author !== user.uid && (
+          <Menu
+            visible={menuVisible}
+            onDismiss={() => setMenuVisible(false)}
+            anchor={
+              <IconButton
+                onPress={() => setMenuVisible(true)}
+                icon={"dots-vertical"}
+              />
             }
-            title={STRS.history.deleteSession}
-          />
-        </Menu>
+          >
+            <Menu.Item
+              onPress={() =>
+                Alert.alert(
+                  STRS.history.deleteSession,
+                  STRS.history.confirmDeleteSession,
+                  [
+                    {
+                      text: STRS.yes,
+                      onPress: async () => {
+                        await deleteSession(user!.uid, sessionId)
+                        setMenuVisible(false)
+                      }
+                    },
+                    {
+                      text: STRS.no,
+                      onPress: async () => {
+                        setMenuVisible(false)
+                      }
+                    }
+                  ]
+                )
+              }
+              title={STRS.history.deleteSession}
+            />
+          </Menu>
+        )}
       </View>
 
       <View>
