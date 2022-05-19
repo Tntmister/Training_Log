@@ -42,7 +42,6 @@ export default function Profile({
       paddingLeft: theme.paddings.m
     },
     headerContainer: {
-      //backgroundColor: "green",,
       justifyContent: "space-evenly"
     },
     img: {
@@ -52,26 +51,22 @@ export default function Profile({
       borderColor: theme.colors.primary
     },
     statsContainer: {
-      //backgroundColor: "blue",
       justifyContent: "space-evenly",
       width: "70%"
     },
     infoContainer: {
       paddingVertical: theme.margins.m,
       flex: 1
-      //backgroundColor: "magenta",
     },
     emailContainer: {
       justifyContent: "flex-start"
     },
     info: {
       width: "50%",
-      //backgroundColor: "blue",
       marginLeft: theme.margins.m
     },
     description: {
       width: "90%",
-      //backgroundColor: "green",
       marginLeft: theme.margins.m,
       marginTop: theme.margins.m
     },

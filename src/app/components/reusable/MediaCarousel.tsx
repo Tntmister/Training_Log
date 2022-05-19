@@ -40,6 +40,7 @@ export default function MediaCarousel({
         showPageIndicator={true}
       >
         {assets.map((asset, index) => {
+          console.log(Dimensions.get("window").width)
           if (asset.type?.includes("image"))
             return (
               <CachedImage

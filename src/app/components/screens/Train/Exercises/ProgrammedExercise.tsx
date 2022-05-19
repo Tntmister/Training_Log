@@ -66,6 +66,14 @@ export default function ProgrammedExercise({
         width: "15%",
         backgroundColor: theme.colors.primary,
         height: 40
+      },
+      annotation: {
+        borderRadius: 10,
+        borderColor: theme.colors.primary,
+        borderWidth: 2,
+        marginTop: theme.margins.s,
+        paddingHorizontal: theme.paddings.m,
+        paddingVertical: theme.paddings.m
       }
     })
   ).current
@@ -111,15 +119,7 @@ export default function ProgrammedExercise({
         />
       ) : (
         exercise_state.annotation.length > 0 && (
-          <Text
-            style={{
-              borderRadius: 5,
-              borderColor: theme.colors.background,
-              borderWidth: 1
-            }}
-          >
-            {exercise_state.annotation}
-          </Text>
+          <Text style={styles.annotation}>{exercise_state.annotation}</Text>
         )
       )}
       {exercise.category == "Cardio" ? (

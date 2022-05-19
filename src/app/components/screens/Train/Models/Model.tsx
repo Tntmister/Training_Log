@@ -156,8 +156,13 @@ export default function Model({
       marginTop: theme.margins.m
     },
     viewDesc: {
-      marginLeft: theme.margins.m,
-      marginTop: theme.margins.s
+      marginHorizontal: theme.margins.m,
+      marginTop: theme.margins.s,
+      borderRadius: 10,
+      borderColor: theme.colors.primary,
+      borderWidth: 2,
+      paddingHorizontal: theme.paddings.m,
+      paddingVertical: theme.paddings.m
     },
     oneTimeContainer: {
       marginTop: theme.margins.s
@@ -243,7 +248,10 @@ export default function Model({
             onChangeText={onDescriptionChange}
           />
         ) : (
-          !onetime && <Text style={styles.viewDesc}>{model.description}</Text>
+          !onetime &&
+          model.description.length > 0 && (
+            <Text style={styles.viewDesc}>{model.description}</Text>
+          )
         )}
         {mode == modelModes.Edit && !onetime ? (
           <MediaSelector
