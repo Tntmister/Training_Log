@@ -62,7 +62,6 @@ export default function ProgrammedCardioExercise({
         <Text
           style={{
             ...styles.subtitle,
-            backgroundColor: "green",
             width: "5%"
           }}
         >
@@ -70,24 +69,21 @@ export default function ProgrammedCardioExercise({
         </Text>
         <Text
           style={{
-            ...styles.subtitle,
-            backgroundColor: "green"
+            ...styles.subtitle
           }}
         >
           {STRS.train.exercises.weight}
         </Text>
         <Text
           style={{
-            ...styles.subtitle,
-            backgroundColor: "green"
+            ...styles.subtitle
           }}
         >
           {STRS.train.exercises.distance}
         </Text>
         <Text
           style={{
-            ...styles.subtitle,
-            backgroundColor: "green"
+            ...styles.subtitle
           }}
         >
           {STRS.train.exercises.duration}
@@ -107,7 +103,6 @@ export default function ProgrammedCardioExercise({
           <Text
             style={{
               ...styles.subtitle,
-              backgroundColor: "green",
               marginRight: 0,
               width: "10%"
             }}

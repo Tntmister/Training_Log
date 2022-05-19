@@ -31,7 +31,6 @@ export default function ProgrammedCardioExercise({
     },
     subtitle: {
       width: "20%",
-      marginRight: theme.margins.s,
       textAlign: "center",
       fontSize: RFValue(16)
     }
@@ -58,7 +57,6 @@ export default function ProgrammedCardioExercise({
         <Text
           style={{
             ...styles.subtitle,
-            backgroundColor: "green",
             width: "5%"
           }}
         >
@@ -66,8 +64,7 @@ export default function ProgrammedCardioExercise({
         </Text>
         <Text
           style={{
-            ...styles.subtitle,
-            backgroundColor: "green"
+            ...styles.subtitle
           }}
         >
           {STRS.train.exercises.weight}
@@ -75,7 +72,6 @@ export default function ProgrammedCardioExercise({
         <Text
           style={{
             ...styles.subtitle,
-            backgroundColor: "green",
             width: mode == modelModes.View ? "20%" : "50%"
           }}
         >
@@ -85,8 +81,6 @@ export default function ProgrammedCardioExercise({
           <Text
             style={{
               ...styles.subtitle,
-              backgroundColor: "green",
-              marginRight: 0,
               width: "10%"
             }}
           >

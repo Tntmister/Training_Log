@@ -36,8 +36,7 @@ export default function RegularSet({
     index: { width: "5%" },
     input: {
       alignSelf: "stretch",
-      width: "20%",
-      marginRight: theme.margins.s
+      width: "20%"
     },
     repsInput: {
       width: mode == modelModes.View ? "20%" : "50%",

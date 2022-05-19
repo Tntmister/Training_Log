@@ -61,7 +61,6 @@ export default function ProgrammedStretchingExercise({
         <Text
           style={{
             ...styles.subtitle,
-            backgroundColor: "green",
             width: "5%"
           }}
         >
@@ -69,16 +68,14 @@ export default function ProgrammedStretchingExercise({
         </Text>
         <Text
           style={{
-            ...styles.subtitle,
-            backgroundColor: "green"
+            ...styles.subtitle
           }}
         >
           {STRS.train.exercises.weight}
         </Text>
         <Text
           style={{
-            ...styles.subtitle,
-            backgroundColor: "green"
+            ...styles.subtitle
           }}
         >
           {STRS.train.exercises.duration}
@@ -98,7 +95,6 @@ export default function ProgrammedStretchingExercise({
             style={{
               ...styles.subtitle,
               marginRight: 0,
-              backgroundColor: "green",
               width: "10%"
             }}
           >
