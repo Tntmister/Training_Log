@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
 import { CardioSetClass, ModelExercise } from "../../../../lib/types/train"
 import {
   langs,
@@ -53,7 +52,7 @@ export default function ProgrammedCardioExercise({
       width: "20%",
       marginRight: theme.margins.s,
       textAlign: "center",
-      fontSize: RFValue(16)
+      ...theme.text.body_m
     }
   })
 
@@ -63,6 +62,7 @@ export default function ProgrammedCardioExercise({
         <Text
           style={{
             ...styles.subtitle,
+            backgroundColor: "green",
             width: "5%"
           }}
         >
@@ -70,21 +70,24 @@ export default function ProgrammedCardioExercise({
         </Text>
         <Text
           style={{
-            ...styles.subtitle
+            ...styles.subtitle,
+            backgroundColor: "green"
           }}
         >
           {STRS.train.exercises.weight}
         </Text>
         <Text
           style={{
-            ...styles.subtitle
+            ...styles.subtitle,
+            backgroundColor: "green"
           }}
         >
           {STRS.train.exercises.distance}
         </Text>
         <Text
           style={{
-            ...styles.subtitle
+            ...styles.subtitle,
+            backgroundColor: "green"
           }}
         >
           {STRS.train.exercises.duration}
@@ -104,6 +107,7 @@ export default function ProgrammedCardioExercise({
           <Text
             style={{
               ...styles.subtitle,
+              backgroundColor: "green",
               marginRight: 0,
               width: "10%"
             }}

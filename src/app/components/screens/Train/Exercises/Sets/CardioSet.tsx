@@ -21,33 +21,7 @@ export default function CardioSet({
   onSetDelete: (setIndex: number) => void;
 }) {
   const theme = useTheme()
-  const styles = StyleSheet.create({
-    container: {
-      justifyContent: "space-between",
-      paddingVertical: theme.margins.xs
-    },
-    box: {
-      ...theme.text.body_l,
-      textAlign: "center",
-      textAlignVertical: "center",
-      color: theme.colors.primary
-    },
-    index: {
-      width: "5%",
-      marginRight: theme.margins.s
-    },
-    input: {
-      width: "20%",
-      marginRight: theme.margins.s
-    },
-    button_checkbox: {
-      width: "10%"
-    },
-    button: {
-      margin: 0,
-      padding: 0
-    }
-  })
+
   const [set_state, setSet] = useState(set)
 
   function onChangeWeight(weight: string) {
@@ -101,6 +75,35 @@ export default function CardioSet({
       ]
     )
   }
+
+  const styles = StyleSheet.create({
+    container: {
+      justifyContent: "space-between",
+      paddingVertical: theme.margins.xs
+    },
+    box: {
+      ...theme.text.body_l,
+      textAlign: "center",
+      textAlignVertical: "center",
+      color: theme.colors.primary
+    },
+    index: {
+      width: "5%",
+      marginRight: theme.margins.s
+    },
+    input: {
+      width: "20%",
+      marginRight: theme.margins.s
+    },
+    button_checkbox: {
+      width: "10%"
+    },
+    button: {
+      margin: 0,
+      padding: 0
+    }
+  })
+
   return (
     <InlineView style={styles.container}>
       <Text style={[styles.index, styles.box]}>{index + 1}</Text>

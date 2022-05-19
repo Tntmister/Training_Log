@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
 import { RegularSetClass, ModelExercise } from "../../../../lib/types/train"
-import { useTheme } from "../../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import InlineView from "../../../reusable/InlineView"
 import { Text } from "../../../reusable/Text"
 import { modelModes } from "../Models/Model"
@@ -17,6 +22,8 @@ export default function ProgrammedCardioExercise({
   mode: modelModes;
 }) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const styles = StyleSheet.create({
     subtitleContainer: {
       justifyContent: "space-between",
@@ -51,6 +58,7 @@ export default function ProgrammedCardioExercise({
         <Text
           style={{
             ...styles.subtitle,
+            backgroundColor: "green",
             width: "5%"
           }}
         >
@@ -58,23 +66,26 @@ export default function ProgrammedCardioExercise({
         </Text>
         <Text
           style={{
-            ...styles.subtitle
+            ...styles.subtitle,
+            backgroundColor: "green"
           }}
         >
-          Weight
+          {STRS.train.exercises.weight}
         </Text>
         <Text
           style={{
             ...styles.subtitle,
+            backgroundColor: "green",
             width: mode == modelModes.View ? "20%" : "50%"
           }}
         >
-          Reps
+          {STRS.train.exercises.reps}
         </Text>
         {mode != modelModes.View && (
           <Text
             style={{
               ...styles.subtitle,
+              backgroundColor: "green",
               marginRight: 0,
               width: "10%"
             }}
