@@ -57,6 +57,7 @@ function PostDescriptor({
     getUser(post.author).then((user) => setUser(user))
   }, [post.author])
 
+  console.log("POST", post.post.date)
   return (
     <TouchableOpacity
       onPress={
