@@ -1,12 +1,17 @@
 import { CachedImage } from "@georstat/react-native-image-cache"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Image, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native"
 import { images } from "../../../lib/extra"
 import { getUser } from "../../../lib/firebase/user"
 import { TrainingModel, TrainingSession } from "../../../lib/types/train"
 import { Post, User } from "../../../lib/types/user"
-import { useTheme } from "../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
 import InlineView from "../../reusable/InlineView"
 import { Text } from "../../reusable/Text"
 import SessionDescriptor from "../History/SessionDescriptor"
@@ -24,11 +29,14 @@ function PostDescriptor({
   onSessionPress: (session: TrainingSession) => void;
 }) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
+
   const styles = StyleSheet.create({
     container: {
       elevation: 6,
       width: "95%",
-      height: 300,
+      //height: 300,
       alignSelf: "center",
       marginTop: theme.margins.s,
       borderRadius: 10,
@@ -89,9 +97,9 @@ function PostDescriptor({
           {`${
             session
               ? activity.name == ""
-                ? "Completed a training session"
-                : "Completed the training session:"
-              : "Shared the training model:"
+                ? STRS.home.completedATS
+                : STRS.home.completedTheTS
+              : STRS.home.sharedTM
           }`}
         </Text>
       )}

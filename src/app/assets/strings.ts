@@ -67,6 +67,9 @@ export type strings = {
   };
   home: {
     home: string;
+    completedATS: string;
+    completedTheTS: string;
+    sharedTM: string;
   };
   user: {
     models: string;
@@ -175,7 +178,10 @@ export const strings_en: strings = {
     confirmDeleteSession: "Confirm?"
   },
   home: {
-    home: "Home"
+    home: "Home",
+    completedATS: "Completed a training session",
+    completedTheTS: "Completed the training session:",
+    sharedTM: "Shared the training model:"
   },
   user: {
     models: "Models",
@@ -269,7 +275,10 @@ export const strings_pt: strings = {
     confirmDeleteSession: "Confirmar?"
   },
   home: {
-    home: "Home"
+    home: "Home",
+    completedATS: "Completou uma Sessão de treino",
+    completedTheTS: "Completou a Sessão de Treino:",
+    sharedTM: "Partilhou o Modelo de Treino:"
   },
   user: {
     models: "Modelos",
