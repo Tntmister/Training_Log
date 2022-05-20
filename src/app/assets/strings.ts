@@ -51,11 +51,13 @@ export type strings = {
       tSession: string;
       defaultName: string;
       confirmDelete: string;
+      confirmCancelTS: string;
       oneTimeSession: string;
     };
     startTraining: string;
     finishTS: string;
     cancelTS: string;
+    confirmShare: string;
   };
   history: {
     yourTH: string;
@@ -86,6 +88,7 @@ export type strings = {
   no: string;
   delete: string;
   edit: string;
+  cancel: string;
 };
 
 export type strings_global_lang = {
@@ -155,11 +158,15 @@ export const strings_en: strings = {
       tSession: "Training Session",
       defaultName: "Workout",
       confirmDelete: "Are you sure you want to delete the model?",
-      oneTimeSession: "One time session?"
+      oneTimeSession: "One time session?",
+      confirmCancelTS:
+        "Are you sure you want to cancel the training session?\nYour progress will be lost."
     },
     startTraining: "Start Training",
     finishTS: "Finish Training Session",
-    cancelTS: "Cancel Training Session"
+    cancelTS: "Cancel Training Session",
+    confirmShare:
+      "Do you want to share this training session with your followers?"
   },
   history: {
     yourTH: "Your Training History",
@@ -189,7 +196,8 @@ export const strings_en: strings = {
   yes: "Yes",
   no: "No",
   delete: "Delete",
-  edit: "Edit"
+  edit: "Edit",
+  cancel: "Cancel"
 }
 
 export const strings_pt: strings = {
@@ -245,11 +253,14 @@ export const strings_pt: strings = {
       tSession: "Sessão de Treino",
       defaultName: "Treino",
       confirmDelete: "Tem a certeza de que quer eliminar o modelo?",
-      oneTimeSession: "Sessão única?"
+      oneTimeSession: "Sessão única?",
+      confirmCancelTS:
+        "Tem a certeza de que quer cancelar a sessão de treino?\nO seu progresso ´será perdido."
     },
     startTraining: "Começar a Treinar",
     finishTS: "Concluir Sessão de Treino",
-    cancelTS: "Cancelar Sessão de Treino"
+    cancelTS: "Cancelar Sessão de Treino",
+    confirmShare: "Quer partilhar a sessão de treino com os seus seguidores?"
   },
   history: {
     yourTH: "Histórico de Treinos",
@@ -279,5 +290,6 @@ export const strings_pt: strings = {
   yes: "Sim",
   no: "Não",
   delete: "Eliminar",
-  edit: "Editar"
+  edit: "Editar",
+  cancel: "Cancelar"
 }

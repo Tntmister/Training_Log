@@ -4,7 +4,12 @@ import { Alert, ScrollView } from "react-native"
 import { Appbar, Menu } from "react-native-paper"
 import { TrainingSession } from "../../../../lib/types/train"
 import { finishSession } from "../../../../lib/firebase/models"
-import { useTheme } from "../../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../../providers/Theme"
 import { UserContext } from "../../../../providers/User"
 import { Button } from "../../../reusable/Button"
 import MediaCarousel from "../../../reusable/MediaCarousel"
@@ -17,6 +22,9 @@ export default function Session({
   navigation
 }: StackScreenProps<RootStackParamListModelNav, "Session">) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
+
   const user = useContext(UserContext)!
   const model = route.params.model
 
@@ -33,29 +41,25 @@ export default function Session({
   function onSessionFinished() {
     session.duration = Date.now() - session.date
     console.log("a")
-    Alert.alert(
-      "Finish Session",
-      "Do you want to share this training session with your followers?",
-      [
-        { text: "Cancel" },
-        {
-          text: "Yes",
-          onPress: () => {
-            finishSession(user.uid, session, {
-              comment: "Post Comment"
-            })
-            navigation.navigate("ModelList")
-          }
-        },
-        {
-          text: "No",
-          onPress: () => {
-            finishSession(user.uid, session)
-            navigation.navigate("ModelList")
-          }
+    Alert.alert(STRS.train.finishTS, STRS.train.confirmShare, [
+      { text: STRS.cancel },
+      {
+        text: STRS.yes,
+        onPress: () => {
+          finishSession(user.uid, session, {
+            comment: "Post Comment"
+          })
+          navigation.navigate("ModelList")
         }
-      ]
-    )
+      },
+      {
+        text: STRS.no,
+        onPress: () => {
+          finishSession(user.uid, session)
+          navigation.navigate("ModelList")
+        }
+      }
+    ])
     console.log("b")
   }
 
@@ -67,9 +71,12 @@ export default function Session({
         <Appbar.BackAction
           onPress={() =>
             Alert.alert(
-              "Cancel Training Session",
-              "Are you sure you want to cancel the training session?\nYour progress will not be saved.",
-              [{ text: "Yes", onPress: navigation.goBack }, { text: "No" }]
+              STRS.train.cancelTS,
+              STRS.train.models.confirmCancelTS,
+              [
+                { text: STRS.yes, onPress: navigation.goBack },
+                { text: STRS.no }
+              ]
             )
           }
         />
@@ -105,7 +112,7 @@ export default function Session({
         }}
         onPress={onSessionFinished}
       >
-        Finish Training Session
+        {STRS.train.finishTS}
       </Button>
     </>
   )
