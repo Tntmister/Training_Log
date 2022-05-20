@@ -125,6 +125,9 @@ export default function Posts({
   function onModelPress(model: TrainingModel) {
     navigation.navigate("Model", { model: model, mode: modelModes.View })
   }
+  function onUserPress(user: string) {
+    navigation.navigate("Profile", { uid: user })
+  }
 
   return (
     <FlatList
@@ -132,6 +135,7 @@ export default function Posts({
       data={posts}
       renderItem={({ item }) => (
         <PostDescriptor
+          onUserPress={onUserPress}
           onModelPress={onModelPress}
           onSessionPress={onSessionPress}
           post={item}

@@ -14,10 +14,12 @@ import ModelDescriptor from "../Train/Models/ModelDescriptor"
 
 function PostDescriptor({
   post,
+  onUserPress,
   onModelPress,
   onSessionPress
 }: {
   post: Post;
+  onUserPress: (user: string) => void;
   onModelPress: (model: TrainingModel) => void;
   onSessionPress: (session: TrainingSession) => void;
 }) {
@@ -63,14 +65,16 @@ function PostDescriptor({
           marginHorizontal: theme.margins.m
         }}
       >
-        {user?.profileURL ? (
-          <CachedImage source={user.profileURL} style={styles.img} />
-        ) : (
-          <Image
-            source={images.User}
-            style={[styles.img, { tintColor: theme.colors.text }]}
-          />
-        )}
+        <TouchableOpacity onPress={() => onUserPress(post.author)}>
+          {user?.profileURL ? (
+            <CachedImage source={user.profileURL} style={styles.img} />
+          ) : (
+            <Image
+              source={images.User}
+              style={[styles.img, { tintColor: theme.colors.text }]}
+            />
+          )}
+        </TouchableOpacity>
         <Text style={[theme.text.header, { marginLeft: theme.margins.m }]}>
           {user?.username}
         </Text>
