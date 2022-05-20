@@ -23,7 +23,7 @@ import {
 } from "../../../../providers/Theme"
 import { StyleSheet, View, ViewStyle } from "react-native"
 import { Exercise } from "../../../../lib/types/train"
-import { exercises } from "../../../../assets/exercises"
+import { exercises } from "../../../../assets/exercises_en"
 
 export default function ExerciseSearch({
   setExercises,
