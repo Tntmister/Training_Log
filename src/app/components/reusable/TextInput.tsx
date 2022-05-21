@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import { TextInput as PaperTextInput } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "../../providers/Theme"
 
 export function TextInput({
