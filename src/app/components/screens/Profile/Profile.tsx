@@ -96,9 +96,7 @@ export default function Profile({
     return subscribeUser(route.params.uid, setUserProfile)
   }, [])
   useEffect(() => {
-    (async () => {
-      getUserPosts()
-    })()
+    getUserPosts()
   }, [])
 
   const [menuVisible, setMenuVisible] = useState(false)
@@ -228,28 +226,27 @@ export default function Profile({
           <Text style={styles.description}>{userProfile?.bio}</Text>
         )}
       </View>
-      <View style={styles.postsContainer}>
-        <FlatList
-          //onRefresh={refreshData}
-          data={posts}
-          renderItem={({ item }) => (
-            <PostDescriptor
-              onUserPress={() => {}}
-              onModelPress={onModelPress}
-              onSessionPress={onSessionPress}
-              post={item}
-            />
-          )}
-          ListFooterComponent={postsFooter}
-          onEndReached={() => setScrollEnd(true)}
-          onMomentumScrollEnd={() => {
-            scrollEnd && getUserPosts()
-            setScrollEnd(false)
-          }}
-          onEndReachedThreshold={0}
-          refreshing={refreshing}
-        />
-      </View>
+      <FlatList
+        style={styles.postsContainer}
+        onRefresh={refreshData}
+        data={posts}
+        renderItem={({ item }) => (
+          <PostDescriptor
+            onUserPress={() => {}}
+            onModelPress={onModelPress}
+            onSessionPress={onSessionPress}
+            post={item}
+          />
+        )}
+        ListFooterComponent={postsFooter}
+        onEndReached={() => setScrollEnd(true)}
+        onMomentumScrollEnd={() => {
+          scrollEnd && getUserPosts()
+          setScrollEnd(false)
+        }}
+        onEndReachedThreshold={0}
+        refreshing={refreshing}
+      />
     </>
   )
 }

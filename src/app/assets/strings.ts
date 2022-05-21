@@ -92,6 +92,7 @@ export type strings = {
   delete: string;
   edit: string;
   cancel: string;
+  comment: string;
 };
 
 export type strings_global_lang = {
@@ -203,7 +204,8 @@ export const strings_en: strings = {
   no: "No",
   delete: "Delete",
   edit: "Edit",
-  cancel: "Cancel"
+  cancel: "Cancel",
+  comment: "Comment"
 }
 
 export const strings_pt: strings = {
@@ -300,5 +302,6 @@ export const strings_pt: strings = {
   no: "Não",
   delete: "Eliminar",
   edit: "Editar",
-  cancel: "Cancelar"
+  cancel: "Cancelar",
+  comment: "Comentário"
 }
