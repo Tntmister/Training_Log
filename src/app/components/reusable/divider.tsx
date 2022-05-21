@@ -11,7 +11,7 @@ function Divider({ style, ...props }: ViewProps) {
           alignSelf: "center",
           height: 0,
           borderTopColor: theme.colors.primary,
-          borderTopWidth: 1.2,
+          borderTopWidth: theme.borders.borderWidth_m,
           width: "90%",
           marginTop: theme.margins.m
         },

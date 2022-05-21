@@ -1,9 +1,14 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react"
-import { View, Dimensions } from "react-native"
+import React, { useContext, useState } from "react"
+import { View, Dimensions, StyleSheet } from "react-native"
 import Dots from "react-native-dots-pagination"
 import PagerView from "react-native-pager-view"
-import { useTheme } from "../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../providers/Theme"
 import { CachedImage } from "@georstat/react-native-image-cache"
 import Loading from "./Loading"
 import { Asset } from "react-native-image-picker"
@@ -16,7 +21,16 @@ export default function MediaCarousel({
   ...props
 }: { assets: Asset[] } & React.ComponentProps<typeof View>) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const [activeImage, setActiveImage] = useState(0)
+
+  const styles = StyleSheet.create({
+    media: {
+      width: Dimensions.get("window").width,
+      height: theme.media.xl
+    }
+  })
   return (
     <View
       style={[
@@ -46,10 +60,7 @@ export default function MediaCarousel({
               <CachedImage
                 loadingImageComponent={Loading}
                 key={index}
-                style={{
-                  width: Dimensions.get("window").width,
-                  height: 400
-                }}
+                style={styles.media}
                 source={asset.uri!}
               />
             )
@@ -61,15 +72,12 @@ export default function MediaCarousel({
                 poster={asset.uri}
                 paused={activeImage != index}
                 repeat={true}
-                style={{
-                  width: Dimensions.get("window").width,
-                  height: 400
-                }}
+                style={styles.media}
                 key={index}
                 source={{ uri: asset.uri, type: asset.type }}
               />
             )
-          else return <Text key={index}>Error reading media.</Text>
+          else return <Text key={index}>{STRS.media_error}</Text>
         })}
       </PagerView>
       {assets.length > 1 && (

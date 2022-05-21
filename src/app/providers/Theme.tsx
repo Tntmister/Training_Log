@@ -47,6 +47,22 @@ export type Theme = {
     body_l: TextStyle;
     body_m: TextStyle;
     body_s: TextStyle;
+    body_xs: TextStyle;
+  };
+  borders: {
+    borderRadius_s: number;
+    borderRadius_m: number;
+    borderWidth_s: number;
+    borderWidth_m: number;
+  };
+  media: {
+    s: number;
+    m: number;
+    l: number;
+    xl: number;
+  };
+  icons: {
+    s: number;
   };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
@@ -77,6 +93,11 @@ const defaultTheme: Theme = {
     },
     body_s: {
       fontSize: RFValue(14),
+      fontWeight: "400",
+      fontFamily: "Lato"
+    },
+    body_xs: {
+      fontSize: RFValue(12),
       fontWeight: "400",
       fontFamily: "Lato"
     }
@@ -130,6 +151,21 @@ const defaultTheme: Theme = {
     error: "#FF0000",
     placeholder: "#424242",
     white: "#FFFFFF"
+  },
+  borders: {
+    borderRadius_s: 5,
+    borderRadius_m: 10,
+    borderWidth_s: 1,
+    borderWidth_m: 2
+  },
+  media: {
+    s: 40,
+    m: 80,
+    l: 100,
+    xl: 400
+  },
+  icons: {
+    s: 30
   },
   global_strings: strings_global,
   strings: {

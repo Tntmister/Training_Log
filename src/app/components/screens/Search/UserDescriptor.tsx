@@ -23,17 +23,16 @@ function UserDescriptor({
       width: "95%",
       alignSelf: "center",
       marginTop: theme.margins.s,
-      borderRadius: 10,
+      borderRadius: theme.borders.borderRadius_m,
       backgroundColor: theme.colors.backdrop,
       padding: theme.paddings.m
     },
     img: {
-      height: 80,
-      width: undefined,
-      aspectRatio: 1,
-      borderWidth: 1,
+      height: theme.media.m,
+      width: theme.media.m,
+      borderWidth: theme.borders.borderWidth_s,
       borderColor: theme.colors.primary,
-      borderRadius: 10,
+      borderRadius: theme.borders.borderRadius_m,
       overflow: "hidden"
     },
     inline: {
@@ -41,6 +40,11 @@ function UserDescriptor({
       justifyContent: "flex-start",
       marginTop: theme.margins.s,
       marginHorizontal: theme.margins.m
+    },
+    infoContainer: {
+      flexGrow: 1,
+      height: "100%",
+      paddingLeft: theme.paddings.m
     }
   })
   return (
@@ -54,13 +58,7 @@ function UserDescriptor({
             style={[styles.img, { tintColor: theme.colors.text }]}
           />
         )}
-        <View
-          style={{
-            flexGrow: 1,
-            height: "100%",
-            paddingLeft: theme.paddings.m
-          }}
-        >
+        <View style={styles.infoContainer}>
           <Text style={theme.text.header}>{user.username}</Text>
           <Text style={theme.text.body_m}>{user.bio}</Text>
         </View>

@@ -1,8 +1,6 @@
 import React, { useContext, useRef, useState } from "react"
 import { StyleSheet, ToastAndroid, View } from "react-native"
 import { Checkbox } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
-
 import {
   langs,
   langStrings,
@@ -48,6 +46,9 @@ export default function SignUp() {
       },
       input: {
         width: "80%"
+      },
+      terms: {
+        ...theme.text.body_s
       }
     })
   ).current
@@ -87,13 +88,7 @@ export default function SignUp() {
             setCheckedTOS(!checkedTOS)
           }}
         />
-        <Text
-          style={{
-            fontSize: RFValue(14)
-          }}
-        >
-          {STRS.auth.termsAgreement}
-        </Text>
+        <Text style={styles.terms}>{STRS.auth.termsAgreement}</Text>
       </View>
 
       <Button style={styles.input} onPress={onSubmit}>

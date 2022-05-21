@@ -18,8 +18,8 @@ export function TextInput({
           marginTop: theme.margins.m,
           paddingHorizontal: theme.paddings.l,
           height: 50,
-          borderBottomWidth: 2,
-          fontSize: RFValue(16)
+          borderBottomWidth: theme.borders.borderWidth_m,
+          ...theme.text.body_m
         },
         style
       ]}

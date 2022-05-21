@@ -1,8 +1,9 @@
 import { CachedImage } from "@georstat/react-native-image-cache"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import {
   Alert,
   ScrollView,
+  StyleSheet,
   TouchableOpacity,
   View,
   ViewProps
@@ -14,7 +15,12 @@ import {
   ImagePickerResponse
 } from "react-native-image-picker"
 import { IconButton } from "react-native-paper"
-import { useTheme } from "../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../providers/Theme"
 import InlineView from "./InlineView"
 
 export default function MediaSelector({
@@ -25,11 +31,23 @@ export default function MediaSelector({
 }: { assets: Asset[]; deletedAssets?: Asset[] } & ViewProps) {
   const [assetsState, setAssetsState] = useState(assets)
   const theme = useTheme()
-
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
+  const styles = StyleSheet.create({
+    btn: {
+      borderRadius: theme.borders.borderRadius_s,
+      backgroundColor: theme.colors.primary
+    },
+    img: {
+      width: theme.media.l,
+      height: theme.media.l,
+      marginRight: theme.margins.s
+    }
+  })
   function onImageDelete(imgNum: number) {
-    Alert.alert("Delete Image", "Delete the specified image?", [
+    Alert.alert(STRS.deleteImage, STRS.confirmDeleteImage, [
       {
-        text: "Yes",
+        text: STRS.yes,
         onPress: () => {
           deletedAssets?.push(assets[imgNum])
           setAssetsState((prevAssets) =>
@@ -38,7 +56,7 @@ export default function MediaSelector({
           assets.splice(imgNum, 1)
         }
       },
-      { text: "No" }
+      { text: STRS.no }
     ])
   }
 
@@ -54,7 +72,7 @@ export default function MediaSelector({
     <View style={[{ marginTop: theme.margins.s }, style]} {...props}>
       <InlineView>
         <IconButton
-          size={30}
+          size={theme.icons.s}
           icon="file-upload"
           onPress={() => {
             launchImageLibrary({
@@ -64,13 +82,10 @@ export default function MediaSelector({
               quality: 0.2
             }).then(onCameraExit)
           }}
-          style={{
-            borderRadius: 5,
-            backgroundColor: theme.colors.primary
-          }}
+          style={styles.btn}
         />
         <IconButton
-          size={30}
+          size={theme.icons.s}
           icon="video"
           onPress={() => {
             launchCamera({
@@ -78,13 +93,10 @@ export default function MediaSelector({
               videoQuality: "low"
             }).then(onCameraExit)
           }}
-          style={{
-            borderRadius: 5,
-            backgroundColor: theme.colors.primary
-          }}
+          style={styles.btn}
         />
         <IconButton
-          size={30}
+          size={theme.icons.s}
           icon="video-image"
           onPress={() => {
             launchCamera({
@@ -92,10 +104,7 @@ export default function MediaSelector({
               quality: 0.2
             }).then(onCameraExit)
           }}
-          style={{
-            borderRadius: 5,
-            backgroundColor: theme.colors.primary
-          }}
+          style={styles.btn}
         />
       </InlineView>
       <ScrollView
@@ -116,11 +125,7 @@ export default function MediaSelector({
                 key={asset.uri!}
                 noCache={asset.uri?.startsWith("file")}
                 resizeMode={"cover"}
-                style={{
-                  width: 100,
-                  height: 100,
-                  marginRight: theme.margins.s
-                }}
+                style={styles.img}
                 source={asset.uri!}
               />
             </>

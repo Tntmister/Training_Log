@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
-import { RFValue } from "react-native-responsive-fontsize"
 import {
   login,
   loginGoogle,
@@ -42,17 +41,21 @@ export default function SignIn() {
       },
       googleTextContainer: {
         width: "90%",
-        borderTopWidth: 1,
+        borderTopWidth: theme.borders.borderWidth_s,
         marginTop: theme.margins.l,
         borderTopColor: theme.colors.primary
       },
       googleText: {
         textAlign: "center",
-        fontSize: RFValue(12),
-        paddingTop: theme.paddings.m
+        paddingTop: theme.paddings.m,
+        ...theme.text.body_xs
       },
       input: {
         width: "80%"
+      },
+      forgotPW: {
+        ...theme.text.body_xs,
+        color: theme.colors.primary
       }
     })
   ).current
@@ -81,7 +84,7 @@ export default function SignIn() {
       <Button
         mode="text"
         onPress={onForgotPassword}
-        labelStyle={{ color: theme.colors.primary, fontSize: RFValue(12) }}
+        labelStyle={{ ...styles.forgotPW }}
         style={[styles.input, { marginTop: theme.margins.s }]}
       >
         {STRS.auth.forgotPassword}
