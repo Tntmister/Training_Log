@@ -86,6 +86,7 @@ export type strings = {
     posts: string;
     follow: string;
     unfollow: string;
+    stats: string;
   };
   yes: string;
   no: string;
@@ -197,7 +198,8 @@ export const strings_en: strings = {
     toggleTheme: "Toggle Theme",
     posts: "Posts",
     follow: "Follow",
-    unfollow: "Unfollow"
+    unfollow: "Unfollow",
+    stats: "Statistics"
   },
   yes: "Yes",
   no: "No",
@@ -294,7 +296,8 @@ export const strings_pt: strings = {
     toggleTheme: "Mudar Tema",
     posts: "Partilhas",
     follow: "Seguir",
-    unfollow: "Deixar de Seguir"
+    unfollow: "Deixar de Seguir",
+    stats: "Estatísticas"
   },
   yes: "Sim",
   no: "Não",

@@ -15,10 +15,6 @@ function Stat({
 
   const styles = StyleSheet.create({
     container: {
-      //backgroundColor: "red",
-      borderRadius: 15,
-      borderWidth: 2,
-      borderColor: theme.colors.primary,
       marginHorizontal: theme.margins.s,
       paddingVertical: theme.margins.xs,
       width: "33%"

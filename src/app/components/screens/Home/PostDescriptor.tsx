@@ -47,7 +47,9 @@ function PostDescriptor({
       height: 60,
       width: 60,
       borderWidth: 1,
-      borderColor: theme.colors.primary
+      borderColor: theme.colors.primary,
+      borderRadius: 10,
+      overflow: "hidden"
     }
   })
   const activity = post.post

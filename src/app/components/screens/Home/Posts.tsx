@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { TrainingModel, TrainingSession } from "../../../lib/types/train"
@@ -11,9 +12,12 @@ import { modelModes } from "../Train/Models/Model"
 import { Post } from "../../../lib/types/user"
 
 export default function Posts({
-  navigation
+  navigation,
+  route
 }: StackScreenProps<RootStackParamHomeNav, "Posts">) {
   const user = useContext(UserContext)!
+  const userid = route.params
+  console.log("ROUTE PARAMS", userid)
   const [posts, setPosts] = useState<Post[]>([])
 
   const [loading, setLoading] = useState(false)

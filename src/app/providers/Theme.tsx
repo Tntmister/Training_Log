@@ -62,7 +62,7 @@ const defaultTheme: Theme = {
     },
     subHeader: {
       fontSize: RFValue(20),
-      fontWeight: "bold",
+      fontWeight: "400",
       fontFamily: "Lato"
     },
     body_l: {
@@ -179,7 +179,7 @@ export const ThemeContext = React.createContext({
 
 export function PaperNavigationProvider({ children }: { children: ReactNode }) {
   const [dark, setDark] = useState(true)
-  const [lang, setLang] = useState("pt")
+  const [lang, setLang] = useState("en")
 
   const toggleTheme = useCallback(() => {
     return setDark(!dark)
