@@ -40,23 +40,6 @@ export default function Posts({
   }
 
   async function retrieveData() {
-    /* for (const followingChunk of followingChunks.current) {
-      const querySnapshot = await firestore()
-        .collection("posts")
-        .where("author", "in", followingChunk)
-        .orderBy("date", "desc")
-        .startAfter(oldest.current)
-        .limit(10)
-        .get()
-      console.log(querySnapshot.empty)
-      if (!querySnapshot.empty) {
-        const olderPosts = querySnapshot.docs.map(
-          (document) => document.data() as Post
-        )
-        setPosts((newerPosts) => [...newerPosts, ...olderPosts])
-        oldest.current = olderPosts[olderPosts.length - 1].post.date
-      }
-    } */
     setLoading(true)
     for (const querySnapshot of await Promise.all(
       followingChunks.current.map(
@@ -93,8 +76,6 @@ export default function Posts({
           .get()
       )
     )) {
-      console.log(querySnapshot)
-      console.log(querySnapshot.empty)
       if (!querySnapshot.empty) {
         const newerPosts = querySnapshot.docs.map(
           (document) => document.data() as Post
@@ -113,9 +94,7 @@ export default function Posts({
     })()
   }, [])
 
-  const postsFooter = () => {
-    return loading ? <Loading /> : null
-  }
+  const postsFooter = () => (loading ? <Loading /> : null)
 
   const [scrollEnd, setScrollEnd] = useState(false)
 

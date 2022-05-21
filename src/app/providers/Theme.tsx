@@ -62,7 +62,7 @@ const defaultTheme: Theme = {
     },
     subHeader: {
       fontSize: RFValue(20),
-      fontWeight: "bold",
+      fontWeight: "400",
       fontFamily: "Lato"
     },
     body_l: {

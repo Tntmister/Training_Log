@@ -74,21 +74,19 @@ export default function Profile({
       marginTop: theme.margins.m
     }
   })
-  const user = useContext(UserContext)!
   const { switchLang, toggleTheme, lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
-  const user_uid = route.params ? route.params.uid : user.uid
-  // user obtido por params (autenticado por default)
+
+  const user = useContext(UserContext)!
+  const self = route.params.uid === user.uid
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   const [follow, setFollow] = useState<Follow | undefined>(undefined)
   useEffect(() => {
-    if (user.uid !== user_uid)
-      return () => {
-        subscribeFollowing(user_uid, user.uid, setFollow)
-        subscribeUser(user_uid, setUserProfile)
-      }
-    return subscribeUser(user_uid, setUserProfile)
-  }, [route.params])
+    if (!self) return subscribeFollowing(route.params.uid, user.uid, setFollow)
+  }, [])
+  useEffect(() => {
+    return subscribeUser(route.params.uid, setUserProfile)
+  }, [])
 
   const [menuVisible, setMenuVisible] = useState(false)
 
@@ -111,7 +109,7 @@ export default function Profile({
         >
           <Menu.Item title={STRS.user.logout} onPress={logout} />
           <Menu.Item title={STRS.user.toggleTheme} onPress={toggleTheme} />
-          {user.uid === user_uid && (
+          {self && (
             <Menu.Item
               onPress={() => {
                 navigation.navigate("EditProfile", { user: userProfile! })
@@ -152,13 +150,13 @@ export default function Profile({
         </InlineView>
       </InlineView>
       <Divider />
-      {user.uid !== user_uid &&
+      {!self &&
         (follow ? (
-          <Button onPress={() => unfollowUser(user.uid, user_uid)}>
+          <Button onPress={() => unfollowUser(user.uid, route.params.uid)}>
             {STRS.user.unfollow}
           </Button>
         ) : (
-          <Button onPress={() => followUser(user.uid, user_uid)}>
+          <Button onPress={() => followUser(user.uid, route.params.uid)}>
             {STRS.user.follow}
           </Button>
         ))}
