@@ -104,7 +104,7 @@ export function getSessions(
 export async function finishSession(
   uid: string,
   session: TrainingSession,
-  share?: { comment?: string }
+  share?: { comment: string }
 ) {
   const userDoc = firestore().collection("users").doc(uid)
   firestore().runTransaction(async (t) => {

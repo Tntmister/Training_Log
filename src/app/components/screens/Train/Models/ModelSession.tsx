@@ -1,6 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useState } from "react"
 import { Alert, ScrollView } from "react-native"
+import prompt from "react-native-prompt-android"
 import { Appbar, Menu } from "react-native-paper"
 import { TrainingSession } from "../../../../lib/types/train"
 import { finishSession } from "../../../../lib/firebase/models"
@@ -40,27 +41,31 @@ export default function Session({
 
   function onSessionFinished() {
     session.duration = Date.now() - session.date
-    console.log("a")
-    Alert.alert(STRS.train.finishTS, STRS.train.confirmShare, [
-      { text: STRS.cancel },
-      {
-        text: STRS.yes,
-        onPress: () => {
-          finishSession(user.uid, session, {
-            comment: "Post Comment"
-          })
-          navigation.navigate("ModelList")
+    prompt(
+      STRS.train.finishTS,
+      STRS.train.confirmShare,
+      [
+        { text: STRS.cancel, style: "cancel" },
+        {
+          text: STRS.no,
+          onPress: () => {
+            finishSession(user.uid, session)
+            navigation.navigate("ModelList")
+          }
+        },
+        {
+          text: STRS.yes,
+          onPress: (comment) => {
+            console.log(comment)
+            finishSession(user.uid, session, {
+              comment: comment
+            })
+            navigation.navigate("ModelList")
+          }
         }
-      },
-      {
-        text: STRS.no,
-        onPress: () => {
-          finishSession(user.uid, session)
-          navigation.navigate("ModelList")
-        }
-      }
-    ])
-    console.log("b")
+      ],
+      { placeholder: STRS.comment }
+    )
   }
 
   const [menuVisible, setMenuVisible] = useState(false)

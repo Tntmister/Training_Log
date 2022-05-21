@@ -47,9 +47,23 @@ function PostDescriptor({
       height: 60,
       width: 60,
       borderWidth: 1,
+<<<<<<< HEAD
       borderColor: theme.colors.primary,
       borderRadius: 10,
       overflow: "hidden"
+=======
+      borderColor: theme.colors.primary
+    },
+    inline: {
+      width: "100%",
+      justifyContent: "flex-start",
+      marginTop: theme.margins.s,
+      marginHorizontal: theme.margins.m
+    },
+    actionText: {
+      marginVertical: theme.margins.s,
+      marginHorizontal: theme.margins.m
+>>>>>>> b24e84692b3eacc2980b9d449bc68edd500d2fad
     }
   })
   const activity = post.post
@@ -68,14 +82,7 @@ function PostDescriptor({
       style={styles.container}
     >
       {/* TODO: converter isto de forma a colocar no theme.strings */}
-      <InlineView
-        style={{
-          width: "100%",
-          justifyContent: "flex-start",
-          marginTop: theme.margins.s,
-          marginHorizontal: theme.margins.m
-        }}
-      >
+      <InlineView style={styles.inline}>
         <TouchableOpacity onPress={() => onUserPress(post.author)}>
           {user?.profileURL ? (
             <CachedImage source={user.profileURL} style={styles.img} />
@@ -91,12 +98,7 @@ function PostDescriptor({
         </Text>
       </InlineView>
       {user && (
-        <Text
-          style={{
-            marginVertical: theme.margins.s,
-            marginHorizontal: theme.margins.m
-          }}
-        >
+        <Text style={styles.actionText}>
           {`${
             session
               ? activity.name == ""
