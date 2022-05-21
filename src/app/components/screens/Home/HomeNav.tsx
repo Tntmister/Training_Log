@@ -7,7 +7,7 @@ import Model, { modelModes } from "../Train/Models/Model"
 import Posts from "./Posts"
 
 export type RootStackParamHomeNav = {
-  Posts: undefined;
+  Posts: { uid: string } | undefined;
   SessionSummary: { session: TrainingSession };
   Model: { model: TrainingModel; mode: modelModes };
   Profile: { uid: string } | undefined;

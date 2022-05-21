@@ -16,7 +16,7 @@ export default function Posts({
   route
 }: StackScreenProps<RootStackParamHomeNav, "Posts">) {
   const user = useContext(UserContext)!
-  const userid = route.params
+  const userid = route.params?.uid
   console.log("ROUTE PARAMS", userid)
   const [posts, setPosts] = useState<Post[]>([])
 
@@ -93,7 +93,10 @@ export default function Posts({
 
   useEffect(() => {
     (async () => {
-      await initFollowing()
+      if (userid == undefined) await initFollowing()
+      else {
+        followingChunks.current.push([userid])
+      }
       retrieveData()
     })()
   }, [])

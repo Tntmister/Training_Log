@@ -31,6 +31,11 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Posts from "../Home/Posts"
 import UserStats from "./UserStats"
 
+export type RootStackProfileList = {
+  Posts: { uid: string } | undefined;
+  Stats: { uid: string } | undefined;
+};
+
 export default function Profile({
   navigation,
   route
@@ -78,13 +83,16 @@ export default function Profile({
     editBtn: {
       marginTop: theme.margins.m
     },
-    postsContainer: {}
+    postsContainer: {},
+    followBtn: {
+      marginVertical: theme.margins.m
+    }
   })
   const { switchLang, toggleTheme, lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
 
   const user = useContext(UserContext)!
-  console.log(user)
+  //console.log(user)
   const self = route.params!.uid === user.uid
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   const [follow, setFollow] = useState<Follow | undefined>(undefined)
@@ -156,14 +164,19 @@ export default function Profile({
           <Stat title={STRS.user.following} stat={userProfile?.following} />
         </InlineView>
       </InlineView>
-      <Divider />
       {!self &&
         (follow ? (
-          <Button onPress={() => unfollowUser(user.uid, route.params!.uid)}>
+          <Button
+            style={styles.followBtn}
+            onPress={() => unfollowUser(user.uid, route.params!.uid)}
+          >
             {STRS.user.unfollow}
           </Button>
         ) : (
-          <Button onPress={() => followUser(user.uid, route.params!.uid)}>
+          <Button
+            style={styles.followBtn}
+            onPress={() => followUser(user.uid, route.params!.uid)}
+          >
             {STRS.user.follow}
           </Button>
         ))}
@@ -183,13 +196,21 @@ export default function Profile({
         backBehavior="none"
         initialLayout={{ width: Dimensions.get("window").width }}
         screenOptions={{
-          tabBarLabelStyle: { ...theme.text.subHeader },
+          tabBarLabelStyle: { ...theme.text.body_l },
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text
         }}
       >
-        <Tab.Screen component={Posts} name={STRS.user.posts} />
-        <Tab.Screen component={UserStats} name={STRS.user.stats} />
+        <Tab.Screen
+          component={Posts}
+          name={STRS.user.posts}
+          initialParams={{ uid: route.params!.uid }}
+        />
+        <Tab.Screen
+          component={UserStats}
+          name={STRS.user.stats}
+          initialParams={{ uid: route.params!.uid }}
+        />
       </Tab.Navigator>
     </>
   )
