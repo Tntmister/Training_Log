@@ -47,12 +47,9 @@ function PostDescriptor({
       height: 60,
       width: 60,
       borderWidth: 1,
-<<<<<<< HEAD
       borderColor: theme.colors.primary,
       borderRadius: 10,
       overflow: "hidden"
-=======
-      borderColor: theme.colors.primary
     },
     inline: {
       width: "100%",
@@ -63,7 +60,6 @@ function PostDescriptor({
     actionText: {
       marginVertical: theme.margins.s,
       marginHorizontal: theme.margins.m
->>>>>>> b24e84692b3eacc2980b9d449bc68edd500d2fad
     }
   })
   const activity = post.post
