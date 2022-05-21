@@ -1,6 +1,8 @@
-import React, { useContext, useEffect, useState } from "react"
-import { Image, StyleSheet, View } from "react-native"
+/* eslint-disable @typescript-eslint/no-empty-function */
+import React, { useContext, useEffect, useRef, useState } from "react"
+import { FlatList, Image, StyleSheet, View } from "react-native"
 import InlineView from "../../reusable/InlineView"
+import firestore from "@react-native-firebase/firestore"
 import {
   langs,
   langStrings,
@@ -20,12 +22,16 @@ import {
   subscribeUser,
   unfollowUser
 } from "../../../lib/firebase/user"
-import { Follow, User } from "../../../lib/types/user"
+import { Follow, Post, User } from "../../../lib/types/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
 import { IconButton, Menu } from "react-native-paper"
 import Divider from "../../reusable/divider"
 import { RFValue } from "react-native-responsive-fontsize"
 import { logout } from "../../../lib/firebase/auth"
+import PostDescriptor from "../Home/PostDescriptor"
+import { TrainingSession, TrainingModel } from "../../../lib/types/train"
+import { modelModes } from "../Train/Models/Model"
+import Loading from "../../reusable/Loading"
 
 export default function Profile({
   navigation,
@@ -72,12 +78,14 @@ export default function Profile({
     },
     editBtn: {
       marginTop: theme.margins.m
-    }
+    },
+    postsContainer: {}
   })
   const { switchLang, toggleTheme, lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
 
   const user = useContext(UserContext)!
+  console.log(user)
   const self = route.params.uid === user.uid
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   const [follow, setFollow] = useState<Follow | undefined>(undefined)
@@ -87,9 +95,58 @@ export default function Profile({
   useEffect(() => {
     return subscribeUser(route.params.uid, setUserProfile)
   }, [])
+  useEffect(() => {
+    (async () => {
+      getUserPosts()
+    })()
+  }, [])
 
   const [menuVisible, setMenuVisible] = useState(false)
+  const [posts, setPosts] = useState<Post[]>([])
 
+  const [loading, setLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+
+  const oldest = useRef(Date.now())
+  const newest = useRef(Date.now())
+
+  async function getUserPosts() {
+    setLoading(true)
+    const querySnapshot = await firestore()
+      .collection("posts")
+      .where("author", "==", user.uid)
+      .orderBy("post.date", "desc")
+      .startAfter(oldest.current)
+      .limit(10)
+      .get()
+    if (!querySnapshot.empty) {
+      const olderPosts = querySnapshot.docs.map(
+        (document) => document.data() as Post
+      )
+      setPosts((newerPosts) => [...newerPosts, ...olderPosts])
+      newest.current = olderPosts[olderPosts.length - 1].post.date
+    }
+    setLoading(false)
+  }
+
+  async function refreshData() {
+    setRefreshing(true)
+    await getUserPosts()
+    setRefreshing(false)
+  }
+
+  function onSessionPress(session: TrainingSession) {
+    navigation.navigate("SessionSummary", { session: session })
+  }
+  function onModelPress(model: TrainingModel) {
+    navigation.navigate("Model", { model: model, mode: modelModes.View })
+  }
+
+  const postsFooter = () => {
+    return loading ? <Loading /> : null
+  }
+
+  const [scrollEnd, setScrollEnd] = useState(false)
   return (
     <>
       <View style={styles.titleContainer}>
@@ -170,6 +227,28 @@ export default function Profile({
         {userProfile?.bio !== "" && (
           <Text style={styles.description}>{userProfile?.bio}</Text>
         )}
+      </View>
+      <View style={styles.postsContainer}>
+        <FlatList
+          //onRefresh={refreshData}
+          data={posts}
+          renderItem={({ item }) => (
+            <PostDescriptor
+              onUserPress={() => {}}
+              onModelPress={onModelPress}
+              onSessionPress={onSessionPress}
+              post={item}
+            />
+          )}
+          ListFooterComponent={postsFooter}
+          onEndReached={() => setScrollEnd(true)}
+          onMomentumScrollEnd={() => {
+            scrollEnd && getUserPosts()
+            setScrollEnd(false)
+          }}
+          onEndReachedThreshold={0}
+          refreshing={refreshing}
+        />
       </View>
     </>
   )
