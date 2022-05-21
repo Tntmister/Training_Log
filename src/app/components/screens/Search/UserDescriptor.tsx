@@ -32,7 +32,9 @@ function UserDescriptor({
       width: undefined,
       aspectRatio: 1,
       borderWidth: 1,
-      borderColor: theme.colors.primary
+      borderColor: theme.colors.primary,
+      borderRadius: 10,
+      overflow: "hidden"
     },
     inline: {
       width: "100%",
