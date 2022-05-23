@@ -46,7 +46,10 @@ export default function UserStats({
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.backdrop
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-around",
+      marginTop: theme.margins.m
     }
   })
 
