@@ -87,6 +87,7 @@ export type strings = {
     follow: string;
     unfollow: string;
     stats: string;
+    trainStats: string[];
   };
   yes: string;
   no: string;
@@ -203,7 +204,8 @@ export const strings_en: strings = {
     posts: "Posts",
     follow: "Follow",
     unfollow: "Unfollow",
-    stats: "Statistics"
+    stats: "Statistics",
+    trainStats: ["Finished T. Sessions", "T. Models Created", "Saved T. Models"]
   },
   yes: "Yes",
   no: "No",
@@ -305,7 +307,12 @@ export const strings_pt: strings = {
     posts: "Partilhas",
     follow: "Seguir",
     unfollow: "Deixar de Seguir",
-    stats: "Estatísticas"
+    stats: "Estatísticas",
+    trainStats: [
+      "Treinos Completos",
+      "Modelos de Treino Criados",
+      "Modelos de Treino Guardados"
+    ]
   },
   yes: "Sim",
   no: "Não",

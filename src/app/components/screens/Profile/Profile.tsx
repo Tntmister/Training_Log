@@ -15,7 +15,7 @@ import {
   useTheme
 } from "../../../providers/Theme"
 import { images } from "../../../lib/extra"
-import Stat from "./reusable/Stat"
+import UserStat from "./reusable/userStat"
 import { Text } from "../../reusable/Text"
 import { UserContext } from "../../../providers/User"
 import { Button } from "../../reusable/Button"
@@ -201,11 +201,17 @@ export default function Profile({
         )}
         <InlineView style={styles.statsContainer}>
           <TouchableOpacity onPress={() => console.log("navigate")}>
-            <Stat title={STRS.user.followers} stat={userProfile?.followers} />
+            <UserStat
+              title={STRS.user.followers}
+              stat={userProfile?.followers}
+            />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => console.log("navigate")}>
-            <Stat title={STRS.user.following} stat={userProfile?.following} />
+            <UserStat
+              title={STRS.user.following}
+              stat={userProfile?.following}
+            />
           </TouchableOpacity>
         </InlineView>
       </InlineView>

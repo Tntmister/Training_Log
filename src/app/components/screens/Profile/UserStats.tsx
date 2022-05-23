@@ -1,6 +1,54 @@
-import React from "react"
-import { Text } from "../../reusable/Text"
+import { StackScreenProps } from "@react-navigation/stack"
+import React, { useContext, useEffect, useState } from "react"
+import { StyleSheet, View } from "react-native"
+import { getSessions } from "../../../lib/firebase/models"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
+import { UserContext } from "../../../providers/User"
+import { RootStackProfileList } from "./Profile"
+import TrainStat from "./reusable/trainStat"
 
-export default function UserStats() {
-  return <Text>User stats</Text>
+export default function UserStats({
+  navigation,
+  route
+}: StackScreenProps<RootStackProfileList, "Posts">) {
+  const theme = useTheme()
+  const user = useContext(UserContext)!
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
+
+  const [stats, setStats] = useState([0, 0, 0])
+  const [statElements, setStatElements] = useState<JSX.Element[]>([])
+  useEffect(() => {
+    getSessions(route.params!.uid, (sessions) => {
+      setStats((prevStats) =>
+        prevStats.map((_, index) =>
+          index == 0 ? sessions.length : prevStats[index]
+        )
+      )
+    })
+    // getModels
+    // get number of saved models
+  }, [])
+
+  useEffect(() => {
+    setStatElements(
+      STRS.user.trainStats.map((stat, index) => {
+        console.log(stat)
+        return <TrainStat key={index} name={stat} value={stats[index]} />
+      })
+    )
+  }, [stats])
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.backdrop
+    }
+  })
+
+  return <View style={styles.container}>{statElements}</View>
 }
