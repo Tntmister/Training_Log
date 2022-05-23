@@ -32,38 +32,38 @@ export default function ProfileSearch({
   function onUserPress(uid: string) {
     navigation.navigate("Profile", { uid: uid })
   }
+
   const [users, setUsers] = useState<{ user: User; uid: string }[]>([])
   const last = useRef<FirebaseFirestoreTypes.DocumentData | null>(null)
   const [loading, setLoading] = useState(false)
   const [username, setUsername] = useState("")
-  async function retrieveData() {
-    const querySnapshot = last.current
-      ? await firestore()
-        .collection("users")
-        .orderBy("username")
-        .orderBy("followers", "desc")
-        .startAfter(last.current)
-        .where("username", ">=", username)
-        .where("username", "<=", username + "~")
-        .limit(10)
-        .get()
-      : await firestore()
-        .collection("users")
-        .orderBy("username")
-        .orderBy("followers", "desc")
-        .where("username", ">=", username)
-        .where("username", "<=", username + "~")
-        .limit(10)
-        .get()
-    if (!querySnapshot.empty) {
-      const olderPosts = querySnapshot.docs.map((document) => ({
-        user: document.data() as User,
-        uid: document.id
-      }))
-      setUsers((usersBefore) => [...usersBefore, ...olderPosts])
-      last.current = querySnapshot.docs[olderPosts.length - 1].data()
-    }
-    setLoading(false)
+  function retrieveData() {
+    let query = firestore()
+      .collection("users")
+      .orderBy("username")
+      .orderBy("followers", "desc")
+    if (last.current) query = query.startAfter(last.current)
+    query
+      .where("username", ">=", username)
+      .where("username", "<=", username + "~")
+      .limit(10)
+      .get()
+      .then(
+        (querySnapshot) => {
+          if (!querySnapshot.empty) {
+            const usersAfter = querySnapshot.docs.map((document) => ({
+              user: document.data() as User,
+              uid: document.id
+            }))
+            setUsers((usersBefore) => [...usersBefore, ...usersAfter])
+            last.current = querySnapshot.docs[usersAfter.length - 1].data()!
+          }
+        },
+        (reason) => {
+          console.error(reason)
+        }
+      )
+      .finally(() => setLoading(false))
   }
   useEffect(() => {
     setLoading(true)

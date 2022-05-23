@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import Profile from "./Profile"
+import FollowUsers from "./FollowUsers"
 import EditProfile from "./EditProfile"
 import { User } from "../../../lib/types/user"
 import { UserContext } from "../../../providers/User"
@@ -13,6 +14,7 @@ export type RootStackParamUserNav = {
   EditProfile: { user: User };
   SessionSummary: { session: TrainingSession };
   Model: { model: TrainingModel; mode: modelModes };
+  FollowUsers: { uid: string; type: "followers" | "following" };
 };
 
 export default function ProfileNav() {
@@ -32,6 +34,7 @@ export default function ProfileNav() {
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="SessionSummary" component={SessionSummary} />
       <Stack.Screen name="Model" component={Model} />
+      <Stack.Screen name="FollowUsers" component={FollowUsers} />
     </Stack.Navigator>
   )
 }

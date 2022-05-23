@@ -5,7 +5,7 @@ import ProfileSearch from "./ProfileSearch"
 
 export type RootStackParamSearchNav = {
   Profile: { uid: string };
-  ProfileSearch: undefined;
+  ProfileSearch: { uid: string; mode: "followers" | "following" } | undefined;
 };
 
 export default function ProfileNav() {
