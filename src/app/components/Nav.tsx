@@ -8,6 +8,7 @@ import { useTheme } from "../providers/Theme"
 import { images } from "../lib/extra"
 import HomeNav from "./screens/Home/HomeNav"
 import SearchNav from "./screens/Search/SearchNav"
+import Loading from "./reusable/Loading"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -21,6 +22,8 @@ export default function Nav() {
       tabBarPosition="bottom"
       initialLayout={{ width: Dimensions.get("window").width }}
       screenOptions={({ route }) => ({
+        lazy: true,
+        lazyPlaceholder: () => <Loading />,
         tabBarInactiveTintColor: theme.colors.text,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarShowLabel: false,

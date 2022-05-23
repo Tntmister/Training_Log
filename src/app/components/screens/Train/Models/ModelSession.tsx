@@ -29,7 +29,7 @@ export default function Session({
   const user = useContext(UserContext)!
   const model = route.params.model
 
-  const [session] = useState<TrainingSession>({
+  const [session, setSession] = useState<TrainingSession>({
     ...model,
     exercises: model.exercises.map((ex) => ({ ...ex, userMediaContent: [] })),
     date: Date.now(),
@@ -69,7 +69,6 @@ export default function Session({
   }
 
   const [menuVisible, setMenuVisible] = useState(false)
-
   return (
     <>
       <Appbar>
@@ -108,10 +107,16 @@ export default function Session({
             key={index}
             exercise={ex}
             mode={modelModes.Session}
+            onChange={setSession}
           />
         ))}
       </ScrollView>
       <Button
+        disabled={
+          !session.exercises.every((value) =>
+            value.sets.every((set) => set.done)
+          )
+        }
         style={{
           marginTop: theme.margins.s
         }}

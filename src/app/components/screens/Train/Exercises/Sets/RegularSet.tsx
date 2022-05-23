@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
-import { RegularSetClass } from "../../../../../lib/types/train"
+import { ExerciseSet, RegularSetClass } from "../../../../../lib/types/train"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import { Button } from "../../../../reusable/Button"
@@ -14,12 +14,12 @@ export default function RegularSet({
   mode,
   set,
   index,
-  onSetDelete
+  setSets
 }: {
   mode: modelModes;
   set: RegularSetClass;
   index: number;
-  onSetDelete: (setIndex: number) => void;
+  setSets: (callback: (sets: ExerciseSet[]) => ExerciseSet[]) => void;
 }) {
   const theme = useTheme()
   const styles = StyleSheet.create({
@@ -61,7 +61,18 @@ export default function RegularSet({
       color: theme.colors.primary
     }
   })
-  const [set_state, setSet] = useState(set)
+
+  function onSetDelete(index: number) {
+    setSets((prevSets) => prevSets.filter((_, i) => i != index))
+  }
+
+  function setSet(callback: (set: RegularSetClass) => RegularSetClass) {
+    setSets((sets) =>
+      sets.map((value, index) =>
+        index != sets.indexOf(set) ? value : callback(set)
+      )
+    )
+  }
 
   function onChangeWeight(weight: string) {
     setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
@@ -79,19 +90,13 @@ export default function RegularSet({
     setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
   }
 
-  useEffect(() => {
-    set.done = set_state.done
-    set.reps = set_state.reps
-    set.weight = set_state.weight
-  }, [set_state])
-
   return (
     <InlineView style={styles.container}>
       <Text style={[styles.index, styles.box]}>{index + 1}</Text>
       <SetFieldInput
         inputMode={mode}
         style={styles.input}
-        value={set_state.weight.toString()}
+        value={set.weight.toString()}
         onChangeText={onChangeWeight}
       />
       <View style={[styles.input, styles.repsInput]}>
@@ -106,7 +111,7 @@ export default function RegularSet({
           </Button>
         )}
         <Text style={[styles.box, { flexGrow: 1, color: theme.colors.text }]}>
-          {set_state.reps}
+          {set.reps}
         </Text>
         {mode != modelModes.View && (
           <Button
@@ -130,7 +135,7 @@ export default function RegularSet({
             />
           ) : (
             <Checkbox
-              status={set_state.done ? "checked" : "unchecked"}
+              status={set.done ? "checked" : "unchecked"}
               onPress={onCheckBoxPress}
             />
           )}

@@ -1,8 +1,13 @@
-import React, { useContext, useRef, useState } from "react"
+import React, { useContext, useRef } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { ModelExercise, SessionExercise } from "../../../../lib/types/train"
+import {
+  ModelExercise,
+  SessionExercise,
+  TrainingModel,
+  TrainingSession
+} from "../../../../lib/types/train"
 import { categoryIcons } from "../../../../lib/firebase/exercises"
 import { images } from "../../../../lib/extra"
 import {
@@ -23,11 +28,13 @@ import ProgrammedStretchingExercise from "./ProgrammedStretchingExercise"
 export default function ProgrammedExercise({
   exercise,
   mode,
-  onExerciseDel
+  onChange
 }: {
   exercise: ModelExercise | SessionExercise;
   mode: modelModes;
-  onExerciseDel?: (exercise: ModelExercise) => void;
+  onChange?:
+  | React.Dispatch<React.SetStateAction<TrainingModel>>
+  | React.Dispatch<React.SetStateAction<TrainingSession>>;
 }) {
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
@@ -78,14 +85,34 @@ export default function ProgrammedExercise({
     })
   ).current
 
-  const [exercise_state, setExercise] = useState(exercise)
+  function onExerciseDel() {
+    (onChange as React.Dispatch<React.SetStateAction<TrainingModel>>)(
+      (prevModel) => ({
+        ...prevModel,
+        exercises: prevModel.exercises.filter((ex) => ex.name != exercise.name)
+      })
+    )
+  }
+
+  function setExercise(
+    callback: (
+      exercise: ModelExercise | SessionExercise
+    ) => ModelExercise | SessionExercise
+  ) {
+    (onChange as React.Dispatch<React.SetStateAction<TrainingModel>>)(
+      (prevTrain) => ({
+        ...prevTrain,
+        exercises: prevTrain.exercises.map((value, index) =>
+          index != prevTrain.exercises.indexOf(exercise)
+            ? value
+            : callback(exercise)
+        )
+      })
+    )
+  }
 
   function onAnnotationChange(text: string) {
-    exercise.annotation = text
-    setExercise((prevEx) => ({
-      ...prevEx,
-      annotation: text
-    }))
+    setExercise((prevExercise) => ({ ...prevExercise, annotation: text }))
   }
 
   return (
@@ -102,7 +129,7 @@ export default function ProgrammedExercise({
           <IconButton
             style={styles.del}
             size={RFValue(26)}
-            onPress={() => onExerciseDel!(exercise)}
+            onPress={onExerciseDel}
             icon={images.Trash}
           />
         )}
@@ -118,16 +145,28 @@ export default function ProgrammedExercise({
           onChangeText={onAnnotationChange}
         />
       ) : (
-        exercise_state.annotation.length > 0 && (
-          <Text style={styles.annotation}>{exercise_state.annotation}</Text>
+        exercise.annotation.length > 0 && (
+          <Text style={styles.annotation}>{exercise.annotation}</Text>
         )
       )}
       {exercise.category == "Cardio" ? (
-        <ProgrammedCardioExercise exercise={exercise} mode={mode} />
+        <ProgrammedCardioExercise
+          exercise={exercise}
+          mode={mode}
+          onChange={setExercise}
+        />
       ) : exercise.category == "Stretching" ? (
-        <ProgrammedStretchingExercise exercise={exercise} mode={mode} />
+        <ProgrammedStretchingExercise
+          exercise={exercise}
+          mode={mode}
+          onChange={setExercise}
+        />
       ) : (
-        <ProgrammedRegularExercise exercise={exercise} mode={mode} />
+        <ProgrammedRegularExercise
+          exercise={exercise}
+          mode={mode}
+          onChange={setExercise}
+        />
       )}
       {mode == modelModes.Session && (
         <MediaSelector

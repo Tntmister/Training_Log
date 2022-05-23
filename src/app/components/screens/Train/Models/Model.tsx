@@ -70,13 +70,6 @@ export default function Model({
     setModel((prevModel) => ({ ...prevModel, description: newDescription }))
   }
 
-  function onExerciseDelete(exercise: Exercise) {
-    setModel((prevModel) => ({
-      ...prevModel,
-      exercises: prevModel.exercises.filter((ex) => ex.name != exercise.name)
-    }))
-  }
-
   async function onModelSave() {
     model.date = Date.now()
     await saveModel(user.uid, model, deletedAssets, id)
@@ -268,7 +261,7 @@ export default function Model({
             key={index}
             exercise={ex}
             mode={mode}
-            onExerciseDel={onExerciseDelete}
+            onChange={setModel}
           />
         ))}
         {mode == modelModes.Edit && (

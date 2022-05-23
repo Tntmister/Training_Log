@@ -1,8 +1,13 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { StretchingSetClass, ModelExercise } from "../../../../lib/types/train"
+import {
+  StretchingSetClass,
+  ModelExercise,
+  SessionExercise,
+  ExerciseSet
+} from "../../../../lib/types/train"
 import {
   langs,
   langStrings,
@@ -16,14 +21,18 @@ import StretchingSet from "./Sets/StretchingSet"
 
 export default function ProgrammedStretchingExercise({
   exercise,
-  mode
+  mode,
+  onChange
 }: {
   exercise: ModelExercise;
   mode: modelModes;
+  onChange: (
+    callback: (
+      exercise: ModelExercise | SessionExercise
+    ) => ModelExercise | SessionExercise
+  ) => void;
 }) {
   const theme = useTheme()
-  const { lang } = useContext(ThemeContext)
-  const STRS = langStrings(theme, lang as langs)
   const styles = StyleSheet.create({
     subtitleContainer: {
       justifyContent: "space-between",
@@ -36,12 +45,11 @@ export default function ProgrammedStretchingExercise({
       fontSize: RFValue(16)
     }
   })
-  const [sets, setSets] = useState<StretchingSetClass[]>(
-    exercise.sets as StretchingSetClass[]
-  )
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
 
-  function onSetDelete(index: number) {
-    setSets((prevSets) => prevSets.filter((_, i) => i != index))
+  function setSets(callback: (sets: ExerciseSet[]) => ExerciseSet[]) {
+    onChange((exercise) => ({ ...exercise, sets: callback(exercise.sets) }))
   }
 
   function addSet() {
@@ -50,10 +58,6 @@ export default function ProgrammedStretchingExercise({
       { done: false, duration: 0, weight: 0 }
     ])
   }
-
-  useEffect(() => {
-    exercise.sets = sets
-  }, [sets])
 
   return (
     <>
@@ -103,13 +107,13 @@ export default function ProgrammedStretchingExercise({
         )}
       </InlineView>
 
-      {sets.map((set, index) => (
+      {exercise.sets.map((set, index) => (
         <StretchingSet
           mode={mode}
-          set={set}
+          set={set as StretchingSetClass}
           index={index}
           key={index}
-          onSetDelete={onSetDelete}
+          setSets={setSets}
         />
       ))}
 

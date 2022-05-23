@@ -1,37 +1,37 @@
 import { Asset } from "react-native-image-picker"
 
-export type ExerciseSet = {
+export interface ExerciseSet {
   weight: number;
   done: boolean;
-};
-export type RegularSetClass = ExerciseSet & {
+}
+export interface RegularSetClass extends ExerciseSet {
   reps: number;
-};
-export type StretchingSetClass = ExerciseSet & {
+}
+export interface StretchingSetClass extends ExerciseSet {
   duration: number;
-};
-export type CardioSetClass = ExerciseSet & {
+}
+export interface CardioSetClass extends ExerciseSet {
   duration: number;
   distance: number;
-};
+}
 
-export type Exercise = {
+export interface Exercise {
   name: string;
   instructions: string[];
   category: string;
   equipment: string;
   primaryMuscle: string;
   secondaryMuscles: string[];
-};
+}
 
-export type ModelExercise = Exercise & {
+export interface ModelExercise extends Exercise {
   sets: ExerciseSet[];
   annotation: string;
-};
+}
 
-export type SessionExercise = ModelExercise & {
+export interface SessionExercise extends ModelExercise {
   userMediaContent: Asset[];
-};
+}
 
 export interface TrainingModel {
   name: string;

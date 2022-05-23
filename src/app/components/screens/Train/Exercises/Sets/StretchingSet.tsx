@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { Alert, StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
-import { StretchingSetClass } from "../../../../../lib/types/train"
+import {
+  ExerciseSet,
+  StretchingSetClass
+} from "../../../../../lib/types/train"
 import { images } from "../../../../../lib/extra"
 import { useTheme } from "../../../../../providers/Theme"
 import InlineView from "../../../../reusable/InlineView"
@@ -13,12 +16,12 @@ export default function StretchingSet({
   mode,
   set,
   index,
-  onSetDelete
+  setSets
 }: {
   mode: modelModes;
   set: StretchingSetClass;
   index: number;
-  onSetDelete: (setIndex: number) => void;
+  setSets: (callback: (sets: ExerciseSet[]) => ExerciseSet[]) => void;
 }) {
   const theme = useTheme()
   const styles = StyleSheet.create({
@@ -48,7 +51,18 @@ export default function StretchingSet({
       padding: 0
     }
   })
-  const [set_state, setSet] = useState(set)
+
+  function onSetDelete(index: number) {
+    setSets((prevSets) => prevSets.filter((_, i) => i != index))
+  }
+
+  function setSet(callback: (set: StretchingSetClass) => StretchingSetClass) {
+    setSets((sets) =>
+      sets.map((value, index) =>
+        index != sets.indexOf(set) ? value : callback(set)
+      )
+    )
+  }
 
   function onChangeWeight(weight: string) {
     setSet((prevSet) => ({ ...prevSet, weight: parseFloat(weight) || 0 }))
@@ -57,12 +71,6 @@ export default function StretchingSet({
   function onCheckBoxPress() {
     setSet((prevSet) => ({ ...prevSet, done: !prevSet.done }))
   }
-
-  useEffect(() => {
-    set.done = set_state.done
-    set.duration = set_state.duration
-    set.weight = set_state.weight
-  }, [set_state])
 
   const [timerActive, setTimerActive] = useState(false)
 
@@ -104,13 +112,13 @@ export default function StretchingSet({
       <SetFieldInput
         inputMode={mode}
         style={styles.input}
-        value={set_state.weight.toString()}
+        value={set.weight.toString()}
         onChangeText={onChangeWeight}
       />
       <SetFieldInput
         style={styles.input}
         inputMode={modelModes.View}
-        value={set_state.duration.toString()}
+        value={set.duration.toString()}
       />
 
       {mode == modelModes.Session && (
@@ -132,7 +140,7 @@ export default function StretchingSet({
             />
           ) : (
             <Checkbox
-              status={set_state.done ? "checked" : "unchecked"}
+              status={set.done ? "checked" : "unchecked"}
               onPress={onCheckBoxPress}
             />
           )}

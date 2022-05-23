@@ -29,11 +29,14 @@ export async function saveModel(
       asset.uri = await ref.getDownloadURL()
     }
   }
-  await collectionReference.doc(id).update(model)
+  await collectionReference
+    .doc(id)
+    .update(model)
+    .then(() => console.log("a"))
 }
 
-export function deleteModel(uID: string, id: string) {
-  firestore()
+export async function deleteModel(uID: string, id: string) {
+  await firestore()
     .collection("users")
     .doc(uID)
     .collection("models")
@@ -45,8 +48,8 @@ export function deleteModel(uID: string, id: string) {
     .then((list) => list.items.forEach((ref) => ref.delete()))
 }
 
-export function deleteSession(uID: string, id: string) {
-  firestore()
+export async function deleteSession(uID: string, id: string) {
+  await firestore()
     .collection("users")
     .doc(uID)
     .collection("sessions")

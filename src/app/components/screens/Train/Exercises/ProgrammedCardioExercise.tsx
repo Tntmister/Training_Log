@@ -1,7 +1,12 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
-import { CardioSetClass, ModelExercise } from "../../../../lib/types/train"
+import {
+  CardioSetClass,
+  ExerciseSet,
+  ModelExercise,
+  SessionExercise
+} from "../../../../lib/types/train"
 import {
   langs,
   langStrings,
@@ -15,34 +20,18 @@ import CardioSet from "./Sets/CardioSet"
 
 export default function ProgrammedCardioExercise({
   exercise,
-  mode
+  mode,
+  onChange
 }: {
   exercise: ModelExercise;
   mode: modelModes;
+  onChange: (
+    callback: (
+      exercise: ModelExercise | SessionExercise
+    ) => ModelExercise | SessionExercise
+  ) => void;
 }) {
   const theme = useTheme()
-  const { lang } = useContext(ThemeContext)
-  const STRS = langStrings(theme, lang as langs)
-
-  const [sets, setSets] = useState<CardioSetClass[]>(
-    exercise.sets as CardioSetClass[]
-  )
-
-  function onSetDelete(index: number) {
-    setSets((prevSets) => prevSets.filter((_, i) => i != index))
-  }
-
-  function addSet() {
-    setSets((prevSets) => [
-      ...prevSets,
-      { distance: 0, done: false, duration: 0, weight: 0 }
-    ])
-  }
-
-  useEffect(() => {
-    exercise.sets = sets
-  }, [sets])
-
   const styles = StyleSheet.create({
     subtitleContainer: {
       justifyContent: "space-between",
@@ -55,6 +44,19 @@ export default function ProgrammedCardioExercise({
       ...theme.text.body_m
     }
   })
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
+
+  function setSets(callback: (sets: ExerciseSet[]) => ExerciseSet[]) {
+    onChange((exercise) => ({ ...exercise, sets: callback(exercise.sets) }))
+  }
+
+  function addSet() {
+    setSets((prevSets) => [
+      ...prevSets,
+      { distance: 0, done: false, duration: 0, weight: 0 }
+    ])
+  }
 
   return (
     <>
@@ -112,13 +114,13 @@ export default function ProgrammedCardioExercise({
         )}
       </InlineView>
 
-      {sets.map((set, index) => (
+      {exercise.sets.map((set, index) => (
         <CardioSet
           key={index}
           mode={mode}
-          set={set}
+          set={set as CardioSetClass}
           index={index}
-          onSetDelete={onSetDelete}
+          setSets={setSets}
         />
       ))}
 

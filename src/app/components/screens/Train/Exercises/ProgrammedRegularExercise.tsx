@@ -1,8 +1,13 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import { StyleSheet } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
-import { RegularSetClass, ModelExercise } from "../../../../lib/types/train"
+import {
+  ModelExercise,
+  ExerciseSet,
+  SessionExercise,
+  RegularSetClass
+} from "../../../../lib/types/train"
 import {
   langs,
   langStrings,
@@ -16,10 +21,16 @@ import RegularSet from "./Sets/RegularSet"
 
 export default function ProgrammedCardioExercise({
   exercise,
-  mode
+  mode,
+  onChange
 }: {
   exercise: ModelExercise;
   mode: modelModes;
+  onChange: (
+    callback: (
+      exercise: ModelExercise | SessionExercise
+    ) => ModelExercise | SessionExercise
+  ) => void;
 }) {
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
@@ -35,21 +46,13 @@ export default function ProgrammedCardioExercise({
       fontSize: RFValue(16)
     }
   })
-  const [sets, setSets] = useState<RegularSetClass[]>(
-    exercise.sets as RegularSetClass[]
-  )
-
-  function onSetDelete(index: number) {
-    setSets((prevSets) => prevSets.filter((_, i) => i != index))
+  function setSets(callback: (sets: ExerciseSet[]) => ExerciseSet[]) {
+    onChange((exercise) => ({ ...exercise, sets: callback(exercise.sets) }))
   }
 
   function addSet() {
     setSets((prevSets) => [...prevSets, { done: false, reps: 1, weight: 0 }])
   }
-
-  useEffect(() => {
-    exercise.sets = sets
-  }, [sets])
 
   return (
     <>
@@ -89,13 +92,13 @@ export default function ProgrammedCardioExercise({
         )}
       </InlineView>
 
-      {sets.map((set, index) => (
+      {exercise.sets.map((set, index) => (
         <RegularSet
           key={index}
           mode={mode}
-          set={set}
+          set={set as RegularSetClass}
           index={index}
-          onSetDelete={onSetDelete}
+          setSets={setSets}
         />
       ))}
 
