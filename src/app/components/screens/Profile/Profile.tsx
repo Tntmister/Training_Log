@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useContext, useEffect, useState } from "react"
-import { Dimensions, Image, StyleSheet, View } from "react-native"
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from "react-native"
 import InlineView from "../../reusable/InlineView"
 import {
   langs,
@@ -24,12 +30,12 @@ import {
 import { Follow, User } from "../../../lib/types/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
 import { IconButton, Menu } from "react-native-paper"
-import Divider from "../../reusable/divider"
 import { RFValue } from "react-native-responsive-fontsize"
 import { logout } from "../../../lib/firebase/auth"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import Posts from "../Home/Posts"
 import UserStats from "./UserStats"
+import firestore from "@react-native-firebase/firestore"
 
 export type RootStackProfileList = {
   Posts: { uid: string } | undefined;
@@ -51,22 +57,25 @@ export default function Profile({
     },
     username: {
       textAlignVertical: "center",
-      paddingLeft: theme.paddings.m
+      paddingLeft: theme.paddings.l
     },
     headerContainer: {
-      justifyContent: "space-around"
+      width: "90%",
+      alignSelf: "center",
+      justifyContent: "space-between"
     },
     img: {
-      height: 80,
-      width: 80,
+      height: 90,
+      width: undefined,
+      aspectRatio: 1,
       borderWidth: 2,
       borderColor: theme.colors.primary,
       borderRadius: 10,
       overflow: "hidden"
     },
     statsContainer: {
-      justifyContent: "space-around",
-      width: "60%"
+      justifyContent: "space-evenly",
+      flexGrow: 1
     },
     infoContainer: {
       paddingTop: theme.margins.m
@@ -101,8 +110,40 @@ export default function Profile({
       return subscribeFollowing(route.params!.uid, user.uid, setFollow)
   }, [])
   useEffect(() => {
-    return subscribeUser(route.params!.uid, setUserProfile)
+    return subscribeUser(route.params.uid, setUserProfile)
   }, [])
+
+  async function following() {
+    console.log(route.params.uid)
+    const usersCollection = firestore().collection("users")
+    usersCollection
+      .doc(route.params.uid)
+      .collection("following")
+      .get()
+      .then((query1) =>
+        query1.forEach((doc) =>
+          usersCollection
+            .doc(doc.id)
+            .get()
+            .then((query2) => console.log(query2.data()))
+        )
+      )
+  }
+
+  async function followers() {
+    console.log(route.params.uid)
+    firestore()
+      .collectionGroup("following")
+      .where("id", "==", route.params.uid)
+      .get()
+      .then((query1) =>
+        query1.docs.forEach((doc) =>
+          doc.ref.parent
+            .parent!.get()
+            .then((query2) => console.log(query2.data()))
+        )
+      )
+  }
 
   const [menuVisible, setMenuVisible] = useState(false)
   return (
@@ -159,9 +200,13 @@ export default function Profile({
           />
         )}
         <InlineView style={styles.statsContainer}>
-          <Stat title={STRS.user.posts} stat={userProfile?.posts} />
-          <Stat title={STRS.user.followers} stat={userProfile?.followers} />
-          <Stat title={STRS.user.following} stat={userProfile?.following} />
+          <TouchableOpacity onPress={() => console.log("navigate")}>
+            <Stat title={STRS.user.followers} stat={userProfile?.followers} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => console.log("navigate")}>
+            <Stat title={STRS.user.following} stat={userProfile?.following} />
+          </TouchableOpacity>
         </InlineView>
       </InlineView>
       {!self &&
@@ -191,7 +236,6 @@ export default function Profile({
           <Text style={styles.description}>{userProfile?.bio}</Text>
         )}
       </View>
-      <Divider />
       <Tab.Navigator
         backBehavior="none"
         initialLayout={{ width: Dimensions.get("window").width }}
@@ -203,7 +247,7 @@ export default function Profile({
       >
         <Tab.Screen
           component={Posts}
-          name={STRS.user.posts}
+          name={`${userProfile?.posts} ${STRS.user.posts}`}
           initialParams={{ uid: route.params!.uid }}
         />
         <Tab.Screen

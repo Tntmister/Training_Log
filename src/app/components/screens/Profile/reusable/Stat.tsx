@@ -15,13 +15,15 @@ function Stat({
 
   const styles = StyleSheet.create({
     container: {
-      marginHorizontal: theme.margins.s,
-      paddingVertical: theme.margins.xs,
-      width: "33%"
+      paddingHorizontal: theme.paddings.m,
+      paddingVertical: theme.paddings.m,
+      borderRadius: 15,
+      borderWidth: 2,
+      borderColor: theme.colors.primary
     },
     name: {
       textAlign: "center",
-      ...theme.text.body_s,
+      ...theme.text.body_m,
       color: theme.colors.primary
     },
     value: {

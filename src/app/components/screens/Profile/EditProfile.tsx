@@ -101,7 +101,8 @@ export default function EditProfile({
             compressImageMaxHeight: 300,
             compressImageMaxWidth: 300,
             cropping: true,
-            mediaType: "photo"
+            mediaType: "photo",
+            forceJpg: true
           }).then(onGalleryExit, (reason) => console.log(reason))
         }
         style={styles.imgContainer}
