@@ -35,7 +35,6 @@ import { logout } from "../../../lib/firebase/auth"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import Posts from "../Home/Posts"
 import UserStats from "./UserStats"
-import firestore from "@react-native-firebase/firestore"
 
 export type RootStackProfileList = {
   Posts: { uid: string } | undefined;
@@ -113,38 +112,6 @@ export default function Profile({
     return subscribeUser(route.params.uid, setUserProfile)
   }, [])
 
-  async function following() {
-    console.log(route.params.uid)
-    const usersCollection = firestore().collection("users")
-    usersCollection
-      .doc(route.params.uid)
-      .collection("following")
-      .get()
-      .then((query1) =>
-        query1.forEach((doc) =>
-          usersCollection
-            .doc(doc.id)
-            .get()
-            .then((query2) => console.log(query2.data()))
-        )
-      )
-  }
-
-  async function followers() {
-    console.log(route.params.uid)
-    firestore()
-      .collectionGroup("following")
-      .where("id", "==", route.params.uid)
-      .get()
-      .then((query1) =>
-        query1.docs.forEach((doc) =>
-          doc.ref.parent
-            .parent!.get()
-            .then((query2) => console.log(query2.data()))
-        )
-      )
-  }
-
   const [menuVisible, setMenuVisible] = useState(false)
   return (
     <>
@@ -200,11 +167,25 @@ export default function Profile({
           />
         )}
         <InlineView style={styles.statsContainer}>
-          <TouchableOpacity onPress={() => console.log("navigate")}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("FollowUsers", {
+                type: "followers",
+                uid: route.params.uid
+              })
+            }
+          >
             <Stat title={STRS.user.followers} stat={userProfile?.followers} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => console.log("navigate")}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("FollowUsers", {
+                type: "following",
+                uid: route.params.uid
+              })
+            }
+          >
             <Stat title={STRS.user.following} stat={userProfile?.following} />
           </TouchableOpacity>
         </InlineView>
