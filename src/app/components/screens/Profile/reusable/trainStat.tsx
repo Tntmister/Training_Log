@@ -42,7 +42,7 @@ export default function TrainStat({
     }
   })
   console.log(index)
-  const [icon, setIcon] = useState("")
+  const [icon, setIcon] = useState("pending")
 
   useEffect(() => {
     setIcon(STRS.user.trainStatsIcons[index])

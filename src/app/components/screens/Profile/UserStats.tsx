@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
-import { getSessions } from "../../../lib/firebase/models"
+import { getModels, getSessions } from "../../../lib/firebase/models"
 import {
   langs,
   langStrings,
@@ -33,8 +33,14 @@ export default function UserStats({
       )
     })
     // get Models
-
-    // get number of saved models
+    getModels(route.params!.uid, (models) => {
+      setStats((prevStats) =>
+        prevStats.map((_, index) =>
+          index == 1 ? models.length : prevStats[index]
+        )
+      )
+    })
+    // TODO get number of saved models
   }, [])
 
   useEffect(() => {
