@@ -20,5 +20,5 @@ export type Post = {
   authorComment: string;
   author: string;
   post: TrainingModel | TrainingSession;
-  postId: string;
+  likes: number;
 };

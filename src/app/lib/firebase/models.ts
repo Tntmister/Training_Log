@@ -116,7 +116,8 @@ export async function finishSession(
       t.set(firestore().collection("posts").doc(), {
         authorComment: share.comment,
         author: uid,
-        post: session
+        post: session,
+        likes: 0
       } as Post)
       t.update(userDoc, { posts: firebase.firestore.FieldValue.increment(1) })
     }

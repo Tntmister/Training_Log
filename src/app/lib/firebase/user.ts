@@ -111,3 +111,31 @@ export function subscribeFollowing(
       onUpdate(query.empty ? undefined : (query.docs[0].data() as Follow))
     })
 }
+
+export async function toggleLikePost(uid: string, postId: string) {
+  const post = firestore().doc(`posts/${postId}`)
+  const liked = await post
+    .collection("likes")
+    .where("id", "==", uid)
+    .get()
+    .then((querySnapshot) => !querySnapshot.empty)
+  firestore().runTransaction(async (t) => {
+    t.update(post, {
+      likes: firebase.firestore.FieldValue.increment(liked ? -1 : 1)
+    })
+    if (liked) t.delete(post.collection("likes").doc(uid))
+    else
+      t.set(post.collection("likes").doc(uid), {
+        date: Date.now(),
+        id: uid
+      })
+  })
+}
+
+export function getPostLiked(uid: string, postId: string) {
+  return firestore()
+    .collection(`posts/${postId}/likes`)
+    .where("id", "==", uid)
+    .get()
+    .then((querySnapshot) => !querySnapshot.empty)
+}

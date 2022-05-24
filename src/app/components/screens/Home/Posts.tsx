@@ -18,7 +18,7 @@ export default function Posts({
   const user = useContext(UserContext)!
   const userid = route.params?.uid
   console.log("ROUTE PARAMS", userid)
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<{ post: Post; postId: string }[]>([])
 
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -58,11 +58,12 @@ export default function Posts({
       )
     )) {
       if (!querySnapshot.empty) {
-        const olderPosts = querySnapshot.docs.map(
-          (document) => document.data() as Post
-        )
+        const olderPosts = querySnapshot.docs.map((document) => ({
+          post: document.data() as Post,
+          postId: document.id
+        }))
         setPosts((newerPosts) => [...newerPosts, ...olderPosts])
-        oldest.current = olderPosts[olderPosts.length - 1].post.date
+        oldest.current = olderPosts[olderPosts.length - 1].post.post.date
       }
     }
     setLoading(false)
@@ -81,11 +82,12 @@ export default function Posts({
       )
     )) {
       if (!querySnapshot.empty) {
-        const newerPosts = querySnapshot.docs.map(
-          (document) => document.data() as Post
-        )
+        const newerPosts = querySnapshot.docs.map((document) => ({
+          post: document.data() as Post,
+          postId: document.id
+        }))
         setPosts((olderPosts) => [...newerPosts, ...olderPosts])
-        newest.current = newerPosts[0].post.date
+        newest.current = newerPosts[0].post.post.date
       }
     }
     setRefreshing(false)
@@ -124,7 +126,8 @@ export default function Posts({
           onUserPress={onUserPress}
           onModelPress={onModelPress}
           onSessionPress={onSessionPress}
-          post={item}
+          post={item.post}
+          postId={item.postId}
         />
       )}
       ListFooterComponent={postsFooter}
