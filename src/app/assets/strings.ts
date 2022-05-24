@@ -1,3 +1,5 @@
+const trainStatsIcons = ["check", "archive-arrow-up", "arm-flex"]
+
 export type strings = {
   auth: {
     signIn: string;
@@ -88,6 +90,7 @@ export type strings = {
     unfollow: string;
     stats: string;
     trainStats: string[];
+    trainStatsIcons: string[];
   };
   yes: string;
   no: string;
@@ -205,7 +208,12 @@ export const strings_en: strings = {
     follow: "Follow",
     unfollow: "Unfollow",
     stats: "Statistics",
-    trainStats: ["Finished T. Sessions", "T. Models Created", "Saved T. Models"]
+    trainStats: [
+      "Finished Training Sessions",
+      "Training Models Created",
+      "Saved Training Models"
+    ],
+    trainStatsIcons: trainStatsIcons
   },
   yes: "Yes",
   no: "No",
@@ -312,7 +320,8 @@ export const strings_pt: strings = {
       "Treinos Completos",
       "Modelos de Treino Criados",
       "Modelos de Treino Guardados"
-    ]
+    ],
+    trainStatsIcons: trainStatsIcons
   },
   yes: "Sim",
   no: "Não",

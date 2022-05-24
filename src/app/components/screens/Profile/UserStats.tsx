@@ -24,6 +24,7 @@ export default function UserStats({
   const [stats, setStats] = useState([0, 0, 0])
   const [statElements, setStatElements] = useState<JSX.Element[]>([])
   useEffect(() => {
+    // get Sessions
     getSessions(route.params!.uid, (sessions) => {
       setStats((prevStats) =>
         prevStats.map((_, index) =>
@@ -31,7 +32,8 @@ export default function UserStats({
         )
       )
     })
-    // getModels
+    // get Models
+
     // get number of saved models
   }, [])
 
@@ -39,7 +41,14 @@ export default function UserStats({
     setStatElements(
       STRS.user.trainStats.map((stat, index) => {
         console.log(stat)
-        return <TrainStat key={index} name={stat} value={stats[index]} />
+        return (
+          <TrainStat
+            key={index}
+            name={stat}
+            index={index}
+            value={stats[index]}
+          />
+        )
       })
     )
   }, [stats])
@@ -48,7 +57,7 @@ export default function UserStats({
     container: {
       flexDirection: "row",
       flexWrap: "wrap",
-      justifyContent: "space-around",
+      justifyContent: "flex-start",
       marginTop: theme.margins.m
     }
   })

@@ -47,7 +47,7 @@ function PostDescriptor({
       //height: 300,
       alignSelf: "center",
       marginTop: theme.margins.s,
-      borderRadius: 10,
+      borderRadius: theme.borders.borderRadius_m,
       backgroundColor: theme.colors.backdrop,
       padding: theme.paddings.m
     },
