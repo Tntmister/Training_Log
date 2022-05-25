@@ -83,7 +83,7 @@ function PostDescriptor({
     getPostLiked(user.uid, postId).then((liked) => setLiked(liked))
   }, [])
 
-  console.log("POST", post.post.date)
+  //console.log("POST ->", post.post.name, "| author ->", post.author)
   return (
     <TouchableOpacity
       onPress={
@@ -121,13 +121,16 @@ function PostDescriptor({
       {session ? (
         <SessionDescriptor
           sessionId={postId}
-          onSessionPress={() => console.log("todo")}
+          onSessionPress={() => {
+            console.log(activity)
+            onSessionPress(activity)
+          }}
           session={activity}
         />
       ) : (
         <ModelDescriptor
           model={activity}
-          onModelPress={() => console.log("todo")}
+          onModelPress={() => onModelPress(activity)}
           modelId={postId}
         />
       )}

@@ -23,7 +23,7 @@ export default function Session({
 }: StackScreenProps<RootStackParamHistoryNav, "Session">) {
   const theme = useTheme()
   const session = route.params as TrainingSession
-  console.log(route.params)
+  console.log("SESSION -> ", session)
 
   const styles = StyleSheet.create({
     header: {

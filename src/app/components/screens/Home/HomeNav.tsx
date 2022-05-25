@@ -1,14 +1,14 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
 import { TrainingModel, TrainingSession } from "../../../lib/types/train"
-import SessionSummary from "../History/SessionSummary"
+import Session from "../History/Session"
 import Profile from "../Profile/Profile"
 import Model, { modelModes } from "../Train/Models/Model"
 import Posts from "./Posts"
 
 export type RootStackParamHomeNav = {
   Posts: { uid: string } | undefined;
-  SessionSummary: { session: TrainingSession };
+  Session: TrainingSession;
   Model: { model: TrainingModel; mode: modelModes };
   Profile: { uid: string } | undefined;
 };
@@ -22,7 +22,7 @@ export default function HomeNav() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Posts" component={Posts} />
-      <Stack.Screen name="SessionSummary" component={SessionSummary} />
+      <Stack.Screen name="Session" component={Session} />
       <Stack.Screen name="Model" component={Model} />
       <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>

@@ -39,6 +39,7 @@ export function getDuration(millis: number): string {
 
 export function getTotalWeight(session: TrainingSession): number {
   let total = 0
+  console.log("A CALCULAR ->", session.exercises)
   for (const exercise of session.exercises) {
     const multiplier = exercise.equipment == "Dumbbell" ? 2 : 1
     for (const set of exercise.sets) {

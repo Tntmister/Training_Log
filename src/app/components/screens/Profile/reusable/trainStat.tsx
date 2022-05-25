@@ -41,8 +41,7 @@ export default function TrainStat({
       backgroundColor: theme.colors.primary
     }
   })
-  console.log(index)
-  const [icon, setIcon] = useState("pending")
+  const [icon, setIcon] = useState("timer-sand-full")
 
   useEffect(() => {
     setIcon(STRS.user.trainStatsIcons[index])

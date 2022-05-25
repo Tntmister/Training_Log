@@ -231,6 +231,7 @@ export default function Profile({
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text
         }}
+        initialRouteName={`${userProfile?.posts} ${STRS.user.posts}`}
       >
         <Tab.Screen
           component={Posts}

@@ -108,7 +108,7 @@ export default function Posts({
   const [scrollEnd, setScrollEnd] = useState(false)
 
   function onSessionPress(session: TrainingSession) {
-    navigation.navigate("SessionSummary", { session: session })
+    navigation.navigate("Session", session)
   }
   function onModelPress(model: TrainingModel) {
     navigation.navigate("Model", { model: model, mode: modelModes.View })
