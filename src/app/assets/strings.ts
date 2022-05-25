@@ -45,6 +45,7 @@ export type strings = {
       createModel: string;
       noTrainingModels: string;
       deleteModel: string;
+      shareModel: string;
       trainingAnnotation: string;
       addExercise: string;
       saveModel: string;
@@ -96,6 +97,7 @@ export type strings = {
   no: string;
   delete: string;
   edit: string;
+  share: string;
   cancel: string;
   comment: string;
   media_error: string;
@@ -162,6 +164,7 @@ export const strings_en: strings = {
       createModel: "Start Training",
       noTrainingModels: "You have no Training Models",
       deleteModel: "Delete Model",
+      shareModel: "Share Model",
       trainingAnnotation: "Training Description",
       addExercise: "Add Exercise",
       saveModel: "Save Training Model",
@@ -219,6 +222,7 @@ export const strings_en: strings = {
   no: "No",
   delete: "Delete",
   edit: "Edit",
+  share: "Share",
   cancel: "Cancel",
   comment: "Comment",
   media_error: "Error reading media.",
@@ -271,6 +275,7 @@ export const strings_pt: strings = {
       createModel: "Começar a Treinar",
       noTrainingModels: "Não existem Modelos de Treino",
       deleteModel: "Apagar Modelo",
+      shareModel: "Partilhar Modelo",
       trainingAnnotation: "Descrição do Treino",
       addExercise: "Adicionar Exercício",
       saveModel: "Guardar Modelo de Treino",
@@ -327,6 +332,7 @@ export const strings_pt: strings = {
   no: "Não",
   delete: "Eliminar",
   edit: "Editar",
+  share: "Partilhar",
   cancel: "Cancelar",
   comment: "Comentário",
   media_error: "Erro ao ler o conteúdo.",

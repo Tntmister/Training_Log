@@ -10,9 +10,10 @@ import { Text } from "../../../reusable/Text"
 import { RFValue } from "react-native-responsive-fontsize"
 import { IconButton, Menu } from "react-native-paper"
 import { modelModes } from "./Model"
-import { deleteModel } from "../../../../lib/firebase/models"
+import { deleteModel, shareModel } from "../../../../lib/firebase/models"
 import { UserContext } from "../../../../providers/User"
 import { TrainingModel } from "../../../../lib/types/train"
+import prompt from "react-native-prompt-android"
 
 function ModelDescriptor({
   model,
@@ -84,6 +85,48 @@ function ModelDescriptor({
               )
             }
             title={STRS.train.models.deleteModel}
+          />
+          <Menu.Item
+            onPress={() =>
+              Alert.alert(
+                STRS.train.models.shareModel,
+                `${STRS.share} "${model.name}"?`,
+                [
+                  {
+                    text: STRS.yes,
+                    onPress: async () => {
+                      prompt(
+                        STRS.train.models.shareModel,
+                        STRS.train.confirmShare,
+                        [
+                          { text: STRS.cancel, style: "cancel" },
+                          {
+                            text: STRS.no,
+                            onPress: () => {
+                              setMenuVisible(false)
+                            }
+                          },
+                          {
+                            text: STRS.yes,
+                            onPress: (comment) => {
+                              console.log(comment)
+                              shareModel(user!.uid, model, {
+                                comment: comment
+                              })
+                              setMenuVisible(false)
+                            }
+                          }
+                        ],
+                        { placeholder: STRS.comment }
+                      )
+                      setMenuVisible(false)
+                    }
+                  },
+                  { text: STRS.no, onPress: () => setMenuVisible(false) }
+                ]
+              )
+            }
+            title={STRS.train.models.shareModel}
           />
         </Menu>
       </View>

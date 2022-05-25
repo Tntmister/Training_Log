@@ -123,3 +123,20 @@ export async function finishSession(
     }
   })
 }
+
+export async function shareModel(
+  uid: string,
+  model: TrainingModel,
+  share: { comment: string }
+) {
+  const userDoc = firestore().collection("users").doc(uid)
+  firestore().runTransaction(async (t) => {
+    t.set(firestore().collection("posts").doc(), {
+      authorComment: share.comment,
+      author: uid,
+      post: model,
+      likes: 0
+    } as Post)
+    t.update(userDoc, { posts: firebase.firestore.FieldValue.increment(1) })
+  })
+}
