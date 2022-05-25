@@ -28,7 +28,6 @@ export function getDate(timestamp: number | string | undefined): string {
 export function getDuration(millis: number): string {
   if (millis === undefined) return "Invalid Duration"
   const totalSecs = millis / 1000
-  console.log(totalSecs)
   const hours = Math.floor(totalSecs / 3600)
   const minutes = Math.floor((totalSecs % 3600) / 60)
 
@@ -39,7 +38,6 @@ export function getDuration(millis: number): string {
 
 export function getTotalWeight(session: TrainingSession): number {
   let total = 0
-  console.log("A CALCULAR ->", session.exercises)
   for (const exercise of session.exercises) {
     const multiplier = exercise.equipment == "Dumbbell" ? 2 : 1
     for (const set of exercise.sets) {

@@ -122,15 +122,23 @@ export default function Model({
     navigation.setParams({ mode: modelModes.Edit })
     setMenuVisible(false)
   }
+  async function onModelFromUserSave() {
+    const newModel = { ...model, author: user.uid, date: Date.now() }
+    await saveModel(user.uid, newModel, deletedAssets, id)
+    setMenuVisible(false)
+    navigation.navigate("ModelList")
+  }
   const [onetime, setOneTime] = useState(false)
 
   const [menuVisible, setMenuVisible] = useState(false)
 
   const [authorName, setAuthorName] = useState("")
+  const [userIsAuthor, setUserIsAuthor] = useState(false)
 
   useEffect(() => {
     const init = async () => {
       setAuthorName(await getUsername(model.author))
+      setUserIsAuthor(model.author === user.uid)
     }
     init()
   }, [model.author])
@@ -205,8 +213,11 @@ export default function Model({
               title={STRS.train.models.deleteModel}
             />
           )}
-          {mode == modelModes.View && (
+          {mode == modelModes.View && userIsAuthor && (
             <Menu.Item onPress={onModelEdit} title={STRS.edit} />
+          )}
+          {mode == modelModes.View && !userIsAuthor && (
+            <Menu.Item onPress={onModelFromUserSave} title={STRS.save} />
           )}
         </Menu>
       </Appbar>
