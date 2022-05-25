@@ -74,6 +74,7 @@ export default function ModelList({
               model={item.model}
               modelId={item.id}
               onModelPress={onModelPress}
+              onPost={false}
               key={index}
             />
           )}

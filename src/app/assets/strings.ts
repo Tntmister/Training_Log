@@ -186,7 +186,7 @@ export const strings_en: strings = {
   history: {
     yourTH: "Your Training History",
     noTS: "You haven't concluded any Training Sessions. Start Training and check your Training History here!",
-    deleteSession: "Delete Session?",
+    deleteSession: "Delete Session",
     confirmDeleteSession: "Confirm?"
   },
   home: {

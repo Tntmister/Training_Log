@@ -80,6 +80,7 @@ export default function SessionList({
               sessionId={item.id}
               onSessionPress={onSessionPress}
               key={index}
+              onPost={false}
             />
           )}
           ListEmptyComponent={<></>}

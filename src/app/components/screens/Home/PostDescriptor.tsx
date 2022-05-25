@@ -126,12 +126,14 @@ function PostDescriptor({
             onSessionPress(activity)
           }}
           session={activity}
+          onPost={true}
         />
       ) : (
         <ModelDescriptor
           model={activity}
           onModelPress={() => onModelPress(activity)}
           modelId={postId}
+          onPost={true}
         />
       )}
       <InlineView style={{ paddingHorizontal: theme.paddings.l }}>

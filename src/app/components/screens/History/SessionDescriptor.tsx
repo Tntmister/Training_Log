@@ -17,10 +17,12 @@ import { Text } from "../../reusable/Text"
 export default function SessionDescriptor({
   session,
   sessionId,
+  onPost,
   onSessionPress
 }: {
   session: TrainingSession;
   sessionId: string;
+  onPost: boolean;
   onSessionPress: (session: TrainingSession) => void;
 }) {
   const theme = useTheme()
@@ -92,7 +94,7 @@ export default function SessionDescriptor({
             <Text>{getDate(session.date)}</Text>
           </InlineView>
         </View>
-        {session.author !== user.uid && (
+        {!onPost && session.author === user.uid && (
           <Menu
             visible={menuVisible}
             onDismiss={() => setMenuVisible(false)}

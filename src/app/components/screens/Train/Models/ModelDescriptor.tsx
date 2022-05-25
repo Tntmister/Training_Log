@@ -18,10 +18,12 @@ import prompt from "react-native-prompt-android"
 function ModelDescriptor({
   model,
   modelId,
+  onPost,
   onModelPress
 }: {
   model: TrainingModel;
   modelId: string;
+  onPost: boolean;
   onModelPress: (
     model: TrainingModel,
     modelId: string,
@@ -50,85 +52,87 @@ function ModelDescriptor({
     >
       <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
         <Text style={{ flexGrow: 1, fontSize: RFValue(18) }}>{model.name}</Text>
-        <Menu
-          visible={menuVisible}
-          onDismiss={() => setMenuVisible(false)}
-          anchor={
-            <IconButton
-              onPress={() => setMenuVisible(true)}
-              icon={"dots-vertical"}
+        {!onPost && (
+          <Menu
+            visible={menuVisible}
+            onDismiss={() => setMenuVisible(false)}
+            anchor={
+              <IconButton
+                onPress={() => setMenuVisible(true)}
+                icon={"dots-vertical"}
+              />
+            }
+          >
+            <Menu.Item
+              title={STRS.edit}
+              onPress={() => {
+                onModelPress(model, modelId, modelModes.Edit),
+                setMenuVisible(false)
+              }}
             />
-          }
-        >
-          <Menu.Item
-            title={STRS.edit}
-            onPress={() => {
-              onModelPress(model, modelId, modelModes.Edit),
-              setMenuVisible(false)
-            }}
-          />
-          <Menu.Item
-            onPress={() =>
-              Alert.alert(
-                STRS.train.models.deleteModel,
-                `${STRS.delete} "${model.name}"?`,
-                [
-                  {
-                    text: STRS.yes,
-                    onPress: async () => {
-                      await deleteModel(user!.uid, modelId)
-                      setMenuVisible(false)
-                    }
-                  },
-                  { text: STRS.no, onPress: () => setMenuVisible(false) }
-                ]
-              )
-            }
-            title={STRS.train.models.deleteModel}
-          />
-          <Menu.Item
-            onPress={() =>
-              Alert.alert(
-                STRS.train.models.shareModel,
-                `${STRS.share} "${model.name}"?`,
-                [
-                  {
-                    text: STRS.yes,
-                    onPress: async () => {
-                      prompt(
-                        STRS.train.models.shareModel,
-                        STRS.train.confirmShare,
-                        [
-                          { text: STRS.cancel, style: "cancel" },
-                          {
-                            text: STRS.no,
-                            onPress: () => {
-                              setMenuVisible(false)
+            <Menu.Item
+              onPress={() =>
+                Alert.alert(
+                  STRS.train.models.deleteModel,
+                  `${STRS.delete} "${model.name}"?`,
+                  [
+                    {
+                      text: STRS.yes,
+                      onPress: async () => {
+                        await deleteModel(user!.uid, modelId)
+                        setMenuVisible(false)
+                      }
+                    },
+                    { text: STRS.no, onPress: () => setMenuVisible(false) }
+                  ]
+                )
+              }
+              title={STRS.train.models.deleteModel}
+            />
+            <Menu.Item
+              onPress={() =>
+                Alert.alert(
+                  STRS.train.models.shareModel,
+                  `${STRS.share} "${model.name}"?`,
+                  [
+                    {
+                      text: STRS.yes,
+                      onPress: async () => {
+                        prompt(
+                          STRS.train.models.shareModel,
+                          STRS.train.confirmShare,
+                          [
+                            { text: STRS.cancel, style: "cancel" },
+                            {
+                              text: STRS.no,
+                              onPress: () => {
+                                setMenuVisible(false)
+                              }
+                            },
+                            {
+                              text: STRS.yes,
+                              onPress: (comment) => {
+                                console.log(comment)
+                                shareModel(user!.uid, model, {
+                                  comment: comment
+                                })
+                                setMenuVisible(false)
+                              }
                             }
-                          },
-                          {
-                            text: STRS.yes,
-                            onPress: (comment) => {
-                              console.log(comment)
-                              shareModel(user!.uid, model, {
-                                comment: comment
-                              })
-                              setMenuVisible(false)
-                            }
-                          }
-                        ],
-                        { placeholder: STRS.comment }
-                      )
-                      setMenuVisible(false)
-                    }
-                  },
-                  { text: STRS.no, onPress: () => setMenuVisible(false) }
-                ]
-              )
-            }
-            title={STRS.train.models.shareModel}
-          />
-        </Menu>
+                          ],
+                          { placeholder: STRS.comment }
+                        )
+                        setMenuVisible(false)
+                      }
+                    },
+                    { text: STRS.no, onPress: () => setMenuVisible(false) }
+                  ]
+                )
+              }
+              title={STRS.train.models.shareModel}
+            />
+          </Menu>
+        )}
       </View>
       <View>
         <>
