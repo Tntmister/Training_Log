@@ -80,8 +80,7 @@ export async function register(
         result.user.sendEmailVerification()
         result.user.updateProfile({
           displayName: username
-        })
-        initFirestore(result.user)
+        }).then(() => initFirestore(result.user))
       })
   } catch (error) {
     switch ((error as FirebaseError).code) {
