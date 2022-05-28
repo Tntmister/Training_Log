@@ -231,16 +231,18 @@ export default function Profile({
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text
         }}
-        initialRouteName={`${userProfile?.posts} ${STRS.user.posts}`}
+        initialRouteName={"Posts"}
       >
         <Tab.Screen
           component={Posts}
-          name={`${userProfile?.posts} ${STRS.user.posts}`}
+          name={"Posts"}
+          options={{ tabBarLabel: `${userProfile?.posts} ${STRS.user.posts}` }}
           initialParams={{ uid: route.params!.uid }}
         />
         <Tab.Screen
           component={UserStats}
-          name={STRS.user.stats}
+          options={{ tabBarLabel: STRS.user.stats }}
+          name={"Stats"}
           initialParams={{ uid: route.params!.uid }}
         />
       </Tab.Navigator>

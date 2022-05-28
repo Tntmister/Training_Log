@@ -73,17 +73,19 @@ function PostDescriptor({
   const activity = post.post
   const session = "model" in activity
   const [userAuthor, setUserAuthor] = useState<User | undefined>(undefined)
-  useEffect(() => {
-    getUser(post.author).then((user) => setUserAuthor(user))
-  }, [post.author])
-
   const [likes, setLikes] = useState(post.likes)
   const [liked, setLiked] = useState(false)
   useEffect(() => {
+    getUser(post.author).then((user) => setUserAuthor(user))
     getPostLiked(user.uid, postId).then((liked) => setLiked(liked))
   }, [])
 
-  //console.log("POST ->", post.post.name, "| author ->", post.author)
+  function onLikePress() {
+    setLikes((prevLikes) => prevLikes + (liked ? -1 : 1))
+    setLiked((state) => !state)
+    toggleLikePost(user.uid, postId)
+  }
+
   return (
     <TouchableOpacity
       onPress={
@@ -91,7 +93,6 @@ function PostDescriptor({
       }
       style={styles.container}
     >
-      {/* TODO: converter isto de forma a colocar no theme.strings */}
       <InlineView style={styles.inline}>
         <TouchableOpacity onPress={() => onUserPress(post.author)}>
           {userAuthor?.profileURL ? (
@@ -146,11 +147,7 @@ function PostDescriptor({
           {post.authorComment}
         </Text>
         <IconButton
-          onPress={() => {
-            setLikes((prevLikes) => prevLikes + (liked ? -1 : 1))
-            setLiked((state) => !state)
-            toggleLikePost(user.uid, postId)
-          }}
+          onPress={user.uid != post.author ? onLikePress : undefined}
           style={{
             backgroundColor: liked
               ? theme.colors.primary
