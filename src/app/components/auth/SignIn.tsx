@@ -51,7 +51,8 @@ export default function SignIn() {
         ...theme.text.body_xs
       },
       input: {
-        width: "80%"
+        width: "80%",
+        marginTop: theme.margins.s
       },
       forgotPW: {
         ...theme.text.body_xs,
@@ -64,7 +65,6 @@ export default function SignIn() {
     <View
       style={{
         ...styles.container,
-        paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
       }}
     >

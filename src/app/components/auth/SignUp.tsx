@@ -36,7 +36,6 @@ export default function SignUp() {
     StyleSheet.create({
       container: {
         alignItems: "center",
-        paddingTop: theme.paddings.m,
         backgroundColor: theme.colors.background
       },
       tosContainer: {
@@ -45,7 +44,8 @@ export default function SignUp() {
         marginTop: theme.margins.s
       },
       input: {
-        width: "80%"
+        width: "80%",
+        marginTop: theme.margins.s
       },
       terms: {
         ...theme.text.body_s

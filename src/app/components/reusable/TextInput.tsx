@@ -16,7 +16,7 @@ export function TextInput({
           borderBottomColor: theme.colors.primary,
           marginTop: theme.margins.m,
           paddingHorizontal: theme.paddings.l,
-          height: 50,
+          height: 40,
           borderBottomWidth: theme.borders.borderWidth_m,
           ...theme.text.body_m
         },
