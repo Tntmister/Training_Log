@@ -24,6 +24,7 @@ import {
 import { StyleSheet, View, ViewStyle } from "react-native"
 import { Exercise } from "../../../../lib/types/train"
 import { exercises } from "../../../../assets/exercises/exercises_en"
+import { categoryIcons } from "../../../../lib/firebase/exercises"
 
 export default function ExerciseSearch({
   setExercises,
@@ -49,16 +50,20 @@ export default function ExerciseSearch({
 
   const categorySet = useCallback(
     () =>
-      categoryList.map((value) => (
-        <Menu.Item
-          onPress={() => {
-            setCategory(value)
-            setCatVisible(false)
-          }}
-          title={value}
-          key={value}
-        />
-      )),
+      categoryList.map((value) => {
+        return (
+          <Menu.Item
+            onPress={() => {
+              setCategory(value)
+              setCatVisible(false)
+            }}
+            icon={categoryIcons[value as keyof typeof categoryIcons]}
+            title={value}
+            key={value}
+            contentStyle={{ marginHorizontal: 0 }}
+          />
+        )
+      }),
     [categoryList]
   )
   const muscleSet = useCallback(
@@ -189,7 +194,10 @@ export default function ExerciseSearch({
               }}
               title={STRS.train.exercises.any}
             />
-            {categorySet()}
+            {
+              categorySet()
+              //console.log(categorySet())
+            }
           </Menu>
           <Menu
             visible={muscleVisible}
