@@ -28,18 +28,18 @@ export default function EditProfile({
       alignItems: "center"
     },
     imgContainer: {
-      //backgroundColor: "green",
       marginTop: theme.margins.l
     },
     img: {
-      height: 120,
-      width: 120,
-      borderWidth: 2,
-      borderColor: theme.colors.primary
+      height: theme.media.l,
+      width: theme.media.l,
+      borderWidth: theme.borders.borderWidth_m,
+      borderRadius: theme.borders.borderRadius_m,
+      borderColor: theme.colors.primary,
+      overflow: "hidden"
     },
     form: {
       marginTop: theme.margins.l,
-      //backgroundColor: "purple",
       width: "95%",
       justifyContent: "center"
     },
@@ -69,7 +69,7 @@ export default function EditProfile({
         )
       )
     )
-    navigation.navigate("Profile", { uid: uid })
+    navigation.navigate("Self", { uid: uid })
   }
   function onNameChange(name: string) {
     setUserChanges((prevChanges) => ({ ...prevChanges, username: name }))

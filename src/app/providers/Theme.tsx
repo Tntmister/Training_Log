@@ -161,7 +161,7 @@ const defaultTheme: Theme = {
   media: {
     s: 50,
     m: 60,
-    l: 100,
+    l: 120,
     xl: 400
   },
   icons: {
