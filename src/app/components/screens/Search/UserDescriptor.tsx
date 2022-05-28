@@ -25,7 +25,8 @@ function UserDescriptor({
       marginTop: theme.margins.s,
       borderRadius: theme.borders.borderRadius_m,
       backgroundColor: theme.colors.backdrop,
-      padding: theme.paddings.m
+      paddingVertical: theme.paddings.m,
+      paddingHorizontal: theme.paddings.l
     },
     img: {
       height: theme.media.m,
@@ -45,6 +46,14 @@ function UserDescriptor({
       flexGrow: 1,
       height: "100%",
       paddingLeft: theme.paddings.m
+    },
+    name: {
+      ...theme.text.body_l
+    },
+    bio: {
+      marginLeft: theme.margins.xs,
+      marginTop: theme.margins.xs,
+      ...theme.text.body_m
     }
   })
   return (
@@ -59,8 +68,8 @@ function UserDescriptor({
           />
         )}
         <View style={styles.infoContainer}>
-          <Text style={theme.text.header}>{user.username}</Text>
-          <Text style={theme.text.body_m}>{user.bio}</Text>
+          <Text style={styles.name}>{user.username}</Text>
+          <Text style={styles.bio}>{user.bio}</Text>
         </View>
       </InlineView>
     </TouchableOpacity>

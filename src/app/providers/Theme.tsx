@@ -160,7 +160,7 @@ const defaultTheme: Theme = {
   },
   media: {
     s: 40,
-    m: 80,
+    m: 60,
     l: 100,
     xl: 400
   },
