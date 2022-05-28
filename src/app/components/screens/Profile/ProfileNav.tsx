@@ -10,7 +10,7 @@ import Model, { modelModes } from "../Train/Models/Model"
 import { TrainingSession, TrainingModel } from "../../../lib/types/train"
 
 export type RootStackParamUserNav = {
-  Profile: { uid: string };
+  Self: { uid: string };
   EditProfile: { user: User };
   SessionSummary: { session: TrainingSession };
   Model: { model: TrainingModel; mode: modelModes };
@@ -23,11 +23,11 @@ export default function ProfileNav() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Self"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name="Profile"
+        name="Self"
         component={Profile}
         initialParams={{ uid: user.uid }}
       />

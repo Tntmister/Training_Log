@@ -52,11 +52,11 @@ function PostDescriptor({
       padding: theme.paddings.m
     },
     img: {
-      height: 60,
-      width: 60,
-      borderWidth: 1,
+      height: theme.media.s,
+      width: theme.media.s,
+      borderWidth: theme.borders.borderWidth_s,
       borderColor: theme.colors.primary,
-      borderRadius: 10,
+      borderRadius: theme.borders.borderRadius_m,
       overflow: "hidden"
     },
     inline: {
@@ -104,7 +104,7 @@ function PostDescriptor({
             />
           )}
         </TouchableOpacity>
-        <Text style={[theme.text.header, { marginLeft: theme.margins.m }]}>
+        <Text style={[theme.text.body_l, { marginLeft: theme.margins.m }]}>
           {userAuthor?.username}
         </Text>
       </InlineView>

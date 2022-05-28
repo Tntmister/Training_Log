@@ -159,7 +159,7 @@ const defaultTheme: Theme = {
     borderWidth_m: 2
   },
   media: {
-    s: 40,
+    s: 50,
     m: 60,
     l: 100,
     xl: 400

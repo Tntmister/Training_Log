@@ -29,8 +29,7 @@ import {
 } from "../../../lib/firebase/user"
 import { Follow, User } from "../../../lib/types/user"
 import { CachedImage } from "@georstat/react-native-image-cache"
-import { IconButton, Menu } from "react-native-paper"
-import { RFValue } from "react-native-responsive-fontsize"
+import { Appbar, IconButton, Menu } from "react-native-paper"
 import { logout } from "../../../lib/firebase/auth"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import Posts from "../Home/Posts"
@@ -44,11 +43,10 @@ export type RootStackProfileList = {
 export default function Profile({
   navigation,
   route
-}: StackScreenProps<RootStackParamUserNav, "Profile">) {
+}: StackScreenProps<RootStackParamUserNav, "Self">) {
   const theme = useTheme()
 
   const Tab = createMaterialTopTabNavigator()
-
   const styles = StyleSheet.create({
     titleContainer: {
       flexDirection: "row",
@@ -113,8 +111,15 @@ export default function Profile({
   }, [])
 
   const [menuVisible, setMenuVisible] = useState(false)
+  console.log("PROFILE ->", route.name)
   return (
     <>
+      {route.name.includes("Profile") && (
+        <Appbar>
+          <Appbar.BackAction onPress={navigation.goBack} />
+          <Appbar.Content title={userProfile?.username} />
+        </Appbar>
+      )}
       <View style={styles.titleContainer}>
         <Text style={[theme.text.header, styles.username]}>
           {userProfile?.username}
@@ -123,8 +128,8 @@ export default function Profile({
           anchor={
             <IconButton
               onPress={() => setMenuVisible(true)}
-              size={RFValue(26)}
               icon={"dots-vertical"}
+              disabled={!self}
             />
           }
           onDismiss={() => setMenuVisible(false)}
@@ -132,15 +137,14 @@ export default function Profile({
         >
           <Menu.Item title={STRS.user.logout} onPress={logout} />
           <Menu.Item title={STRS.user.toggleTheme} onPress={toggleTheme} />
-          {self && (
-            <Menu.Item
-              onPress={() => {
-                navigation.navigate("EditProfile", { user: userProfile! })
-                setMenuVisible(false)
-              }}
-              title={STRS.user.editProfile}
-            />
-          )}
+
+          <Menu.Item
+            onPress={() => {
+              navigation.navigate("EditProfile", { user: userProfile! })
+              setMenuVisible(false)
+            }}
+            title={STRS.user.editProfile}
+          />
           <Menu.Item
             title={theme.global_strings.langs.en}
             onPress={() => {
