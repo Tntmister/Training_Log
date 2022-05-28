@@ -21,7 +21,7 @@ export function getProfileURL(uid: string) {
 }
 
 export function subscribeUser(uid: string, onUpdate: (user: User) => void) {
-  firestore()
+  return firestore()
     .collection("users")
     .doc(uid)
     .onSnapshot((documentSnapshot) =>

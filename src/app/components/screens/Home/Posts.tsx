@@ -10,6 +10,7 @@ import { UserContext } from "../../../providers/User"
 import PostDescriptor from "./PostDescriptor"
 import { modelModes } from "../Train/Models/Model"
 import { Post } from "../../../lib/types/user"
+import { query } from "@firebase/firestore"
 
 export default function Posts({
   navigation,
@@ -29,18 +30,20 @@ export default function Posts({
   // firebase query por conter em lista está limitado a blocos de 10 ids
   const followingChunks = useRef<string[][]>([])
 
-  async function initFollowing() {
-    followingChunks.current = []
-    const following = (
-      await firestore()
-        .collection("users")
-        .doc(user.uid)
-        .collection("following")
-        .get()
-    ).docs.map((queryDocumentSnapshot) => queryDocumentSnapshot.id)
-    for (let i = 0; i < following.length; i += 10) {
-      followingChunks.current.push(following.slice(i, i + 10))
-    }
+  function subscribeFollowing() {
+    return firestore()
+      .collection(`users/${user.uid}/following`)
+      .onSnapshot((querySnapshot) => {
+        const ids = querySnapshot.docs.map((docs) => docs.id)
+        followingChunks.current = []
+        for (let i = 0; i < ids.length; i += 10) {
+          followingChunks.current.push(ids.slice(i, i + 10))
+        }
+        oldest.current = Date.now()
+        newest.current = Date.now()
+        setPosts([])
+        retrieveData()
+      })
   }
 
   async function retrieveData() {
@@ -70,37 +73,19 @@ export default function Posts({
   }
   async function refreshData() {
     setRefreshing(true)
-    for (const querySnapshot of await Promise.all(
-      followingChunks.current.map(async (followingChunk) =>
-        firestore()
-          .collection("posts")
-          .where("author", "in", followingChunk)
-          .orderBy("post.date", "desc")
-          .endBefore(newest.current)
-          .limit(10)
-          .get()
-      )
-    )) {
-      if (!querySnapshot.empty) {
-        const newerPosts = querySnapshot.docs.map((document) => ({
-          post: document.data() as Post,
-          postId: document.id
-        }))
-        setPosts((olderPosts) => [...newerPosts, ...olderPosts])
-        newest.current = newerPosts[0].post.post.date
-      }
-    }
+    setPosts([])
+    oldest.current = Date.now()
+    newest.current = Date.now()
+    retrieveData()
     setRefreshing(false)
   }
 
   useEffect(() => {
-    (async () => {
-      if (userid == undefined) await initFollowing()
-      else {
-        followingChunks.current.push([userid])
-      }
+    if (userid == undefined) return subscribeFollowing()
+    else {
+      followingChunks.current.push([userid])
       retrieveData()
-    })()
+    }
   }, [])
 
   const postsFooter = () => (loading ? <Loading /> : null)

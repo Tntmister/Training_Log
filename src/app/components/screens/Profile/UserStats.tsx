@@ -24,16 +24,16 @@ export default function UserStats({
   const [stats, setStats] = useState([0, 0, 0])
   const [statElements, setStatElements] = useState<JSX.Element[]>([])
   useEffect(() => {
-    // get Sessions
-    getSessions(route.params!.uid, (sessions) => {
+    return getSessions(route.params!.uid, (sessions) => {
       setStats((prevStats) =>
         prevStats.map((_, index) =>
           index == 0 ? sessions.length : prevStats[index]
         )
       )
     })
-    // get Models
-    getModels(route.params!.uid, (models) => {
+  }, [])
+  useEffect(() => {
+    return getModels(route.params!.uid, (models) => {
       setStats((prevStats) =>
         prevStats.map((_, index) =>
           index == 1 ? models.length : prevStats[index]

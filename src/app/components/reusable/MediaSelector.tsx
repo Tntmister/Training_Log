@@ -22,6 +22,7 @@ import {
   useTheme
 } from "../../providers/Theme"
 import InlineView from "./InlineView"
+import RNFS from "react-native-fs"
 
 export default function MediaSelector({
   assets,
@@ -60,9 +61,17 @@ export default function MediaSelector({
     ])
   }
 
-  function onCameraExit(response: ImagePickerResponse) {
-    console.log("Asset: ", response.assets)
+  async function onCameraExit(response: ImagePickerResponse) {
     if (response.assets !== undefined) {
+      for (const asset of response.assets) {
+        if (asset.uri?.startsWith("content")) {
+          const fileName = `video${Date.now()}.${asset.type?.split("/").pop()}`
+          const destPath = `${RNFS.TemporaryDirectoryPath}/${fileName}`
+          await RNFS.copyFile(asset.uri, destPath)
+          asset.uri = "file://" + destPath
+          asset.fileName = fileName
+        }
+      }
       setAssetsState((prevAssets) => [...prevAssets, ...response.assets!])
       assets.push(...response.assets)
     }
@@ -77,7 +86,7 @@ export default function MediaSelector({
           onPress={() => {
             launchImageLibrary({
               mediaType: "mixed",
-              videoQuality: "high",
+              videoQuality: "low",
               selectionLimit: 5,
               quality: 0.2
             }).then(onCameraExit)
