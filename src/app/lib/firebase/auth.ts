@@ -47,7 +47,6 @@ export async function login(email: string, password: string) {
   try {
     await auth().signInWithEmailAndPassword(email, password)
   } catch (error) {
-    console.log(error)
     switch ((error as FirebaseError).code) {
       case "auth/user-not-found":
       case "auth/wrong-password":
@@ -56,9 +55,12 @@ export async function login(email: string, password: string) {
       case "auth/invalid-email":
         ToastAndroid.show("Invalid Email", ToastAndroid.SHORT)
         break
+      case "auth/network-request-failed":
+        ToastAndroid.show("Connection Error", ToastAndroid.SHORT)
+        break
       default:
         console.log(error)
-        ToastAndroid.show("Unknown Error", ToastAndroid.LONG)
+        ToastAndroid.show((error as FirebaseError).message, ToastAndroid.LONG)
         break
     }
   }
@@ -78,9 +80,11 @@ export async function register(
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         result.user.sendEmailVerification()
-        result.user.updateProfile({
-          displayName: username
-        }).then(() => initFirestore(result.user))
+        result.user
+          .updateProfile({
+            displayName: username
+          })
+          .then(() => initFirestore(result.user))
       })
   } catch (error) {
     switch ((error as FirebaseError).code) {
