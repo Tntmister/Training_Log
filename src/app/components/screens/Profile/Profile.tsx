@@ -62,12 +62,9 @@ export default function Profile({
       justifyContent: "space-between"
     },
     img: {
-      height: 90,
-      width: undefined,
-      aspectRatio: 1,
-      borderWidth: 2,
-      borderColor: theme.colors.primary,
-      borderRadius: 10,
+      height: theme.media.m,
+      width: theme.media.m,
+      borderRadius: theme.borders.borderRadius_m,
       overflow: "hidden"
     },
     statsContainer: {
@@ -98,7 +95,6 @@ export default function Profile({
   const STRS = langStrings(theme, lang as langs)
 
   const user = useContext(UserContext)!
-  //console.log(user)
   const self = route.params!.uid === user.uid
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   const [follow, setFollow] = useState<Follow | undefined>(undefined)
@@ -111,7 +107,6 @@ export default function Profile({
   }, [])
 
   const [menuVisible, setMenuVisible] = useState(false)
-  console.log("PROFILE ->", route.name)
   return (
     <>
       {route.name.includes("Profile") && (
@@ -240,12 +235,18 @@ export default function Profile({
         <Tab.Screen
           component={Posts}
           name={"Posts"}
-          options={{ tabBarLabel: `${userProfile?.posts} ${STRS.user.posts}` }}
+          options={{
+            tabBarLabel: `${userProfile?.posts} ${STRS.user.posts}`,
+            tabBarLabelStyle: { ...theme.text.body_m }
+          }}
           initialParams={{ uid: route.params!.uid }}
         />
         <Tab.Screen
           component={UserStats}
-          options={{ tabBarLabel: STRS.user.stats }}
+          options={{
+            tabBarLabel: STRS.user.stats,
+            tabBarLabelStyle: { ...theme.text.body_m }
+          }}
           name={"Stats"}
           initialParams={{ uid: route.params!.uid }}
         />

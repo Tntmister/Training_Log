@@ -52,10 +52,10 @@ function PostDescriptor({
       padding: theme.paddings.m
     },
     img: {
-      height: theme.media.s,
-      width: theme.media.s,
-      borderWidth: theme.borders.borderWidth_s,
-      borderColor: theme.colors.primary,
+      height: theme.media.xs,
+      width: theme.media.xs,
+      //borderWidth: theme.borders.borderWidth_s,
+      //borderColor: theme.colors.primary,
       borderRadius: theme.borders.borderRadius_m,
       overflow: "hidden"
     },

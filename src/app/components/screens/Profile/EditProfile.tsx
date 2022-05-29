@@ -6,7 +6,12 @@ import { Appbar } from "react-native-paper"
 import { images } from "../../../lib/extra"
 import { saveUserDetails } from "../../../lib/firebase/user"
 import { User } from "../../../lib/types/user"
-import { useTheme } from "../../../providers/Theme"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
 import { Button } from "../../reusable/Button"
 import ImageCropPicker, {
   Image as ImageResponse
@@ -23,6 +28,8 @@ export default function EditProfile({
   route
 }: StackScreenProps<RootStackParamUserNav, "EditProfile">) {
   const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const styles = StyleSheet.create({
     container: {
       alignItems: "center"
@@ -33,9 +40,7 @@ export default function EditProfile({
     img: {
       height: theme.media.l,
       width: theme.media.l,
-      borderWidth: theme.borders.borderWidth_m,
       borderRadius: theme.borders.borderRadius_m,
-      borderColor: theme.colors.primary,
       overflow: "hidden"
     },
     form: {
@@ -140,7 +145,7 @@ export default function EditProfile({
         ></VariableHeightTextInput>
       </View>
       <Button style={styles.save} onPress={saveChanges}>
-        Save Changes
+        {STRS.save}
       </Button>
     </View>
   )
