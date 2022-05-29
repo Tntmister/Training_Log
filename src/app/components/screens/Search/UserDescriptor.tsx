@@ -29,10 +29,10 @@ function UserDescriptor({
       paddingHorizontal: theme.paddings.l
     },
     img: {
-      height: theme.media.m,
-      width: theme.media.m,
-      borderWidth: theme.borders.borderWidth_s,
-      borderColor: theme.colors.primary,
+      height: theme.media.xs,
+      width: theme.media.xs,
+      //borderWidth: theme.borders.borderWidth_s,
+      //borderColor: theme.colors.primary,
       borderRadius: theme.borders.borderRadius_m,
       overflow: "hidden"
     },
@@ -53,7 +53,7 @@ function UserDescriptor({
     bio: {
       marginLeft: theme.margins.xs,
       marginTop: theme.margins.xs,
-      ...theme.text.body_m
+      ...theme.text.body_s
     }
   })
   return (

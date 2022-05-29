@@ -16,10 +16,10 @@ function UserStat({
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: theme.paddings.m,
-      paddingVertical: theme.paddings.m,
-      borderRadius: 15,
-      borderWidth: theme.borders.borderWidth_m,
-      borderColor: theme.colors.primary
+      paddingVertical: theme.paddings.m
+      //borderRadius: 15,
+      //borderWidth: theme.borders.borderWidth_m,
+      //borderColor: theme.colors.primary
     },
     name: {
       textAlign: "center",

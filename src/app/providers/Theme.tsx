@@ -56,6 +56,7 @@ export type Theme = {
     borderWidth_m: number;
   };
   media: {
+    xs: number;
     s: number;
     m: number;
     l: number;
@@ -63,6 +64,7 @@ export type Theme = {
   };
   icons: {
     s: number;
+    m: number;
   };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
@@ -159,13 +161,15 @@ const defaultTheme: Theme = {
     borderWidth_m: 2
   },
   media: {
-    s: 50,
-    m: 60,
+    xs: 50,
+    s: 60,
+    m: 80,
     l: 120,
     xl: 400
   },
   icons: {
-    s: 30
+    s: 30,
+    m: 50
   },
   global_strings: strings_global,
   strings: {
