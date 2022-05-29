@@ -54,6 +54,7 @@ export function Exercise({
     initImages()
   }, [])
 
+  const hasSecondary = exercise.secondaryMuscles.length > 1
   return (
     <>
       <Appbar>
@@ -68,9 +69,11 @@ export function Exercise({
         {exercise.secondaryMuscles.length > 0 && (
           <Text style={styles.text}>
             {STRS.train.exercises.secondaryMuscles}:{" "}
-            {exercise.secondaryMuscles[0] +
+            {exercise.secondaryMuscles[0].charAt(0).toUpperCase() +
+              exercise.secondaryMuscles[0].slice(1) +
+              (hasSecondary ? "," : "") +
               exercise.secondaryMuscles.slice(1).map((value) => {
-                return `, ${value}`
+                return ` ${value.charAt(0).toUpperCase() + value.slice(1)}`
               })}
           </Text>
         )}
