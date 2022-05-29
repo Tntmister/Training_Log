@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Alert, StyleSheet, View } from "react-native"
 import { Checkbox, IconButton } from "react-native-paper"
 import { CardioSetClass, ExerciseSet } from "../../../../../lib/types/train"
@@ -47,20 +47,26 @@ export default function CardioSet({
   }
 
   const [timerActive, setTimerActive] = useState(false)
-
+  const toggleTimer = () => {
+    prevNow.current = Date.now()
+    setTimerActive((prevState) => !prevState)
+  }
+  const prevNow = useRef(0)
   const interval = useRef<NodeJS.Timer>()
 
-  function onTimerToggle() {
+  useEffect(() => {
     if (timerActive) {
-      clearInterval(interval.current!)
-    } else {
-      console.log("start timer")
       interval.current = setInterval(() => {
-        setSet((prevSet) => ({ ...prevSet, duration: prevSet.duration + 1 }))
-      }, 1000)
+        if (Date.now() - prevNow.current > 1000) {
+          setSet((prevSet) => ({ ...prevSet, duration: prevSet.duration + 1 }))
+          prevNow.current = Date.now()
+        }
+      }, 50)
+      return () => {
+        clearInterval(interval.current!)
+      }
     }
-    setTimerActive(!timerActive)
-  }
+  }, [timerActive, set.duration])
 
   function onTimerReset() {
     Alert.alert(
@@ -132,9 +138,9 @@ export default function CardioSet({
       {mode == modelModes.Session && (
         <IconButton
           rippleColor={theme.colors.primary}
-          icon={"play"}
+          icon={timerActive ? "pause" : "play"}
           style={[styles.button, { marginRight: theme.margins.s }]}
-          onPress={onTimerToggle}
+          onPress={toggleTimer}
           onLongPress={onTimerReset}
         />
       )}
