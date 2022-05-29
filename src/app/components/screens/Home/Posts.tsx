@@ -18,7 +18,7 @@ export default function Posts({
 }: StackScreenProps<RootStackParamHomeNav, "Posts">) {
   const user = useContext(UserContext)!
   const userid = route.params?.uid
-  console.log("ROUTE PARAMS", userid)
+  //console.log("ROUTE PARAMS", userid)
   const [posts, setPosts] = useState<{ post: Post; postId: string }[]>([])
 
   const [loading, setLoading] = useState(false)

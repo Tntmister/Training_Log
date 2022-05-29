@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react"
+import React, { useContext } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { IconButton } from "react-native-paper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -39,51 +39,49 @@ export default function ProgrammedExercise({
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
-  const styles = useRef(
-    StyleSheet.create({
-      container: {
-        width: "95%",
-        borderRadius: 10,
-        alignSelf: "center",
-        backgroundColor: theme.colors.backdrop,
-        marginTop: theme.margins.m,
-        paddingVertical: theme.margins.m,
-        paddingHorizontal: theme.paddings.l
-      },
-      headerContainer: {
-        justifyContent: "space-between"
-      },
-      title: {
-        flexGrow: 1,
-        textAlign: "left",
-        paddingLeft: theme.paddings.s,
-        color: theme.colors.primary,
-        fontSize: theme.text.body_l.fontSize,
-        maxWidth: "70%"
-      },
-      categ: {
-        height: 40,
-        width: 40,
-        marginRight: theme.margins.xs,
-        tintColor: theme.colors.text
-      },
-      del: {
-        marginLeft: theme.margins.xs,
-        borderRadius: 5,
-        width: "15%",
-        backgroundColor: theme.colors.primary,
-        height: 40
-      },
-      annotation: {
-        borderRadius: 10,
-        borderColor: theme.colors.primary,
-        borderWidth: 2,
-        marginTop: theme.margins.s,
-        paddingHorizontal: theme.paddings.m,
-        paddingVertical: theme.paddings.m
-      }
-    })
-  ).current
+  const styles = StyleSheet.create({
+    container: {
+      width: "95%",
+      borderRadius: theme.borders.borderRadius_m,
+      alignSelf: "center",
+      backgroundColor: theme.colors.backdrop,
+      marginTop: theme.margins.m,
+      paddingVertical: theme.margins.m,
+      paddingHorizontal: theme.paddings.l
+    },
+    headerContainer: {
+      justifyContent: "space-between"
+    },
+    title: {
+      flexGrow: 1,
+      textAlign: "left",
+      paddingLeft: theme.paddings.s,
+      color: theme.colors.primary,
+      fontSize: theme.text.body_l.fontSize,
+      maxWidth: "70%"
+    },
+    categ: {
+      height: 40,
+      width: 40,
+      marginRight: theme.margins.xs,
+      tintColor: theme.colors.text
+    },
+    del: {
+      marginLeft: theme.margins.xs,
+      borderRadius: theme.borders.borderRadius_s,
+      width: "15%",
+      backgroundColor: theme.colors.primary,
+      height: 40
+    },
+    annotation: {
+      borderRadius: theme.borders.borderRadius_m,
+      borderColor: theme.colors.primary,
+      borderWidth: theme.borders.borderWidth_m,
+      marginTop: theme.margins.s,
+      paddingHorizontal: theme.paddings.m,
+      paddingVertical: theme.paddings.m
+    }
+  })
 
   function onExerciseDel() {
     (onChange as React.Dispatch<React.SetStateAction<TrainingModel>>)(

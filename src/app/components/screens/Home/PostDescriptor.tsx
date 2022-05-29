@@ -123,7 +123,7 @@ function PostDescriptor({
         <SessionDescriptor
           sessionId={postId}
           onSessionPress={() => {
-            console.log(activity)
+            //console.log(activity)
             onSessionPress(activity)
           }}
           session={activity}

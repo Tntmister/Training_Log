@@ -149,7 +149,7 @@ const defaultTheme: Theme = {
     primary: "#FE6751",
     border: "#FE6751",
     accent: "#FE6751",
-    text: "#000000",
+    text: "#2F2C3B",
     error: "#FF0000",
     placeholder: "#424242",
     white: "#FFFFFF"

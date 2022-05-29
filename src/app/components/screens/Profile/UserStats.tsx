@@ -46,7 +46,7 @@ export default function UserStats({
   useEffect(() => {
     setStatElements(
       STRS.user.trainStats.map((stat, index) => {
-        console.log(stat)
+        //console.log(stat)
         return (
           <TrainStat
             key={index}

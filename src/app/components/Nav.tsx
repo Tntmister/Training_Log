@@ -14,7 +14,17 @@ const Tab = createMaterialTopTabNavigator()
 
 export default function Nav() {
   const theme = useTheme()
-
+  const styles = StyleSheet.create({
+    icon: {
+      width: theme.icons.s,
+      height: theme.icons.s
+      //color: theme.colors.text
+    },
+    img: {
+      width: "100%",
+      height: "100%"
+    }
+  })
   return (
     <Tab.Navigator
       initialRouteName="Train"
@@ -47,14 +57,3 @@ export default function Nav() {
     </Tab.Navigator>
   )
 }
-
-const styles = StyleSheet.create({
-  icon: {
-    width: 30,
-    height: 30
-  },
-  img: {
-    width: "100%",
-    height: "100%"
-  }
-})

@@ -60,6 +60,7 @@ export default function ExerciseSearch({
             icon={categoryIcons[value as keyof typeof categoryIcons]}
             title={value}
             key={value}
+            titleStyle={{ color: useTheme().colors.text }}
             contentStyle={{ marginHorizontal: 0 }}
           />
         )
@@ -75,6 +76,7 @@ export default function ExerciseSearch({
             setMuscleVisible(false)
           }}
           title={value}
+          titleStyle={{ color: useTheme().colors.text }}
           key={value}
         />
       )),
@@ -111,7 +113,7 @@ export default function ExerciseSearch({
     width: "100%",
     marginTop: 0,
     borderColor: theme.colors.placeholder,
-    borderWidth: 1
+    borderWidth: theme.borders.borderWidth_s
   }
 
   const styles = StyleSheet.create({
@@ -149,7 +151,8 @@ export default function ExerciseSearch({
     },
     btnLabel: {
       ...theme.text.body_s,
-      marginHorizontal: 0
+      marginHorizontal: 0,
+      color: theme.colors.text
     },
     dropDownContainer: {
       marginHorizontal: theme.margins.s,
