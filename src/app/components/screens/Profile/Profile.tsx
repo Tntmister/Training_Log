@@ -226,7 +226,7 @@ export default function Profile({
         backBehavior="none"
         initialLayout={{ width: Dimensions.get("window").width }}
         screenOptions={{
-          tabBarLabelStyle: { ...theme.text.body_l },
+          tabBarLabelStyle: { ...theme.text.body_m },
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text
         }}
@@ -236,16 +236,14 @@ export default function Profile({
           component={Posts}
           name={"Posts"}
           options={{
-            tabBarLabel: `${userProfile?.posts} ${STRS.user.posts}`,
-            tabBarLabelStyle: { ...theme.text.body_m }
+            tabBarLabel: `${userProfile?.posts} ${STRS.user.posts}`
           }}
           initialParams={{ uid: route.params!.uid }}
         />
         <Tab.Screen
           component={UserStats}
           options={{
-            tabBarLabel: STRS.user.stats,
-            tabBarLabelStyle: { ...theme.text.body_m }
+            tabBarLabel: STRS.user.stats
           }}
           name={"Stats"}
           initialParams={{ uid: route.params!.uid }}

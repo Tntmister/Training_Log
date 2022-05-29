@@ -64,6 +64,7 @@ export type Theme = {
   };
   icons: {
     s: number;
+    m: number;
   };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
@@ -167,7 +168,8 @@ const defaultTheme: Theme = {
     xl: 400
   },
   icons: {
-    s: 30
+    s: 30,
+    m: 50
   },
   global_strings: strings_global,
   strings: {

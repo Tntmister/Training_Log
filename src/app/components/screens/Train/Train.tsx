@@ -28,7 +28,7 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
         backBehavior="none"
         initialLayout={{ width: Dimensions.get("window").width }}
         screenOptions={{
-          tabBarLabelStyle: { ...theme.text.header },
+          tabBarLabelStyle: { ...theme.text.body_m },
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.text
         }}
