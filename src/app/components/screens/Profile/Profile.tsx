@@ -133,13 +133,15 @@ export default function Profile({
           <Menu.Item title={STRS.user.logout} onPress={logout} />
           <Menu.Item title={STRS.user.toggleTheme} onPress={toggleTheme} />
 
-          <Menu.Item
-            onPress={() => {
-              navigation.navigate("EditProfile", { user: userProfile! })
-              setMenuVisible(false)
-            }}
-            title={STRS.user.editProfile}
-          />
+          {!route.name.includes("Profile") && (
+            <Menu.Item
+              onPress={() => {
+                navigation.navigate("EditProfile", { user: userProfile! })
+                setMenuVisible(false)
+              }}
+              title={STRS.user.editProfile}
+            />
+          )}
           <Menu.Item
             title={theme.global_strings.langs.en}
             onPress={() => {

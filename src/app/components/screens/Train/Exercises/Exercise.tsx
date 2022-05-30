@@ -14,6 +14,7 @@ import {
 import { getImages } from "../../../../lib/firebase/exercises"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import { Asset } from "react-native-image-picker"
+import ProgressGraph from "../../../reusable/ProgressGraph"
 
 export function Exercise({
   route,
@@ -87,6 +88,7 @@ export function Exercise({
             </Text>
           )
         })}
+        <ProgressGraph />
       </ScrollView>
     </>
   )
