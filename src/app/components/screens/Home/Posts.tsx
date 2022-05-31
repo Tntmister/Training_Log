@@ -10,7 +10,6 @@ import { UserContext } from "../../../providers/User"
 import PostDescriptor from "./PostDescriptor"
 import { modelModes } from "../Train/Models/Model"
 import { Post } from "../../../lib/types/user"
-import { query } from "@firebase/firestore"
 
 export default function Posts({
   navigation,

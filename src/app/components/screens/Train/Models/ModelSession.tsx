@@ -1,8 +1,8 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useContext, useState } from "react"
-import { Alert, ScrollView } from "react-native"
+import React, { useContext, useEffect, useRef, useState } from "react"
+import { Alert, ScrollView, View } from "react-native"
 import prompt from "react-native-prompt-android"
-import { Appbar, Menu } from "react-native-paper"
+import { Appbar, IconButton, Menu } from "react-native-paper"
 import { TrainingSession } from "../../../../lib/types/train"
 import { finishSession } from "../../../../lib/firebase/models"
 import {
@@ -17,6 +17,8 @@ import MediaCarousel from "../../../reusable/MediaCarousel"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
 import { modelModes } from "../Models/Model"
 import { RootStackParamListModelNav } from "../Models/ModelNav"
+import { Text } from "../../../reusable/Text"
+import { RFValue } from "react-native-responsive-fontsize"
 
 export default function Session({
   route,
@@ -69,6 +71,21 @@ export default function Session({
   }
 
   const [menuVisible, setMenuVisible] = useState(false)
+
+  const prevNow = useRef(0)
+  const interval = useRef<NodeJS.Timer>()
+
+  useEffect(() => {
+    interval.current = setInterval(() => {
+      if (Date.now() - prevNow.current > 1000) {
+        setSession({ ...session, duration: session.duration + 1 })
+        prevNow.current = Date.now()
+      }
+    }, 50)
+    return () => {
+      clearInterval(interval.current!)
+    }
+  }, [session.duration])
   return (
     <>
       <Appbar>
@@ -98,6 +115,23 @@ export default function Session({
           <Menu.Item title={"Placeholder"} />
         </Menu>
       </Appbar>
+      <View
+        style={{
+          width: "100%",
+          height: "10%",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "row",
+          alignSelf: "center"
+        }}
+      >
+        <IconButton size={RFValue(30)} icon={"clock"} />
+        <Text style={theme.text.header}>
+          {new Date(session.duration! * 1000)
+            .toISOString()
+            .substring(11, 11 + 8)}
+        </Text>
+      </View>
       <ScrollView>
         {session.mediaContent.length > 0 && (
           <MediaCarousel assets={session.mediaContent} />
