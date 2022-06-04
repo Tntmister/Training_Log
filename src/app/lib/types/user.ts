@@ -22,3 +22,10 @@ export type Post = {
   post: TrainingModel | TrainingSession;
   likes: number;
 };
+
+export type Comment = {
+  author: string;
+  body: string;
+  childIDs?: string[];
+  parentID?: string;
+};

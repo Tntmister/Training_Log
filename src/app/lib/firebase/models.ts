@@ -3,7 +3,7 @@ import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
 import { TrainingModel, TrainingSession } from "../types/train"
-import { Post } from "../types/user"
+import { Comment, Post } from "../types/user"
 
 export async function saveModel(
   uID: string,
@@ -139,4 +139,21 @@ export async function shareModel(
     } as Post)
     t.update(userDoc, { posts: firebase.firestore.FieldValue.increment(1) })
   })
+}
+
+export async function postComment(
+  author: string,
+  postID: string,
+  body: string,
+  parentComment?: string
+) {
+  firestore()
+    .collection(`posts/${postID}/comments`)
+    .add({ author: author, body: body, parentId: parentComment } as Comment)
+}
+
+export async function getComments(postID: string): Promise<Comment[]> {
+  return (
+    await firestore().collection(`posts/${postID}/comments`).get()
+  ).docs.map((doc) => doc.data() as Comment)
 }
