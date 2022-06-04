@@ -36,7 +36,7 @@ export default function MediaCarousel({
       style={[
         {
           width: "100%",
-          marginVertical: theme.margins.m
+          marginTop: theme.margins.s
         },
         style
       ]}

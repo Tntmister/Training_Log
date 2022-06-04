@@ -104,6 +104,8 @@ export type strings = {
   deleteImage: string;
   confirmDeleteImage: string;
   save: string;
+  info: string;
+  stats: string;
 };
 
 export type strings_global_lang = {
@@ -229,7 +231,9 @@ export const strings_en: strings = {
   media_error: "Error reading media.",
   deleteImage: "Delete Image",
   confirmDeleteImage: "Delete the specified image?",
-  save: "Save"
+  save: "Save",
+  info: "Info",
+  stats: "Statistics"
 }
 
 export const strings_pt: strings = {
@@ -340,5 +344,7 @@ export const strings_pt: strings = {
   media_error: "Erro ao ler o conteúdo.",
   deleteImage: "Apagar Imagem",
   confirmDeleteImage: "Apagar a imagem selecionada",
-  save: "Guardar"
+  save: "Guardar",
+  info: "Informação",
+  stats: "Estatísticas"
 }
