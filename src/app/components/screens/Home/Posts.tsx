@@ -10,6 +10,12 @@ import { UserContext } from "../../../providers/User"
 import PostDescriptor from "./PostDescriptor"
 import { modelModes } from "../Train/Models/Model"
 import { Post } from "../../../lib/types/user"
+import BackgroundFetch from "react-native-background-fetch"
+import notifee, {
+  AuthorizationStatus,
+  RepeatFrequency,
+  TriggerType
+} from "@notifee/react-native"
 
 export default function Posts({
   navigation,
@@ -17,16 +23,15 @@ export default function Posts({
 }: StackScreenProps<RootStackParamHomeNav, "Posts">) {
   const user = useContext(UserContext)!
   const userid = route.params?.uid
-  //console.log("ROUTE PARAMS", userid)
   const [posts, setPosts] = useState<{ post: Post; postId: string }[]>([])
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
 
   const oldest = useRef(Date.now())
   const newest = useRef(Date.now())
 
-  // firebase query por conter em lista está limitado a blocos de 10 ids
+  // firebase query por array-contains está limitado a blocos de 10 ids
   const followingChunks = useRef<string[][]>([])
 
   function subscribeFollowing() {
@@ -34,10 +39,11 @@ export default function Posts({
       .collection(`users/${user.uid}/following`)
       .onSnapshot((querySnapshot) => {
         const ids = querySnapshot.docs.map((docs) => docs.id)
-        followingChunks.current = []
+        const following = [[user.uid]]
         for (let i = 0; i < ids.length; i += 10) {
-          followingChunks.current.push(ids.slice(i, i + 10))
+          following.push(ids.slice(i, i + 10))
         }
+        followingChunks.current = following
         oldest.current = Date.now()
         newest.current = Date.now()
         setPosts([])
@@ -82,10 +88,51 @@ export default function Posts({
   useEffect(() => {
     if (userid == undefined) return subscribeFollowing()
     else {
-      followingChunks.current.push([userid])
       retrieveData()
     }
   }, [])
+
+  async function initBackgroundFetch() {
+    BackgroundFetch.configure(
+      {
+        minimumFetchInterval: 60 * 24,
+        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY
+      },
+      async (taskId) => {
+        let numPosts = 0
+        for (const followingChunk of followingChunks.current) {
+          numPosts += (
+            await firestore()
+              .collection("posts")
+              .where("author", "in", followingChunk)
+              .orderBy("post.date", "desc")
+              .endBefore(newest.current)
+              .limit(10)
+              .get()
+          ).size
+          if (numPosts >= 10) break
+        }
+        if (numPosts > 0) {
+          notifee.displayNotification({
+            title: "New Training Posts From From Users You Follow!",
+            body: `You have ${numPosts} new unseen posts from users you follow!`
+          })
+        }
+        BackgroundFetch.finish(taskId)
+      },
+      (taskId) => {
+        console.warn(`background-fetch timeout: ${taskId}`)
+        BackgroundFetch.finish(taskId)
+      }
+    )
+  }
+
+  useEffect(() => {
+    if (followingChunks.current.length > 1 && !loading) {
+      console.log(followingChunks.current)
+      initBackgroundFetch()
+    }
+  }, [loading, followingChunks.current])
 
   const postsFooter = () => (loading ? <Loading /> : null)
 

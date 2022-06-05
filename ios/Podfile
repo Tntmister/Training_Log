@@ -25,6 +25,8 @@ target 'TrainingLog' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
+
   target 'TrainingLogTests' do
     inherit! :complete
     # Pods for testing
