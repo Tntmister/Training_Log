@@ -5,7 +5,6 @@ import FollowUsers from "./FollowUsers"
 import EditProfile from "./EditProfile"
 import { User } from "../../../lib/types/user"
 import { UserContext } from "../../../providers/User"
-import SessionSummary from "../History/SessionSummary"
 import Model, { modelModes } from "../Train/Models/Model"
 import { TrainingSession, TrainingModel } from "../../../lib/types/train"
 
@@ -32,7 +31,6 @@ export default function ProfileNav() {
         initialParams={{ uid: user.uid }}
       />
       <Stack.Screen name="EditProfile" component={EditProfile} />
-      <Stack.Screen name="SessionSummary" component={SessionSummary} />
       <Stack.Screen name="Model" component={Model} />
       <Stack.Screen name="FollowUsers" component={FollowUsers} />
     </Stack.Navigator>

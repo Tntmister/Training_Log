@@ -23,7 +23,7 @@ export default function SessionDescriptor({
   session: TrainingSession;
   sessionId: string;
   onPost: boolean;
-  onSessionPress: (session: TrainingSession) => void;
+  onSessionPress?: (session: TrainingSession) => void;
 }) {
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
@@ -83,7 +83,7 @@ export default function SessionDescriptor({
   const [menuVisible, setMenuVisible] = useState(false)
   return (
     <TouchableOpacity
-      onPress={() => onSessionPress(session)}
+      onPress={onSessionPress?.bind(null, session)}
       style={styles.container}
     >
       <View style={styles.headerContainer}>

@@ -24,7 +24,7 @@ function ModelDescriptor({
   model: TrainingModel;
   modelId: string;
   onPost: boolean;
-  onModelPress: (
+  onModelPress?: (
     model: TrainingModel,
     modelId: string,
     mode: modelModes
@@ -38,7 +38,7 @@ function ModelDescriptor({
 
   return (
     <TouchableOpacity
-      onPress={() => onModelPress(model, modelId, modelModes.View)}
+      onPress={onModelPress?.bind(null, model, modelId, modelModes.View)}
       style={{
         backgroundColor: theme.colors.backdrop,
         marginBottom: theme.margins.s,
@@ -66,7 +66,7 @@ function ModelDescriptor({
             <Menu.Item
               title={STRS.edit}
               onPress={() => {
-                onModelPress(model, modelId, modelModes.Edit),
+                onModelPress!(model, modelId, modelModes.Edit),
                 setMenuVisible(false)
               }}
             />

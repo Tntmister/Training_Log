@@ -26,6 +26,7 @@ export type Post = {
 export type Comment = {
   author: string;
   body: string;
-  childIDs?: string[];
-  parentID?: string;
+  date: number;
+  childIDs: string[];
+  parentID: string | null;
 };

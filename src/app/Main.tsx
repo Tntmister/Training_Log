@@ -5,6 +5,7 @@ import React from "react"
 import { UserProvider } from "./providers/User"
 import App from "./App"
 import { PaperNavigationProvider } from "./providers/Theme"
+import { LogBox } from "react-native"
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images/`,
@@ -13,6 +14,8 @@ CacheManager.config = {
   sourceAnimationDuration: 0,
   thumbnailAnimationDuration: 0
 }
+
+LogBox.ignoreLogs(["ViewPropTypes will be removed"])
 
 export default function Main() {
   return (

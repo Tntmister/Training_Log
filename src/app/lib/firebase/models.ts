@@ -143,17 +143,34 @@ export async function shareModel(
 
 export async function postComment(
   author: string,
-  postID: string,
+  postId: string,
   body: string,
   parentComment?: string
 ) {
   firestore()
-    .collection(`posts/${postID}/comments`)
-    .add({ author: author, body: body, parentId: parentComment } as Comment)
+    .collection(`posts/${postId}/comments`)
+    .add({
+      author: author,
+      body: body,
+      date: Date.now(),
+      parentID: parentComment,
+      childIDs: []
+    } as Comment)
 }
 
-export async function getComments(postID: string): Promise<Comment[]> {
+export async function getRootComments(postId: string) {
+  return getCommentReplies(postId, null)
+}
+
+export async function getCommentReplies(
+  postId: string,
+  commentId: string | null
+) {
   return (
-    await firestore().collection(`posts/${postID}/comments`).get()
-  ).docs.map((doc) => doc.data() as Comment)
+    await firestore()
+      .collection(`posts/${postId}/comments`)
+      .orderBy("date", "desc")
+      .where("parentID", "==", commentId)
+      .get()
+  ).docs.map((doc) => ({ id: doc.id, comment: doc.data() as Comment }))
 }

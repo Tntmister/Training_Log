@@ -147,11 +147,8 @@ export default function Posts({
 
   const [scrollEnd, setScrollEnd] = useState(false)
 
-  function onSessionPress(session: TrainingSession) {
-    navigation.navigate("Session", session)
-  }
-  function onModelPress(model: TrainingModel) {
-    navigation.navigate("Model", { model: model, mode: modelModes.View })
+  function onPostPress(postId: string, post: Post) {
+    navigation.navigate("Post", { postId: postId, post: post })
   }
   function onUserPress(user: string) {
     navigation.navigate("Profile", { uid: user })
@@ -164,8 +161,7 @@ export default function Posts({
       renderItem={({ item }) => (
         <PostDescriptor
           onUserPress={onUserPress}
-          onModelPress={onModelPress}
-          onSessionPress={onSessionPress}
+          onPostPress={onPostPress}
           post={item.post}
           postId={item.postId}
         />

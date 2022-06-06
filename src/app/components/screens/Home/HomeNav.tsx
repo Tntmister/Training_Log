@@ -3,16 +3,19 @@ import React from "react"
 import { Image } from "react-native"
 import { images } from "../../../lib/extra"
 import { TrainingModel, TrainingSession } from "../../../lib/types/train"
+import { Post as PostType } from "../../../lib/types/user"
 import { useTheme } from "../../../providers/Theme"
 import Session from "../History/Session"
 import Profile from "../Profile/Profile"
 import Model, { modelModes } from "../Train/Models/Model"
+import Post from "./Post"
 import Posts from "./Posts"
 
 export type RootStackParamHomeNav = {
   Posts: { uid: string } | undefined;
   Session: TrainingSession;
   Model: { model: TrainingModel; mode: modelModes };
+  Post: { post: PostType; postId: string };
   Profile: { uid: string } | undefined;
 };
 
@@ -43,6 +46,7 @@ export default function HomeNav() {
       <Stack.Screen name="Session" component={Session} />
       <Stack.Screen name="Model" component={Model} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Post" component={Post} />
     </Stack.Navigator>
   )
 }

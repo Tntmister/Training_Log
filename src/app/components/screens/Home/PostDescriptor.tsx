@@ -9,7 +9,6 @@ import {
   getUser,
   toggleLikePost
 } from "../../../lib/firebase/user"
-import { TrainingModel, TrainingSession } from "../../../lib/types/train"
 import { Post, User } from "../../../lib/types/user"
 import {
   langs,
@@ -27,14 +26,12 @@ function PostDescriptor({
   post,
   postId,
   onUserPress,
-  onModelPress,
-  onSessionPress
+  onPostPress
 }: {
   post: Post;
   postId: string;
   onUserPress: (user: string) => void;
-  onModelPress: (model: TrainingModel) => void;
-  onSessionPress: (session: TrainingSession) => void;
+  onPostPress: (postId: string, post: Post) => void;
 }) {
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
@@ -70,8 +67,9 @@ function PostDescriptor({
       marginHorizontal: theme.margins.m
     }
   })
-  const activity = post.post
-  const session = "model" in activity
+  const content = post.post
+  console.log(content)
+  const session = "model" in content
   const [userAuthor, setUserAuthor] = useState<User | undefined>(undefined)
   const [likes, setLikes] = useState(post.likes)
   const [liked, setLiked] = useState(false)
@@ -88,9 +86,7 @@ function PostDescriptor({
 
   return (
     <TouchableOpacity
-      onPress={
-        session ? () => onSessionPress(activity) : () => onModelPress(activity)
-      }
+      onPress={onPostPress.bind(null, postId, post)}
       style={styles.container}
     >
       <InlineView style={styles.inline}>
@@ -112,7 +108,7 @@ function PostDescriptor({
         <Text style={styles.actionText}>
           {`${
             session
-              ? activity.name == ""
+              ? content.name == ""
                 ? STRS.home.completedATS
                 : STRS.home.completedTheTS
               : STRS.home.sharedTM
@@ -120,22 +116,9 @@ function PostDescriptor({
         </Text>
       )}
       {session ? (
-        <SessionDescriptor
-          sessionId={postId}
-          onSessionPress={() => {
-            //console.log(activity)
-            onSessionPress(activity)
-          }}
-          session={activity}
-          onPost={true}
-        />
+        <SessionDescriptor sessionId={postId} session={content} onPost={true} />
       ) : (
-        <ModelDescriptor
-          model={activity}
-          onModelPress={() => onModelPress(activity)}
-          modelId={postId}
-          onPost={true}
-        />
+        <ModelDescriptor model={content} modelId={postId} onPost={true} />
       )}
       <InlineView style={{ paddingHorizontal: theme.paddings.l }}>
         <Text

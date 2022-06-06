@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Exercise } from "../../../../../lib/types/train"
+import { Exercise as ExerciseType } from "../../../../../lib/types/train"
 import ExerciseInfo from "./ExerciseInfo"
 import ExerciseStats from "./ExerciseStats"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
@@ -16,8 +16,8 @@ import { Appbar } from "react-native-paper"
 import { RootStackParamList } from "../ExerciseNav"
 
 export type ExDetailStackParamList = {
-  ExerciseInfo: { exercise: Exercise };
-  ExerciseStats: { exercise: Exercise };
+  ExerciseInfo: { exercise: ExerciseType };
+  ExerciseStats: { exercise: ExerciseType };
 };
 
 export function Exercise({
