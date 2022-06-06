@@ -11,11 +11,7 @@ import PostDescriptor from "./PostDescriptor"
 import { modelModes } from "../Train/Models/Model"
 import { Post } from "../../../lib/types/user"
 import BackgroundFetch from "react-native-background-fetch"
-import notifee, {
-  AuthorizationStatus,
-  RepeatFrequency,
-  TriggerType
-} from "@notifee/react-native"
+import notifee, { AuthorizationStatus, EventType } from "@notifee/react-native"
 
 export default function Posts({
   navigation,
@@ -95,7 +91,7 @@ export default function Posts({
   async function initBackgroundFetch() {
     BackgroundFetch.configure(
       {
-        minimumFetchInterval: 60 * 24,
+        minimumFetchInterval: 15,
         requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY
       },
       async (taskId) => {
@@ -115,7 +111,15 @@ export default function Posts({
         if (numPosts > 0) {
           notifee.displayNotification({
             title: "New Training Posts From From Users You Follow!",
-            body: `You have ${numPosts} new unseen posts from users you follow!`
+            body: `You have ${
+              numPosts > 10 ? "10+" : numPosts
+            } new unseen posts from users you follow!`,
+            android: {
+              channelId: await notifee.createChannel({
+                id: "default",
+                name: "New Posts"
+              })
+            }
           })
         }
         BackgroundFetch.finish(taskId)
@@ -128,12 +132,18 @@ export default function Posts({
   }
 
   useEffect(() => {
-    if (followingChunks.current.length > 1 && !loading) {
-      initBackgroundFetch()
-    }
+    notifee.requestPermission().then((value) => {
+      if (value.authorizationStatus >= AuthorizationStatus.AUTHORIZED) {
+        if (followingChunks.current.length > 1 && !loading) {
+          initBackgroundFetch()
+        }
+      }
+    })
+    return notifee.onBackgroundEvent(async ({ type, detail }) => {
+      console.log(type)
+      console.log(detail)
+    })
   }, [loading, followingChunks.current])
-
-  const postsFooter = () => (loading ? <Loading /> : null)
 
   const [scrollEnd, setScrollEnd] = useState(false)
 
@@ -160,7 +170,7 @@ export default function Posts({
           postId={item.postId}
         />
       )}
-      ListFooterComponent={postsFooter}
+      ListFooterComponent={loading ? <Loading /> : null}
       onEndReached={() => setScrollEnd(true)}
       onMomentumScrollEnd={() => {
         scrollEnd && retrieveData()
