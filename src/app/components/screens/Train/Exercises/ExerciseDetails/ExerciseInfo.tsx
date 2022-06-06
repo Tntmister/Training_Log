@@ -7,7 +7,7 @@ import {
   ThemeContext,
   useTheme
 } from "../../../../../providers/Theme"
-import { ExDetailStackParamList } from "./ExerciseDetailsNav"
+import { ExDetailStackParamList } from "./Exercise"
 import { StackScreenProps } from "@react-navigation/stack"
 import MediaCarousel from "../../../../reusable/MediaCarousel"
 import { getImages } from "../../../../../lib/firebase/exercises"

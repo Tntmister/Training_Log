@@ -2,7 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import React from "react"
 import ProgressGraph from "../../../../reusable/ProgressGraph"
 import { Text } from "../../../../reusable/Text"
-import { ExDetailStackParamList } from "./ExerciseDetailsNav"
+import { ExDetailStackParamList } from "./Exercise"
 
 export default function ExerciseStats({
   route

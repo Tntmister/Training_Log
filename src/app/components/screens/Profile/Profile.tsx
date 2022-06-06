@@ -43,7 +43,7 @@ export type RootStackProfileList = {
 export default function Profile({
   navigation,
   route
-}: StackScreenProps<RootStackParamUserNav, "Self">) {
+}: StackScreenProps<RootStackParamUserNav, "Profile">) {
   const theme = useTheme()
 
   const Tab = createMaterialTopTabNavigator()

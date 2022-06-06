@@ -74,7 +74,7 @@ export default function EditProfile({
         )
       )
     )
-    navigation.navigate("Self", { uid: uid })
+    navigation.navigate("Profile", { uid: uid })
   }
   function onNameChange(name: string) {
     setUserChanges((prevChanges) => ({ ...prevChanges, username: name }))

@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
 import { Exercise as ExerciseType } from "../../../../lib/types/train"
-import { Exercise } from "./Exercise"
+import { Exercise } from "./ExerciseDetails/Exercise"
 import ExerciseList from "./ExerciseList"
 
 export type RootStackParamList = {
