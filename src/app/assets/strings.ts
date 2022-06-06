@@ -38,6 +38,7 @@ export type strings = {
       goalTime: string;
       times: string;
       searchExercises: string;
+      performedEx: string;
     };
     models: {
       models: string;
@@ -106,6 +107,7 @@ export type strings = {
   save: string;
   info: string;
   stats: string;
+  timesSoFar: string;
 };
 
 export type strings_global_lang = {
@@ -159,7 +161,8 @@ export const strings_en: strings = {
       time: "Time",
       goalTime: "Goal Time",
       times: "x",
-      searchExercises: "Search Exercises"
+      searchExercises: "Search Exercises",
+      performedEx: "You've performed this exercise "
     },
     models: {
       models: "Models",
@@ -233,7 +236,8 @@ export const strings_en: strings = {
   confirmDeleteImage: "Delete the specified image?",
   save: "Save",
   info: "Info",
-  stats: "Statistics"
+  stats: "Statistics",
+  timesSoFar: "times so far"
 }
 
 export const strings_pt: strings = {
@@ -273,7 +277,8 @@ export const strings_pt: strings = {
       time: "Tempo",
       goalTime: "Objetivo de Tempo",
       times: "x",
-      searchExercises: "Pesquisar Exercícios"
+      searchExercises: "Pesquisar Exercícios",
+      performedEx: "Já executou este exercício"
     },
     models: {
       models: "Modelos",
@@ -346,5 +351,6 @@ export const strings_pt: strings = {
   confirmDeleteImage: "Apagar a imagem selecionada",
   save: "Guardar",
   info: "Informação",
-  stats: "Estatísticas"
+  stats: "Estatísticas",
+  timesSoFar: "vezes"
 }
