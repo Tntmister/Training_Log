@@ -69,6 +69,7 @@ export default function ProfileSearch({
     setLoading(true)
     setUsers([])
     const timeout = setTimeout(() => {
+      last.current = null
       retrieveData()
     }, 250)
     return () => clearTimeout(timeout)

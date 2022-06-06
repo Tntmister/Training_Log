@@ -36,6 +36,15 @@ export default function Train({ navigation }: MaterialTopTabBarProps) {
         <Tab.Screen
           component={ExerciseNav}
           name={STRS.train.exercises.exercises}
+          options={{
+            tabBarStyle: {
+              display:
+                navigation.getState().routes[2].state?.routes[0].state?.index ==
+                1
+                  ? "none"
+                  : undefined
+            }
+          }}
         />
         <Tab.Screen component={ModelNav} name={STRS.train.models.models} />
       </Tab.Navigator>

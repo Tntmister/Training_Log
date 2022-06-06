@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Text } from "../../../../reusable/Text"
 import { ScrollView, StyleSheet, TextStyle } from "react-native"
 import {
@@ -9,6 +9,9 @@ import {
 } from "../../../../../providers/Theme"
 import { ExDetailStackParamList } from "./ExerciseDetailsNav"
 import { StackScreenProps } from "@react-navigation/stack"
+import MediaCarousel from "../../../../reusable/MediaCarousel"
+import { getImages } from "../../../../../lib/firebase/exercises"
+import { Asset } from "react-native-image-picker"
 export default function ExerciseInfo({
   route
 }: StackScreenProps<ExDetailStackParamList, "ExerciseInfo">) {
@@ -16,7 +19,6 @@ export default function ExerciseInfo({
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
   const exercise = route.params.exercise
-  console.log("ExerciseInfo -> " + exercise.name)
   const textStyle: TextStyle = {
     width: "90%",
     marginBottom: theme.margins.s,
@@ -40,8 +42,16 @@ export default function ExerciseInfo({
     }
   })
   const hasSecondary = exercise.secondaryMuscles.length > 1
+
+  const [images, setImages] = useState<Asset[]>([])
+  useEffect(() => {
+    (async () => {
+      setImages(await getImages(exercise.name))
+    })()
+  }, [])
   return (
     <ScrollView>
+      <MediaCarousel assets={images} />
       <Text style={styles.text}>
         {STRS.train.exercises.primaryMuscle}: {exercise.primaryMuscle}
       </Text>

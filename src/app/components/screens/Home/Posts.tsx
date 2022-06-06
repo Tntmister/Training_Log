@@ -129,7 +129,6 @@ export default function Posts({
 
   useEffect(() => {
     if (followingChunks.current.length > 1 && !loading) {
-      console.log(followingChunks.current)
       initBackgroundFetch()
     }
   }, [loading, followingChunks.current])

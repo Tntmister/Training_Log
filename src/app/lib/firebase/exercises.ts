@@ -34,18 +34,28 @@ export const categories = [
  * @param name Nome do Exercício
  * @returns Promessa sobre array de URLs de imagens do exercício
  */
-export async function getImages(name: string): Promise<Asset[]> {
-  const assets: Asset[] = []
-  const list = await storage()
-    .ref(`exercises/${name.replace("/", "_")}`)
-    .list()
-  for (const ref of list.items) {
-    assets.push({
-      uri: await ref.getDownloadURL(),
-      type: (await ref.getMetadata()).contentType!
-    })
-  }
-  return assets
+export async function getImages(name: string) {
+  return new Promise<Asset[]>((resolve, reject) => {
+    storage()
+      .ref(`exercises/${name.replace("/", "_")}`)
+      .list()
+      .then(
+        async (list) => {
+          const assets: Asset[] = []
+          for (const ref of list.items) {
+            assets.push({
+              uri: await ref.getDownloadURL(),
+              type: (await ref.getMetadata()).contentType!
+            })
+          }
+          resolve(assets)
+        },
+        (reason) => {
+          console.warn("exercise - getImages rejected: " + reason)
+          reject(reason)
+        }
+      )
+  })
 }
 
 export function searchExercises(
