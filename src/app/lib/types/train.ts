@@ -47,3 +47,8 @@ export interface TrainingSession extends TrainingModel {
   duration: number;
   model: string | null;
 }
+
+export interface ExerciseHistory {
+  date: number;
+  exercises: SessionExercise[];
+}
