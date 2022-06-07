@@ -145,17 +145,23 @@ export async function postComment(
   author: string,
   postId: string,
   body: string,
-  parentComment?: string
-) {
-  firestore()
-    .collection(`posts/${postId}/comments`)
-    .add({
+  parentComment: string | null
+): Promise<{ id: string; comment: Comment }> {
+  return new Promise((resolve, reject) => {
+    const comment: Comment = {
       author: author,
       body: body,
       date: Date.now(),
       parentID: parentComment,
       childIDs: []
-    } as Comment)
+    }
+    firestore()
+      .collection(`posts/${postId}/comments`)
+      .add(comment)
+      .then((documentReference) =>
+        resolve({ id: documentReference.id, comment: comment })
+      )
+  })
 }
 
 export async function getRootComments(postId: string) {

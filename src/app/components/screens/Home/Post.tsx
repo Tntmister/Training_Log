@@ -23,8 +23,7 @@ export type RootStackParamPostNav = {
 };
 
 export default function Post({
-  route,
-  navigation
+  route
 }: StackScreenProps<RootStackParamHomeNav, "Post">) {
   const Tab = createMaterialTopTabNavigator<RootStackParamPostNav>()
   const theme = useTheme()
@@ -39,6 +38,7 @@ export default function Post({
   }, [])
   return (
     <Tab.Navigator
+      backBehavior="none"
       initialLayout={{ width: Dimensions.get("window").width }}
       screenOptions={{
         tabBarLabelStyle: { ...theme.text.body_m },
@@ -64,6 +64,7 @@ export default function Post({
         component={PostComments}
         name={"PostComments"}
         options={{ tabBarLabel: "Comments" }}
+        initialParams={{ postId: postId }}
       />
     </Tab.Navigator>
   )
