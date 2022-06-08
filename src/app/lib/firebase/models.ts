@@ -147,7 +147,7 @@ export async function postComment(
   body: string,
   parentComment: string | null
 ): Promise<{ id: string; comment: Comment }> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const comment: Comment = {
       author: author,
       body: body,

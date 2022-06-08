@@ -1,12 +1,9 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Dimensions } from "react-native"
-import { getUser } from "../../../lib/firebase/user"
 import { TrainingModel, TrainingSession } from "../../../lib/types/train"
-import { User } from "../../../lib/types/user"
 import { useTheme } from "../../../providers/Theme"
-import { Text } from "../../reusable/Text"
 import Session from "../History/Session"
 import Model, { modelModes } from "../Train/Models/Model"
 import { RootStackParamHomeNav } from "./HomeNav"
@@ -32,10 +29,6 @@ export default function Post({
   const postId = route.params.postId
   const content = post.post
   const session = "model" in content
-  const [userAuthor, setUserAuthor] = useState<User | undefined>(undefined)
-  useEffect(() => {
-    getUser(post.author).then((user) => setUserAuthor(user))
-  }, [])
   return (
     <Tab.Navigator
       backBehavior="none"
