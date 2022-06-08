@@ -1,6 +1,12 @@
 import storage from "@react-native-firebase/storage"
+import firestore from "@react-native-firebase/firestore"
 import { Asset } from "react-native-image-picker"
 import { exercises } from "../../assets/exercises/exercises_en"
+import {
+  ExerciseHistory,
+  SessionExercise,
+  TrainingSession
+} from "../types/train"
 
 export const categoryIcons = {
   Cardio: require("../../assets/icons/ex_categ/cardio/cardio(-xxxhdpi).png"),
@@ -86,4 +92,28 @@ export function searchExercises(
     )
   }
   return result
+}
+
+export function getExerciseHistory(
+  name: string,
+  uID: string,
+  onLoad: (history: ExerciseHistory[]) => void
+) {
+  const exerciseHistory: ExerciseHistory[] = []
+  firestore()
+    .collection("users")
+    .doc(uID)
+    .collection("sessions")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((documentSnapshot) => {
+        const session = documentSnapshot.data() as TrainingSession
+        //console.log("session id: ", documentSnapshot.id, session)
+        exerciseHistory.push({
+          date: session.date,
+          exercise: session.exercises.filter((ex) => (ex.name = name))
+        } as unknown as ExerciseHistory)
+      })
+      onLoad(exerciseHistory)
+    })
 }
