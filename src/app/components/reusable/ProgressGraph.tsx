@@ -17,26 +17,23 @@ export default function ProgressGraph({
   const [today, setToday] = useState("")
   const [datesArr, setDatesArr] = useState<number[]>([])
   const [dataArr, setDataArr] = useState<number[]>([])
-  console.log(data)
+
   useEffect(() => {
     setNumSamples(data.length)
+    setGreaterThan15(data.length > 15)
     setToday(getTodayDate())
-  }, [])
-
-  useEffect(() => {
-    setGreaterThan15(numSamples > 15)
     setDatesArr(
-      data.map((record) => {
-        const date = new Date(record.date).toISOString().slice(0, 10)
-        return getDaysBetween(today, date)
-      })
+      data
+        .map((record) => {
+          const date = new Date(record.date).toISOString().slice(0, 10)
+          return getDaysBetween(getTodayDate(), date)
+        })
+        .reverse()
     )
-    setDataArr(data.map((record) => record.ONE_RM))
-  }, [today])
+    setDataArr(data.map((record) => record.ONE_RM).reverse())
+    console.log("inside useEffect")
+  }, [data])
 
-  /*  useEffect(() => {
-
-  }, [])*/
   const axesSvg = { fontSize: 10, fill: theme.colors.text }
   const verticalContentInset = { top: 10, bottom: 10 }
   const xAxisHeight = 10
@@ -63,8 +60,9 @@ export default function ProgressGraph({
       right: theme.margins.s
     }
   })
-  console.log(datesArr)
-  console.log(dataArr)
+
+  console.log("PG -> ", datesArr)
+  console.log("PG -> ", dataArr)
   return (
     <View style={styles.container}>
       <YAxis
@@ -90,7 +88,7 @@ export default function ProgressGraph({
               if (index % 2 == 0) return value
               return ""
             } else return value*/
-            return value
+            return index
           }}
           contentInset={styles.xContentInset}
           svg={axesSvg}

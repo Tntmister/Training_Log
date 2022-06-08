@@ -42,8 +42,8 @@ export default function ExerciseStats({
       100, 102.5, 105, 107.5, 105, 100, 102.5, 105, 107.5, 105, 120, 122.5, 125,
       122.5, 125, 127.5, 130, 132.5, 132.5, 132.5, 135
     ])*/
-    getExerciseHistory(exercise.name, user.uid, (ex) => {
-      setData(ex)
+    getExerciseHistory(exercise.name, user.uid, (data) => {
+      setData(data)
     })
   }, [])
 
@@ -53,10 +53,11 @@ export default function ExerciseStats({
       exercise.category == "Strength" ||
       exercise.category == "Weightlifting"
     ) {
-      setExercise1RMs(getExercise1RMs(data).sort((a, b) => b.date - a.date))
+      setExercise1RMs(getExercise1RMs(data))
     }
   }, [data])
 
+  console.log(exercise1RMs)
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: theme.paddings.m
