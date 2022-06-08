@@ -78,7 +78,10 @@ export default function Session({
   useEffect(() => {
     interval.current = setInterval(() => {
       if (Date.now() - prevNow.current > 1000) {
-        setSession({ ...session, duration: session.duration + 1 })
+        setSession((session) => ({
+          ...session,
+          duration: session.duration + 1
+        }))
         prevNow.current = Date.now()
       }
     }, 50)
