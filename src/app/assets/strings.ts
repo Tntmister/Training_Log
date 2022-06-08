@@ -39,6 +39,8 @@ export type strings = {
       times: string;
       searchExercises: string;
       performedEx: string;
+      daysAgo: string;
+      estimated1RM: string;
     };
     models: {
       models: string;
@@ -162,7 +164,9 @@ export const strings_en: strings = {
       goalTime: "Goal Time",
       times: "x",
       searchExercises: "Search Exercises",
-      performedEx: "You've performed this exercise "
+      performedEx: "You've performed this exercise ",
+      daysAgo: "Days ago",
+      estimated1RM: "Estimated 1RM"
     },
     models: {
       models: "Models",
@@ -278,7 +282,9 @@ export const strings_pt: strings = {
       goalTime: "Objetivo de Tempo",
       times: "x",
       searchExercises: "Pesquisar Exercícios",
-      performedEx: "Já executou este exercício"
+      performedEx: "Já executou este exercício",
+      daysAgo: "Dias atrás",
+      estimated1RM: "1RM Estimado"
     },
     models: {
       models: "Modelos",

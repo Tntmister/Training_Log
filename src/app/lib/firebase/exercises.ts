@@ -3,9 +3,11 @@ import firestore from "@react-native-firebase/firestore"
 import { Asset } from "react-native-image-picker"
 import { exercises } from "../../assets/exercises/exercises_en"
 import {
+  CardioSetClass,
   Exercise,
   ExerciseHistory,
   RegularSetClass,
+  StretchingSetClass,
   TrainingSession
 } from "../types/train"
 
@@ -143,4 +145,50 @@ export function isStrOrWLExercise(exercise: Exercise) {
   return (
     exercise.category == "Strength" || exercise.category == "Weightlifting"
   )
+}
+
+export function isCardioExercise(exercise: Exercise) {
+  return exercise.category == "Cardio"
+}
+
+export function isStretchingExercise(exercise: Exercise) {
+  return exercise.category == "Stretching"
+}
+
+export function getExercisePaces(history: ExerciseHistory[]) {
+  const result = history.map((record) => {
+    const bestPace = Math.max(
+      ...record.exercises.map((ex) =>
+        getSessionBestPace(ex.sets as CardioSetClass[])
+      )
+    )
+    return { date: record.date, pace: bestPace }
+  })
+  return result
+}
+
+function getSessionBestPace(session_ex: CardioSetClass[]) {
+  return Math.max(
+    ...session_ex.map((set) => calcPace(set.distance, set.duration))
+  )
+}
+
+function calcPace(distance: number, duration: number) {
+  return distance / duration
+}
+
+export function getExerciseDurations(history: ExerciseHistory[]) {
+  const result = history.map((record) => {
+    const longestDur = Math.max(
+      ...record.exercises.map((ex) =>
+        getSessionBestDuration(ex.sets as StretchingSetClass[])
+      )
+    )
+    return { date: record.date, duration: longestDur }
+  })
+  return result
+}
+
+function getSessionBestDuration(session_ex: StretchingSetClass[]) {
+  return Math.max(...session_ex.map((set) => set.duration))
 }

@@ -3,13 +3,14 @@ import React, { useContext, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import {
   getExercise1RMs,
+  getExerciseDurations,
   getExerciseHistory,
+  getExercisePaces,
+  isCardioExercise,
+  isStretchingExercise,
   isStrOrWLExercise
 } from "../../../../../lib/firebase/exercises"
-import {
-  ExerciseHistory,
-  SessionExercise
-} from "../../../../../lib/types/train"
+import { ExerciseHistory } from "../../../../../lib/types/train"
 import {
   langs,
   langStrings,
@@ -37,11 +38,19 @@ export default function ExerciseStats({
     ONE_RM: number;
   }[]
   >([])
+  const [exerciseDurations, setExerciseDurations] = useState<
+  {
+    date: number;
+    duration: number;
+  }[]
+  >([])
+  const [exercisePaces, setExercisePaces] = useState<
+  {
+    date: number;
+    pace: number;
+  }[]
+  >([])
   useEffect(() => {
-    /*setData([
-      100, 102.5, 105, 107.5, 105, 100, 102.5, 105, 107.5, 105, 120, 122.5, 125,
-      122.5, 125, 127.5, 130, 132.5, 132.5, 132.5, 135
-    ])*/
     getExerciseHistory(exercise.name, user.uid, (data) => {
       setData(data)
     })
@@ -49,11 +58,19 @@ export default function ExerciseStats({
 
   useEffect(() => {
     setTimesDone(data.length)
-    if (
-      exercise.category == "Strength" ||
-      exercise.category == "Weightlifting"
-    ) {
-      setExercise1RMs(getExercise1RMs(data))
+    if (isStrOrWLExercise(exercise)) {
+      setExercise1RMs(getExercise1RMs(data).sort((a, b) => b.date - a.date))
+    }
+    if (isCardioExercise(exercise)) {
+      setExercisePaces(getExercisePaces(data).sort((a, b) => b.date - a.date))
+      setExerciseDurations(
+        getExerciseDurations(data).sort((a, b) => b.date - a.date)
+      )
+    }
+    if (isStretchingExercise(exercise)) {
+      setExerciseDurations(
+        getExerciseDurations(data).sort((a, b) => b.date - a.date)
+      )
     }
   }, [data])
 
@@ -73,8 +90,15 @@ export default function ExerciseStats({
         {STRS.train.exercises.performedEx} {timesDone} {STRS.timesSoFar}.
       </Text>
       <ProgressGraph
-        data={isStrOrWLExercise(exercise) ? exercise1RMs : exercise1RMs}
+        data={
+          isCardioExercise(exercise)
+            ? exercisePaces
+            : isStretchingExercise(exercise)
+              ? exerciseDurations
+              : exercise1RMs
+        }
       />
+      {isCardioExercise(exercise) && <ProgressGraph data={exerciseDurations} />}
     </View>
   )
 }

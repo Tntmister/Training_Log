@@ -66,6 +66,9 @@ export type Theme = {
     s: number;
     m: number;
   };
+  graphs: {
+    height: number;
+  };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
 } & NavigationTheme &
@@ -170,6 +173,9 @@ const defaultTheme: Theme = {
   icons: {
     s: 30,
     m: 50
+  },
+  graphs: {
+    height: 250
   },
   global_strings: strings_global,
   strings: {
