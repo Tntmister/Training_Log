@@ -37,7 +37,10 @@ export default function PostComments({
           onPress={() =>
             postComment(user.uid, postId, commentBody, null).then(
               (commentDoc) => {
-                setCommentDocs((docs) => [commentDoc, ...docs])
+                setCommentDocs((docs) => [
+                  { ...commentDoc, profileURL: user.photoURL },
+                  ...docs
+                ])
               }
             )
           }

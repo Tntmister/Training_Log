@@ -5,15 +5,14 @@ import { images } from "../../../lib/extra"
 import { Comment as CommentType, User } from "../../../lib/types/user"
 import { useTheme } from "../../../providers/Theme"
 import InlineView from "../../reusable/InlineView"
-import storage from "@react-native-firebase/storage"
 import { VariableHeightTextInput } from "../../reusable/VariableHeightTextInput"
 import { Button } from "../../reusable/Button"
 import { Text } from "../../reusable/Text"
 import { getCommentReplies, postComment } from "../../../lib/firebase/models"
 import { UserContext } from "../../../providers/User"
-import { FirebaseError } from "@firebase/util"
 import { IconButton } from "react-native-paper"
 import { getUser } from "../../../lib/firebase/user"
+import Reply from "./Reply"
 
 export default function Comment({
   postId,
@@ -31,7 +30,7 @@ export default function Comment({
       alignSelf: "center",
       backgroundColor: theme.colors.backdrop,
       width: "90%",
-      padding: theme.paddings.m
+      padding: theme.paddings.l
     },
     comment: {
       flex: 1
@@ -51,25 +50,13 @@ export default function Comment({
     }
   })
   const user = useContext(UserContext)!
-  const [profileURL, setProfileURL] = useState<string>()
-  useEffect(() => {
-    storage()
-      .ref(`users/${commentDoc.comment.author}/profile`)
-      .getDownloadURL()
-      .then(setProfileURL)
-      .catch((error) => {
-        if ((error as FirebaseError).code !== "storage/object-not-found") {
-          console.warn(error)
-        }
-      })
-  }, [])
 
   const [replyBody, setReplyBody] = useState("")
   const [viewReplies, setViewReplies] = useState(false)
 
-  const [userAuthor, setUserAuthor] = useState<User | undefined>(undefined)
+  const [author, setAuthor] = useState<User>()
   useEffect(() => {
-    getUser(commentDoc.comment.author).then((user) => setUserAuthor(user))
+    getUser(commentDoc.comment.author).then((user) => setAuthor(user))
   }, [])
 
   const [repliesDocs, setRepliesDocs] = useState<
@@ -80,10 +67,10 @@ export default function Comment({
   }, [])
   return (
     <View style={styles.card}>
-      <Text style={[theme.text.subHeader]}>{userAuthor?.username}</Text>
+      <Text style={[theme.text.subHeader]}>{author?.username}</Text>
       <InlineView style={styles.comment}>
-        {profileURL ? (
-          <CachedImage source={profileURL} style={styles.img} />
+        {author?.profileURL ? (
+          <CachedImage source={author.profileURL} style={styles.img} />
         ) : (
           <Image
             source={images.User}
@@ -96,33 +83,33 @@ export default function Comment({
           icon={viewReplies ? "chevron-up" : "chevron-down"}
         />
       </InlineView>
-      <FlatList
-        data={repliesDocs}
-        renderItem={({ item }) => (
-          <>
-            <Text>{item.comment.author}</Text>
-            <Text>{item.comment.body}</Text>
-          </>
-        )}
-      />
       {viewReplies && (
-        <InlineView>
-          <VariableHeightTextInput
-            value={replyBody}
-            onChangeText={setReplyBody}
+        <>
+          <FlatList
+            data={repliesDocs}
+            renderItem={({ item }) => <Reply comment={item.comment} />}
           />
-          <Button
-            onPress={() =>
-              postComment(user.uid, postId, replyBody, commentDoc.id).then(
-                (replyDoc) => {
-                  setRepliesDocs((docs) => [...docs, replyDoc])
-                }
-              )
-            }
-          >
-            Reply
-          </Button>
-        </InlineView>
+          <InlineView>
+            <VariableHeightTextInput
+              value={replyBody}
+              onChangeText={setReplyBody}
+            />
+            <Button
+              onPress={() =>
+                postComment(user.uid, postId, replyBody, commentDoc.id).then(
+                  (replyDoc) => {
+                    setRepliesDocs((docs) => [
+                      ...docs,
+                      { ...replyDoc, profileURL: user.photoURL }
+                    ])
+                  }
+                )
+              }
+            >
+              Reply
+            </Button>
+          </InlineView>
+        </>
       )}
     </View>
   )

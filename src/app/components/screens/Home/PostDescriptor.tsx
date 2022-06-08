@@ -68,7 +68,6 @@ function PostDescriptor({
     }
   })
   const content = post.post
-  console.log(content)
   const session = "model" in content
   const [userAuthor, setUserAuthor] = useState<User | undefined>(undefined)
   const [likes, setLikes] = useState(post.likes)

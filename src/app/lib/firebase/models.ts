@@ -178,5 +178,8 @@ export async function getCommentReplies(
       .orderBy("date", "desc")
       .where("parentID", "==", commentId)
       .get()
-  ).docs.map((doc) => ({ id: doc.id, comment: doc.data() as Comment }))
+  ).docs.map((doc) => ({
+    id: doc.id,
+    comment: doc.data() as Comment
+  }))
 }

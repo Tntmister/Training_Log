@@ -1,3 +1,4 @@
+import { FirebaseError } from "@firebase/util"
 import { firebase } from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
@@ -13,11 +14,14 @@ export async function saveUserDetails(uid: string, user: Partial<User>) {
 }
 
 export function getProfileURL(uid: string) {
-  return firestore()
-    .collection("users")
-    .doc(uid)
-    .get()
-    .then((documentSnapshot) => documentSnapshot.get("profileURL") as string)
+  return storage()
+    .ref(`users/${uid}/profile`)
+    .getDownloadURL()
+    .catch((error) => {
+      if ((error as FirebaseError).code !== "storage/object-not-found")
+        console.warn(error)
+      return null
+    })
 }
 
 export function subscribeUser(uid: string, onUpdate: (user: User) => void) {
