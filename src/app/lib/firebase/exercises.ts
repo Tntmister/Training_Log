@@ -3,8 +3,9 @@ import firestore from "@react-native-firebase/firestore"
 import { Asset } from "react-native-image-picker"
 import { exercises } from "../../assets/exercises/exercises_en"
 import {
+  Exercise,
   ExerciseHistory,
-  SessionExercise,
+  RegularSetClass,
   TrainingSession
 } from "../types/train"
 
@@ -111,9 +112,35 @@ export function getExerciseHistory(
         //console.log("session id: ", documentSnapshot.id, session)
         exerciseHistory.push({
           date: session.date,
-          exercise: session.exercises.filter((ex) => (ex.name = name))
+          exercises: session.exercises.filter((ex) => ex.name == name)
         } as unknown as ExerciseHistory)
       })
       onLoad(exerciseHistory)
     })
+}
+
+export function getExercise1RMs(history: ExerciseHistory[]) {
+  const result = history.map((record) => {
+    const ONE_RM = Math.max(
+      ...record.exercises.map((ex) =>
+        getSession1RM(ex.sets as RegularSetClass[])
+      )
+    )
+    return { date: record.date, ONE_RM: ONE_RM }
+  })
+  return result
+}
+
+function getSession1RM(session_ex: RegularSetClass[]) {
+  return Math.max(...session_ex.map((set) => calc1RM(set.weight, set.reps)))
+}
+
+function calc1RM(weight: number, reps: number) {
+  return Math.round(weight / (1.0278 - 0.0278 * reps))
+}
+
+export function isStrOrWLExercise(exercise: Exercise) {
+  return (
+    exercise.category == "Strength" || exercise.category == "Weightlifting"
+  )
 }

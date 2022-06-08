@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Grid, LineChart, XAxis, YAxis } from "react-native-svg-charts"
+import { getDaysBetween, getTodayDate } from "../../lib/extra"
 import { useTheme } from "../../providers/Theme"
-export default function ProgressGraph({ data }: { data: number[] }) {
+export default function ProgressGraph({
+  data
+}: {
+  data: {
+    date: number;
+    ONE_RM: number;
+  }[];
+}) {
   const theme = useTheme()
   const [numSamples, setNumSamples] = useState(0)
   const [greaterThan15, setGreaterThan15] = useState(false)
-
+  const [today, setToday] = useState("")
+  const [datesArr, setDatesArr] = useState<number[]>([])
+  const [dataArr, setDataArr] = useState<number[]>([])
+  console.log(data)
   useEffect(() => {
     setNumSamples(data.length)
+    setToday(getTodayDate())
   }, [])
+
   useEffect(() => {
     setGreaterThan15(numSamples > 15)
-  }, [numSamples])
+    setDatesArr(
+      data.map((record) => {
+        const date = new Date(record.date).toISOString().slice(0, 10)
+        return getDaysBetween(today, date)
+      })
+    )
+    setDataArr(data.map((record) => record.ONE_RM))
+  }, [today])
 
+  /*  useEffect(() => {
+
+  }, [])*/
   const axesSvg = { fontSize: 10, fill: theme.colors.text }
   const verticalContentInset = { top: 10, bottom: 10 }
   const xAxisHeight = 10
@@ -40,10 +63,12 @@ export default function ProgressGraph({ data }: { data: number[] }) {
       right: theme.margins.s
     }
   })
+  console.log(datesArr)
+  console.log(dataArr)
   return (
     <View style={styles.container}>
       <YAxis
-        data={data}
+        data={dataArr}
         style={styles.y}
         contentInset={verticalContentInset}
         svg={axesSvg}
@@ -51,7 +76,7 @@ export default function ProgressGraph({ data }: { data: number[] }) {
       <View style={styles.subcontainer}>
         <LineChart
           style={{ flex: 1 }}
-          data={data}
+          data={dataArr}
           contentInset={verticalContentInset}
           svg={{ stroke: theme.colors.primary }}
         >
@@ -59,12 +84,13 @@ export default function ProgressGraph({ data }: { data: number[] }) {
         </LineChart>
         <XAxis
           style={styles.x}
-          data={data}
+          data={datesArr}
           formatLabel={(value, index) => {
-            if (greaterThan15) {
-              if (index % 2 == 0) return index
+            /*if (greaterThan15) {
+              if (index % 2 == 0) return value
               return ""
-            } else return index
+            } else return value*/
+            return value
           }}
           contentInset={styles.xContentInset}
           svg={axesSvg}

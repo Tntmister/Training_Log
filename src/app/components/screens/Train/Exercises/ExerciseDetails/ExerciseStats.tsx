@@ -1,7 +1,11 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
-import { getExerciseHistory } from "../../../../../lib/firebase/exercises"
+import {
+  getExercise1RMs,
+  getExerciseHistory,
+  isStrOrWLExercise
+} from "../../../../../lib/firebase/exercises"
 import {
   ExerciseHistory,
   SessionExercise
@@ -27,7 +31,12 @@ export default function ExerciseStats({
   const STRS = langStrings(theme, lang as langs)
   const [timesDone, setTimesDone] = useState(0)
   const [data, setData] = useState<ExerciseHistory[]>([])
-
+  const [exercise1RMs, setExercise1RMs] = useState<
+  {
+    date: number;
+    ONE_RM: number;
+  }[]
+  >([])
   useEffect(() => {
     /*setData([
       100, 102.5, 105, 107.5, 105, 100, 102.5, 105, 107.5, 105, 120, 122.5, 125,
@@ -40,6 +49,12 @@ export default function ExerciseStats({
 
   useEffect(() => {
     setTimesDone(data.length)
+    if (
+      exercise.category == "Strength" ||
+      exercise.category == "Weightlifting"
+    ) {
+      setExercise1RMs(getExercise1RMs(data).sort((a, b) => b.date - a.date))
+    }
   }, [data])
 
   const styles = StyleSheet.create({
@@ -51,17 +66,13 @@ export default function ExerciseStats({
       ...theme.text.body_l
     }
   })
-
   return (
     <View style={styles.container}>
       <Text style={styles.headerInfo}>
         {STRS.train.exercises.performedEx} {timesDone} {STRS.timesSoFar}.
       </Text>
       <ProgressGraph
-        data={[
-          100, 102.5, 105, 107.5, 105, 100, 102.5, 105, 107.5, 105, 120, 122.5,
-          125, 122.5, 125, 127.5, 130, 132.5, 132.5, 132.5, 135
-        ]}
+        data={isStrOrWLExercise(exercise) ? exercise1RMs : exercise1RMs}
       />
     </View>
   )
