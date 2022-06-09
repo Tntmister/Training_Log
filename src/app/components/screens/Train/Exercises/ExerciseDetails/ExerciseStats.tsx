@@ -32,6 +32,7 @@ export default function ExerciseStats({
   const STRS = langStrings(theme, lang as langs)
   const [timesDone, setTimesDone] = useState(0)
   const [data, setData] = useState<ExerciseHistory[]>([])
+
   const [exercise1RMs, setExercise1RMs] = useState<
   {
     date: number;
@@ -74,6 +75,8 @@ export default function ExerciseStats({
     }
   }, [data])
 
+  console.log(exercise.name)
+  console.log(exercise1RMs.length)
   console.log(exercise1RMs)
   const styles = StyleSheet.create({
     container: {
@@ -82,6 +85,10 @@ export default function ExerciseStats({
     headerInfo: {
       marginVertical: theme.margins.xl,
       ...theme.text.body_l
+    },
+    warning: {
+      color: theme.colors.primary,
+      ...theme.text.body_l
     }
   })
   return (
@@ -89,16 +96,27 @@ export default function ExerciseStats({
       <Text style={styles.headerInfo}>
         {STRS.train.exercises.performedEx} {timesDone} {STRS.timesSoFar}.
       </Text>
-      <ProgressGraph
-        data={
-          isCardioExercise(exercise)
-            ? exercisePaces
-            : isStretchingExercise(exercise)
-              ? exerciseDurations
-              : exercise1RMs
-        }
-      />
-      {isCardioExercise(exercise) && <ProgressGraph data={exerciseDurations} />}
+      {timesDone > theme.graphs.min_number_executions && (
+        <>
+          <ProgressGraph
+            data={
+              isCardioExercise(exercise)
+                ? exercisePaces
+                : isStretchingExercise(exercise)
+                  ? exerciseDurations
+                  : exercise1RMs
+            }
+          />
+          {isCardioExercise(exercise) && (
+            <ProgressGraph data={exerciseDurations} />
+          )}
+        </>
+      )}
+      {timesDone < theme.graphs.min_number_executions && (
+        <Text style={styles.warning}>
+          {STRS.train.exercises.progress_warning}
+        </Text>
+      )}
     </View>
   )
 }

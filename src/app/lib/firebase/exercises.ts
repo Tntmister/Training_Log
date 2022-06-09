@@ -112,10 +112,12 @@ export function getExerciseHistory(
       querySnapshot.forEach((documentSnapshot) => {
         const session = documentSnapshot.data() as TrainingSession
         //console.log("session id: ", documentSnapshot.id, session)
-        exerciseHistory.push({
-          date: session.date,
-          exercises: session.exercises.filter((ex) => ex.name == name)
-        } as unknown as ExerciseHistory)
+        if (session.exercises.filter((ex) => ex.name == name).length > 0) {
+          exerciseHistory.push({
+            date: session.date,
+            exercises: session.exercises.filter((ex) => ex.name == name)
+          } as ExerciseHistory)
+        }
       })
       onLoad(exerciseHistory)
     })

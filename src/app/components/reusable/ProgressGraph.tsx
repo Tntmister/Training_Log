@@ -44,7 +44,16 @@ export default function ProgressGraph({
         })
         .reverse()
     )
-    setDataArr(data.map((record) => record.ONE_RM).reverse())
+    setDataArr(
+      data
+        .map((record) =>
+          record.ONE_RM == Number.POSITIVE_INFINITY ||
+          record.ONE_RM == Number.NEGATIVE_INFINITY
+            ? 0
+            : record.ONE_RM
+        )
+        .reverse()
+    )
   }, [data])
 
   const axesSvg = { fontSize: 10, fill: theme.colors.text }
@@ -84,6 +93,7 @@ export default function ProgressGraph({
 
   console.log("PG -> ", datesArr)
   console.log("PG -> ", dataArr)
+
   return (
     <>
       <View style={styles.container}>

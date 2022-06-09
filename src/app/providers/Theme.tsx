@@ -68,6 +68,7 @@ export type Theme = {
   };
   graphs: {
     height: number;
+    min_number_executions: number;
   };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
@@ -175,7 +176,8 @@ const defaultTheme: Theme = {
     m: 50
   },
   graphs: {
-    height: 250
+    height: 250,
+    min_number_executions: 2
   },
   global_strings: strings_global,
   strings: {

@@ -41,6 +41,7 @@ export type strings = {
       performedEx: string;
       daysAgo: string;
       estimated1RM: string;
+      progress_warning: string;
     };
     models: {
       models: string;
@@ -166,7 +167,9 @@ export const strings_en: strings = {
       searchExercises: "Search Exercises",
       performedEx: "You've performed this exercise ",
       daysAgo: "Days ago",
-      estimated1RM: "Estimated 1RM"
+      estimated1RM: "Estimated 1RM",
+      progress_warning:
+        "You havent't executed this exercise enough times to see progress. Execute it at least 2 times!"
     },
     models: {
       models: "Models",
@@ -284,7 +287,9 @@ export const strings_pt: strings = {
       searchExercises: "Pesquisar Exercícios",
       performedEx: "Já executou este exercício",
       daysAgo: "Dias atrás",
-      estimated1RM: "1RM Estimado"
+      estimated1RM: "1RM Estimado",
+      progress_warning:
+        "Ainda não executou o exercício vezes suficientes para ver o progresso. Execute-o pelo menos 2 vezes!"
     },
     models: {
       models: "Modelos",
