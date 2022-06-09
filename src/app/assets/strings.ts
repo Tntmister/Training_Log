@@ -41,6 +41,7 @@ export type strings = {
       performedEx: string;
       daysAgo: string;
       estimated1RM: string;
+      pace: string;
       progress_warning: string;
     };
     models: {
@@ -169,7 +170,8 @@ export const strings_en: strings = {
       daysAgo: "Days ago",
       estimated1RM: "Estimated 1RM",
       progress_warning:
-        "You havent't executed this exercise enough times to see progress. Execute it at least 2 times!"
+        "You havent't executed this exercise enough times to see progress. Execute it at least 2 times!",
+      pace: "Average Pace"
     },
     models: {
       models: "Models",
@@ -289,7 +291,8 @@ export const strings_pt: strings = {
       daysAgo: "Dias atrás",
       estimated1RM: "1RM Estimado",
       progress_warning:
-        "Ainda não executou o exercício vezes suficientes para ver o progresso. Execute-o pelo menos 2 vezes!"
+        "Ainda não executou o exercício vezes suficientes para ver o progresso. Execute-o pelo menos 2 vezes!",
+      pace: "Ritmo Médio"
     },
     models: {
       models: "Modelos",

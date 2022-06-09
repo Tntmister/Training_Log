@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useContext, useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { ScrollView, StyleSheet, View } from "react-native"
 import {
   getExercise1RMs,
   getExerciseDurations,
@@ -80,38 +80,45 @@ export default function ExerciseStats({
   console.log(exercise1RMs)
   const styles = StyleSheet.create({
     container: {
-      paddingHorizontal: theme.paddings.m
+      paddingHorizontal: theme.paddings.s
     },
     headerInfo: {
-      marginVertical: theme.margins.xl,
-      ...theme.text.body_l
+      ...theme.text.body_l,
+      textAlign: "center"
     },
     warning: {
       color: theme.colors.primary,
-      ...theme.text.body_l
+      ...theme.text.body_l,
+      textAlign: "center"
+    },
+    graphContainer: {
+      paddingVertical: theme.paddings.m
     }
   })
   return (
     <View style={styles.container}>
-      <Text style={styles.headerInfo}>
-        {STRS.train.exercises.performedEx} {timesDone} {STRS.timesSoFar}.
-      </Text>
-      {timesDone > theme.graphs.min_number_executions && (
-        <>
-          <ProgressGraph
-            data={
-              isCardioExercise(exercise)
-                ? exercisePaces
-                : isStretchingExercise(exercise)
-                  ? exerciseDurations
-                  : exercise1RMs
-            }
-          />
-          {isCardioExercise(exercise) && (
-            <ProgressGraph data={exerciseDurations} />
-          )}
-        </>
-      )}
+      <ScrollView contentContainerStyle={styles.graphContainer}>
+        <Text style={styles.headerInfo}>
+          {STRS.train.exercises.performedEx} {timesDone} {STRS.timesSoFar}.
+        </Text>
+        {timesDone >= theme.graphs.min_number_executions && (
+          <>
+            <ProgressGraph
+              data={
+                isCardioExercise(exercise)
+                  ? exercisePaces
+                  : isStretchingExercise(exercise)
+                    ? exerciseDurations
+                    : exercise1RMs
+              }
+            />
+            {isCardioExercise(exercise) && (
+              <ProgressGraph data={exerciseDurations} />
+            )}
+          </>
+        )}
+      </ScrollView>
+
       {timesDone < theme.graphs.min_number_executions && (
         <Text style={styles.warning}>
           {STRS.train.exercises.progress_warning}

@@ -111,7 +111,6 @@ export function getExerciseHistory(
     .then((querySnapshot) => {
       querySnapshot.forEach((documentSnapshot) => {
         const session = documentSnapshot.data() as TrainingSession
-        //console.log("session id: ", documentSnapshot.id, session)
         if (session.exercises.filter((ex) => ex.name == name).length > 0) {
           exerciseHistory.push({
             date: session.date,
@@ -176,7 +175,7 @@ function getSessionBestPace(session_ex: CardioSetClass[]) {
 }
 
 function calcPace(distance: number, duration: number) {
-  return distance / duration
+  return distance / (duration / 3600)
 }
 
 export function getExerciseDurations(history: ExerciseHistory[]) {

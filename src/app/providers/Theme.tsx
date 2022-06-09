@@ -69,6 +69,13 @@ export type Theme = {
   graphs: {
     height: number;
     min_number_executions: number;
+    xlabelLimit: number;
+    dims: {
+      font: number;
+      contentInsetTop: number;
+      contentInsetBottom: number;
+      xAxisHeight: number;
+    };
   };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
@@ -177,7 +184,14 @@ const defaultTheme: Theme = {
   },
   graphs: {
     height: 250,
-    min_number_executions: 2
+    min_number_executions: 2,
+    xlabelLimit: 15,
+    dims: {
+      font: 10,
+      contentInsetTop: 10,
+      contentInsetBottom: 20,
+      xAxisHeight: 10
+    }
   },
   global_strings: strings_global,
   strings: {

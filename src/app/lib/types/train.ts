@@ -52,3 +52,24 @@ export interface ExerciseHistory {
   date: number;
   exercises: SessionExercise[];
 }
+
+export type RegularExHistory = RegularExRecord[];
+
+export type RegularExRecord = {
+  date: number;
+  ONE_RM: number;
+};
+
+export type DurationExHistory = DurationExRecord[];
+
+export type DurationExRecord = {
+  date: number;
+  duration: number;
+};
+
+export type CardioExHistory = CardioExRecord[];
+
+export type CardioExRecord = {
+  date: number;
+  pace: number;
+};
