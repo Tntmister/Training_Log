@@ -110,8 +110,8 @@ export default function ProgressGraph({
     }
   })
 
-  console.log("PG -> ", datesArr)
-  console.log("PG -> ", dataArr)
+  //console.log("PG -> ", datesArr)
+  //console.log("PG -> ", dataArr)
   return (
     <>
       <View style={styles.container}>
