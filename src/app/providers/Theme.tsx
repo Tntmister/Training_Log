@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { ReactNode, useCallback, useMemo, useState } from "react"
 import {
@@ -22,6 +23,7 @@ import {
   strings_global_lang,
   strings_pt
 } from "../assets/strings"
+import { available_units, units, units_global } from "../lib/units"
 
 export type Theme = {
   margins: {
@@ -66,8 +68,20 @@ export type Theme = {
     s: number;
     m: number;
   };
+  graphs: {
+    height: number;
+    min_number_executions: number;
+    xlabelLimit: number;
+    dims: {
+      font: number;
+      contentInsetTop: number;
+      contentInsetBottom: number;
+      xAxisHeight: number;
+    };
+  };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
+  units: units;
 } & NavigationTheme &
 PaperTheme;
 
@@ -171,6 +185,17 @@ const defaultTheme: Theme = {
     s: 30,
     m: 50
   },
+  graphs: {
+    height: 250,
+    min_number_executions: 2,
+    xlabelLimit: 15,
+    dims: {
+      font: 10,
+      contentInsetTop: 10,
+      contentInsetBottom: 20,
+      xAxisHeight: 10
+    }
+  },
   global_strings: strings_global,
   strings: {
     en: {
@@ -179,7 +204,8 @@ const defaultTheme: Theme = {
     pt: {
       ...strings_pt
     }
-  }
+  },
+  units: units_global
 }
 
 const darkTheme: Theme = {
@@ -209,17 +235,23 @@ export const useTheme = () => {
 }
 
 export const ThemeContext = React.createContext({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   switchLang: (lang: langs) => {},
+  switchUnit: (unit: available_units) => {},
   lang: "en",
+  unit: "metric",
   dark: true
 })
 
+const initial_params = {
+  lang: "en",
+  unit: "metric",
+  dark: true
+}
 export function PaperNavigationProvider({ children }: { children: ReactNode }) {
-  const [dark, setDark] = useState(true)
-  const [lang, setLang] = useState("en")
+  const [dark, setDark] = useState(initial_params.dark)
+  const [lang, setLang] = useState(initial_params.lang)
+  const [unit, setUnit] = useState(initial_params.unit)
 
   const toggleTheme = useCallback(() => {
     return setDark(!dark)
@@ -231,11 +263,17 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
     },
     [lang]
   )
+  const switchUnit = useCallback(
+    (unit: available_units) => {
+      return setUnit(unit)
+    },
+    [unit]
+  )
 
   const theme = dark ? darkTheme : defaultTheme
 
   const theming = useMemo(
-    () => ({ toggleTheme, switchLang, dark, lang }),
+    () => ({ toggleTheme, switchLang, switchUnit, dark, lang, unit }),
     [toggleTheme, switchLang, dark, lang]
   )
 

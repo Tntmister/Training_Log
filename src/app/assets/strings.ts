@@ -39,6 +39,10 @@ export type strings = {
       times: string;
       searchExercises: string;
       performedEx: string;
+      daysAgo: string;
+      estimated1RM: string;
+      pace: string;
+      progress_warning: string;
     };
     models: {
       models: string;
@@ -162,7 +166,12 @@ export const strings_en: strings = {
       goalTime: "Goal Time",
       times: "x",
       searchExercises: "Search Exercises",
-      performedEx: "You've performed this exercise "
+      performedEx: "You've performed this exercise ",
+      daysAgo: "Days ago",
+      estimated1RM: "Estimated 1RM",
+      progress_warning:
+        "You havent't executed this exercise enough times to see progress. Execute it at least 2 times!",
+      pace: "Average Pace"
     },
     models: {
       models: "Models",
@@ -278,7 +287,12 @@ export const strings_pt: strings = {
       goalTime: "Objetivo de Tempo",
       times: "x",
       searchExercises: "Pesquisar Exercícios",
-      performedEx: "Já executou este exercício"
+      performedEx: "Já executou este exercício",
+      daysAgo: "Dias atrás",
+      estimated1RM: "1RM Estimado",
+      progress_warning:
+        "Ainda não executou o exercício vezes suficientes para ver o progresso. Execute-o pelo menos 2 vezes!",
+      pace: "Ritmo Médio"
     },
     models: {
       models: "Modelos",

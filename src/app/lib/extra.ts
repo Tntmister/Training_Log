@@ -25,6 +25,16 @@ export function getDate(timestamp: number | string | undefined): string {
   return `${day}/${month}/${year}`
 }
 
+export function getTodayDate(): string {
+  return new Date().toISOString().slice(0, 10)
+}
+
+export function getDaysBetween(date1: string, date2: string): number {
+  const diffInMs = new Date(date1).getTime() - new Date(date2).getTime()
+  const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
+  return diffInDays
+}
+
 export function getDuration(millis: number): string {
   if (millis === undefined) return "Invalid Duration"
   const totalSecs = millis / 1000

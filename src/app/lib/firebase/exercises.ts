@@ -3,8 +3,11 @@ import firestore from "@react-native-firebase/firestore"
 import { Asset } from "react-native-image-picker"
 import { exercises } from "../../assets/exercises/exercises_en"
 import {
+  CardioSetClass,
+  Exercise,
   ExerciseHistory,
-  SessionExercise,
+  RegularSetClass,
+  StretchingSetClass,
   TrainingSession
 } from "../types/train"
 
@@ -108,12 +111,85 @@ export function getExerciseHistory(
     .then((querySnapshot) => {
       querySnapshot.forEach((documentSnapshot) => {
         const session = documentSnapshot.data() as TrainingSession
-        //console.log("session id: ", documentSnapshot.id, session)
-        exerciseHistory.push({
-          date: session.date,
-          exercise: session.exercises.filter((ex) => (ex.name = name))
-        } as unknown as ExerciseHistory)
+        if (session.exercises.filter((ex) => ex.name == name).length > 0) {
+          exerciseHistory.push({
+            date: session.date,
+            exercises: session.exercises.filter((ex) => ex.name == name)
+          } as ExerciseHistory)
+        }
       })
       onLoad(exerciseHistory)
     })
+}
+
+export function getExercise1RMs(history: ExerciseHistory[]) {
+  const result = history.map((record) => {
+    const ONE_RM = Math.max(
+      ...record.exercises.map((ex) =>
+        getSession1RM(ex.sets as RegularSetClass[])
+      )
+    )
+    return { date: record.date, ONE_RM: ONE_RM }
+  })
+  return result
+}
+
+function getSession1RM(session_ex: RegularSetClass[]) {
+  return Math.max(...session_ex.map((set) => calc1RM(set.weight, set.reps)))
+}
+
+function calc1RM(weight: number, reps: number) {
+  return Math.round(weight / (1.0278 - 0.0278 * reps))
+}
+
+export function isStrOrWLExercise(exercise: Exercise) {
+  return (
+    exercise.category == "Strength" || exercise.category == "Weightlifting"
+  )
+}
+
+export function isCardioExercise(exercise: Exercise) {
+  return exercise.category == "Cardio"
+}
+
+export function isStretchingExercise(exercise: Exercise) {
+  return exercise.category == "Stretching"
+}
+
+export function getExercisePaces(history: ExerciseHistory[]) {
+  const result = history.map((record) => {
+    const bestPace = Math.max(
+      ...record.exercises.map((ex) =>
+        getSessionBestPace(ex.sets as CardioSetClass[])
+      )
+    )
+    return { date: record.date, pace: bestPace }
+  })
+  return result
+}
+
+function getSessionBestPace(session_ex: CardioSetClass[]) {
+  return Math.max(
+    ...session_ex.map((set) => calcPace(set.distance, set.duration))
+  )
+}
+
+function calcPace(distance: number, duration: number) {
+  return distance / (duration / 3600)
+}
+
+export function getExerciseDurations(history: ExerciseHistory[]) {
+  const result = history.map((record) => {
+    const longestDur = Math.max(
+      ...record.exercises.map((ex) =>
+        getSessionBestDuration(ex.sets as StretchingSetClass[])
+      )
+    )
+    return { date: record.date, duration: longestDur }
+  })
+  return result
+}
+
+function getSessionBestDuration(session_ex: StretchingSetClass[]) {
+  return Math.max(...session_ex.map((set) => set.duration))
 }
