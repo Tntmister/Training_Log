@@ -14,6 +14,7 @@ export type RootStackParamUserNav = {
   SessionSummary: { session: TrainingSession };
   Model: { model: TrainingModel; mode: modelModes };
   FollowUsers: { uid: string; type: "followers" | "following" };
+  ReportedPosts: undefined;
 };
 
 export default function ProfileNav() {
@@ -33,6 +34,7 @@ export default function ProfileNav() {
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="Model" component={Model} />
       <Stack.Screen name="FollowUsers" component={FollowUsers} />
+      <Stack.Screen name="ReportedPosts" component={FollowUsers} />
     </Stack.Navigator>
   )
 }

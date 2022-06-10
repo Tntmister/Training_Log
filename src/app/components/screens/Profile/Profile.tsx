@@ -155,6 +155,15 @@ export default function Profile({
               setMenuVisible(false)
             }}
           />
+          {self && userProfile?.admin && (
+            <Menu.Item
+              title="Reported Posts"
+              onPress={() => {
+                setMenuVisible(false)
+                navigation.navigate("ReportedPosts")
+              }}
+            />
+          )}
         </Menu>
       </View>
       <InlineView style={styles.headerContainer}>
