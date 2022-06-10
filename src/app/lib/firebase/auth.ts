@@ -37,7 +37,9 @@ export async function initFirestore(user: FirebaseAuthTypes.User) {
       username: user.displayName!,
       followers: 0,
       following: 0,
-      posts: 0
+      posts: 0,
+      admin: false,
+      bannedUntil: null
     } as User)
 }
 

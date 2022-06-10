@@ -8,6 +8,8 @@ export type User = {
   followers: number;
   following: number;
   posts: number;
+  admin: boolean;
+  bannedUntil: number | null;
 };
 
 export type Follow = {

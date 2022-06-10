@@ -10,11 +10,22 @@ import PostDescriptor from "./PostDescriptor"
 import { Post } from "../../../lib/types/user"
 import BackgroundFetch from "react-native-background-fetch"
 import notifee, { AuthorizationStatus, EventType } from "@notifee/react-native"
+import { deletePost, initBackgroundFetch } from "../../../lib/firebase/posts"
+import prompt from "react-native-prompt-android"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
 
 export default function Posts({
   navigation,
   route
 }: StackScreenProps<RootStackParamHomeNav, "Posts">) {
+  const theme = useTheme()
+  const { lang } = useContext(ThemeContext)
+  const STRS = langStrings(theme, lang as langs)
   const user = useContext(UserContext)!
   const userid = route.params?.uid
   const [posts, setPosts] = useState<{ post: Post; postId: string }[]>([])
@@ -28,7 +39,7 @@ export default function Posts({
   // firebase query por array-contains está limitado a blocos de 10 ids
   const followingChunks = useRef<string[][]>([])
 
-  function subscribeFollowing() {
+  function subscribeFollowings() {
     return firestore()
       .collection(`users/${user.uid}/following`)
       .onSnapshot((querySnapshot) => {
@@ -80,63 +91,14 @@ export default function Posts({
   }
 
   useEffect(() => {
-    if (userid == undefined) return subscribeFollowing()
+    if (userid == undefined) return subscribeFollowings()
     else {
       retrieveData()
     }
   }, [])
 
-  async function initBackgroundFetch() {
-    BackgroundFetch.configure(
-      {
-        minimumFetchInterval: 15,
-        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY
-      },
-      async (taskId) => {
-        let numPosts = 0
-        for (const followingChunk of followingChunks.current) {
-          numPosts += (
-            await firestore()
-              .collection("posts")
-              .where("author", "in", followingChunk)
-              .orderBy("post.date", "desc")
-              .endBefore(newest.current)
-              .limit(10)
-              .get()
-          ).size
-          if (numPosts >= 10) break
-        }
-        if (numPosts > 0) {
-          notifee.displayNotification({
-            title: "New Training Posts From From Users You Follow!",
-            body: `You have ${
-              numPosts > 10 ? "10+" : numPosts
-            } new unseen posts from users you follow!`,
-            android: {
-              channelId: await notifee.createChannel({
-                id: "default",
-                name: "New Posts"
-              })
-            }
-          })
-        }
-        BackgroundFetch.finish(taskId)
-      },
-      (taskId) => {
-        console.warn(`background-fetch timeout: ${taskId}`)
-        BackgroundFetch.finish(taskId)
-      }
-    )
-  }
-
   useEffect(() => {
-    notifee.requestPermission().then((value) => {
-      if (value.authorizationStatus >= AuthorizationStatus.AUTHORIZED) {
-        if (followingChunks.current.length > 1 && !loading) {
-          initBackgroundFetch()
-        }
-      }
-    })
+    if (!loading) initBackgroundFetch(followingChunks.current, newest.current)
     return notifee.onBackgroundEvent(async ({ type, detail }) => {
       console.log(type)
       console.log(detail)
@@ -151,6 +113,21 @@ export default function Posts({
   function onUserPress(user: string) {
     navigation.navigate("Profile", { uid: user })
   }
+  async function onDeletePress(postId: string, post: Post) {
+    if (post.author == user.uid) await deletePost(postId)
+    else {
+      prompt("Report Post", "How do you think this post is inappropriate?", [
+        { text: STRS.cancel, style: "cancel" },
+        {
+          text: "Report Post",
+          onPress: () => {
+            console.log("report")
+          }
+        }
+      ])
+    }
+    setPosts((posts) => posts.filter((post) => post.postId != postId))
+  }
 
   return (
     <FlatList
@@ -158,6 +135,7 @@ export default function Posts({
       data={posts}
       renderItem={({ item }) => (
         <PostDescriptor
+          onDeletePress={onDeletePress}
           onUserPress={onUserPress}
           onPostPress={onPostPress}
           post={item.post}

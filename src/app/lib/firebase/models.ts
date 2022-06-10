@@ -3,7 +3,7 @@ import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { Asset } from "react-native-image-picker"
 import { TrainingModel, TrainingSession } from "../types/train"
-import { Comment, Post } from "../types/user"
+import { Post } from "../types/user"
 
 export async function saveModel(
   uID: string,
@@ -139,47 +139,4 @@ export async function shareModel(
     } as Post)
     t.update(userDoc, { posts: firebase.firestore.FieldValue.increment(1) })
   })
-}
-
-export async function postComment(
-  author: string,
-  postId: string,
-  body: string,
-  parentComment: string | null
-): Promise<{ id: string; comment: Comment }> {
-  return new Promise((resolve) => {
-    const comment: Comment = {
-      author: author,
-      body: body,
-      date: Date.now(),
-      parentID: parentComment,
-      childIDs: []
-    }
-    firestore()
-      .collection(`posts/${postId}/comments`)
-      .add(comment)
-      .then((documentReference) =>
-        resolve({ id: documentReference.id, comment: comment })
-      )
-  })
-}
-
-export async function getRootComments(postId: string) {
-  return getCommentReplies(postId, null)
-}
-
-export async function getCommentReplies(
-  postId: string,
-  commentId: string | null
-) {
-  return (
-    await firestore()
-      .collection(`posts/${postId}/comments`)
-      .orderBy("date", "desc")
-      .where("parentID", "==", commentId)
-      .get()
-  ).docs.map((doc) => ({
-    id: doc.id,
-    comment: doc.data() as Comment
-  }))
 }

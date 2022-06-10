@@ -2,7 +2,7 @@ import { CachedImage } from "@georstat/react-native-image-cache"
 import React, { useContext, useEffect, useState } from "react"
 import { Image, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native"
-import { IconButton } from "react-native-paper"
+import { IconButton, Menu } from "react-native-paper"
 import { images } from "../../../lib/extra"
 import {
   getPostLiked,
@@ -26,12 +26,14 @@ function PostDescriptor({
   post,
   postId,
   onUserPress,
-  onPostPress
+  onPostPress,
+  onDeletePress
 }: {
   post: Post;
   postId: string;
   onUserPress: (user: string) => void;
   onPostPress: (postId: string, post: Post) => void;
+  onDeletePress: (postId: string, post: Post) => void;
 }) {
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
@@ -69,11 +71,13 @@ function PostDescriptor({
   })
   const content = post.post
   const session = "model" in content
-  const [userAuthor, setUserAuthor] = useState<User | undefined>(undefined)
+  const [userSelf, setUserSelf] = useState<User>()
+  const [userAuthor, setUserAuthor] = useState<User>()
   const [likes, setLikes] = useState(post.likes)
   const [liked, setLiked] = useState(false)
   useEffect(() => {
     getUser(post.author).then((user) => setUserAuthor(user))
+    getUser(user.uid).then((user) => setUserSelf(user))
     getPostLiked(user.uid, postId).then((liked) => setLiked(liked))
   }, [])
 
@@ -83,6 +87,7 @@ function PostDescriptor({
     toggleLikePost(user.uid, postId)
   }
 
+  const [menuVisible, setMenuVisible] = useState(false)
   return (
     <TouchableOpacity
       onPress={onPostPress.bind(null, postId, post)}
@@ -99,9 +104,33 @@ function PostDescriptor({
             />
           )}
         </TouchableOpacity>
-        <Text style={[theme.text.body_l, { marginLeft: theme.margins.m }]}>
+        <Text
+          style={[
+            theme.text.body_l,
+            { marginLeft: theme.margins.m, flexGrow: 1 }
+          ]}
+        >
           {userAuthor?.username}
         </Text>
+        <Menu
+          visible={menuVisible}
+          onDismiss={() => setMenuVisible(false)}
+          anchor={
+            <IconButton
+              onPress={() => setMenuVisible(true)}
+              icon={"dots-vertical"}
+            />
+          }
+        >
+          <Menu.Item
+            onPress={() => onDeletePress(postId, post)}
+            title={
+              userSelf?.admin || user.uid == post.author
+                ? "Delete Post"
+                : "Report Post"
+            }
+          />
+        </Menu>
       </InlineView>
       {userAuthor && (
         <Text style={styles.actionText}>
