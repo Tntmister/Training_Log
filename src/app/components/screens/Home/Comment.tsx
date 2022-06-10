@@ -96,7 +96,7 @@ export default function Comment({
             />
             <Button
               onPress={() =>
-                postComment(user.uid, postId, replyBody, commentDoc.id).then(
+                postComment(postId, replyBody, commentDoc.id).then(
                   (replyDoc) => {
                     setRepliesDocs((docs) => [
                       ...docs,

@@ -11,7 +11,6 @@ import { RFValue } from "react-native-responsive-fontsize"
 import { IconButton, Menu } from "react-native-paper"
 import { modelModes } from "./Model"
 import { deleteModel, shareModel } from "../../../../lib/firebase/models"
-import { UserContext } from "../../../../providers/User"
 import { TrainingModel } from "../../../../lib/types/train"
 import prompt from "react-native-prompt-android"
 
@@ -33,7 +32,6 @@ function ModelDescriptor({
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
-  const user = useContext(UserContext)
   const [menuVisible, setMenuVisible] = useState(false)
 
   return (
@@ -79,7 +77,7 @@ function ModelDescriptor({
                     {
                       text: STRS.yes,
                       onPress: async () => {
-                        await deleteModel(user!.uid, modelId)
+                        await deleteModel(modelId)
                         setMenuVisible(false)
                       }
                     },
@@ -113,7 +111,7 @@ function ModelDescriptor({
                               text: STRS.yes,
                               onPress: (comment) => {
                                 console.log(comment)
-                                shareModel(user!.uid, model, {
+                                shareModel(model, {
                                   comment: comment
                                 })
                                 setMenuVisible(false)

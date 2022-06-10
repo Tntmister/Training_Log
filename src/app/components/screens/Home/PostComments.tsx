@@ -35,14 +35,12 @@ export default function PostComments({
         />
         <Button
           onPress={() =>
-            postComment(user.uid, postId, commentBody, null).then(
-              (commentDoc) => {
-                setCommentDocs((docs) => [
-                  { ...commentDoc, profileURL: user.photoURL },
-                  ...docs
-                ])
-              }
-            )
+            postComment(postId, commentBody, null).then((commentDoc) => {
+              setCommentDocs((docs) => [
+                { ...commentDoc, profileURL: user.photoURL },
+                ...docs
+              ])
+            })
           }
           disabled={commentBody.length < 2}
         >

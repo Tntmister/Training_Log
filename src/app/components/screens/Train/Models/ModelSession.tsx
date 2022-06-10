@@ -11,7 +11,6 @@ import {
   ThemeContext,
   useTheme
 } from "../../../../providers/Theme"
-import { UserContext } from "../../../../providers/User"
 import { Button } from "../../../reusable/Button"
 import MediaCarousel from "../../../reusable/MediaCarousel"
 import ProgrammedExercise from "../Exercises/ProgrammedExercise"
@@ -27,8 +26,6 @@ export default function Session({
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
-
-  const user = useContext(UserContext)!
   const model = route.params.model
 
   const [session, setSession] = useState<TrainingSession>({
@@ -51,7 +48,7 @@ export default function Session({
         {
           text: STRS.no,
           onPress: () => {
-            finishSession(user.uid, session)
+            finishSession(session)
             navigation.navigate("ModelList")
           }
         },
@@ -59,7 +56,7 @@ export default function Session({
           text: STRS.yes,
           onPress: (comment) => {
             console.log(comment)
-            finishSession(user.uid, session, {
+            finishSession(session, {
               comment: comment
             })
             navigation.navigate("ModelList")

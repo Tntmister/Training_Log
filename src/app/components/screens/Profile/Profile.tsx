@@ -99,8 +99,7 @@ export default function Profile({
   const [userProfile, setUserProfile] = useState<User | undefined>(undefined)
   const [follow, setFollow] = useState<Follow | undefined>(undefined)
   useEffect(() => {
-    if (!self)
-      return subscribeFollowing(route.params!.uid, user.uid, setFollow)
+    if (!self) return subscribeFollowing(route.params!.uid, setFollow)
   }, [])
   useEffect(() => {
     return subscribeUser(route.params.uid, setUserProfile)
@@ -201,14 +200,14 @@ export default function Profile({
         (follow ? (
           <Button
             style={styles.followBtn}
-            onPress={() => unfollowUser(user.uid, route.params!.uid)}
+            onPress={() => unfollowUser(route.params!.uid)}
           >
             {STRS.user.unfollow}
           </Button>
         ) : (
           <Button
             style={styles.followBtn}
-            onPress={() => followUser(user.uid, route.params!.uid)}
+            onPress={() => followUser(route.params!.uid)}
           >
             {STRS.user.follow}
           </Button>

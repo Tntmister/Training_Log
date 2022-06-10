@@ -4,7 +4,8 @@ import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 import { User, Follow } from "../types/user"
 
-export async function saveUserDetails(uid: string, user: Partial<User>) {
+export async function saveUserDetails(user: Partial<User>) {
+  const uid = firebase.auth().currentUser!.uid
   const profileRef = storage().ref(`users/${uid}/profile`)
   if (user.profileURL) {
     await profileRef.putFile(user.profileURL)
@@ -41,8 +42,10 @@ export function getUser(uid: string) {
     .then((documentSnapshot) => documentSnapshot.data() as User)
 }
 
-export async function followUser(self_uid: string, user_uid: string) {
+export async function followUser(user_uid: string) {
   const now = Date.now()
+
+  const self_uid = firebase.auth().currentUser!.uid
 
   const selfDoc = firestore().collection("users").doc(self_uid)
   const userDoc = firestore().collection("users").doc(user_uid)
@@ -75,7 +78,9 @@ export async function followUser(self_uid: string, user_uid: string) {
     .catch((resason) => console.log(resason))
 }
 
-export async function unfollowUser(self_uid: string, user_uid: string) {
+export async function unfollowUser(user_uid: string) {
+  const self_uid = firebase.auth().currentUser!.uid
+
   const selfDoc = firestore().collection("users").doc(self_uid)
   const userDoc = firestore().collection("users").doc(user_uid)
 
@@ -103,12 +108,11 @@ export async function unfollowUser(self_uid: string, user_uid: string) {
 
 export function subscribeFollowing(
   uid: string,
-  uid_self: string,
   onUpdate: (follow?: Follow) => void
 ) {
   return firestore()
     .collection("users")
-    .doc(uid_self)
+    .doc(firebase.auth().currentUser!.uid)
     .collection("following")
     .where("id", "==", uid)
     .onSnapshot((query) => {
@@ -116,7 +120,8 @@ export function subscribeFollowing(
     })
 }
 
-export async function toggleLikePost(uid: string, postId: string) {
+export async function toggleLikePost(postId: string) {
+  const uid = firebase.auth().currentUser!.uid
   const post = firestore().doc(`posts/${postId}`)
   const liked = await post
     .collection("likes")
@@ -136,10 +141,10 @@ export async function toggleLikePost(uid: string, postId: string) {
   })
 }
 
-export function getPostLiked(uid: string, postId: string) {
+export function getPostLiked(postId: string) {
   return firestore()
     .collection(`posts/${postId}/likes`)
-    .where("id", "==", uid)
+    .where("id", "==", firebase.auth().currentUser!.uid)
     .get()
     .then((querySnapshot) => !querySnapshot.empty)
 }

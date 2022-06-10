@@ -17,7 +17,6 @@ import {
   ThemeContext,
   useTheme
 } from "../../../../../providers/Theme"
-import { UserContext } from "../../../../../providers/User"
 import ProgressGraph from "../../../../reusable/ProgressGraph"
 import { Text } from "../../../../reusable/Text"
 import { ExDetailStackParamList } from "./Exercise"
@@ -27,7 +26,6 @@ export default function ExerciseStats({
 }: StackScreenProps<ExDetailStackParamList, "ExerciseInfo">) {
   const exercise = route.params.exercise
   const theme = useTheme()
-  const user = useContext(UserContext)!
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
   const [timesDone, setTimesDone] = useState(0)
@@ -52,7 +50,7 @@ export default function ExerciseStats({
   }[]
   >([])
   useEffect(() => {
-    getExerciseHistory(exercise.name, user.uid, (data) => {
+    getExerciseHistory(exercise.name, (data) => {
       setData(data)
     })
   }, [])

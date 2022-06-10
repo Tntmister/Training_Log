@@ -10,11 +10,11 @@ import { Text } from "../../../reusable/Text"
 import { TrainingModel } from "../../../../lib/types/train"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamListModelNav } from "./ModelNav"
-import { UserContext } from "../../../../providers/User"
 import { getModels } from "../../../../lib/firebase/models"
 import Loading from "../../../reusable/Loading"
 import ModelDescriptor from "./ModelDescriptor"
 import { modelModes } from "./Model"
+import { UserContext } from "../../../../providers/User"
 
 export default function ModelList({
   navigation
@@ -22,7 +22,7 @@ export default function ModelList({
   const theme = useTheme()
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
-  const user = useContext(UserContext)
+  const user = useContext(UserContext)!
   const [loading, setLoading] = useState(true)
   const [models, setModels] = useState<{ model: TrainingModel; id: string }[]>(
     []
@@ -42,7 +42,7 @@ export default function ModelList({
   })
 
   useEffect(() => {
-    const subscriber = getModels(user!.uid, (models) => {
+    const subscriber = getModels(user.uid, (models) => {
       setModels(models)
       setLoading(false)
     })

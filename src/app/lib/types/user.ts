@@ -32,3 +32,9 @@ export type Comment = {
   childIDs: string[];
   parentID: string | null;
 };
+
+export type Report = {
+  userID: string;
+  reportedPostId: string;
+  reason: string;
+};

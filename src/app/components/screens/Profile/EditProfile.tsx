@@ -65,7 +65,6 @@ export default function EditProfile({
 
   function saveChanges() {
     saveUserDetails(
-      uid,
       // cria objeto com apenas campos alterados entre alteracoes feitas e user atual
       Object.fromEntries(
         Object.entries(userChanges).filter(

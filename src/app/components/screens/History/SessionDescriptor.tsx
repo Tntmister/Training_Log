@@ -114,7 +114,7 @@ export default function SessionDescriptor({
                     {
                       text: STRS.yes,
                       onPress: async () => {
-                        await deleteSession(user!.uid, sessionId)
+                        await deleteSession(sessionId)
                         setMenuVisible(false)
                       }
                     },

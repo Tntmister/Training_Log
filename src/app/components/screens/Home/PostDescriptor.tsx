@@ -78,13 +78,13 @@ function PostDescriptor({
   useEffect(() => {
     getUser(post.author).then((user) => setUserAuthor(user))
     getUser(user.uid).then((user) => setUserSelf(user))
-    getPostLiked(user.uid, postId).then((liked) => setLiked(liked))
+    getPostLiked(postId).then((liked) => setLiked(liked))
   }, [])
 
   function onLikePress() {
     setLikes((prevLikes) => prevLikes + (liked ? -1 : 1))
     setLiked((state) => !state)
-    toggleLikePost(user.uid, postId)
+    toggleLikePost(postId)
   }
 
   const [menuVisible, setMenuVisible] = useState(false)

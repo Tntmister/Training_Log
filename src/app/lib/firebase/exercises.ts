@@ -1,4 +1,4 @@
-import storage from "@react-native-firebase/storage"
+import storage, { firebase } from "@react-native-firebase/storage"
 import firestore from "@react-native-firebase/firestore"
 import { Asset } from "react-native-image-picker"
 import { exercises } from "../../assets/exercises/exercises_en"
@@ -99,14 +99,12 @@ export function searchExercises(
 
 export function getExerciseHistory(
   name: string,
-  uID: string,
   onLoad: (history: ExerciseHistory[]) => void
 ) {
+  const uID = firebase.auth().currentUser!.uid
   const exerciseHistory: ExerciseHistory[] = []
   firestore()
-    .collection("users")
-    .doc(uID)
-    .collection("sessions")
+    .collection(`users/${uID}/sessions`)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((documentSnapshot) => {

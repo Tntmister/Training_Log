@@ -6,15 +6,12 @@ import { TrainingModel, TrainingSession } from "../types/train"
 import { Post } from "../types/user"
 
 export async function saveModel(
-  uID: string,
   model: TrainingModel,
   deletedImages: Asset[],
   id?: string
 ) {
-  const collectionReference = firestore()
-    .collection("users")
-    .doc(uID)
-    .collection("models")
+  const uID = firebase.auth().currentUser!.uid
+  const collectionReference = firestore().collection(`users/${uID}/models`)
   if (id === undefined) {
     id = (await collectionReference.add({})).id
   } else {
@@ -35,26 +32,18 @@ export async function saveModel(
     .then(() => console.log("a"))
 }
 
-export async function deleteModel(uID: string, id: string) {
-  await firestore()
-    .collection("users")
-    .doc(uID)
-    .collection("models")
-    .doc(id)
-    .delete()
+export async function deleteModel(id: string) {
+  const uID = firebase.auth().currentUser!.uid
+  await firestore().doc(`users/${uID}/models/${id}`).delete()
   storage()
     .ref(`/users/${uID}/models/${id}`)
     .listAll()
     .then((list) => list.items.forEach((ref) => ref.delete()))
 }
 
-export async function deleteSession(uID: string, id: string) {
-  await firestore()
-    .collection("users")
-    .doc(uID)
-    .collection("sessions")
-    .doc(id)
-    .delete()
+export async function deleteSession(id: string) {
+  const uID = firebase.auth().currentUser!.uid
+  await firestore().doc(`users/${uID}/sessions/${id}`).delete()
   storage()
     .ref(`/users/${uID}/sessions/${id}`)
     .listAll()
@@ -66,9 +55,7 @@ export function getModels(
   onLoad: (models: { model: TrainingModel; id: string }[]) => void
 ): () => void {
   return firestore()
-    .collection("users")
-    .doc(uid)
-    .collection("models")
+    .collection(`users/${uid}/models`)
     .onSnapshot((querySnapshot) => {
       const models: { model: TrainingModel; id: string }[] = []
       querySnapshot.forEach((documentSnapshot) => {
@@ -105,10 +92,10 @@ export function getSessions(
 }
 
 export async function finishSession(
-  uid: string,
   session: TrainingSession,
   share?: { comment: string }
 ) {
+  const uid = firebase.auth().currentUser!.uid
   const userDoc = firestore().collection("users").doc(uid)
   firestore().runTransaction(async (t) => {
     t.set(userDoc.collection("sessions").doc(), session)
@@ -125,11 +112,11 @@ export async function finishSession(
 }
 
 export async function shareModel(
-  uid: string,
   model: TrainingModel,
   share: { comment: string }
 ) {
-  const userDoc = firestore().collection("users").doc(uid)
+  const uid = firebase.auth().currentUser!.uid
+  const userDoc = firestore().doc(`users/${uid}`)
   firestore().runTransaction(async (t) => {
     t.set(firestore().collection("posts").doc(), {
       authorComment: share.comment,

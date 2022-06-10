@@ -5,7 +5,6 @@ import { Alert, ScrollView, StyleSheet } from "react-native"
 import { Appbar, Checkbox, Menu } from "react-native-paper"
 import {
   CardioSetClass,
-  Exercise,
   StretchingSetClass,
   RegularSetClass
 } from "../../../../lib/types/train"
@@ -72,12 +71,12 @@ export default function Model({
 
   async function onModelSave() {
     model.date = Date.now()
-    await saveModel(user.uid, model, deletedAssets, id)
+    await saveModel(model, deletedAssets, id)
     navigation.navigate("ModelList")
   }
 
   async function onModelDelete() {
-    await deleteModel(user.uid, id!)
+    await deleteModel(id!)
     navigation.navigate("ModelList")
     setMenuVisible(false)
   }
@@ -124,7 +123,7 @@ export default function Model({
   }
   async function onModelFromUserSave() {
     const newModel = { ...model, author: user.uid, date: Date.now() }
-    await saveModel(user.uid, newModel, deletedAssets, id)
+    await saveModel(newModel, deletedAssets, id)
     setMenuVisible(false)
     navigation.navigate("ModelList")
   }

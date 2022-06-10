@@ -10,7 +10,11 @@ import PostDescriptor from "./PostDescriptor"
 import { Post } from "../../../lib/types/user"
 import BackgroundFetch from "react-native-background-fetch"
 import notifee, { AuthorizationStatus, EventType } from "@notifee/react-native"
-import { deletePost, initBackgroundFetch } from "../../../lib/firebase/posts"
+import {
+  deletePost,
+  initBackgroundFetch,
+  reportPost
+} from "../../../lib/firebase/posts"
 import prompt from "react-native-prompt-android"
 import {
   langs,
@@ -120,8 +124,8 @@ export default function Posts({
         { text: STRS.cancel, style: "cancel" },
         {
           text: "Report Post",
-          onPress: () => {
-            console.log("report")
+          onPress: (reason) => {
+            reportPost(postId, reason)
           }
         }
       ])

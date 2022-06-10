@@ -8,16 +8,13 @@ import {
   ThemeContext,
   useTheme
 } from "../../../providers/Theme"
-import { UserContext } from "../../../providers/User"
 import { RootStackProfileList } from "./Profile"
 import TrainStat from "./reusable/trainStat"
 
 export default function UserStats({
-  navigation,
   route
 }: StackScreenProps<RootStackProfileList, "Posts">) {
   const theme = useTheme()
-  const user = useContext(UserContext)!
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
 

@@ -1,22 +1,21 @@
 import firestore from "@react-native-firebase/firestore"
 import BackgroundFetch from "react-native-background-fetch"
-import { Comment } from "../types/user"
+import { Comment, Report } from "../types/user"
 import notifee, { AuthorizationStatus } from "@notifee/react-native"
-import { StringFormat } from "@firebase/storage"
+import { getAuth } from "@firebase/auth"
 
 export async function deletePost(postId: string) {
   return firestore().doc(`posts/${postId}`).delete()
 }
 
 export async function postComment(
-  author: string,
   postId: string,
   body: string,
   parentComment: string | null
 ): Promise<{ id: string; comment: Comment }> {
   return new Promise((resolve) => {
     const comment: Comment = {
-      author: author,
+      author: getAuth().currentUser!.uid,
       body: body,
       date: Date.now(),
       parentID: parentComment,
@@ -104,5 +103,11 @@ export async function initBackgroundFetch(
 }
 
 export async function reportPost(postId: string, reason: string) {
-  //todo
+  firestore()
+    .collection("reports")
+    .add({
+      reason: reason,
+      reportedPostId: postId,
+      userID: getAuth().currentUser!.uid
+    } as Report)
 }
