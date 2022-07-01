@@ -91,7 +91,8 @@ export default function Profile({
       marginVertical: theme.margins.m
     }
   })
-  const { switchLang, toggleTheme, lang } = useContext(ThemeContext)
+  const { switchLang, switchUnit, toggleTheme, lang } =
+    useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
 
   const user = useContext(UserContext)!
@@ -152,6 +153,20 @@ export default function Profile({
             title={theme.global_strings.langs.pt}
             onPress={() => {
               switchLang("pt")
+              setMenuVisible(false)
+            }}
+          />
+          <Menu.Item
+            title={STRS.user.metric}
+            onPress={() => {
+              switchUnit("metric")
+              setMenuVisible(false)
+            }}
+          />
+          <Menu.Item
+            title={STRS.user.imperial}
+            onPress={() => {
+              switchUnit("imperial")
               setMenuVisible(false)
             }}
           />

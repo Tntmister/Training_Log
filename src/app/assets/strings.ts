@@ -66,6 +66,7 @@ export type strings = {
     finishTS: string;
     cancelTS: string;
     confirmShare: string;
+    timeFormat: string;
   };
   history: {
     yourTH: string;
@@ -97,6 +98,8 @@ export type strings = {
     stats: string;
     trainStats: string[];
     trainStatsIcons: string[];
+    metric: string;
+    imperial: string;
   };
   yes: string;
   no: string;
@@ -196,7 +199,8 @@ export const strings_en: strings = {
     finishTS: "Finish Training Session",
     cancelTS: "Cancel Training Session",
     confirmShare:
-      "Do you want to share this training session with your followers?"
+      "Do you want to share this training session with your followers?",
+    timeFormat: "mm:ss"
   },
   history: {
     yourTH: "Your Training History",
@@ -231,7 +235,9 @@ export const strings_en: strings = {
       "Training Models Created",
       "Saved Training Models"
     ],
-    trainStatsIcons: trainStatsIcons
+    trainStatsIcons: trainStatsIcons,
+    metric: "Metric",
+    imperial: "Imperial"
   },
   yes: "Yes",
   no: "No",
@@ -316,7 +322,8 @@ export const strings_pt: strings = {
     startTraining: "Começar a Treinar",
     finishTS: "Concluir Sessão de Treino",
     cancelTS: "Cancelar Sessão de Treino",
-    confirmShare: "Quer partilhar a sessão de treino com os seus seguidores?"
+    confirmShare: "Quer partilhar a sessão de treino com os seus seguidores?",
+    timeFormat: "mm:ss"
   },
   history: {
     yourTH: "Histórico de Treinos",
@@ -351,7 +358,9 @@ export const strings_pt: strings = {
       "Modelos de Treino Criados",
       "Modelos de Treino Guardados"
     ],
-    trainStatsIcons: trainStatsIcons
+    trainStatsIcons: trainStatsIcons,
+    metric: "Métrico",
+    imperial: "Imperial"
   },
   yes: "Sim",
   no: "Não",

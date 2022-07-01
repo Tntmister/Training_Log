@@ -7,6 +7,7 @@ import {
   ModelExercise,
   SessionExercise
 } from "../../../../lib/types/train"
+import { available_units } from "../../../../lib/units"
 import {
   langs,
   langStrings,
@@ -44,7 +45,8 @@ export default function ProgrammedCardioExercise({
       ...theme.text.body_m
     }
   })
-  const { lang } = useContext(ThemeContext)
+  const { lang, unit } = useContext(ThemeContext)
+  const current_units = theme.units[unit as available_units]
   const STRS = langStrings(theme, lang as langs)
 
   function setSets(callback: (sets: ExerciseSet[]) => ExerciseSet[]) {
@@ -74,21 +76,21 @@ export default function ProgrammedCardioExercise({
             ...styles.subtitle
           }}
         >
-          {STRS.train.exercises.weight}
+          {`${STRS.train.exercises.weight} (${current_units.mass})`}
         </Text>
         <Text
           style={{
             ...styles.subtitle
           }}
         >
-          {STRS.train.exercises.distance}
+          {`${STRS.train.exercises.distance} (${current_units.distance})`}
         </Text>
         <Text
           style={{
             ...styles.subtitle
           }}
         >
-          {STRS.train.exercises.duration}
+          {`${STRS.train.exercises.duration} (${STRS.train.timeFormat})`}
         </Text>
 
         {mode == modelModes.Session && (

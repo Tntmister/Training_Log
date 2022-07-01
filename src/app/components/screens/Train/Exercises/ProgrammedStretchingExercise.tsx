@@ -8,6 +8,7 @@ import {
   SessionExercise,
   ExerciseSet
 } from "../../../../lib/types/train"
+import { available_units } from "../../../../lib/units"
 import {
   langs,
   langStrings,
@@ -45,9 +46,9 @@ export default function ProgrammedStretchingExercise({
       fontSize: RFValue(16)
     }
   })
-  const { lang } = useContext(ThemeContext)
+  const { lang, unit } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
-
+  const current_units = theme.units[unit as available_units]
   function setSets(callback: (sets: ExerciseSet[]) => ExerciseSet[]) {
     onChange((exercise) => ({ ...exercise, sets: callback(exercise.sets) }))
   }
@@ -75,14 +76,14 @@ export default function ProgrammedStretchingExercise({
             ...styles.subtitle
           }}
         >
-          {STRS.train.exercises.weight}
+          {`${STRS.train.exercises.weight} (${current_units.mass})`}
         </Text>
         <Text
           style={{
             ...styles.subtitle
           }}
         >
-          {STRS.train.exercises.duration}
+          {`${STRS.train.exercises.duration} (${STRS.train.timeFormat})`}
         </Text>
         {mode == modelModes.Session && (
           <Text

@@ -8,6 +8,7 @@ import {
   SessionExercise,
   RegularSetClass
 } from "../../../../lib/types/train"
+import { available_units } from "../../../../lib/units"
 import {
   langs,
   langStrings,
@@ -33,7 +34,8 @@ export default function ProgrammedCardioExercise({
   ) => void;
 }) {
   const theme = useTheme()
-  const { lang } = useContext(ThemeContext)
+  const { lang, unit } = useContext(ThemeContext)
+  const current_units = theme.units[unit as available_units]
   const STRS = langStrings(theme, lang as langs)
   const styles = StyleSheet.create({
     subtitleContainer: {
@@ -70,7 +72,7 @@ export default function ProgrammedCardioExercise({
             ...styles.subtitle
           }}
         >
-          {STRS.train.exercises.weight}
+          {`${STRS.train.exercises.weight} (${current_units.mass})`}
         </Text>
         <Text
           style={{

@@ -265,6 +265,7 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
   )
   const switchUnit = useCallback(
     (unit: available_units) => {
+      console.log("Unit changed to", unit)
       return setUnit(unit)
     },
     [unit]
@@ -274,7 +275,7 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
 
   const theming = useMemo(
     () => ({ toggleTheme, switchLang, switchUnit, dark, lang, unit }),
-    [toggleTheme, switchLang, dark, lang]
+    [toggleTheme, switchLang, switchUnit, dark, lang]
   )
 
   return (
@@ -286,6 +287,7 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
   )
 }
 export type langs = "en" | "pt";
+
 export function langStrings(theme: Theme, lang: langs) {
   return theme.strings[lang]
 }
