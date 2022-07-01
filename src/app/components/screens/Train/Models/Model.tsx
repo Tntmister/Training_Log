@@ -28,6 +28,7 @@ import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
 import { getUsername } from "../../../../lib/firebase/auth"
 import { deleteModel, saveModel } from "../../../../lib/firebase/models"
+import { convertImperialToMetric } from "../../../../lib/units"
 
 export enum modelModes {
   Edit = "edit",
@@ -42,7 +43,7 @@ export default function Model({
   const user = useContext(UserContext)!
   const theme = useTheme()
 
-  const { lang } = useContext(ThemeContext)
+  const { lang, unit } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
   const id = route.params.id
   const mode = route.params.mode
@@ -71,7 +72,10 @@ export default function Model({
 
   async function onModelSave() {
     model.date = Date.now()
-    await saveModel(model, deletedAssets, id)
+    const modelToSave =
+      unit == "imperial" ? convertImperialToMetric(model) : model
+    console.log(JSON.stringify(modelToSave, null, 2))
+    await saveModel(modelToSave, deletedAssets, id)
     navigation.navigate("ModelList")
   }
 
