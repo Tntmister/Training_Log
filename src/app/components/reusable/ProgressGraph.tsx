@@ -10,6 +10,7 @@ import {
   RegularExHistory,
   RegularExRecord
 } from "../../lib/types/train"
+import { available_units } from "../../lib/units"
 import {
   langs,
   langStrings,
@@ -23,8 +24,9 @@ export default function ProgressGraph({
   data: RegularExHistory | DurationExHistory | CardioExHistory;
 }) {
   const theme = useTheme()
-  const { lang } = useContext(ThemeContext)
+  const { lang, unit } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
+  const current_units = theme.units[unit as available_units]
   const [greaterThan15, setGreaterThan15] = useState(false)
   const [datesArr, setDatesArr] = useState<number[]>([])
   const [dataArr, setDataArr] = useState<number[]>([])
@@ -34,10 +36,10 @@ export default function ProgressGraph({
     setGreaterThan15(data.length > theme.graphs.xlabelLimit)
     setYLabel(
       Object.keys(data[0]).includes("ONE_RM")
-        ? STRS.train.exercises.estimated1RM
+        ? `${STRS.train.exercises.estimated1RM} (${current_units.mass})`
         : Object.keys(data[0]).includes("duration")
-          ? STRS.train.exercises.duration
-          : STRS.train.exercises.pace
+          ? `${STRS.train.exercises.duration} (${current_units.time})`
+          : `${STRS.train.exercises.pace} (${current_units.pace})`
     )
     const today = getTodayDate()
     setDatesArr(
@@ -122,7 +124,7 @@ export default function ProgressGraph({
             justifyContent: "center"
           }}
         >
-          <Text style={styles.yLabel}>{yLabel} (unit)</Text>
+          <Text style={styles.yLabel}>{yLabel}</Text>
         </View>
         <YAxis
           data={dataArr}
