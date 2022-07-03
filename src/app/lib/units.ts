@@ -55,6 +55,21 @@ export function mile_to_km(dist_in_miles: number): number {
   )
 }
 
+export function minsPerKm_to_minsPerMile(pace_in_minsPerKm: number) {
+  return (
+    Math.round((pace_in_minsPerKm * MILE_TO_KM_RATIO + Number.EPSILON) * 100) /
+    100
+  )
+}
+
+export function minsPerMile_to_minsPerKm(pace_in_minsPerMile: number) {
+  return (
+    Math.round(
+      (pace_in_minsPerMile * KM_TO_MILE_RATIO + Number.EPSILON) * 100
+    ) / 100
+  )
+}
+
 export function presentWeight(
   weight_in_kg: number,
   current_unit: available_units

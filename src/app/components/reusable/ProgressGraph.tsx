@@ -10,7 +10,11 @@ import {
   RegularExHistory,
   RegularExRecord
 } from "../../lib/types/train"
-import { available_units } from "../../lib/units"
+import {
+  available_units,
+  kg_to_lb,
+  minsPerKm_to_minsPerMile
+} from "../../lib/units"
 import {
   langs,
   langStrings,
@@ -58,7 +62,9 @@ export default function ProgressGraph({
             return rec.ONE_RM == Number.POSITIVE_INFINITY ||
               rec.ONE_RM == Number.NEGATIVE_INFINITY
               ? 0
-              : rec.ONE_RM
+              : unit == "imperial"
+                ? kg_to_lb(rec.ONE_RM)
+                : rec.ONE_RM
           } else if (Object.keys(record).includes("duration")) {
             return (record as DurationExRecord).duration
           } else {
@@ -66,12 +72,14 @@ export default function ProgressGraph({
             return rec.pace == Number.POSITIVE_INFINITY ||
               rec.pace == Number.NEGATIVE_INFINITY
               ? 0
-              : rec.pace
+              : unit == "imperial"
+                ? minsPerKm_to_minsPerMile(rec.pace)
+                : rec.pace
           }
         })
         .reverse()
     )
-  }, [data])
+  }, [data, unit])
 
   const axesSvg = { fontSize: theme.graphs.dims.font, fill: theme.colors.text }
   const verticalContentInset = {
