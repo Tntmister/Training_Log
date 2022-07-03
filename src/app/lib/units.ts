@@ -1,7 +1,4 @@
-import {
-  TrainingModel,
-  CardioSetClass
-} from "./types/train"
+import { TrainingModel, CardioSetClass, TrainingSession } from "./types/train"
 
 const KG_TO_LB_RATIO = 2.20462262
 const LB_TO_KG_RATIO = 0.45359237
@@ -47,11 +44,15 @@ export function lb_to_kg(weight_in_lb: number): number {
 }
 
 export function km_to_mile(dist_in_km: number): number {
-  return Math.round(dist_in_km * KM_TO_MILE_RATIO)
+  return (
+    Math.round((dist_in_km * KM_TO_MILE_RATIO + Number.EPSILON) * 100) / 100
+  )
 }
 
 export function mile_to_km(dist_in_miles: number): number {
-  return Math.round(dist_in_miles * MILE_TO_KM_RATIO)
+  return (
+    Math.round((dist_in_miles * MILE_TO_KM_RATIO + Number.EPSILON) * 100) / 100
+  )
 }
 
 export function presentWeight(
@@ -75,7 +76,9 @@ export function presentPace(
   return presentDistance(pace_in_min_per_km, current_unit)
 }
 
-export function convertImperialToMetric(train: TrainingModel) {
+export function convertImperialToMetric(
+  train: TrainingModel | TrainingSession
+): TrainingModel | TrainingSession {
   const convertedExercises = train.exercises.map((exercise) => {
     const newSets = exercise.sets.map((set) => {
       if (Object.keys(set).includes("distance")) {
@@ -96,7 +99,9 @@ export function convertImperialToMetric(train: TrainingModel) {
   return { ...train, exercises: convertedExercises }
 }
 
-export function convertMetricToImperial(train: TrainingModel): TrainingModel {
+export function convertMetricToImperial(
+  train: TrainingModel | TrainingSession
+): TrainingModel | TrainingSession {
   const convertedExercises = train.exercises.map((exercise) => {
     const newSets = exercise.sets.map((set) => {
       if (Object.keys(set).includes("distance")) {

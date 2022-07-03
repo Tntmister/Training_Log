@@ -51,6 +51,7 @@ export default function Model({
   const id = route.params.id
   const mode = route.params.mode
 
+  const [counter, setCounter] = useState(0)
   const [model, setModel] = useState<TrainingModel>(
     route.params.model === undefined
       ? {
@@ -61,9 +62,7 @@ export default function Model({
         description: "",
         date: 0
       }
-      : unit == "imperial"
-        ? convertMetricToImperial(route.params.model!)
-        : route.params.model!
+      : route.params.model!
   )
   const [deletedAssets] = useState<Asset[]>([])
 
@@ -72,27 +71,16 @@ export default function Model({
       if (unit == "imperial") {
         return convertMetricToImperial(prevModel)
       } else {
-        return convertImperialToMetric(prevModel)
+        if (counter == 0) {
+          setCounter((prevCounter) => prevCounter + 1)
+          return prevModel
+        } else {
+          return convertImperialToMetric(prevModel)
+        }
       }
     })
   }, [unit])
 
-  useEffect(() => {
-    setModel((_) => {
-      return route.params.model === undefined
-        ? {
-          name: STRS.train.models.defaultName,
-          author: user.uid,
-          exercises: [],
-          mediaContent: [],
-          description: "",
-          date: 0
-        }
-        : unit == "imperial"
-          ? convertMetricToImperial(route.params.model!)
-          : route.params.model!
-    })
-  }, [])
   function onNameChange(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))
   }
