@@ -1,6 +1,5 @@
 import {
   TrainingModel,
-  StretchingSetClass,
   CardioSetClass
 } from "./types/train"
 
