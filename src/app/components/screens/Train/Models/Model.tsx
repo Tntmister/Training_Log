@@ -28,7 +28,10 @@ import MediaCarousel from "../../../reusable/MediaCarousel"
 import MediaSelector from "../../../reusable/MediaSelector"
 import { getUsername } from "../../../../lib/firebase/auth"
 import { deleteModel, saveModel } from "../../../../lib/firebase/models"
-import { convertImperialToMetric } from "../../../../lib/units"
+import {
+  convertImperialToMetric,
+  convertMetricToImperial
+} from "../../../../lib/units"
 
 export enum modelModes {
   Edit = "edit",
@@ -48,6 +51,7 @@ export default function Model({
   const id = route.params.id
   const mode = route.params.mode
 
+  const [counter, setCounter] = useState(0)
   const [model, setModel] = useState<TrainingModel>(
     route.params.model === undefined
       ? {
@@ -61,6 +65,21 @@ export default function Model({
       : route.params.model!
   )
   const [deletedAssets] = useState<Asset[]>([])
+
+  useEffect(() => {
+    setModel((prevModel) => {
+      if (unit == "imperial") {
+        return convertMetricToImperial(prevModel)
+      } else {
+        if (counter == 0) {
+          setCounter((prevCounter) => prevCounter + 1)
+          return prevModel
+        } else {
+          return convertImperialToMetric(prevModel)
+        }
+      }
+    })
+  }, [unit])
 
   function onNameChange(newName: string) {
     setModel((prevModel) => ({ ...prevModel, name: newName }))

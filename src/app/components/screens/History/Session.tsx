@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Image, ScrollView, StyleSheet } from "react-native"
 import { Appbar } from "react-native-paper"
 import { TrainingSession } from "../../../lib/types/train"
@@ -9,20 +9,43 @@ import {
   getTotalWeight,
   images
 } from "../../../lib/extra"
-import { useTheme } from "../../../providers/Theme"
+import { ThemeContext, useTheme } from "../../../providers/Theme"
 import InlineView from "../../reusable/InlineView"
 import MediaCarousel from "../../reusable/MediaCarousel"
 import { Text } from "../../reusable/Text"
 import ProgrammedExercise from "../Train/Exercises/ProgrammedExercise"
 import { modelModes } from "../Train/Models/Model"
 import { RootStackParamHistoryNav } from "./HistoryNav"
+import {
+  available_units,
+  convertImperialToMetric,
+  convertMetricToImperial
+} from "../../../lib/units"
 
 export default function Session({
   route,
   navigation
 }: StackScreenProps<RootStackParamHistoryNav, "Session">) {
   const theme = useTheme()
-  const session = route.params as TrainingSession
+  const { unit } = useContext(ThemeContext)
+  const current_units = theme.units[unit as available_units]
+  const [session, setSession] = useState(route.params as TrainingSession)
+  const [counter, setCounter] = useState(0)
+
+  useEffect(() => {
+    setSession((prevSession) => {
+      if (unit == "imperial") {
+        return convertMetricToImperial(prevSession) as TrainingSession
+      } else {
+        if (counter == 0) {
+          setCounter((prevCounter) => prevCounter + 1)
+          return prevSession
+        } else {
+          return convertImperialToMetric(prevSession) as TrainingSession
+        }
+      }
+    })
+  }, [unit])
 
   const styles = StyleSheet.create({
     header: {
@@ -74,7 +97,9 @@ export default function Session({
           </InlineView>
           <InlineView style={styles.headerContainer}>
             <Image source={images.Weight} style={styles.icon}></Image>
-            <Text style={styles.info}>{getTotalWeight(session)} Kg</Text>
+            <Text style={styles.info}>
+              {`${getTotalWeight(session)} (${current_units.mass})`}
+            </Text>
           </InlineView>
         </InlineView>
 

@@ -46,6 +46,19 @@ export function getDuration(millis: number): string {
   return `${fHours}h ${fMinutes}m`
 }
 
+export function getHoursMinutesSeconds(seconds: number): string {
+  console.log(seconds)
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+
+  const fHours = hours < 10 ? "0" + hours : hours
+  const fMinutes = minutes < 10 ? "0" + minutes : minutes
+  const fSec = seconds % 60
+  const fSeconds = fSec < 10 ? "0" + fSec : fSec
+
+  return `${fHours}:${fMinutes}:${fSeconds}`
+}
+
 export function getTotalWeight(session: TrainingSession): number {
   let total = 0
   for (const exercise of session.exercises) {

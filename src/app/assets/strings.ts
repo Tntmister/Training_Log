@@ -200,7 +200,7 @@ export const strings_en: strings = {
     cancelTS: "Cancel Training Session",
     confirmShare:
       "Do you want to share this training session with your followers?",
-    timeFormat: "mm:ss"
+    timeFormat: "HH:MM:SS"
   },
   history: {
     yourTH: "Your Training History",
@@ -323,7 +323,7 @@ export const strings_pt: strings = {
     finishTS: "Concluir Sessão de Treino",
     cancelTS: "Cancelar Sessão de Treino",
     confirmShare: "Quer partilhar a sessão de treino com os seus seguidores?",
-    timeFormat: "mm:ss"
+    timeFormat: "HH:MM:SS"
   },
   history: {
     yourTH: "Histórico de Treinos",
