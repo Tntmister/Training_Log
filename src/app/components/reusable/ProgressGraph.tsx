@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Grid, LineChart, XAxis, YAxis } from "react-native-svg-charts"
-import { getDaysBetween, getTodayDate } from "../../lib/extra"
+import {
+  getDaysBetween,
+  getHoursMinutesSeconds,
+  getTodayDate
+} from "../../lib/extra"
 import {
   CardioExHistory,
   CardioExRecord,
@@ -35,6 +39,7 @@ export default function ProgressGraph({
   const [datesArr, setDatesArr] = useState<number[]>([])
   const [dataArr, setDataArr] = useState<number[]>([])
   const [yLabel, setYLabel] = useState("")
+  const [isDurationGraph, setIsDurationGraph] = useState(false)
 
   useEffect(() => {
     setGreaterThan15(data.length > theme.graphs.xlabelLimit)
@@ -42,7 +47,7 @@ export default function ProgressGraph({
       Object.keys(data[0]).includes("ONE_RM")
         ? `${STRS.train.exercises.estimated1RM} (${current_units.mass})`
         : Object.keys(data[0]).includes("duration")
-          ? `${STRS.train.exercises.duration} (${current_units.time})`
+          ? `${STRS.train.exercises.duration} (${STRS.train.timeFormat})`
           : `${STRS.train.exercises.pace} (${current_units.pace})`
     )
     const today = getTodayDate()
@@ -66,6 +71,7 @@ export default function ProgressGraph({
                 ? kg_to_lb(rec.ONE_RM)
                 : rec.ONE_RM
           } else if (Object.keys(record).includes("duration")) {
+            setIsDurationGraph(true)
             return (record as DurationExRecord).duration
           } else {
             const rec = record as CardioExRecord
@@ -139,6 +145,13 @@ export default function ProgressGraph({
           style={styles.y}
           contentInset={verticalContentInset}
           svg={axesSvg}
+          formatLabel={(value) => {
+            if (isDurationGraph) {
+              return getHoursMinutesSeconds(value)
+            } else {
+              return value
+            }
+          }}
         />
         <View style={styles.subcontainer}>
           <LineChart
