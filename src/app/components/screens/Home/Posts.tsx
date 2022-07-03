@@ -125,7 +125,7 @@ export default function Posts({
         {
           text: "Report Post",
           onPress: (reason) => {
-            reportPost(postId, reason)
+            reportPost(postId, post, reason)
           }
         }
       ])

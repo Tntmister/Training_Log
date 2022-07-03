@@ -3,10 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack"
 import Profile from "./Profile"
 import FollowUsers from "./FollowUsers"
 import EditProfile from "./EditProfile"
-import { User } from "../../../lib/types/user"
+import { Post as PostType, User } from "../../../lib/types/user"
 import { UserContext } from "../../../providers/User"
 import Model, { modelModes } from "../Train/Models/Model"
 import { TrainingSession, TrainingModel } from "../../../lib/types/train"
+import Post from "../Home/Post"
+import ReportedPosts from "./ReportedPosts"
 
 export type RootStackParamUserNav = {
   Profile: { uid: string };
@@ -15,6 +17,7 @@ export type RootStackParamUserNav = {
   Model: { model: TrainingModel; mode: modelModes };
   FollowUsers: { uid: string; type: "followers" | "following" };
   ReportedPosts: undefined;
+  Post: { post: PostType; postId: string };
 };
 
 export default function ProfileNav() {
@@ -34,7 +37,8 @@ export default function ProfileNav() {
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="Model" component={Model} />
       <Stack.Screen name="FollowUsers" component={FollowUsers} />
-      <Stack.Screen name="ReportedPosts" component={FollowUsers} />
+      <Stack.Screen name="ReportedPosts" component={ReportedPosts} />
+      <Stack.Screen name="Post" component={Post} />
     </Stack.Navigator>
   )
 }

@@ -9,7 +9,7 @@ export type User = {
   following: number;
   posts: number;
   admin: boolean;
-  bannedUntil: number | null;
+  bannedUntil: number;
 };
 
 export type Follow = {
@@ -34,7 +34,9 @@ export type Comment = {
 };
 
 export type Report = {
-  userID: string;
+  userId: string;
   reportedPostId: string;
+  reportedUserId: string;
   reason: string;
+  reportTime: number;
 };
