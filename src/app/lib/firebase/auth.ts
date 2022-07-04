@@ -52,10 +52,8 @@ export async function login(email: string, password: string) {
     switch ((error as FirebaseError).code) {
       case "auth/user-not-found":
       case "auth/wrong-password":
-        ToastAndroid.show("Invalid Credentials", ToastAndroid.SHORT)
-        break
       case "auth/invalid-email":
-        ToastAndroid.show("Invalid Email", ToastAndroid.SHORT)
+        ToastAndroid.show("Invalid Credentials", ToastAndroid.SHORT)
         break
       case "auth/network-request-failed":
         ToastAndroid.show("Connection Error", ToastAndroid.SHORT)
@@ -118,10 +116,12 @@ export async function resetPassword(email: string) {
           )
         )
     } catch (error) {
-      ToastAndroid.show("Invalid email", ToastAndroid.SHORT)
+      Alert.alert(
+        "Password Reset",
+        `A password reset email has been send to "${email}"`,
+        [{ text: "Ok" }]
+      )
     }
-  } else {
-    ToastAndroid.show("Email is empty", ToastAndroid.SHORT)
   }
 }
 

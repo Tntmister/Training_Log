@@ -15,7 +15,6 @@ import { images } from "../../../lib/extra"
 import { getUser } from "../../../lib/firebase/user"
 import { Button } from "../../reusable/Button"
 import { deletePost, deleteReport } from "../../../lib/firebase/posts"
-import prompt from "react-native-prompt-android"
 
 export default function ReportDescriptor({
   id,
@@ -115,7 +114,7 @@ export default function ReportDescriptor({
     >
       <Text style={theme.text.header}>{post?.post.name}</Text>
       <InlineView style={styles.user}>
-        <Text>Reported by {user?.username}</Text>
+        <Text>{STRS.admin.reportedBy(user?.username)}</Text>
         {user?.profileURL ? (
           <CachedImage source={user.profileURL} style={styles.img} />
         ) : (
@@ -126,7 +125,7 @@ export default function ReportDescriptor({
         )}
       </InlineView>
       <InlineView style={styles.user}>
-        <Text>Post by {reportedUser?.username}</Text>
+        <Text>{STRS.admin.postedBy(reportedUser?.username)}</Text>
         {reportedUser?.profileURL ? (
           <CachedImage source={reportedUser.profileURL} style={styles.img} />
         ) : (
@@ -136,10 +135,10 @@ export default function ReportDescriptor({
           />
         )}
       </InlineView>
-      <Text style={styles.reason}>Reason: {report?.reason}</Text>
+      <Text style={styles.reason}>{STRS.admin.reason(report?.reason)}</Text>
       {report && (
         <InlineView>
-          <Text>Delete Post? </Text>
+          <Text>{STRS.admin.deletePost}</Text>
           <Button
             onPress={() => {
               resolveReport(false)
@@ -150,24 +149,24 @@ export default function ReportDescriptor({
           <Button
             onPress={() => {
               Alert.alert(
-                "Deleting Post",
-                `Do you want to ban ${reportedUser?.username}`,
+                STRS.admin.deletingPost,
+                STRS.admin.banPrompt(reportedUser?.username),
                 [
                   { text: STRS.cancel, style: "cancel" },
                   {
-                    text: "No",
+                    text: STRS.no,
                     onPress: () => {
                       resolveReport(true, 0)
                     }
                   },
                   {
-                    text: "1 Week",
+                    text: STRS.admin.week,
                     onPress: () => {
                       resolveReport(true, Date.now() + 1000 * 60 * 60 * 24 * 7)
                     }
                   },
                   {
-                    text: "Permanently",
+                    text: STRS.admin.permanent,
                     onPress: () => {
                       resolveReport(true, -1)
                     }

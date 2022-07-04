@@ -14,6 +14,19 @@ export type strings = {
     termsAgreement: string;
     passwordsDoNotMatch: string;
     mustAgrreToTerms: string;
+    invalidCredentials: string;
+    nonEmptyUsername: string;
+    weakPassword: string;
+    invalidEmail: string;
+    networkError: string;
+    unknownUser: string;
+    resetPasswordHeader: string;
+    resetPasswordContent: (email: string) => string;
+    permenentlyBanned: string;
+    bannedUntil: (date: string) => string;
+    confirmAccountHeader: string;
+    confirmAccountContent: (email: string) => string;
+    resendEmail: string;
   };
   train: {
     exercises: {
@@ -79,6 +92,8 @@ export type strings = {
     completedATS: string;
     completedTheTS: string;
     sharedTM: string;
+    reportPostHeader: string;
+    reportPostContent: string;
   };
   user: {
     models: string;
@@ -101,8 +116,19 @@ export type strings = {
     metric: string;
     imperial: string;
   };
+  admin: {
+    reportedBy: (user: string | undefined) => string;
+    postedBy: (user: string | undefined) => string;
+    reason: (reason: string | undefined) => string;
+    deletePost: string;
+    deletingPost: string;
+    banPrompt: (user: string | undefined) => string;
+    week: string;
+    permanent: string;
+  };
   yes: string;
   no: string;
+  ok: string;
   delete: string;
   edit: string;
   share: string;
@@ -144,7 +170,22 @@ export const strings_en: strings = {
     confirmPassword: "Confirm Password",
     termsAgreement: "I agree to the Terms of Use",
     passwordsDoNotMatch: "Passwords do not match!",
-    mustAgrreToTerms: "You must agree to the Terms of Use."
+    mustAgrreToTerms: "You must agree to the Terms of Use.",
+    invalidCredentials: "Invalid Credentials",
+    invalidEmail: "Email already in use",
+    networkError: "Connection Error",
+    nonEmptyUsername: "Username must not be empty",
+    resetPasswordContent: (email: string): string =>
+      `A password reset email has been send to "${email}"`,
+    resetPasswordHeader: "Password Reset",
+    unknownUser: "Unknown User",
+    weakPassword: "Password must be at least 6 characters long",
+    permenentlyBanned: "You are permanently banned",
+    bannedUntil: (date) => `You are banned until ${date}`,
+    confirmAccountContent: (email) =>
+      `A confirmation email has been sent to ${email}.`,
+    confirmAccountHeader: "Confirm Registration",
+    resendEmail: "Resend Email"
   },
   train: {
     exercises: {
@@ -212,7 +253,9 @@ export const strings_en: strings = {
     home: "Home",
     completedATS: "Completed a training session",
     completedTheTS: "Completed the training session:",
-    sharedTM: "Shared the training model:"
+    sharedTM: "Shared the training model:",
+    reportPostHeader: "Report Post",
+    reportPostContent: "How do you think this post is inappropriate?"
   },
   user: {
     models: "Models",
@@ -239,8 +282,19 @@ export const strings_en: strings = {
     metric: "Metric",
     imperial: "Imperial"
   },
+  admin: {
+    banPrompt: (user) => `Should the user ${user} be banned?`,
+    deletePost: "Delete Post?",
+    deletingPost: "Deleting Post",
+    permanent: "Permanently",
+    postedBy: (user) => `Posted by ${user}`,
+    reason: (reason) => `Reason: ${reason}`,
+    reportedBy: (user) => `Reported by ${user}`,
+    week: "1 Week"
+  },
   yes: "Yes",
   no: "No",
+  ok: "Ok",
   delete: "Delete",
   edit: "Edit",
   share: "Share",
@@ -268,7 +322,22 @@ export const strings_pt: strings = {
     confirmPassword: "Confirmar Palavra-Passe",
     termsAgreement: "Concordo com os Termos de Utilização",
     passwordsDoNotMatch: "As Palavras-Passe não coincidem!",
-    mustAgrreToTerms: "É necessário concordar com os Termos de Utilização."
+    mustAgrreToTerms: "É necessário concordar com os Termos de Utilização.",
+    invalidCredentials: "Credenciais Inválidas",
+    invalidEmail: "Email já em uso",
+    networkError: "Erro Ligação",
+    nonEmptyUsername: "Nome de utilizador não pode ser vazio",
+    resetPasswordContent: (email: string): string =>
+      `Um Email para repor a palavra-passe foi enviado para "${email}"`,
+    resetPasswordHeader: "Report Palavra-Passe",
+    unknownUser: "Utilizador Desconhecido",
+    weakPassword: "Palavra-passe deve ter pelo menos 6 caracteres",
+    bannedUntil: (date) => `Está banido até ${date}.`,
+    confirmAccountContent: (email) =>
+      `O email de confirmação foi enviado para ${email}.`,
+    confirmAccountHeader: "Confirmar Registo",
+    resendEmail: "Reenviar Email",
+    permenentlyBanned: "Está banido permanentemente"
   },
   train: {
     exercises: {
@@ -335,7 +404,9 @@ export const strings_pt: strings = {
     home: "Home",
     completedATS: "Completou uma Sessão de treino",
     completedTheTS: "Completou a Sessão de Treino:",
-    sharedTM: "Partilhou o Modelo de Treino:"
+    sharedTM: "Partilhou o Modelo de Treino:",
+    reportPostContent: "Como acha esta publicação inapropriada?",
+    reportPostHeader: "Reportar Publicação"
   },
   user: {
     models: "Modelos",
@@ -362,8 +433,19 @@ export const strings_pt: strings = {
     metric: "Métrico",
     imperial: "Imperial"
   },
+  admin: {
+    banPrompt: (user) => `O utilizador ${user} deve ser banido?`,
+    deletePost: "Apagar publicação?",
+    deletingPost: "A Apagar Publicação",
+    permanent: "Permanentemente",
+    postedBy: (user) => `Publicado por ${user}`,
+    reason: (reason) => `Razão: ${reason}`,
+    reportedBy: (user) => `Reportado por ${user}`,
+    week: "1 Semana"
+  },
   yes: "Sim",
   no: "Não",
+  ok: "Ok",
   delete: "Eliminar",
   edit: "Editar",
   share: "Partilhar",

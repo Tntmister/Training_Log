@@ -120,10 +120,10 @@ export default function Posts({
   async function onDeletePress(postId: string, post: Post) {
     if (post.author == user.uid) await deletePost(postId)
     else {
-      prompt("Report Post", "How do you think this post is inappropriate?", [
+      prompt(STRS.home.reportPostHeader, STRS.home.reportPostContent, [
         { text: STRS.cancel, style: "cancel" },
         {
-          text: "Report Post",
+          text: STRS.home.reportPostHeader,
           onPress: (reason) => {
             reportPost(postId, post, reason)
           }
