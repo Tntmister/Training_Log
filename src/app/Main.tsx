@@ -19,10 +19,10 @@ LogBox.ignoreLogs(["ViewPropTypes will be removed"])
 
 export default function Main() {
   return (
-    <UserProvider>
-      <PaperNavigationProvider>
+    <PaperNavigationProvider>
+      <UserProvider>
         <App />
-      </PaperNavigationProvider>
-    </UserProvider>
+      </UserProvider>
+    </PaperNavigationProvider>
   )
 }

@@ -126,6 +126,10 @@ export type strings = {
     week: string;
     permanent: string;
   };
+  notification: {
+    newPosts: string;
+    newPostsContent: (num: number) => string;
+  };
   yes: string;
   no: string;
   ok: string;
@@ -292,6 +296,13 @@ export const strings_en: strings = {
     reportedBy: (user) => `Reported by ${user}`,
     week: "1 Week"
   },
+  notification: {
+    newPosts: "New Training Posts From From Users You Follow!",
+    newPostsContent: (num) =>
+      `You have ${
+        num > 10 ? "10+" : num
+      } new unseen posts from users you follow!`
+  },
   yes: "Yes",
   no: "No",
   ok: "Ok",
@@ -442,6 +453,13 @@ export const strings_pt: strings = {
     reason: (reason) => `Razão: ${reason}`,
     reportedBy: (user) => `Reportado por ${user}`,
     week: "1 Semana"
+  },
+  notification: {
+    newPosts: "Novas publicações de treino de utilizadores que segue!",
+    newPostsContent: (num) =>
+      `Tem ${
+        num > 10 ? "10+" : num
+      } novas publicações de utilizadores que segue!`
   },
   yes: "Sim",
   no: "Não",

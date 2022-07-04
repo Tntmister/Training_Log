@@ -4,11 +4,18 @@ import { FirebaseError } from "@firebase/util"
 import { Alert, ToastAndroid } from "react-native"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { User } from "../types/user"
+import { strings } from "../../assets/strings"
 
 GoogleSignin.configure({
   webClientId:
     "782424571231-deej2palg0cprusaid4mjh3ir9p7lffe.apps.googleusercontent.com"
 })
+
+let STRS: strings
+
+export function setSTRS(newSTRS: strings) {
+  STRS = newSTRS
+}
 
 export async function loginGoogle() {
   const { idToken } = await GoogleSignin.signIn()
@@ -45,7 +52,7 @@ export async function initFirestore(user: FirebaseAuthTypes.User) {
 
 export async function login(email: string, password: string) {
   if (email == "" || password == "")
-    return ToastAndroid.show("Invalid Credentials", ToastAndroid.SHORT)
+    return ToastAndroid.show(STRS.auth.invalidCredentials, ToastAndroid.SHORT)
   try {
     await auth().signInWithEmailAndPassword(email, password)
   } catch (error) {
@@ -53,10 +60,10 @@ export async function login(email: string, password: string) {
       case "auth/user-not-found":
       case "auth/wrong-password":
       case "auth/invalid-email":
-        ToastAndroid.show("Invalid Credentials", ToastAndroid.SHORT)
+        ToastAndroid.show(STRS.auth.invalidCredentials, ToastAndroid.SHORT)
         break
       case "auth/network-request-failed":
-        ToastAndroid.show("Connection Error", ToastAndroid.SHORT)
+        ToastAndroid.show(STRS.auth.networkError, ToastAndroid.SHORT)
         break
       default:
         console.log(error)
@@ -72,7 +79,7 @@ export async function register(
   username: string
 ) {
   if (username == "") {
-    ToastAndroid.show("Username must not be empty", ToastAndroid.SHORT)
+    ToastAndroid.show(STRS.auth.nonEmptyUsername, ToastAndroid.SHORT)
     return
   }
   try {
@@ -89,13 +96,10 @@ export async function register(
   } catch (error) {
     switch ((error as FirebaseError).code) {
       case "auth/weak-password":
-        ToastAndroid.show(
-          "Password must be at least 6 characters long",
-          ToastAndroid.SHORT
-        )
+        ToastAndroid.show(STRS.auth.weakPassword, ToastAndroid.SHORT)
         break
       case "auth/email-already-in-use":
-        ToastAndroid.show("Email already in use", ToastAndroid.SHORT)
+        ToastAndroid.show(STRS.auth.invalidEmail, ToastAndroid.SHORT)
         break
       default:
         break
@@ -110,16 +114,16 @@ export async function resetPassword(email: string) {
         .sendPasswordResetEmail(email)
         .then(() =>
           Alert.alert(
-            "Password Reset",
-            `A password reset email has been send to "${email}"`,
-            [{ text: "Ok" }]
+            STRS.auth.confirmAccountHeader,
+            STRS.auth.confirmAccountContent(email),
+            [{ text: STRS.ok }]
           )
         )
     } catch (error) {
       Alert.alert(
-        "Password Reset",
-        `A password reset email has been send to "${email}"`,
-        [{ text: "Ok" }]
+        STRS.auth.confirmAccountHeader,
+        STRS.auth.confirmAccountContent(email),
+        [{ text: STRS.ok }]
       )
     }
   }

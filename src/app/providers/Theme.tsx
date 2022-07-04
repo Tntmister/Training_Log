@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { ReactNode, useCallback, useMemo, useState } from "react"
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from "react"
 import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
@@ -24,6 +30,8 @@ import {
   strings_pt
 } from "../assets/strings"
 import { available_units, units, units_global } from "../lib/units"
+import { setSTRS as setAuthSTRS } from "../lib/firebase/auth"
+import { setSTRS as setPostsSTRS } from "../lib/firebase/posts"
 
 export type Theme = {
   margins: {
@@ -234,17 +242,19 @@ export const useTheme = () => {
   return useThemePaper() as Theme
 }
 
+export type langs = "en" | "pt";
+
 export const ThemeContext = React.createContext({
   toggleTheme: () => {},
   switchLang: (lang: langs) => {},
   switchUnit: (unit: available_units) => {},
-  lang: "en",
+  lang: "en" as langs,
   unit: "metric",
   dark: true
 })
 
 const initial_params = {
-  lang: "en",
+  lang: "en" as langs,
   unit: "metric",
   dark: true
 }
@@ -259,6 +269,8 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
 
   const switchLang = useCallback(
     (lang: langs) => {
+      setAuthSTRS(langStrings(theme, lang))
+      setPostsSTRS(langStrings(theme, lang))
       return setLang(lang)
     },
     [lang]
@@ -270,6 +282,10 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
     },
     [unit]
   )
+
+  useEffect(() => {
+    setAuthSTRS(langStrings(theme, initial_params.lang as langs))
+  }, [])
 
   const theme = dark ? darkTheme : defaultTheme
 
@@ -286,7 +302,6 @@ export function PaperNavigationProvider({ children }: { children: ReactNode }) {
     </ThemeContext.Provider>
   )
 }
-export type langs = "en" | "pt";
 
 export function langStrings(theme: Theme, lang: langs) {
   return theme.strings[lang]

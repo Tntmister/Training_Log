@@ -20,40 +20,43 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const STRS = langStrings(theme, lang as langs)
 
   useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged(async (firebaseUser) => {
-      const user = (
-        await firestore().doc(`users/${firebaseUser?.uid}`).get()
-      ).data() as User
-      if (user.bannedUntil == -1) {
-        ToastAndroid.show(STRS.auth.permenentlyBanned, ToastAndroid.LONG)
-      } else if (user.bannedUntil > Date.now() || user.bannedUntil == -1) {
-        ToastAndroid.show(
-          STRS.auth.bannedUntil(
-            new Date(user.bannedUntil).toLocaleDateString()
-          ),
-          ToastAndroid.LONG
-        )
-      } else {
-        setUser(firebaseUser)
-        if (firebaseUser && !firebaseUser.emailVerified) {
-          Alert.alert(
-            STRS.auth.confirmAccountHeader,
-            STRS.auth.confirmAccountContent(firebaseUser.email!),
-            [
-              {
-                text: STRS.auth.resendEmail,
-                onPress: () => firebaseUser.sendEmailVerification()
-              },
-              {
-                text: STRS.ok
-              }
-            ]
+    return auth().onAuthStateChanged(async (firebaseUser) => {
+      if (firebaseUser) {
+        const userDoc = (
+          await firestore().doc(`users/${firebaseUser?.uid}`).get()
+        ).data() as User
+        if (userDoc.bannedUntil == -1) {
+          ToastAndroid.show(STRS.auth.permenentlyBanned, ToastAndroid.LONG)
+        } else if (
+          userDoc.bannedUntil > Date.now() ||
+          userDoc.bannedUntil == -1
+        ) {
+          ToastAndroid.show(
+            STRS.auth.bannedUntil(
+              new Date(userDoc.bannedUntil).toLocaleDateString()
+            ),
+            ToastAndroid.LONG
           )
+        } else {
+          setUser(firebaseUser)
+          if (!firebaseUser.emailVerified) {
+            Alert.alert(
+              STRS.auth.confirmAccountHeader,
+              STRS.auth.confirmAccountContent(firebaseUser.email!),
+              [
+                {
+                  text: STRS.auth.resendEmail,
+                  onPress: () => firebaseUser.sendEmailVerification()
+                },
+                {
+                  text: STRS.ok
+                }
+              ]
+            )
+          }
         }
       }
     })
-
-    return unsubscribe
   }, [])
 
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>

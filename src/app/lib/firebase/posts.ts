@@ -3,6 +3,13 @@ import auth from "@react-native-firebase/auth"
 import BackgroundFetch from "react-native-background-fetch"
 import { Comment, Post, Report } from "../types/user"
 import notifee, { AuthorizationStatus } from "@notifee/react-native"
+import { strings } from "../../assets/strings"
+
+let STRS: strings
+
+export function setSTRS(newSTRS: strings) {
+  STRS = newSTRS
+}
 
 export async function deletePost(postId: string) {
   return firestore().doc(`posts/${postId}`).delete()
@@ -78,14 +85,12 @@ export async function initBackgroundFetch(
             }
             if (numPosts > 0) {
               notifee.displayNotification({
-                title: "New Training Posts From From Users You Follow!",
-                body: `You have ${
-                  numPosts > 10 ? "10+" : numPosts
-                } new unseen posts from users you follow!`,
+                title: STRS.notification.newPosts,
+                body: STRS.notification.newPostsContent(numPosts),
                 android: {
                   channelId: await notifee.createChannel({
                     id: "default",
-                    name: "New Posts"
+                    name: "Posts"
                   })
                 }
               })
