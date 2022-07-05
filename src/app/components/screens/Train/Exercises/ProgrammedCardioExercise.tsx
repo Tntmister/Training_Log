@@ -54,10 +54,17 @@ export default function ProgrammedCardioExercise({
   }
 
   function addSet() {
-    setSets((prevSets) => [
-      ...prevSets,
-      { distance: 0, done: false, duration: 0, weight: 0 }
-    ])
+    setSets((prevSets) => {
+      const numOfSets = prevSets.length
+      if (numOfSets == 0) {
+        return [
+          ...prevSets,
+          { distance: 0, done: false, duration: 0, weight: 0 }
+        ]
+      } else {
+        return [...prevSets, prevSets[numOfSets - 1]]
+      }
+    })
   }
 
   return (
