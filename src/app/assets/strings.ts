@@ -122,6 +122,7 @@ export type strings = {
     reason: (reason: string | undefined) => string;
     deletePost: string;
     deletingPost: string;
+    reportedPosts: string;
     banPrompt: (user: string | undefined) => string;
     week: string;
     permanent: string;
@@ -291,6 +292,7 @@ export const strings_en: strings = {
     deletePost: "Delete Post?",
     deletingPost: "Deleting Post",
     permanent: "Permanently",
+    reportedPosts: "Reported Posts",
     postedBy: (user) => `Posted by ${user}`,
     reason: (reason) => `Reason: ${reason}`,
     reportedBy: (user) => `Reported by ${user}`,
@@ -448,6 +450,7 @@ export const strings_pt: strings = {
     banPrompt: (user) => `O utilizador ${user} deve ser banido?`,
     deletePost: "Apagar publicação?",
     deletingPost: "A Apagar Publicação",
+    reportedPosts: "Publicações Reportadas",
     permanent: "Permanentemente",
     postedBy: (user) => `Publicado por ${user}`,
     reason: (reason) => `Razão: ${reason}`,

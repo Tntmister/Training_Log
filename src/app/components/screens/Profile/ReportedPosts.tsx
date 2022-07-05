@@ -1,17 +1,27 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { FlatList } from "react-native"
 import Loading from "../../reusable/Loading"
 import { RootStackParamUserNav } from "./ProfileNav"
 import ReportDescriptor from "./ReportDescriptor"
 import firestore from "@react-native-firebase/firestore"
 import { Post } from "../../../lib/types/user"
+import {
+  langs,
+  langStrings,
+  ThemeContext,
+  useTheme
+} from "../../../providers/Theme"
+import { Appbar } from "react-native-paper"
 
 export default function ReportedPosts({
   navigation
 }: StackScreenProps<RootStackParamUserNav, "ReportedPosts">) {
   const [reports, setReports] = useState<string[]>([])
   const newest = useRef(0)
+  const { lang } = useContext(ThemeContext)
+  const theme = useTheme()
+  const STRS = langStrings(theme, lang as langs)
 
   useEffect(() => {
     listReports()
@@ -52,22 +62,28 @@ export default function ReportedPosts({
   const [loading, setLoading] = useState(false)
   const [scrollEnd, setScrollEnd] = useState(false)
   return (
-    <FlatList
-      data={reports}
-      renderItem={({ item }) => (
-        <ReportDescriptor
-          onExpire={onReportExpired}
-          onPress={onReportPress}
-          id={item}
-        />
-      )}
-      ListFooterComponent={loading ? <Loading /> : null}
-      onEndReached={() => setScrollEnd(true)}
-      onMomentumScrollEnd={() => {
-        scrollEnd && listReports()
-        setScrollEnd(false)
-      }}
-      onEndReachedThreshold={0}
-    />
+    <>
+      <Appbar>
+        <Appbar.BackAction onPress={navigation.goBack} />
+        <Appbar.Content title={STRS.admin.reportedPosts} />
+      </Appbar>
+      <FlatList
+        data={reports}
+        renderItem={({ item }) => (
+          <ReportDescriptor
+            onExpire={onReportExpired}
+            onPress={onReportPress}
+            id={item}
+          />
+        )}
+        ListFooterComponent={loading ? <Loading /> : null}
+        onEndReached={() => setScrollEnd(true)}
+        onMomentumScrollEnd={() => {
+          scrollEnd && listReports()
+          setScrollEnd(false)
+        }}
+        onEndReachedThreshold={0}
+      />
+    </>
   )
 }

@@ -43,7 +43,7 @@ export default function UserStats({
   useEffect(() => {
     setStatElements(
       STRS.user.trainStats.map((stat, index) => {
-        //console.log(stat)
+        console.log(stat)
         return (
           <TrainStat
             key={index}
@@ -54,7 +54,7 @@ export default function UserStats({
         )
       })
     )
-  }, [stats])
+  }, [stats, lang])
 
   const styles = StyleSheet.create({
     container: {
