@@ -109,7 +109,7 @@ export default function Profile({
   const [menuVisible, setMenuVisible] = useState(false)
   return (
     <>
-      {route.name.includes("Profile") && (
+      {route.name.includes("ProfileFromSearch") && (
         <Appbar>
           <Appbar.BackAction onPress={navigation.goBack} />
           <Appbar.Content title={userProfile?.username} />

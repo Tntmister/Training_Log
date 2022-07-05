@@ -4,7 +4,7 @@ import Profile from "../Profile/Profile"
 import ProfileSearch from "./ProfileSearch"
 
 export type RootStackParamSearchNav = {
-  Profile: { uid: string };
+  ProfileFromSearch: { uid: string };
   ProfileSearch: { uid: string; mode: "followers" | "following" } | undefined;
 };
 
@@ -17,7 +17,7 @@ export default function ProfileNav() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="ProfileSearch" component={ProfileSearch} />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="ProfileFromSearch" component={Profile} />
     </Stack.Navigator>
   )
 }

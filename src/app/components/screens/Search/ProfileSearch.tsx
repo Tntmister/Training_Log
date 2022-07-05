@@ -30,7 +30,7 @@ export default function ProfileSearch({
     }
   })
   function onUserPress(uid: string) {
-    navigation.navigate("Profile", { uid: uid })
+    navigation.navigate("ProfileFromSearch", { uid: uid })
   }
 
   const [users, setUsers] = useState<{ user: User; uid: string }[]>([])

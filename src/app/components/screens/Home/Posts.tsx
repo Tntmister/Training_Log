@@ -79,8 +79,6 @@ export default function Posts({
           post: document.data() as Post,
           postId: document.id
         }))
-
-        //setPosts((newerPosts) => [...newerPosts, ...olderPosts])
         setPosts((newerPosts) =>
           [...newerPosts, ...olderPosts].sort(
             (a, b) => b.post.post.date - a.post.post.date
