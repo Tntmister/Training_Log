@@ -78,7 +78,7 @@ export function getSessions(
     .doc(uid)
     .collection("sessions")
     .onSnapshot((querySnapshot) => {
-      const sessions: { session: TrainingSession; id: string }[] = []
+      let sessions: { session: TrainingSession; id: string }[] = []
       querySnapshot.forEach((documentSnapshot) => {
         if (Object.keys(documentSnapshot.data()).length != 0) {
           sessions.push({
@@ -87,6 +87,7 @@ export function getSessions(
           })
         }
       })
+      sessions = sessions.sort((a, b) => b.session.date - a.session.date)
       onLoad(sessions)
     })
 }
