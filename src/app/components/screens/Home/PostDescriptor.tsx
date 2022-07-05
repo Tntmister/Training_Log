@@ -158,7 +158,7 @@ function PostDescriptor({
           {post.authorComment}
         </Text>
         <IconButton
-          onPress={user.uid != post.author ? onLikePress : undefined}
+          onPress={onLikePress}
           style={{
             backgroundColor: liked
               ? theme.colors.primary
