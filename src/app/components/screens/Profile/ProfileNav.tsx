@@ -12,6 +12,7 @@ import ReportedPosts from "./ReportedPosts"
 
 export type RootStackParamUserNav = {
   Profile: { uid: string };
+  ProfileFromSearch: { uid: string };
   EditProfile: { user: User };
   SessionSummary: { session: TrainingSession };
   Model: { model: TrainingModel; mode: modelModes };
@@ -39,6 +40,7 @@ export default function ProfileNav() {
       <Stack.Screen name="FollowUsers" component={FollowUsers} />
       <Stack.Screen name="ReportedPosts" component={ReportedPosts} />
       <Stack.Screen name="Post" component={Post} />
+      <Stack.Screen name="ProfileFromSearch" component={Profile} />
     </Stack.Navigator>
   )
 }
