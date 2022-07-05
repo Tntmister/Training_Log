@@ -48,11 +48,13 @@ export default function Posts({
       .collection(`users/${user.uid}/following`)
       .onSnapshot((querySnapshot) => {
         const ids = querySnapshot.docs.map((docs) => docs.id)
-        const following = [[user.uid]]
-        for (let i = 0; i < ids.length; i += 10) {
-          following.push(ids.slice(i, i + 10))
+        const following = [[userid == undefined ? user.uid : userid]]
+        if (userid == undefined) {
+          for (let i = 0; i < ids.length; i += 10) {
+            following.push(ids.slice(i, i + 10))
+          }
         }
-        followingChunks.current = following
+        followingChunks.current = [...new Set([following.flat()])]
         oldest.current = Date.now()
         newest.current = Date.now()
         setPosts([])
@@ -79,11 +81,13 @@ export default function Posts({
           post: document.data() as Post,
           postId: document.id
         }))
-        setPosts((newerPosts) =>
-          [...newerPosts, ...olderPosts].sort(
+        setPosts((newerPosts) => {
+          const aux = [...new Set([...newerPosts, ...olderPosts])].sort(
             (a, b) => b.post.post.date - a.post.post.date
           )
-        )
+          const aux2 = aux.filter((post, index) => aux.indexOf(post) === index)
+          return aux2
+        })
         oldest.current = olderPosts[olderPosts.length - 1].post.post.date
       }
     }
@@ -99,10 +103,11 @@ export default function Posts({
   }
 
   useEffect(() => {
-    if (userid == undefined) return subscribeFollowings()
+    /*if (userid == undefined) return subscribeFollowings()
     else {
       retrieveData()
-    }
+    }*/
+    subscribeFollowings()
   }, [])
 
   useEffect(() => {
@@ -136,7 +141,7 @@ export default function Posts({
     }
     setPosts((posts) => posts.filter((post) => post.postId != postId))
   }
-
+  console.log(posts.length)
   return (
     <FlatList
       onRefresh={refreshData}
