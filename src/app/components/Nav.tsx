@@ -18,7 +18,6 @@ export default function Nav() {
     icon: {
       width: theme.icons.s,
       height: theme.icons.s
-      //color: theme.colors.text
     },
     img: {
       width: "100%",

@@ -20,7 +20,7 @@ import {
   Theme as NavigationTheme
 } from "@react-navigation/native"
 import { Theme as PaperTheme } from "react-native-paper/lib/typescript/types"
-import { TextStyle } from "react-native"
+import { StatusBarStyle, TextStyle } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import {
   strings,
@@ -86,6 +86,10 @@ export type Theme = {
       contentInsetBottom: number;
       xAxisHeight: number;
     };
+  };
+  statusBar: {
+    lightContent: StatusBarStyle;
+    darkContent: StatusBarStyle;
   };
   global_strings: strings_global_lang;
   strings: { en: strings; pt: strings };
@@ -203,6 +207,10 @@ const defaultTheme: Theme = {
       contentInsetBottom: 20,
       xAxisHeight: 10
     }
+  },
+  statusBar: {
+    lightContent: "light-content",
+    darkContent: "dark-content"
   },
   global_strings: strings_global,
   strings: {

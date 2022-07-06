@@ -10,11 +10,13 @@ export default function App() {
   const user = useContext(UserContext)
   const { dark } = useContext(ThemeContext)
   const theme = useTheme()
+  const lightContent = "light-content"
+  const darkContent = "dark-content"
 
   return (
     <>
       <StatusBar
-        barStyle={dark ? "light-content" : "dark-content"}
+        barStyle={dark ? lightContent : darkContent}
         backgroundColor={theme.colors.background}
       />
       {user?.emailVerified || DEBUG_NoLogin ? <Nav /> : <AuthNav />}
