@@ -15,7 +15,7 @@ import ModelNav from "./Models/ModelNav"
 import { Button } from "../../reusable/Button"
 import { modelModes } from "./Models/Model"
 
-export default function Train({ navigation }: MaterialTopTabBarProps) {
+export default function TrainNav({ navigation }: MaterialTopTabBarProps) {
   const Tab = createMaterialTopTabNavigator()
 
   const theme = useTheme()

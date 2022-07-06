@@ -10,8 +10,8 @@ export default function App() {
   const user = useContext(UserContext)
   const { dark } = useContext(ThemeContext)
   const theme = useTheme()
-  const lightContent = "light-content"
-  const darkContent = "dark-content"
+  const lightContent = theme.statusBar.lightContent
+  const darkContent = theme.statusBar.darkContent
 
   return (
     <>
