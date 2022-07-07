@@ -62,7 +62,7 @@ function ModelDescriptor({
             }
           >
             <Menu.Item
-              title={STRS.edit}
+              title={STRS.train.models.editModel}
               onPress={() => {
                 onModelPress!(model, modelId, modelModes.Edit),
                 setMenuVisible(false)
