@@ -67,6 +67,7 @@ export type strings = {
       trainingAnnotation: string;
       addExercise: string;
       saveModel: string;
+      editModel: string;
       author: string;
       startTS: string;
       tSession: string;
@@ -233,6 +234,7 @@ export const strings_en: strings = {
       trainingAnnotation: "Training Description",
       addExercise: "Add Exercise",
       saveModel: "Save Training Model",
+      editModel: "Edit Model",
       author: "Author",
       startTS: "Start Training Session",
       tSession: "Training Session",
@@ -394,6 +396,7 @@ export const strings_pt: strings = {
       trainingAnnotation: "Descrição do Treino",
       addExercise: "Adicionar Exercício",
       saveModel: "Guardar Modelo de Treino",
+      editModel: "Editar Modelo",
       author: "Autor",
       startTS: "Começar Sessão de Treino",
       tSession: "Sessão de Treino",
