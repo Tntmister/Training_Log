@@ -124,6 +124,7 @@ export type strings = {
     deletingPost: string;
     reportedPosts: string;
     banPrompt: (user: string | undefined) => string;
+    banPlaceholder: string;
     week: string;
     permanent: string;
   };
@@ -289,6 +290,7 @@ export const strings_en: strings = {
   },
   admin: {
     banPrompt: (user) => `Should the user ${user} be banned?`,
+    banPlaceholder: "Days (-1 = permanent)",
     deletePost: "Delete Post?",
     deletingPost: "Deleting Post",
     permanent: "Permanently",
@@ -448,6 +450,7 @@ export const strings_pt: strings = {
   },
   admin: {
     banPrompt: (user) => `O utilizador ${user} deve ser banido?`,
+    banPlaceholder: "Dias (-1 = permanente)",
     deletePost: "Apagar publicação?",
     deletingPost: "A Apagar Publicação",
     reportedPosts: "Publicações Reportadas",

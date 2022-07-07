@@ -1,5 +1,10 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Alert, Image, StyleSheet, TouchableOpacity } from "react-native"
+import {
+  Image,
+  StyleSheet,
+  ToastAndroid,
+  TouchableOpacity
+} from "react-native"
 import { Post, Report, User } from "../../../lib/types/user"
 import firestore from "@react-native-firebase/firestore"
 import InlineView from "../../reusable/InlineView"
@@ -15,6 +20,7 @@ import { images } from "../../../lib/extra"
 import { getUser } from "../../../lib/firebase/user"
 import { Button } from "../../reusable/Button"
 import { deletePost, deleteReport } from "../../../lib/firebase/posts"
+import prompt from "react-native-prompt-android"
 
 export default function ReportDescriptor({
   id,
@@ -31,7 +37,7 @@ export default function ReportDescriptor({
   const styles = StyleSheet.create({
     container: {
       marginTop: theme.margins.s,
-      padding: theme.paddings.m,
+      padding: theme.paddings.l,
       alignSelf: "center",
       width: "95%",
       backgroundColor: theme.colors.backdrop,
@@ -52,6 +58,9 @@ export default function ReportDescriptor({
     reason: {
       alignSelf: "center",
       marginVertical: theme.margins.l
+    },
+    optionContainer: {
+      justifyContent: "space-around"
     }
   })
   const [reportedUser, setReportedUser] = useState<User>()
@@ -137,7 +146,7 @@ export default function ReportDescriptor({
       </InlineView>
       <Text style={styles.reason}>{STRS.admin.reason(report?.reason)}</Text>
       {report && (
-        <InlineView>
+        <InlineView style={styles.optionContainer}>
           <Text>{STRS.admin.deletePost}</Text>
           <Button
             onPress={() => {
@@ -148,7 +157,7 @@ export default function ReportDescriptor({
           </Button>
           <Button
             onPress={() => {
-              Alert.alert(
+              prompt(
                 STRS.admin.deletingPost,
                 STRS.admin.banPrompt(reportedUser?.username),
                 [
@@ -160,18 +169,21 @@ export default function ReportDescriptor({
                     }
                   },
                   {
-                    text: STRS.admin.week,
-                    onPress: () => {
-                      resolveReport(true, Date.now() + 1000 * 60 * 60 * 24 * 7)
-                    }
-                  },
-                  {
-                    text: STRS.admin.permanent,
-                    onPress: () => {
-                      resolveReport(true, -1)
+                    text: STRS.yes,
+                    onPress: (num) => {
+                      const number = parseInt(num)
+                      if (number > 0) {
+                        resolveReport(true, number + 1000 * 60 * 60 * 24)
+                      } else {
+                        ToastAndroid.show(
+                          "Invalid ban duration",
+                          ToastAndroid.SHORT
+                        )
+                      }
                     }
                   }
-                ]
+                ],
+                { placeholder: STRS.admin.banPlaceholder }
               )
             }}
           >

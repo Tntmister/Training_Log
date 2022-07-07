@@ -133,7 +133,7 @@ export default function Profile({
           <Menu.Item title={STRS.user.logout} onPress={logout} />
           <Menu.Item title={STRS.user.toggleTheme} onPress={toggleTheme} />
 
-          {!route.name.includes("Profile") && (
+          {self && (
             <Menu.Item
               onPress={() => {
                 navigation.navigate("EditProfile", { user: userProfile! })
