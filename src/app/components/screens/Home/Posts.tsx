@@ -141,7 +141,7 @@ export default function Posts({
     }
     setPosts((posts) => posts.filter((post) => post.postId != postId))
   }
-  console.log(posts.length)
+  
   return (
     <FlatList
       onRefresh={refreshData}

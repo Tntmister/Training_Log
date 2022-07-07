@@ -7,14 +7,26 @@ import InlineView from "../../reusable/InlineView"
 import { Button } from "../../reusable/Button"
 import { getRootComments, postComment } from "../../../lib/firebase/posts"
 import { UserContext } from "../../../providers/User"
-import { FlatList } from "react-native"
+import { FlatList, StyleSheet } from "react-native"
 import Comment from "./Comment"
+import { useTheme } from "../../../providers/Theme"
 
 export default function PostComments({
   route
 }: StackScreenProps<RootStackParamPostNav, "PostComments">) {
   const user = useContext(UserContext)!
+  const theme = useTheme()
   const postId = route.params.postId
+  const styles = StyleSheet.create({
+    commentInputContainer: {
+      width: "90%",
+      alignSelf: "center"
+    },
+    commmentInput: {
+      marginRight: theme.margins.m,
+      flexGrow: 1
+    }
+  })
 
   const [commentDocs, setCommentDocs] = useState<
   { id: string; comment: CommentType }[]
@@ -27,11 +39,12 @@ export default function PostComments({
 
   return (
     <>
-      <InlineView>
+      <InlineView style={styles.commentInputContainer}>
         <VariableHeightTextInput
           placeholder="Reply..."
           onChangeText={setCommentBody}
           value={commentBody}
+          style={styles.commmentInput}
         />
         <Button
           onPress={() =>

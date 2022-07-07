@@ -39,6 +39,14 @@ export default function Comment({
       flexGrow: 1,
       marginLeft: theme.margins.s
     },
+    commentInputContainer: {
+      width: "90%",
+      alignSelf: "center"
+    },
+    commmentInput: {
+      marginRight: theme.margins.m,
+      flexGrow: 1
+    },
     img: {
       height: theme.media.m,
       width: theme.media.m,
@@ -89,10 +97,12 @@ export default function Comment({
             data={repliesDocs}
             renderItem={({ item }) => <Reply comment={item.comment} />}
           />
-          <InlineView>
+          <InlineView style={styles.commentInputContainer}>
             <VariableHeightTextInput
+              placeholder="Reply..."
               value={replyBody}
               onChangeText={setReplyBody}
+              style={styles.commmentInput}
             />
             <Button
               onPress={() =>
