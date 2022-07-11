@@ -42,11 +42,10 @@ export default function ModelList({
   })
 
   useEffect(() => {
-    const subscriber = getModels(user.uid, (models) => {
+    return getModels(user.uid, (models) => {
       setModels(models)
       setLoading(false)
     })
-    return () => subscriber()
   }, [])
 
   function onModelPress(

@@ -31,7 +31,7 @@ export default function Posts({
   const { lang } = useContext(ThemeContext)
   const STRS = langStrings(theme, lang as langs)
   const user = useContext(UserContext)!
-  const userid = route.params?.uid
+  const userid = route.params?.uid ? route.params?.uid : user.uid
   const [posts, setPosts] = useState<{ post: Post; postId: string }[]>([])
 
   const [loading, setLoading] = useState(true)
@@ -41,18 +41,16 @@ export default function Posts({
   const newest = useRef(Date.now())
 
   // firebase query por array-contains está limitado a blocos de 10 ids
-  const followingChunks = useRef<string[][]>([])
+  const followingChunks = useRef<string[][]>([[userid]])
 
   function subscribeFollowings() {
     return firestore()
-      .collection(`users/${user.uid}/following`)
+      .collection(`users/${userid}/following`)
       .onSnapshot((querySnapshot) => {
         const ids = querySnapshot.docs.map((docs) => docs.id)
-        const following = [[userid == undefined ? user.uid : userid]]
-        if (userid == undefined) {
-          for (let i = 0; i < ids.length; i += 10) {
-            following.push(ids.slice(i, i + 10))
-          }
+        const following = [[userid]]
+        for (let i = 0; i < ids.length; i += 10) {
+          following.push(ids.slice(i, i + 10))
         }
         followingChunks.current = [...new Set([following.flat()])]
         oldest.current = Date.now()
@@ -103,11 +101,10 @@ export default function Posts({
   }
 
   useEffect(() => {
-    /*if (userid == undefined) return subscribeFollowings()
+    if (route.params === undefined) return subscribeFollowings()
     else {
       retrieveData()
-    }*/
-    subscribeFollowings()
+    }
   }, [])
 
   useEffect(() => {
@@ -141,7 +138,7 @@ export default function Posts({
     }
     setPosts((posts) => posts.filter((post) => post.postId != postId))
   }
-  
+
   return (
     <FlatList
       onRefresh={refreshData}

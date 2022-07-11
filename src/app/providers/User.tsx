@@ -21,6 +21,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     return auth().onAuthStateChanged(async (firebaseUser) => {
+      console.log(firebaseUser)
       if (firebaseUser) {
         const userDoc = (
           await firestore().doc(`users/${firebaseUser?.uid}`).get()
@@ -55,6 +56,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             )
           }
         }
+      } else {
+        setUser(null)
       }
     })
   }, [])
